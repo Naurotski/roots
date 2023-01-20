@@ -12,11 +12,11 @@
       </q-toolbar-title>
       <q-tabs class="gt-xs">
         <q-route-tab
-          v-for="{ title } in essentialLinks"
-          :key="title"
-          :name="title"
-          :label="title"
-          :to="{ name: title }"
+          v-for="link in essentialLinks"
+          :key="link"
+          :name="link"
+          :label="link"
+          :to="{ name: link }"
         />
       </q-tabs>
       <q-btn

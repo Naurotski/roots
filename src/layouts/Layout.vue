@@ -5,6 +5,7 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+    <floating-button />
     <layout-footer />
   </q-layout>
 </template>
@@ -14,6 +15,7 @@ import { defineComponent } from 'vue'
 import LayoutFooter from 'components/layoutComponents/LayoutFooter.vue'
 import LayoutHeader from 'components/layoutComponents/LayoutHeader.vue'
 import LayoutDrawer from 'components/layoutComponents/LayoutDrawer.vue'
+import FloatingButton from 'components/FloatingButton.vue'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -21,7 +23,8 @@ export default defineComponent({
   components: {
     LayoutHeader,
     LayoutFooter,
-    LayoutDrawer
+    LayoutDrawer,
+    FloatingButton
   }
 })
 </script>
