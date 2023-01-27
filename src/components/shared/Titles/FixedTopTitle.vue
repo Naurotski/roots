@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'TitleFixedTop',
+  name: 'FixedTopTitle',
   props: {
     name: {
       style: String,

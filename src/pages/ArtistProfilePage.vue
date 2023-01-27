@@ -1,17 +1,26 @@
 <template>
   <q-page class="q-pa-md" style="margin-top: 60px">
-    <title-fixed-top :name="artistData.name" />
+    <fixed-top-title :name="artistData.name" />
     <div class="q-gutter-sm row justify-around q-my-md">
-      <div class="my-card" v-for="{ urlWork } in artistData.works" :key="urlWork">
-        <img :src="urlWork" style="height: 25vh" :alt="artistData.name" />
+      <div v-for="work in artistData.works" :key="work.urlImageWork">
+        <full-width-dialog :work="work" :artistName="artistData.name">
+          <template #button="{ onUseActivator }">
+            <img
+              class="cursor-pointer"
+              :src="work.urlImageWork"
+              style="height: 25vh"
+              :alt="artistData.name"
+              @click="onUseActivator"
+            />
+          </template>
+        </full-width-dialog>
       </div>
     </div>
     <q-separator />
-
-    <div class="row q-mt-md">
-      <div class="col-12 col-sm-4 row justify-end">
-        <q-card square flat style="width: 100%; max-width: 450px; z-index: 1" class="q-pr-sm-xl">
-          <p class="text-h5 q-ml-md">About</p>
+    <small-page-container>
+      <secondary-title title="About" class="q-py-md" />
+      <div class="col-12 col-sm-4 row">
+        <q-card square flat style="z-index: 1" class="q-pr-sm-xl">
           <img :src="artistData.urlPortrait" :alt="artistData.name" />
           <q-card-section>
             <div class="text-subtitle1">
@@ -45,56 +54,71 @@
         </q-card>
       </div>
       <div class="col-12 col-sm-8">
-        <div style="width: 100%; max-width: 1000px" class="q-pt-md-xl">
-          <p class="text-justify text-subtitle1">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi assumenda aut
-            beatae blanditiis dolorem dolores, earum et iusto laudantium minima obcaecati quaerat
-            reiciendis rem, repellat tenetur, ut vero voluptatum! Eum, illum ipsa nostrum omnis quos
-            repellendus? Aliquam aperiam asperiores corporis culpa cum deserunt distinctio dolore
-            dolorem dolores dolorum eligendi error esse et explicabo facere facilis hic labore magni
-            minima molestias mollitia necessitatibus nobis nostrum numquam odio optio quae quaerat
-            quasi quo recusandae repudiandae sequi sunt tenetur ullam, vero, voluptatem voluptates.
-            Ad autem consequuntur cupiditate deleniti ducimus et excepturi expedita explicabo, fugit
-            in labore nemo officiis quibusdam, sapiente sed vel.
-          </p>
-          <p class="text-justify text-subtitle1">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi assumenda aut
-            beatae blanditiis dolorem dolores, earum et iusto laudantium minima obcaecati quaerat
-            reiciendis rem, repellat tenetur, ut vero voluptatum! Eum, illum ipsa nostrum omnis quos
-            repellendus? Aliquam aperiam asperiores corporis culpa cum deserunt distinctio dolore
-            dolorem dolores dolorum eligendi error esse et explicabo facere facilis hic labore magni
-            minima molestias mollitia necessitatibus nobis nostrum numquam odio optio quae quaerat
-            quasi quo recusandae repudiandae sequi sunt tenetur ullam, vero, voluptatem voluptates.
-            Ad autem consequuntur cupiditate deleniti ducimus et excepturi expedita explicabo, fugit
-            in labore nemo officiis quibusdam, sapiente sed vel.
-          </p>
-          <p class="text-justify text-subtitle1">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi assumenda aut
-            beatae blanditiis dolorem dolores, earum et iusto laudantium minima obcaecati quaerat
-            reiciendis rem, repellat tenetur, ut vero voluptatum! Eum, illum ipsa nostrum omnis quos
-            repellendus? Aliquam aperiam asperiores corporis culpa cum deserunt distinctio dolore
-            dolorem dolores dolorum eligendi error esse et explicabo facere facilis hic labore magni
-            minima molestias mollitia necessitatibus nobis nostrum numquam odio optio quae quaerat
-            quasi quo recusandae repudiandae sequi sunt tenetur ullam, vero, voluptatem voluptates.
-            Ad autem consequuntur cupiditate deleniti ducimus et excepturi expedita explicabo, fugit
-            in labore nemo officiis quibusdam, sapiente sed vel.
-          </p>
-        </div>
+        <p class="text-justify text-subtitle1">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi assumenda aut
+          beatae blanditiis dolorem dolores, earum et iusto laudantium minima obcaecati quaerat
+          reiciendis rem, repellat tenetur, ut vero voluptatum! Eum, illum ipsa nostrum omnis quos
+          repellendus? Aliquam aperiam asperiores corporis culpa cum deserunt distinctio dolore
+          dolorem dolores dolorum eligendi error esse et explicabo facere facilis hic labore magni
+          minima molestias mollitia necessitatibus nobis nostrum numquam odio optio quae quaerat
+          quasi quo recusandae repudiandae sequi sunt tenetur ullam, vero, voluptatem voluptates. Ad
+          autem consequuntur cupiditate deleniti ducimus et excepturi expedita explicabo, fugit in
+          labore nemo officiis quibusdam, sapiente sed vel.
+        </p>
+        <p class="text-justify text-subtitle1">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi assumenda aut
+          beatae blanditiis dolorem dolores, earum et iusto laudantium minima obcaecati quaerat
+          reiciendis rem, repellat tenetur, ut vero voluptatum! Eum, illum ipsa nostrum omnis quos
+          repellendus? Aliquam aperiam asperiores corporis culpa cum deserunt distinctio dolore
+          dolorem dolores dolorum eligendi error esse et explicabo facere facilis hic labore magni
+          minima molestias mollitia necessitatibus nobis nostrum numquam odio optio quae quaerat
+          quasi quo recusandae repudiandae sequi sunt tenetur ullam, vero, voluptatem voluptates. Ad
+          autem consequuntur cupiditate deleniti ducimus et excepturi expedita explicabo, fugit in
+          labore nemo officiis quibusdam, sapiente sed vel.
+        </p>
+        <p class="text-justify text-subtitle1">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi assumenda aut
+          beatae blanditiis dolorem dolores, earum et iusto laudantium minima obcaecati quaerat
+          reiciendis rem, repellat tenetur, ut vero voluptatum! Eum, illum ipsa nostrum omnis quos
+          repellendus? Aliquam aperiam asperiores corporis culpa cum deserunt distinctio dolore
+          dolorem dolores dolorum eligendi error esse et explicabo facere facilis hic labore magni
+          minima molestias mollitia necessitatibus nobis nostrum numquam odio optio quae quaerat
+          quasi quo recusandae repudiandae sequi sunt tenetur ullam, vero, voluptatem voluptates. Ad
+          autem consequuntur cupiditate deleniti ducimus et excepturi expedita explicabo, fugit in
+          labore nemo officiis quibusdam, sapiente sed vel.
+        </p>
       </div>
-    </div>
+    </small-page-container>
+    <q-separator />
+    <small-page-container>
+      <secondary-title title="Education" />
+    </small-page-container>
+    <q-separator />
+    <small-page-container>
+      <secondary-title title="Exhibitions" />
+    </small-page-container>
+    <q-separator />
+    <small-page-container>
+      <secondary-title title="Press" />
+    </small-page-container>
   </q-page>
 </template>
 
 <script>
 import { toRefs } from 'vue'
 import { useArtistsStore } from 'stores/artists-store.js'
-// import { storeToRefs } from 'pinia'
-import TitleFixedTop from 'components/shared/TitleFixedTop.vue'
+import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
+import SecondaryTitle from 'components/shared/Titles/SecondaryTitle.vue'
+import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
+import FullWidthDialog from 'components/dialogs/FullWidthDialog.vue'
 
 export default {
   name: 'ArtistProfilePage',
   components: {
-    TitleFixedTop
+    FixedTopTitle,
+    SecondaryTitle,
+    SmallPageContainer,
+    FullWidthDialog
   },
   props: {
     artistId: {
@@ -104,11 +128,11 @@ export default {
   },
   setup(props) {
     const { artistId } = toRefs(props)
-    console.log(artistId.value)
     const artistsStore = useArtistsStore()
     const { artistData } = artistsStore
-    console.log(artistData(artistId.value))
+    const test = () => console.log('Hello')
     return {
+      test,
       artistData: artistData(artistId.value),
       lorem:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
