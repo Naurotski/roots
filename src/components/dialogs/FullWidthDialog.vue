@@ -5,9 +5,12 @@
     </slot>
     <q-dialog v-model="activator" full-width>
       <q-card>
-        <secondary-title class="q-pt-md" :title="artistName"
-          ><q-btn flat round icon="close" v-close-popup
-        /></secondary-title>
+        <q-toolbar class="q-pl-xl q-pt-md">
+          <q-toolbar-title class="text-h5">
+            {{ artistName }}
+          </q-toolbar-title>
+          <q-btn flat round icon="close" v-close-popup />
+        </q-toolbar>
         <div class="row">
           <div class="col-12 col-sm-8">
             <q-card-section>
@@ -22,12 +25,7 @@
                 control-color="primary"
                 v-model:fullscreen="fullscreen"
               >
-                <q-carousel-slide
-                  v-for="(url, index) in allUrlImagesWork"
-                  :key="url"
-                  :name="index"
-                  class="flex flex-center"
-                >
+                <q-carousel-slide v-for="(url, index) in allUrlImagesWork" :key="url" :name="index">
                   <div class="row justify-center">
                     <img
                       :src="url"
@@ -70,12 +68,8 @@
 <script>
 import { computed, ref, toRefs } from 'vue'
 import { Screen } from 'quasar'
-import SecondaryTitle from 'components/shared/Titles/SecondaryTitle.vue'
 export default {
   name: 'FullWidthDialog',
-  components: {
-    SecondaryTitle
-  },
   props: {
     work: {
       type: Object,
@@ -93,11 +87,9 @@ export default {
     const { work } = toRefs(props)
     const { urlImageWork, urlSecondImagesWork } = toRefs(work.value)
     const allUrlImagesWork = computed(() => [urlImageWork.value, ...urlSecondImagesWork.value])
-    console.log(Screen.xs)
     const carouselSlideHeight = computed(() => {
-      return fullscreen.value ? 90 : Screen.xs ? 40 : 60
+      return fullscreen.value ? 97 : Screen.xs ? 40 : 60
     })
-    console.log(carouselSlideHeight.value)
     return {
       slide: ref(0),
       fullscreen,

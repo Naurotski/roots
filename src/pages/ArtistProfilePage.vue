@@ -18,7 +18,9 @@
     </div>
     <q-separator />
     <small-page-container>
-      <secondary-title title="About" class="q-py-md" />
+      <q-toolbar>
+        <q-toolbar-title class="text-h5">About</q-toolbar-title>
+      </q-toolbar>
       <div class="col-12 col-sm-4 row">
         <q-card square flat style="z-index: 1" class="q-pr-sm-xl">
           <img :src="artistData.urlPortrait" :alt="artistData.name" />
@@ -90,17 +92,17 @@
       </div>
     </small-page-container>
     <q-separator />
-    <small-page-container>
-      <secondary-title title="Education" />
-    </small-page-container>
+    <q-toolbar>
+      <q-toolbar-title class="text-h5">Education</q-toolbar-title>
+    </q-toolbar>
     <q-separator />
-    <small-page-container>
-      <secondary-title title="Exhibitions" />
-    </small-page-container>
+    <q-toolbar>
+      <q-toolbar-title class="text-h5">Exhibitions</q-toolbar-title>
+    </q-toolbar>
     <q-separator />
-    <small-page-container>
-      <secondary-title title="Press" />
-    </small-page-container>
+    <q-toolbar class="text-primary">
+      <q-toolbar-title class="text-h5"> Press </q-toolbar-title>
+    </q-toolbar>
   </q-page>
 </template>
 
@@ -108,7 +110,6 @@
 import { toRefs } from 'vue'
 import { useArtistsStore } from 'stores/artists-store.js'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
-import SecondaryTitle from 'components/shared/Titles/SecondaryTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import FullWidthDialog from 'components/dialogs/FullWidthDialog.vue'
 
@@ -116,7 +117,6 @@ export default {
   name: 'ArtistProfilePage',
   components: {
     FixedTopTitle,
-    SecondaryTitle,
     SmallPageContainer,
     FullWidthDialog
   },
