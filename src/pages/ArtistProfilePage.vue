@@ -107,8 +107,9 @@
 </template>
 
 <script>
-import { toRefs } from 'vue'
+import { toRefs, computed } from 'vue'
 import { useArtistsStore } from 'stores/artists-store.js'
+import { storeToRefs } from 'pinia'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import FullWidthDialog from 'components/dialogs/FullWidthDialog.vue'
@@ -129,13 +130,19 @@ export default {
   setup(props) {
     const { artistId } = toRefs(props)
     const artistsStore = useArtistsStore()
-    const { artistData } = artistsStore
-    const test = () => console.log('Hello')
+    const { artists } = storeToRefs(artistsStore)
+    const artistData = computed(() => {
+      if (artists.value) {
+        return artists.value.find((item) => {
+          return item.artistId === artistId.value
+        })
+      } else {
+        return []
+      }
+    })
     return {
-      test,
-      artistData: artistData(artistId.value),
-      lorem:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+      artistData,
+      artists
     }
   }
 }

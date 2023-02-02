@@ -2,7 +2,7 @@
   <q-header bordered class="bg-white text-primary">
     <q-toolbar>
       <q-toolbar-title>
-        <router-link to="/" style="text-decoration: none">
+        <router-link :to="{ name: 'Home' }" style="text-decoration: none">
           <q-img
             style="max-width: 100px; height: 50px"
             fit="contain"
