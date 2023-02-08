@@ -25,6 +25,8 @@ export default {
   setup() {
     const artistsStore = useArtistsStore()
     const { artists } = storeToRefs(artistsStore)
+    const { getArtists } = artistsStore
+    if (!artists.value) getArtists()
     return {
       artists
     }

@@ -55,8 +55,16 @@
               <div class="text-h6" v-text="work.name" />
             </q-card-section>
             <q-card-section>
-              <p class="text-subtitle2" v-text="work.materials" />
-              <p class="text-subtitle2" v-text="work.description" />
+              <p
+                style="white-space: pre-line"
+                class="text-justify text-subtitle2"
+                v-text="work.materials"
+              />
+              <p
+                style="white-space: pre-line"
+                class="text-justify text-subtitle2"
+                v-text="work.description"
+              />
             </q-card-section>
           </div>
         </div>
@@ -85,7 +93,7 @@ export default {
     const fullscreen = ref(false)
     const useActivator = () => (activator.value = true)
     const { work } = toRefs(props)
-    const { urlImageWork, urlSecondImagesWork } = toRefs(work.value)
+    const { urlImageWork, urlSecondImagesWork = ref([]) } = toRefs(work.value)
     const allUrlImagesWork = computed(() => [urlImageWork.value, ...urlSecondImagesWork.value])
     const carouselSlideHeight = computed(() => {
       return fullscreen.value ? 97 : Screen.xs ? 40 : 60

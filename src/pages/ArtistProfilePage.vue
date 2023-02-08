@@ -25,18 +25,18 @@
         <q-card square flat style="z-index: 1" class="q-pr-sm-xl">
           <img :src="artistData.urlPortrait" :alt="artistData.name" />
           <q-card-section>
-            <div class="text-subtitle1">
+            <div v-if="artistData.linkFacebook" class="text-subtitle1">
               <a
-                href="http://localhost:9000/artists"
+                :href="artistData.linkFacebook"
                 target="_blank"
                 style="text-decoration: none; color: #1d1d1d"
               >
                 <q-icon name="mdi-facebook" size="sm" class="q-mb-xs q-mr-sm" />Facebook</a
               >
             </div>
-            <div class="text-subtitle1">
+            <div v-if="artistData.linkInstagram" class="text-subtitle1">
               <a
-                href="http://localhost:9000/"
+                :href="artistData.linkInstagram"
                 target="_blank"
                 style="text-decoration: none; color: #1d1d1d"
               >
@@ -56,53 +56,38 @@
         </q-card>
       </div>
       <div class="col-12 col-sm-8">
-        <p class="text-justify text-subtitle1">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi assumenda aut
-          beatae blanditiis dolorem dolores, earum et iusto laudantium minima obcaecati quaerat
-          reiciendis rem, repellat tenetur, ut vero voluptatum! Eum, illum ipsa nostrum omnis quos
-          repellendus? Aliquam aperiam asperiores corporis culpa cum deserunt distinctio dolore
-          dolorem dolores dolorum eligendi error esse et explicabo facere facilis hic labore magni
-          minima molestias mollitia necessitatibus nobis nostrum numquam odio optio quae quaerat
-          quasi quo recusandae repudiandae sequi sunt tenetur ullam, vero, voluptatem voluptates. Ad
-          autem consequuntur cupiditate deleniti ducimus et excepturi expedita explicabo, fugit in
-          labore nemo officiis quibusdam, sapiente sed vel.
-        </p>
-        <p class="text-justify text-subtitle1">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi assumenda aut
-          beatae blanditiis dolorem dolores, earum et iusto laudantium minima obcaecati quaerat
-          reiciendis rem, repellat tenetur, ut vero voluptatum! Eum, illum ipsa nostrum omnis quos
-          repellendus? Aliquam aperiam asperiores corporis culpa cum deserunt distinctio dolore
-          dolorem dolores dolorum eligendi error esse et explicabo facere facilis hic labore magni
-          minima molestias mollitia necessitatibus nobis nostrum numquam odio optio quae quaerat
-          quasi quo recusandae repudiandae sequi sunt tenetur ullam, vero, voluptatem voluptates. Ad
-          autem consequuntur cupiditate deleniti ducimus et excepturi expedita explicabo, fugit in
-          labore nemo officiis quibusdam, sapiente sed vel.
-        </p>
-        <p class="text-justify text-subtitle1">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi assumenda aut
-          beatae blanditiis dolorem dolores, earum et iusto laudantium minima obcaecati quaerat
-          reiciendis rem, repellat tenetur, ut vero voluptatum! Eum, illum ipsa nostrum omnis quos
-          repellendus? Aliquam aperiam asperiores corporis culpa cum deserunt distinctio dolore
-          dolorem dolores dolorum eligendi error esse et explicabo facere facilis hic labore magni
-          minima molestias mollitia necessitatibus nobis nostrum numquam odio optio quae quaerat
-          quasi quo recusandae repudiandae sequi sunt tenetur ullam, vero, voluptatem voluptates. Ad
-          autem consequuntur cupiditate deleniti ducimus et excepturi expedita explicabo, fugit in
-          labore nemo officiis quibusdam, sapiente sed vel.
+        <p class="text-justify text-subtitle1" style="white-space: pre-line">
+          {{ artistData.description }}
         </p>
       </div>
     </small-page-container>
     <q-separator />
-    <q-toolbar>
-      <q-toolbar-title class="text-h5">Education</q-toolbar-title>
-    </q-toolbar>
+    <small-page-container v-if="artistData.education">
+      <q-toolbar>
+        <q-toolbar-title class="text-h5">Education</q-toolbar-title>
+      </q-toolbar>
+      <p class="text-justify text-subtitle1" style="white-space: pre-line">
+        {{ artistData.education }}
+      </p>
+    </small-page-container>
     <q-separator />
-    <q-toolbar>
-      <q-toolbar-title class="text-h5">Exhibitions</q-toolbar-title>
-    </q-toolbar>
+    <small-page-container v-if="artistData.exhibitions">
+      <q-toolbar>
+        <q-toolbar-title class="text-h5">Exhibitions</q-toolbar-title>
+      </q-toolbar>
+      <p class="text-justify text-subtitle1" style="white-space: pre-line">
+        {{ artistData.exhibitions }}
+      </p>
+    </small-page-container>
     <q-separator />
-    <q-toolbar class="text-primary">
-      <q-toolbar-title class="text-h5"> Press </q-toolbar-title>
-    </q-toolbar>
+    <small-page-container v-if="artistData.press">
+      <q-toolbar class="text-primary">
+        <q-toolbar-title class="text-h5"> Press </q-toolbar-title>
+      </q-toolbar>
+      <p class="text-justify text-subtitle1" style="white-space: pre-line">
+        {{ artistData.press }}
+      </p>
+    </small-page-container>
   </q-page>
 </template>
 
@@ -131,6 +116,8 @@ export default {
     const { artistId } = toRefs(props)
     const artistsStore = useArtistsStore()
     const { artists } = storeToRefs(artistsStore)
+    const { getArtists } = artistsStore
+    if (!artists.value) getArtists()
     const artistData = computed(() => {
       if (artists.value) {
         return artists.value.find((item) => {
