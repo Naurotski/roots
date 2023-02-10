@@ -115,12 +115,12 @@ export default {
   setup(props) {
     const { artistId } = toRefs(props)
     const artistsStore = useArtistsStore()
-    const { artists } = storeToRefs(artistsStore)
+    const { filterArtistsDraft } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
-    if (!artists.value) getArtists()
+    if (!filterArtistsDraft.value.length) getArtists()
     const artistData = computed(() => {
-      if (artists.value) {
-        return artists.value.find((item) => {
+      if (filterArtistsDraft.value.length) {
+        return filterArtistsDraft.value.find((item) => {
           return item.artistId === artistId.value
         })
       } else {
@@ -128,8 +128,7 @@ export default {
       }
     })
     return {
-      artistData,
-      artists
+      artistData
     }
   }
 }
