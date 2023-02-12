@@ -1,16 +1,15 @@
 import { defineStore } from 'pinia'
+import { computed, ref } from 'vue'
 import { db } from 'boot/firebase.js'
 import { ref as fbRef, onValue } from 'firebase/database'
 
-import { computed, ref } from 'vue'
-
 export const useArtistsStore = defineStore('artists', () => {
-  const artists = ref([])
-  const filterArtistsDraft = computed(() => artists.value.filter((artist) => !artist.draft))
+  const artistsList = ref([])
+  const filterArtistsDraft = computed(() => artistsList.value.filter((artist) => !artist.draft))
   const getArtists = () => {
     onValue(fbRef(db, 'artists/'), (snapshot) => {
       const data = snapshot.val()
-      artists.value = Object.values(data)
+      artistsList.value = Object.values(data)
     })
   }
   return {

@@ -18,12 +18,14 @@
     </div>
     <q-separator />
     <small-page-container>
-      <q-toolbar>
-        <q-toolbar-title class="text-h5">About</q-toolbar-title>
-      </q-toolbar>
-      <div class="col-12 col-sm-4 row">
-        <q-card square flat style="z-index: 1" class="q-pr-sm-xl">
-          <img :src="artistData.urlPortrait" :alt="artistData.name" />
+      <shared-card
+        :data-card="{
+          name: 'About',
+          url: artistData.urlPortrait,
+          description: artistData.description
+        }"
+      >
+        <template #underPicture>
           <q-card-section>
             <div v-if="artistData.linkFacebook" class="text-subtitle1">
               <a
@@ -43,23 +45,9 @@
                 <q-icon name="mdi-instagram" size="sm" class="q-mb-xs q-mr-sm" />Instagram</a
               >
             </div>
-            <!--            <div class="text-subtitle1">-->
-            <!--              <a-->
-            <!--                :href="`mailto:${artistData.mail}?subject=Roots`"-->
-            <!--                target="_blank"-->
-            <!--                style="text-decoration: none; color: #1d1d1d"-->
-            <!--              >-->
-            <!--                <q-icon name="mdi-email-outline" size="sm" class="q-mb-xs q-mr-sm"/>E-mail</a-->
-            <!--              >-->
-            <!--            </div>-->
           </q-card-section>
-        </q-card>
-      </div>
-      <div class="col-12 col-sm-8">
-        <p class="text-justify text-subtitle1" style="white-space: pre-line">
-          {{ artistData.description }}
-        </p>
-      </div>
+        </template>
+      </shared-card>
     </small-page-container>
     <q-separator />
     <small-page-container v-if="artistData.education">
@@ -98,13 +86,15 @@ import { storeToRefs } from 'pinia'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import FullWidthDialog from 'components/dialogs/FullWidthDialog.vue'
+import SharedCard from 'components/shared/SharedCard.vue'
 
 export default {
   name: 'ArtistProfilePage',
   components: {
     FixedTopTitle,
     SmallPageContainer,
-    FullWidthDialog
+    FullWidthDialog,
+    SharedCard
   },
   props: {
     artistId: {

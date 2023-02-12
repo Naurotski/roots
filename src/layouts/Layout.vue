@@ -15,7 +15,7 @@ import { defineComponent } from 'vue'
 import LayoutFooter from 'components/layoutComponents/LayoutFooter.vue'
 import LayoutHeader from 'components/layoutComponents/LayoutHeader.vue'
 import LayoutDrawer from 'components/layoutComponents/LayoutDrawer.vue'
-import FloatingButton from 'components/FloatingButton.vue'
+import FloatingButton from 'components/shared/FloatingButton.vue'
 
 export default defineComponent({
   name: 'MainLayout',

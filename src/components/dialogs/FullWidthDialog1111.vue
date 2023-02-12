@@ -7,7 +7,7 @@
       <q-card>
         <q-toolbar class="q-pl-xl q-pt-md">
           <q-toolbar-title class="text-h5">
-            {{ artistName }}
+            {{ title }}
           </q-toolbar-title>
           <q-btn flat round icon="close" v-close-popup />
         </q-toolbar>
@@ -25,7 +25,7 @@
                 control-color="primary"
                 v-model:fullscreen="fullscreen"
               >
-                <q-carousel-slide v-for="(url, index) in allUrlImagesWork" :key="url" :name="index">
+                <q-carousel-slide v-for="(url, index) in urlImages" :key="url" :name="index">
                   <div class="row justify-center">
                     <img
                       :src="url"
@@ -52,14 +52,12 @@
           </div>
           <div class="col-12 col-sm-4 q-pt-sm-md">
             <q-card-section class="q-pt-none">
+              <div class="text-h6" v-text="work.artistName" />
+            </q-card-section>
+            <q-card-section class="q-pt-none">
               <div class="text-h6" v-text="work.name" />
             </q-card-section>
             <q-card-section>
-              <p
-                style="white-space: pre-line"
-                class="text-justify text-subtitle2"
-                v-text="work.materials"
-              />
               <p
                 style="white-space: pre-line"
                 class="text-justify text-subtitle2"
@@ -76,38 +74,41 @@
 <script>
 import { computed, ref, toRefs } from 'vue'
 import { Screen } from 'quasar'
+
 export default {
-  name: 'FullWidthDialog',
+  name: 'FullWidthDialog1111',
   props: {
-    work: {
-      type: Object,
+    title: {
+      type: String,
       require: true
     },
-    artistName: {
-      type: String,
+    dialogData: {
+      type: Object,
       require: true
     }
   },
   setup(props) {
     const activator = ref(false)
+    const slide = ref(0)
     const fullscreen = ref(false)
     const useActivator = () => (activator.value = true)
-    const { work } = toRefs(props)
-    const { urlImageWork, urlSecondImagesWork = ref([]) } = toRefs(work.value)
-    const allUrlImagesWork = computed(() => [urlImageWork.value, ...urlSecondImagesWork.value])
+    const { dialogData } = toRefs(props)
+    const urlImages = computed(() => dialogData.value.map((item) => item.urlWork))
+    const work = computed(() => dialogData.value[slide.value])
     const carouselSlideHeight = computed(() => {
       return fullscreen.value ? 97 : Screen.xs ? 40 : 60
     })
     return {
-      slide: ref(0),
+      slide,
       fullscreen,
       activator,
       useActivator,
-      allUrlImagesWork,
+      urlImages,
+      work,
       carouselSlideHeight
     }
   }
 }
 </script>
 
-<style lang="scss"></style>
+<style scoped></style>
