@@ -14,40 +14,7 @@
         <div class="row">
           <div class="col-12 col-sm-8">
             <q-card-section>
-              <q-carousel
-                v-model="slide"
-                swipeable
-                animated
-                infinite
-                arrows
-                height="100%"
-                class="bg-grey-1"
-                control-color="primary"
-                v-model:fullscreen="fullscreen"
-              >
-                <q-carousel-slide v-for="(url, index) in allUrlImagesWork" :key="url" :name="index">
-                  <div class="row justify-center">
-                    <img
-                      :src="url"
-                      style="max-width: 100%; object-fit: contain"
-                      :style="{ height: carouselSlideHeight + 'vh' }"
-                      alt="alt"
-                    />
-                  </div>
-                </q-carousel-slide>
-                <template v-slot:control>
-                  <q-carousel-control position="bottom-right" :offset="[8, 8]">
-                    <q-btn
-                      flat
-                      round
-                      dense
-                      text-color="primary"
-                      :icon="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
-                      @click="fullscreen = !fullscreen"
-                    />
-                  </q-carousel-control>
-                </template>
-              </q-carousel>
+              <carousel-component :url-images="allUrlImagesWork" />
             </q-card-section>
           </div>
           <div class="col-12 col-sm-4 q-pt-sm-md">
@@ -75,9 +42,12 @@
 
 <script>
 import { computed, ref, toRefs } from 'vue'
-import { Screen } from 'quasar'
+import CarouselComponent from 'components/shared/CarouselComponent.vue'
 export default {
   name: 'FullWidthDialog',
+  components: {
+    CarouselComponent
+  },
   props: {
     work: {
       type: Object,
@@ -90,21 +60,14 @@ export default {
   },
   setup(props) {
     const activator = ref(false)
-    const fullscreen = ref(false)
     const useActivator = () => (activator.value = true)
     const { work } = toRefs(props)
     const { urlImageWork, urlSecondImagesWork = ref([]) } = toRefs(work.value)
     const allUrlImagesWork = computed(() => [urlImageWork.value, ...urlSecondImagesWork.value])
-    const carouselSlideHeight = computed(() => {
-      return fullscreen.value ? 97 : Screen.xs ? 40 : 60
-    })
     return {
-      slide: ref(0),
-      fullscreen,
       activator,
       useActivator,
-      allUrlImagesWork,
-      carouselSlideHeight
+      allUrlImagesWork
     }
   }
 }
