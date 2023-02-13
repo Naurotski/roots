@@ -4,10 +4,10 @@
     swipeable
     animated
     infinite
-    arrows
+    :arrows="urlImages.length > 1"
     transition-prev="slide-right"
     transition-next="slide-left"
-    :navigation="!checkVideo"
+    :navigation="!checkVideo && urlImages.length > 1"
     control-type="push"
     navigation-icon="radio_button_unchecked"
     height="100%"
