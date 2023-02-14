@@ -1,124 +1,31 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
+import { onValue, ref as dbRef } from 'firebase/database'
+import { db } from 'boot/firebase.js'
+import { date } from 'quasar'
 
 export const useExhibitionsStore = defineStore('exhibitions', () => {
-  const exhibitionsList = ref([
-    {
-      id: '123456',
-      name: 'First Exhibitions',
-      description:
-        'Lorem ipsum dolor Commodi cupiditate dolorem eaque quod? Aperiam, at debitis eaque impedit minima modi, nihil numquam officia possimus quas quisquam quos sed ut vel voluptas. Assumenda atque ea illo maxime obcaecati! Autem consequatur, distinctio eligendi expedita impedit mollitia nesciunt non optio, praesentium repellendus, tempor Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi cupiditate dolorem eaque quod? Aperiam, at debitis eaque impedit minima modi, nihil numquam officia possimus quas quisquam quos sed ut vel voluptas. Assumenda atque ea illo maxime obcaecati! Autem consequatur, distinctio eligendi expedita impedit mollitia nesciunt non optio, praesentium repellendus, temporeLorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi cupiditate dolorem eaque quod? Aperiam, at debitis eaque impedit minima modi, nihil numquam officia possimus quas quisquam quos sed ut vel voluptas. Assumenda atque ea illo maxime obcaecati! Autem consequatur, distinctio eligendi expedita impedit mollitia nesciunt non optio, praesentium repellendus, temporeLorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi cupiditate dolorem eaque quod? Aperiam, at debitis eaque impedit minima modi, nihil numquam officia possimus quas quisquam quos sed ut vel voluptas. Assumenda atque ea illo maxime obcaecati! Autem consequatur, distinctio eligendi expedita impedit mollitia nesciunt non optio, praesentium repellendus, temporeLorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi cupiditate dolorem eaque quod? Aperiam, at debitis eaque impedit minima modi, nihil numquam officia possimus quas quisquam quos sed ut vel voluptas. Assumenda atque ea illo maxime obcaecati! Autem consequatur, distinctio eligendi expedita impedit mollitia nesciunt non optio, praesentium repellendus, tempore. Lorem ipsum dolor Commodi cupiditate dolorem eaque quod? Aperiam, at debitis eaque impedit minima modi, nihil numquam officia possimus quas ',
-      draft: false,
-      urlImage:
-        'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FBobMarley%2Fworks%2FBobMarley-Test3?alt=media&token=00d2dfab-8116-4136-ac01-319a1b21eb90',
-      works: [
-        {
-          id: 'ff99ff',
-          urlWork:
-            'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FBobMarley%2Fworks%2FBobMarley-tes3?alt=media&token=e6407aaa-db30-4e9b-be92-5333e47f1915',
-          artistName: 'Bob Marley',
-          name: 'Hello World!',
-          description:
-            ' Assumenda atque ea illo maxime obcaecati! Autem consequatur, distinctio eligendi expedita impedit mollitia nesciunt non optio, praesentium repellendus, tempor Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
-        },
-        {
-          id: '111ff99ff',
-          urlWork: 'https://player.vimeo.com/video/535307712',
-          artistName: 'Naurotskaya',
-          name: 'Welcome!!!!',
-          description:
-            ' Assumenda atque ea illo maxime obcaecati! Autem consequatur, distinctio eligendi expedita impedit mollitia nesciunt non optio, praesentium repellendus, tempor Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
-        },
-        {
-          id: 'ff99333ff',
-          urlWork:
-            'https://firebasestorage.googleapis.com/v0/b/first-project-6daea.appspot.com/o/admin%2F32.jpg?alt=media&token=76382467-144f-4314-b041-f403f81a4775',
-          artistName: 'Anselm Kiefer',
-          name: 'Goodbye World!',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid dignissimos dolorum, earum laborum magni numquam odio rem. Atque debitis facere fuga ipsa labore minima nisi, placeat praesentium, sint ut veritatis?70'
-        },
-
-        {
-          id: 'ff99333ff',
-          urlWork:
-            'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FBobMarley%2Fworks%2FBobMarley-Test1%2F13-500x300.jpg?alt=media&token=283a8e3f-1779-481f-bae9-56717d863e70',
-          artistName: 'Anselm Kiefer',
-          name: 'Goodbye World!',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid dignissimos dolorum, earum laborum magni numquam odio rem. Atque debitis facere fuga ipsa labore minima nisi, placeat praesentium, sint ut veritatis?70'
-        },
-
-        {
-          id: 'ff99333ff',
-          urlWork:
-            'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FBobMarley%2Fworks%2FBobMarley-Test1%2F13-500x300.jpg?alt=media&token=283a8e3f-1779-481f-bae9-56717d863e70',
-          artistName: 'Anselm Kiefer',
-          name: 'Goodbye World!',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid dignissimos dolorum, earum laborum magni numquam odio rem. Atque debitis facere fuga ipsa labore minima nisi, placeat praesentium, sint ut veritatis?70'
-        },
-        {
-          id: 'ff99333ff',
-          urlWork:
-            'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FBobMarley%2Fworks%2FBobMarley-Test1%2F13-500x300.jpg?alt=media&token=283a8e3f-1779-481f-bae9-56717d863e70',
-          artistName: 'Anselm Kiefer',
-          name: 'Goodbye World!',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid dignissimos dolorum, earum laborum magni numquam odio rem. Atque debitis facere fuga ipsa labore minima nisi, placeat praesentium, sint ut veritatis?70'
-        },
-        {
-          id: 'ff99333ff',
-          urlWork:
-            'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FBobMarley%2Fworks%2FBobMarley-Test1%2F13-500x300.jpg?alt=media&token=283a8e3f-1779-481f-bae9-56717d863e70',
-          artistName: 'Anselm Kiefer',
-          name: 'Goodbye World!',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid dignissimos dolorum, earum laborum magni numquam odio rem. Atque debitis facere fuga ipsa labore minima nisi, placeat praesentium, sint ut veritatis?70'
-        },
-        {
-          id: 'ff99333ff',
-          urlWork:
-            'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FBobMarley%2Fworks%2FBobMarley-Test1%2F13-500x300.jpg?alt=media&token=283a8e3f-1779-481f-bae9-56717d863e70',
-          artistName: 'Anselm Kiefer',
-          name: 'Goodbye World!',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid dignissimos dolorum, earum laborum magni numquam odio rem. Atque debitis facere fuga ipsa labore minima nisi, placeat praesentium, sint ut veritatis?70'
-        }
-      ]
-    },
-    {
-      id: '98765',
-      name: 'Second Exhibitions',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid dignissimos dolorum, earum laborum magni numquam odio rem. Atque debitis facere fuga ipsa labore minima nisi, placeat praesentium, sint ut veritatis?70',
-      draft: false,
-      urlImage:
-        'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FBobMarley%2Fworks%2FBobMarley-Test1?alt=media&token=f39e684f-b355-4311-98ed-69994dda2b8e',
-      works: [
-        {
-          id: 'ff99ff',
-          urlWork:
-            'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FBobMarley%2Fworks%2FBobMarley-tes3?alt=media&token=e6407aaa-db30-4e9b-be92-5333e47f1915',
-          artistName: 'Bob Marley',
-          name: 'Hello World!',
-          description:
-            ' Assumenda atque ea illo maxime obcaecati! Autem consequatur, distinctio eligendi expedita impedit mollitia nesciunt non optio, praesentium repellendus, tempor Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
-        },
-        {
-          id: 'ff99333ff',
-          urlWork:
-            'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FBobMarley%2Fworks%2FBobMarley-Test1%2F13-500x300.jpg?alt=media&token=283a8e3f-1779-481f-bae9-56717d863e70',
-          artistName: 'Anselm Kiefer',
-          name: 'Goodbye World!',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid dignissimos dolorum, earum laborum magni numquam odio rem. Atque debitis facere fuga ipsa labore minima nisi, placeat praesentium, sint ut veritatis?70'
-        }
-      ]
-    }
-  ])
+  const exhibitionsList = ref([])
   const filterExhibitionsDraft = computed(() => exhibitionsList.value.filter((item) => !item.draft))
+  const setExhibitionsList = (exhibitionsData) => {
+    exhibitionsList.value = exhibitionsData.map((item) => ({
+      ...item,
+      openingDate: date.formatDate(item.openingDate, 'DD/MM/YYYY'),
+      closingDate: date.formatDate(item.closingDate, 'DD/MM/YYYY')
+    }))
+  }
+  const getExhibitions = () => {
+    console.log('getExhibitions')
+    onValue(dbRef(db, 'exhibitions/'), (snapshot) => {
+      if (snapshot.val()) {
+        const data = snapshot.val()
+        setExhibitionsList(Object.values(data))
+        console.log(exhibitionsList.value)
+      }
+    })
+  }
   return {
-    filterExhibitionsDraft
+    filterExhibitionsDraft,
+    getExhibitions
   }
 })
