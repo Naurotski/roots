@@ -19,7 +19,12 @@
           </div>
           <div class="col-12 col-sm-4 q-pt-sm-md">
             <q-card-section class="q-pt-none">
-              <div class="text-h6" v-text="work.artistName" />
+              <router-link
+                style="text-decoration: none; color: #1d1d1d"
+                :to="`/artists/${work.artistName.split(' ').join('')}`"
+              >
+                <div class="text-h6" v-text="work.artistName" />
+              </router-link>
             </q-card-section>
             <q-card-section class="q-pt-none">
               <div class="text-h6" v-text="work.name" />
