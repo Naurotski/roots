@@ -5,7 +5,17 @@
       <div v-for="work in artistData.works" :key="work.urlImageWork">
         <full-width-dialog :work="work" :artistName="artistData.name">
           <template #button="{ onUseActivator }">
+            <div style="position: relative" v-if="work.urlImageWork.includes('video')">
+              <q-video style="height: 25vh" :src="work.urlImageWork" @click="onUseActivator" />
+              <div
+                style="position: absolute; top: 5px; height: 100%; width: 100%; opacity: 0.1"
+                @click="onUseActivator"
+                class="bg-grey-2 cursor-pointer"
+              ></div>
+            </div>
+
             <img
+              v-else
               class="cursor-pointer"
               :src="work.urlImageWork"
               style="height: 25vh"
