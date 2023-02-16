@@ -6,7 +6,7 @@
     <q-dialog v-model="activator" full-width>
       <q-card>
         <q-toolbar class="q-pl-xl q-pt-md">
-          <q-toolbar-title class="text-h5">
+          <q-toolbar-title class="text-h4">
             {{ title }}
           </q-toolbar-title>
           <q-btn flat round icon="close" v-close-popup />
@@ -23,7 +23,7 @@
                 style="text-decoration: none; color: #1d1d1d"
                 :to="`/artists/${work.artistName.split(' ').join('')}`"
               >
-                <div class="text-h6" v-text="work.artistName" />
+                <div class="text-h5" v-text="work.artistName" />
               </router-link>
             </q-card-section>
             <q-card-section class="q-pt-none">
@@ -32,7 +32,7 @@
             <q-card-section>
               <p
                 style="white-space: pre-line"
-                class="text-justify text-subtitle2"
+                class="text-justify text-body1"
                 v-text="work.description"
               />
             </q-card-section>

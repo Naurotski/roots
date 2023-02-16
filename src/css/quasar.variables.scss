@@ -23,3 +23,9 @@ $positive  : #21BA45;
 $negative  : #C10015;
 $info      : #31CCEC;
 $warning   : #F2C037;
+$body1:     (size: 1.1rem,     line-height: 1.5rem,   letter-spacing: .03125em,  weight: 400) !default;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Saira+Condensed&display=swap');
+$typography-font-family : 'Saira Condensed', sans-serif !default;
+

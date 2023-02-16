@@ -6,7 +6,7 @@
       </q-item-label>
       <template v-for="link in essentialLinks" :key="link">
         <q-item exact clickable :to="{ name: link }">
-          <q-item-section>
+          <q-item-section class="text-body1">
             <q-item-label>{{ link }}</q-item-label>
           </q-item-section>
         </q-item>

@@ -64,7 +64,7 @@
       <q-toolbar>
         <q-toolbar-title class="text-h5">Education</q-toolbar-title>
       </q-toolbar>
-      <p class="text-justify text-subtitle1" style="white-space: pre-line">
+      <p class="text-justify text-body1" style="white-space: pre-line">
         {{ artistData.education }}
       </p>
     </small-page-container>
@@ -73,7 +73,7 @@
       <q-toolbar>
         <q-toolbar-title class="text-h5">Exhibitions</q-toolbar-title>
       </q-toolbar>
-      <p class="text-justify text-subtitle1" style="white-space: pre-line">
+      <p class="text-justify text-body1" style="white-space: pre-line">
         {{ artistData.exhibitions }}
       </p>
     </small-page-container>
@@ -82,7 +82,7 @@
       <q-toolbar class="text-primary">
         <q-toolbar-title class="text-h5"> Press </q-toolbar-title>
       </q-toolbar>
-      <p class="text-justify text-subtitle1" style="white-space: pre-line">
+      <p class="text-justify text-body1" style="white-space: pre-line">
         {{ artistData.press }}
       </p>
     </small-page-container>

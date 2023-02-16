@@ -4,7 +4,8 @@
       <q-toolbar-title>
         <router-link :to="{ name: 'Home' }" style="text-decoration: none">
           <q-img
-            style="max-width: 100px; height: 50px"
+            class="q-ml-md"
+            style="max-width: 100px; height: 80px"
             fit="contain"
             src="~assets/roots-logo.png"
           />
@@ -12,6 +13,7 @@
       </q-toolbar-title>
       <q-tabs class="gt-xs">
         <q-route-tab
+          class="text-body1"
           v-for="link in essentialLinks"
           :key="link"
           :name="link"

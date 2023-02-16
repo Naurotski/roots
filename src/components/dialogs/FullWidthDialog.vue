@@ -6,7 +6,7 @@
     <q-dialog v-model="activator" full-width>
       <q-card>
         <q-toolbar class="q-pl-xl q-pt-md">
-          <q-toolbar-title class="text-h5">
+          <q-toolbar-title class="text-h4">
             {{ artistName }}
           </q-toolbar-title>
           <q-btn flat round icon="close" v-close-popup />
@@ -19,17 +19,17 @@
           </div>
           <div class="col-12 col-sm-4 q-pt-sm-md">
             <q-card-section class="q-pt-none">
-              <div class="text-h6" v-text="work.name" />
+              <div class="text-h5" v-text="work.name" />
             </q-card-section>
             <q-card-section>
               <p
                 style="white-space: pre-line"
-                class="text-justify text-subtitle2"
+                class="text-justify text-body1"
                 v-text="work.materials"
               />
               <p
                 style="white-space: pre-line"
-                class="text-justify text-subtitle2"
+                class="text-justify text-body1"
                 v-text="work.description"
               />
             </q-card-section>

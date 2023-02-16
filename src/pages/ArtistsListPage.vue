@@ -10,7 +10,7 @@
         <router-link :to="`/artists/${artistId}`">
           <!--удалить размер при правильной фотографии-->
           <q-img :src="urlPortrait" style="height: 400px; max-width: 400px">
-            <div class="absolute-bottom text-subtitle1 text-center">
+            <div class="absolute-bottom text-body1 text-center">
               {{ name }}
             </div></q-img
           >

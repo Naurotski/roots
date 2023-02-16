@@ -9,7 +9,7 @@
     </q-card>
   </div>
   <div class="col-12 col-sm-8 relative-position" v-bind="$attrs">
-    <p class="text-justify text-subtitle1" style="white-space: pre-line">
+    <p class="text-justify text-body1" style="white-space: pre-line">
       {{ dataCard.description }}
     </p>
     <slot name="button" />
