@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-md">
-    <template v-for="exhibition in filterExhibitionsDraft" :key="exhibition.id">
+    <template v-for="(exhibition, index) in filterExhibitionsDraft" :key="exhibition.id">
       <small-page-container class="q-pb-md">
         <shared-card
           :data-card="{
@@ -33,7 +33,7 @@
           </template>
         </shared-card>
       </small-page-container>
-      <q-separator />
+      <q-separator v-if="index > filterExhibitionsDraft.length - 1" />
     </template>
   </q-page>
 </template>

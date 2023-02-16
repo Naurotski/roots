@@ -68,7 +68,7 @@
         {{ artistData.education }}
       </p>
     </small-page-container>
-    <q-separator />
+    <q-separator v-if="artistData.exhibitions || artistData.press" />
     <small-page-container v-if="artistData.exhibitions">
       <q-toolbar>
         <q-toolbar-title class="text-h5">Exhibitions</q-toolbar-title>
@@ -77,7 +77,7 @@
         {{ artistData.exhibitions }}
       </p>
     </small-page-container>
-    <q-separator />
+    <q-separator v-if="artistData.press" />
     <small-page-container v-if="artistData.press">
       <q-toolbar class="text-primary">
         <q-toolbar-title class="text-h5"> Press </q-toolbar-title>

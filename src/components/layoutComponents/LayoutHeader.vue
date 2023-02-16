@@ -11,7 +11,7 @@
           />
         </router-link>
       </q-toolbar-title>
-      <q-tabs class="gt-xs">
+      <q-tabs stretch>
         <q-route-tab
           class="text-body1"
           v-for="link in essentialLinks"
