@@ -1,41 +1,43 @@
 <template>
-  <q-page class="q-pa-md">
-    <template v-for="(exhibition, index) in filterExhibitionsDraft" :key="exhibition.id">
-      <small-page-container class="q-pb-md">
-        <shared-card
-          :data-card="{
-            name: exhibition.name,
-            description: exhibition.description,
-            url: exhibition.urlImage,
-            caption: `${exhibition.openingDate} - ${exhibition.closingDate}, ${exhibition.city}`
-          }"
-          class="q-pb-lg"
-        >
-          <template #button>
-            <exhibitionism-work-dialog
-              label="enter"
-              class="absolute-bottom-right"
-              :title="exhibition.name"
-              :dialogData="exhibition.works"
-            />
-          </template>
-          <template #underPicture>
-            <q-card-section>
-              <div class="text-subtitle1">
-                <p
-                  style="color: #1d1d1d"
-                  v-text="
-                    `${exhibition.openingDate} - ${exhibition.closingDate}, ${exhibition.city}`
-                  "
-                />
-              </div>
-            </q-card-section>
-          </template>
-        </shared-card>
-      </small-page-container>
-      <q-separator v-if="index > filterExhibitionsDraft.length - 1" />
-    </template>
-  </q-page>
+  <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+    <q-page class="q-pa-md">
+      <template v-for="(exhibition, index) in filterExhibitionsDraft" :key="exhibition.id">
+        <small-page-container class="q-pb-md">
+          <shared-card
+            :data-card="{
+              name: exhibition.name,
+              description: exhibition.description,
+              url: exhibition.urlImage,
+              caption: `${exhibition.openingDate} - ${exhibition.closingDate}, ${exhibition.city}`
+            }"
+            class="q-pb-lg"
+          >
+            <template #button>
+              <exhibitionism-work-dialog
+                label="enter"
+                class="absolute-bottom-right"
+                :title="exhibition.name"
+                :dialogData="exhibition.works"
+              />
+            </template>
+            <template #underPicture>
+              <q-card-section>
+                <div class="text-subtitle1">
+                  <p
+                    style="color: #1d1d1d"
+                    v-text="
+                      `${exhibition.openingDate} - ${exhibition.closingDate}, ${exhibition.city}`
+                    "
+                  />
+                </div>
+              </q-card-section>
+            </template>
+          </shared-card>
+        </small-page-container>
+        <q-separator v-if="index > filterExhibitionsDraft.length - 1" />
+      </template>
+    </q-page>
+  </transition>
 </template>
 
 <script>
