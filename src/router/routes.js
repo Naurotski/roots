@@ -4,19 +4,28 @@ const routes = [
     redirect: { name: 'Home' },
     component: () => import('layouts/Layout.vue'),
     children: [
-      { path: 'home', name: 'Home', component: () => import('pages/HomePage.vue') },
+      { path: '/home', name: 'Home', component: () => import('pages/HomePage.vue') },
       { path: 'artists', name: 'Artists', component: () => import('pages/ArtistsListPage.vue') },
       {
-        path: 'artists/:artistId',
+        path: '/artists/:artistId',
         name: 'ArtistProfile',
         props: true,
         component: () => import('pages/ArtistProfilePage.vue')
       },
       { path: 'about', name: 'About', component: () => import('pages/AboutPage.vue') },
       {
-        path: 'exhibitions',
+        path: '/exhibitions',
+        redirect: '/exhibitions/current',
         name: 'Exhibitions',
-        component: () => import('pages/ExhibitionsPage.vue')
+        component: () => import('pages/AllExhibitionsPage.vue'),
+        children: [
+          {
+            path: ':timestamp',
+            name: 'FilteredDateExhibitionsPage',
+            props: true,
+            component: () => import('pages/FilteredDateExhibitionsPage.vue')
+          }
+        ]
       }
     ]
   },

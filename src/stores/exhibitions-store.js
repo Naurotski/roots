@@ -10,6 +10,12 @@ export const useExhibitionsStore = defineStore('exhibitions', () => {
   const setExhibitionsList = (exhibitionsData) => {
     exhibitionsList.value = exhibitionsData.map((item) => ({
       ...item,
+      lifeTime:
+        date.formatDate(item.openingDate, 'x') > Date.now()
+          ? 'upcoming'
+          : date.formatDate(item.closingDate, 'x') < Date.now()
+          ? 'archive'
+          : 'current',
       openingDate: date.formatDate(item.openingDate, 'DD/MM/YYYY'),
       closingDate: date.formatDate(item.closingDate, 'DD/MM/YYYY')
     }))
@@ -20,7 +26,6 @@ export const useExhibitionsStore = defineStore('exhibitions', () => {
       if (snapshot.val()) {
         const data = snapshot.val()
         setExhibitionsList(Object.values(data))
-        console.log(exhibitionsList.value)
       }
     })
   }

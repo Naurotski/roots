@@ -1,6 +1,6 @@
 <template>
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-    <q-page class="q-pa-md" style="margin-top: 60px">
+    <q-page class="q-pa-md" style="padding-top: 65px">
       <fixed-top-title :name="artistData.name" />
       <div class="q-gutter-sm row justify-around q-my-md">
         <div v-for="work in artistData.works" :key="work.urlImageWork">

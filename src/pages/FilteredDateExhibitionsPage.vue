@@ -1,7 +1,7 @@
 <template>
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-    <q-page class="q-pa-md">
-      <template v-for="(exhibition, index) in filterExhibitionsDraft" :key="exhibition.id">
+    <q-page>
+      <template v-for="(exhibition, index) in filterExhibitionsDate" :key="exhibition.id">
         <small-page-container class="q-pb-md">
           <shared-card
             :data-card="{
@@ -41,27 +41,38 @@
 </template>
 
 <script>
-import { useExhibitionsStore } from 'stores/exhibitions-store.js'
-import { storeToRefs } from 'pinia'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
 import ExhibitionismWorkDialog from 'components/dialogs/ExhibitionismWorkDialog.vue'
+import { useExhibitionsStore } from 'stores/exhibitions-store.js'
+import { storeToRefs } from 'pinia'
+import { computed, toRefs } from 'vue'
+
 export default {
-  name: 'ExhibitionsPage',
+  name: 'FilteredDateExhibitionsPage',
   components: {
     SmallPageContainer,
     SharedCard,
     ExhibitionismWorkDialog
   },
-  setup() {
+  props: {
+    timestamp: {
+      type: String,
+      require: true
+    }
+  },
+  setup(props) {
+    const { timestamp } = toRefs(props)
     const exhibitionsStore = useExhibitionsStore()
     const { filterExhibitionsDraft } = storeToRefs(exhibitionsStore)
     const { getExhibitions } = exhibitionsStore
     if (!filterExhibitionsDraft.value.length) getExhibitions()
-    const enterExhibition = () => console.log('enterExhibition')
+    const filterExhibitionsDate = computed(() =>
+      filterExhibitionsDraft.value.filter((exhibition) => exhibition.lifeTime === timestamp.value)
+    )
     return {
       filterExhibitionsDraft,
-      enterExhibition
+      filterExhibitionsDate
     }
   }
 }
