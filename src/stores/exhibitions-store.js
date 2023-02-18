@@ -13,7 +13,8 @@ export const useExhibitionsStore = defineStore('exhibitions', () => {
       lifeTime:
         date.formatDate(item.openingDate, 'x') > Date.now()
           ? 'upcoming'
-          : date.formatDate(item.closingDate, 'x') < Date.now()
+          : new Date(new Date(item.closingDate).setDate(new Date(item.closingDate).getDate() + 1)) <
+            Date.now()
           ? 'archive'
           : 'current',
       openingDate: date.formatDate(item.openingDate, 'DD/MM/YYYY'),

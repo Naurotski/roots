@@ -15,7 +15,7 @@ const routes = [
       { path: 'about', name: 'About', component: () => import('pages/AboutPage.vue') },
       {
         path: '/exhibitions',
-        redirect: '/exhibitions/current',
+        redirect: '/exhibitions/upcoming',
         name: 'Exhibitions',
         component: () => import('pages/AllExhibitionsPage.vue'),
         children: [

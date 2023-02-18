@@ -1,6 +1,6 @@
 <template>
-  <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-    <q-page>
+  <transition appear enter-active-class="animated fadeIn">
+    <q-page :key="timestamp">
       <template v-for="(exhibition, index) in filterExhibitionsDate" :key="exhibition.id">
         <small-page-container class="q-pb-md">
           <shared-card
@@ -34,7 +34,7 @@
             </template>
           </shared-card>
         </small-page-container>
-        <q-separator v-if="index > filterExhibitionsDraft.length - 1" />
+        <q-separator v-if="index < filterExhibitionsDate.length - 1" class="q-my-md" />
       </template>
     </q-page>
   </transition>
