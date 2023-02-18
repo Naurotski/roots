@@ -22,7 +22,6 @@ export const useExhibitionsStore = defineStore('exhibitions', () => {
     }))
   }
   const getExhibitions = () => {
-    console.log('getExhibitions')
     onValue(dbRef(db, 'exhibitions/'), (snapshot) => {
       if (snapshot.val()) {
         const data = snapshot.val()

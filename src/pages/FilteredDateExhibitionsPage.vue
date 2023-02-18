@@ -12,14 +12,6 @@
             }"
             class="q-pb-lg"
           >
-            <template #button>
-              <exhibitionism-work-dialog
-                label="enter"
-                class="absolute-bottom-right"
-                :title="exhibition.name"
-                :dialogData="exhibition.works"
-              />
-            </template>
             <template #underPicture>
               <q-card-section>
                 <div class="text-subtitle1">
@@ -31,6 +23,14 @@
                   />
                 </div>
               </q-card-section>
+            </template>
+            <template v-if="exhibition.lifeTime !== 'upcoming'" #button>
+              <exhibitionism-work-dialog
+                label="enter"
+                class="absolute-bottom-right"
+                :title="exhibition.name"
+                :dialogData="exhibition.works"
+              />
             </template>
           </shared-card>
         </small-page-container>
