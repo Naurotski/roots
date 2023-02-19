@@ -22,7 +22,8 @@
         />
       </q-tabs>
       <q-btn
-        class="lt-sm"
+        size="lg"
+        class="lt-sm q-mr-md"
         flat
         dense
         round

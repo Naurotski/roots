@@ -1,8 +1,16 @@
 <template>
   <q-drawer v-model="rightDrawerOpen" side="right">
     <q-list>
-      <q-item-label class="text-right q-mr-sm q-mt-sm">
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleRightDrawer" />
+      <q-item-label class="text-right q-mr-lg q-mt-md">
+        <q-btn
+          size="lg"
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="toggleRightDrawer"
+        />
       </q-item-label>
       <template v-for="link in essentialLinks" :key="link">
         <q-item exact clickable :to="{ name: link }">

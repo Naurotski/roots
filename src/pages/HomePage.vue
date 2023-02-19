@@ -1,7 +1,7 @@
 <template>
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-    <q-page class="flex flex-center">
-      <img alt="logo" src="~assets/3F0A9210.jpg" style="height: 80vh" />
+    <q-page>
+      <q-img alt="logo" src="~assets/3F0A9210.jpg" class="fixed" height="90vh" />
     </q-page>
   </transition>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <q-footer bordered class="bg-white text-primary">
+  <q-footer :reveal="$route.name === 'Home'" bordered class="bg-white text-primary">
     <div class="row justify-center q-mt-md">
       <a
         v-for="item in socialMedia"

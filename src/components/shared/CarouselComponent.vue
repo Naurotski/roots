@@ -9,32 +9,21 @@
     transition-next="slide-left"
     control-type="push"
     navigation-icon="radio_button_unchecked"
-    height="100%"
+    :height="$q.screen.xs ? '300px' : '500px'"
     class="bg-grey-1"
     control-color="grey"
     v-model:fullscreen="fullscreen"
   >
     <q-carousel-slide v-for="(url, index) in urlImages" :key="url" :name="index">
-      <div class="row justify-center" :class="{}">
-        <q-video
-          v-if="checkVideo"
-          :style="{ height: carouselSlideHeight + 'vh' }"
-          style="width: 100%"
-          :src="url"
-        />
-        <q-img
-          v-else
-          :src="url"
-          fit="contain"
-          style="max-width: 100%"
-          :style="{ height: carouselSlideHeight + 'vh' }"
-          alt="alt"
-        />
+      <div class="row justify-center">
+        <q-video v-if="checkVideo" class="absolute-full" :src="url" />
+        <q-img v-else :src="url" fit="contain" alt="alt" class="absolute-full" />
       </div>
     </q-carousel-slide>
     <template v-slot:control v-if="!checkVideo">
       <q-carousel-control position="bottom-right" :offset="[8, 8]">
         <q-btn
+          size="xl"
           flat
           round
           dense
@@ -49,7 +38,6 @@
 
 <script>
 import { computed, ref, toRefs, watch } from 'vue'
-import { Screen } from 'quasar'
 
 export default {
   name: 'CarouselComponent',
@@ -64,15 +52,11 @@ export default {
     const { urlImages } = toRefs(props)
     const slide = ref(0)
     const fullscreen = ref(false)
-    const carouselSlideHeight = computed(() => {
-      return fullscreen.value ? 95 : Screen.xs ? 40 : 60
-    })
     const checkVideo = computed(() => urlImages.value[slide.value].includes('video'))
     watch(slide, (value) => emit('update:slide', value), { immediate: true })
     return {
       slide,
       fullscreen,
-      carouselSlideHeight,
       checkVideo
     }
   }
