@@ -22,6 +22,22 @@
 import { useArtistsStore } from 'stores/artists-store.js'
 import { storeToRefs } from 'pinia'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
+import { useMeta } from 'quasar'
+
+const metaData = {
+  title: 'Roots',
+  titleTemplate: (title) => `${title} | Artists`,
+  meta: {
+    description: {
+      name: 'description',
+      content:
+        'Roots Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+    },
+    ogTitle: {
+      property: 'og:title'
+    }
+  }
+}
 
 export default {
   name: 'ArtistsPage',
@@ -33,7 +49,7 @@ export default {
     const { filterArtistsDraft } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
     if (!filterArtistsDraft.value.length) getArtists()
-
+    useMeta(metaData)
     return {
       filterArtistsDraft
     }

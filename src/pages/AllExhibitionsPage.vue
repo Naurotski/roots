@@ -23,6 +23,23 @@
 import { useSharedStore } from 'stores/shared-store.js'
 import { storeToRefs } from 'pinia'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
+import { useMeta } from 'quasar'
+
+const metaData = {
+  title: 'Roots',
+  titleTemplate: (title) => `${title} | Exhibitions`,
+  meta: {
+    description: {
+      name: 'description',
+      content:
+        'Roots Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+    },
+    ogTitle: {
+      property: 'og:title'
+    }
+  }
+}
+
 export default {
   name: 'AllExhibitionsPage',
   components: {
@@ -31,6 +48,7 @@ export default {
   setup() {
     const shredStore = useSharedStore()
     const { exhibitionsLinks } = storeToRefs(shredStore)
+    useMeta(metaData)
     return {
       exhibitionsLinks
     }

@@ -100,6 +100,8 @@ import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import FullWidthDialog from 'components/dialogs/FullWidthDialog.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
 
+import { useMeta } from 'quasar'
+
 export default {
   name: 'ArtistProfilePage',
   components: {
@@ -127,6 +129,21 @@ export default {
         })
       } else {
         return []
+      }
+    })
+    useMeta(() => {
+      return {
+        title: 'Roots',
+        titleTemplate: (title) => `${title} | ${artistData.value.name}`,
+        meta: {
+          description: {
+            name: 'description',
+            content: artistData.value.description?.split('.')[0]
+          },
+          ogTitle: {
+            property: 'og:title'
+          }
+        }
       }
     })
     return {

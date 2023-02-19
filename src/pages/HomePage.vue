@@ -8,7 +8,25 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { useMeta } from 'quasar'
+
+const metaData = {
+  title: 'Roots Gallery',
+  meta: {
+    description: {
+      name: 'description',
+      content:
+        'Roots Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+    },
+    ogTitle: {
+      property: 'og:title'
+    }
+  }
+}
 export default defineComponent({
-  name: 'HomePage'
+  name: 'HomePage',
+  setup() {
+    useMeta(metaData)
+  }
 })
 </script>

@@ -22,8 +22,17 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { useMeta } from 'quasar'
+
+const metaData = {
+  title: 'Roots',
+  titleTemplate: (title) => `${title} | Error`
+}
 
 export default defineComponent({
-  name: 'ErrorNotFound'
+  name: 'ErrorNotFound',
+  setup() {
+    useMeta(metaData)
+  }
 })
 </script>
