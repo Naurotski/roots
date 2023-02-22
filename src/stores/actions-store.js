@@ -10,7 +10,6 @@ export const useActionStore = defineStore('Action', () => {
   const filterExhibitionsDraft = computed(() => exhibitionsList.value.filter((item) => !item.draft))
   const filterEventsDraft = computed(() => eventList.value.filter((item) => !item.draft))
   const setActionsList = ({ actionsData, typeAction }) => {
-    console.log(actionsData)
     const localList = actionsData
       .sort((a, b) => {
         if (new Date(a.openingDate) > new Date(b.openingDate)) return 1
@@ -30,7 +29,6 @@ export const useActionStore = defineStore('Action', () => {
         openingDate: date.formatDate(item.openingDate, 'DD/MM/YYYY'),
         closingDate: date.formatDate(item.closingDate, 'DD/MM/YYYY')
       }))
-    console.log(localList)
     if (typeAction === 'exhibitions') {
       exhibitionsList.value = localList
     } else {
