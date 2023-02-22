@@ -4,7 +4,7 @@
       <fixed-top-title :name="artistData.name" />
       <div class="q-gutter-sm row justify-around q-my-md">
         <div v-for="work in artistData.works" :key="work.urlImageWork">
-          <full-width-dialog :work="work" :artistName="artistData.name">
+          <artist-work-dialog :work="work" :artistName="artistData.name">
             <template #button="{ onUseActivator }">
               <div style="position: relative" v-if="work.urlImageWork.includes('video')">
                 <q-video style="height: 25vh" :src="work.urlImageWork" @click="onUseActivator" />
@@ -24,7 +24,7 @@
                 @click="onUseActivator"
               />
             </template>
-          </full-width-dialog>
+          </artist-work-dialog>
         </div>
       </div>
       <q-separator />
@@ -97,7 +97,7 @@ import { useArtistsStore } from 'stores/artists-store.js'
 import { storeToRefs } from 'pinia'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
-import FullWidthDialog from 'components/dialogs/FullWidthDialog.vue'
+import ArtistWorkDialog from 'components/dialogs/ArtidstWorkDialog.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
 
 import { useMeta } from 'quasar'
@@ -107,7 +107,7 @@ export default {
   components: {
     FixedTopTitle,
     SmallPageContainer,
-    FullWidthDialog,
+    ArtistWorkDialog,
     SharedCard
   },
   props: {

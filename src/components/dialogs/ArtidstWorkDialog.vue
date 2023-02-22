@@ -46,7 +46,7 @@
 import { computed, ref, toRefs } from 'vue'
 import CarouselComponent from 'components/shared/CarouselComponent.vue'
 export default {
-  name: 'FullWidthDialog',
+  name: 'ArtistWorkDialog',
   components: {
     CarouselComponent
   },

@@ -39,7 +39,7 @@
                       </q-card-section>
                     </template>
                     <template v-if="action.lifeTime !== 'upcoming'" #button>
-                      <exhibitionism-work-dialog
+                      <action-dialog
                         label="enter"
                         class="absolute-bottom-right"
                         :title="action.name"
@@ -68,7 +68,7 @@ import { toRefs, ref, watchEffect } from 'vue'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
-import ExhibitionismWorkDialog from 'components/dialogs/ExhibitionismWorkDialog.vue'
+import ActionDialog from 'components/dialogs/ActionDialog.vue'
 import NoResults from 'components/shared/NoResults.vue'
 
 export default {
@@ -77,7 +77,7 @@ export default {
     FixedTopTitle,
     SmallPageContainer,
     SharedCard,
-    ExhibitionismWorkDialog,
+    ActionDialog,
     NoResults
   },
   props: {
