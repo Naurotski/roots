@@ -12,10 +12,10 @@
           @click="toggleRightDrawer"
         />
       </q-item-label>
-      <template v-for="link in essentialLinks" :key="link">
-        <q-item exact clickable :to="{ name: link }">
+      <template v-for="{ name, path } in essentialLinks" :key="name">
+        <q-item exact clickable :to="path">
           <q-item-section class="text-body1">
-            <q-item-label>{{ link }}</q-item-label>
+            <q-item-label>{{ name }}</q-item-label>
           </q-item-section>
         </q-item>
         <q-separator inset />

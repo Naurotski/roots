@@ -4,11 +4,13 @@ import { onValue, ref as dbRef } from 'firebase/database'
 import { db } from 'boot/firebase.js'
 import { date } from 'quasar'
 
-export const useExhibitionsStore = defineStore('exhibitions', () => {
+export const useActionStore = defineStore('Action', () => {
   const exhibitionsList = ref([])
+  const eventList = ref([])
   const filterExhibitionsDraft = computed(() => exhibitionsList.value.filter((item) => !item.draft))
-  const setExhibitionsList = (exhibitionsData) => {
-    exhibitionsList.value = exhibitionsData.map((item) => ({
+  const filterEventsDraft = computed(() => eventList.value.filter((item) => !item.draft))
+  const setActionsList = ({ actionsData, typeAction }) => {
+    const localList = actionsData.map((item) => ({
       ...item,
       lifeTime:
         date.formatDate(item.openingDate, 'x') > Date.now()
@@ -20,17 +22,32 @@ export const useExhibitionsStore = defineStore('exhibitions', () => {
       openingDate: date.formatDate(item.openingDate, 'DD/MM/YYYY'),
       closingDate: date.formatDate(item.closingDate, 'DD/MM/YYYY')
     }))
+    if (typeAction === 'exhibitions') {
+      exhibitionsList.value = localList
+    } else {
+      eventList.value = localList
+    }
   }
   const getExhibitions = () => {
     onValue(dbRef(db, 'exhibitions/'), (snapshot) => {
       if (snapshot.val()) {
         const data = snapshot.val()
-        setExhibitionsList(Object.values(data))
+        setActionsList({ actionsData: Object.values(data), typeAction: 'exhibitions' })
+      }
+    })
+  }
+  const getEvents = () => {
+    onValue(dbRef(db, 'events/'), (snapshot) => {
+      if (snapshot.val()) {
+        const data = snapshot.val()
+        setActionsList({ actionsData: Object.values(data), typeAction: 'events' })
       }
     })
   }
   return {
     filterExhibitionsDraft,
-    getExhibitions
+    filterEventsDraft,
+    getExhibitions,
+    getEvents
   }
 })

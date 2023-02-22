@@ -11,14 +11,14 @@
           />
         </router-link>
       </q-toolbar-title>
-      <q-tabs stretch class="gt-xs">
+      <q-tabs narrow-indicator stretch class="gt-xs">
         <q-route-tab
           class="text-body1"
-          v-for="link in essentialLinks"
-          :key="link"
-          :name="link"
-          :label="link"
-          :to="{ name: link }"
+          v-for="{ name, path } in essentialLinks"
+          :key="name"
+          :name="name"
+          :label="name"
+          :to="path"
         />
       </q-tabs>
       <q-btn

@@ -2,11 +2,17 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useSharedStore = defineStore('shared', () => {
-  const essentialLinks = ref(['Home', 'Artists', 'Exhibitions', 'About'])
-  const exhibitionsLinks = ref(['current', 'upcoming', 'archive'])
+  const essentialLinks = ref([
+    { name: 'Home', path: '/home' },
+    { name: 'Artists', path: '/artists' },
+    { name: 'Exhibitions', path: '/actions/exhibitions' },
+    { name: 'Events', path: '/actions/events' },
+    { name: 'About', path: '/about' }
+  ])
+  const actionsLinks = ref(['current', 'upcoming', 'archive'])
   const rightDrawerOpen = ref(false)
 
   const toggleRightDrawer = () => (rightDrawerOpen.value = !rightDrawerOpen.value)
 
-  return { essentialLinks, exhibitionsLinks, rightDrawerOpen, toggleRightDrawer }
+  return { essentialLinks, actionsLinks, rightDrawerOpen, toggleRightDrawer }
 })

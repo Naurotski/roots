@@ -14,18 +14,10 @@ const routes = [
       },
       { path: 'about', name: 'About', component: () => import('pages/AboutPage.vue') },
       {
-        path: '/exhibitions',
-        redirect: '/exhibitions/upcoming',
+        path: '/actions/:typeAction',
         name: 'Exhibitions',
-        component: () => import('pages/AllExhibitionsPage.vue'),
-        children: [
-          {
-            path: ':timestamp',
-            name: 'FilteredDateExhibitionsPage',
-            props: true,
-            component: () => import('pages/FilteredDateExhibitionsPage.vue')
-          }
-        ]
+        props: true,
+        component: () => import('pages/ActionsPage.vue')
       }
     ]
   },
