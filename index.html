@@ -2,12 +2,17 @@
 <html>
   <head>
     <title><%= productName %></title>
-
     <meta charset="utf-8">
     <meta name="description" content="<%= productDescription %>">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rootsgallery.it/">
+    <meta property="og:title" content="Roots Gallery">
+    <meta property="og:description" content="Roots Gallery is a young and aspiring online gallery of contemporary art.">
+    <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/admin%2Froots-logo.png?alt=media&token=2e962fb7-614d-47d3-98c4-5b52f5ddc56e">
 
     <link rel="icon" type="image/png" sizes="128x128" href="icons/favicon-128x128.png">
     <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
