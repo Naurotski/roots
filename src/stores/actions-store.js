@@ -8,7 +8,7 @@ export const useActionStore = defineStore('Action', () => {
   const exhibitionsList = ref([])
   const eventList = ref([])
   const filterExhibitionsDraft = computed(() => exhibitionsList.value.filter((item) => !item.draft))
-  const filterEventsDraft = computed(() => eventList.value.filter((item) => !item.draft))
+  const filterEventsDraft = computed(() => eventList.value.filter((item) => item.draft))
   const setActionsList = ({ actionsData, typeAction }) => {
     const localList = actionsData
       .sort((a, b) => {

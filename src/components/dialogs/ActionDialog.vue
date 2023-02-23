@@ -21,11 +21,13 @@
             <div class="col-12 col-sm-4 q-pt-sm-md">
               <q-card-section class="q-pt-none">
                 <router-link
+                  v-if="work.phat"
                   style="text-decoration: none; color: #1d1d1d"
-                  :to="`/artists/${work.artistName.split(' ').join('')}`"
+                  :to="work.phat"
                 >
                   <div class="text-h5" v-text="work.artistName" />
                 </router-link>
+                <div v-else class="text-h5" v-text="work.artistName" />
               </q-card-section>
               <q-card-section class="q-pt-none">
                 <div class="text-h6" v-text="work.name" />
@@ -46,9 +48,10 @@
 </template>
 
 <script>
-import { computed, ref, toRefs } from 'vue'
+import { computed, ref, toRefs, watchEffect } from 'vue'
 import CarouselComponent from 'components/shared/CarouselComponent.vue'
-
+import { useArtistsStore } from 'stores/artists-store.js'
+import { storeToRefs } from 'pinia'
 export default {
   name: 'ActionDialog',
   components: {
@@ -71,6 +74,20 @@ export default {
     const { dialogData } = toRefs(props)
     const urlImages = computed(() => dialogData.value.map((item) => item.urlWork))
     const work = computed(() => dialogData.value[slide.value])
+    const artistsStore = useArtistsStore()
+    const { filterArtistsDraft } = storeToRefs(artistsStore)
+    const { getArtists } = artistsStore
+    if (!filterArtistsDraft.value.length) getArtists()
+    watchEffect(() =>
+      dialogData.value.forEach((action) => {
+        filterArtistsDraft.value.forEach((artist) => {
+          if (action.artistName === artist.name) {
+            action.phat = `/artists/${action.artistName.split(' ').join('')}`
+          }
+        })
+      })
+    )
+
     return {
       slide,
       activator,
