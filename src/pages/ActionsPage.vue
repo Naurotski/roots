@@ -43,6 +43,7 @@
                         label="enter"
                         class="absolute-bottom-right"
                         :title="action.name"
+                        :typeAction="typeAction"
                         :dialogData="action.works"
                       />
                     </template>

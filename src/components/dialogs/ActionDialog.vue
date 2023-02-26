@@ -19,7 +19,7 @@
               </q-card-section>
             </div>
             <div class="col-12 col-sm-4 q-pt-sm-md">
-              <q-card-section class="q-pt-none">
+              <q-card-section v-if="typeAction !== 'events'" class="q-pt-none">
                 <router-link
                   v-if="work.phat"
                   style="text-decoration: none; color: #1d1d1d"
@@ -59,6 +59,10 @@ export default {
   },
   props: {
     title: {
+      type: String,
+      require: true
+    },
+    typeAction: {
       type: String,
       require: true
     },
