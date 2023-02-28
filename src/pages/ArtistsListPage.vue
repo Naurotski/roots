@@ -1,7 +1,7 @@
 <template>
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <q-page class="q-pa-md" style="padding-top: 65px">
-      <fixed-top-title name="Artists" />
+      <fixed-top-title :name="$t('links.artists')" />
       <div class="q-gutter-md row wrap justify-around q-my-md">
         <q-card v-for="{ artistId, name, urlPortrait } in filterArtistsDraft" :key="artistId">
           <router-link :to="`/artists/${artistId}`">

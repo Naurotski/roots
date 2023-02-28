@@ -1,7 +1,19 @@
-// This is just an example,
-// so you can safely delete all default props below
-
 export default {
-  failed: 'Action failed',
-  success: 'Action was successful'
+  common: {
+    enter: 'enter'
+  },
+  links: {
+    home: 'Home',
+    about: 'About',
+    artists: 'Artists',
+    events: 'Events',
+    exhibitions: 'Exhibitions',
+    current: 'Current',
+    upcoming: 'Upcoming',
+    archive: 'Archive'
+  },
+  artist: {
+    education: 'Education',
+    press: 'Press'
+  }
 }

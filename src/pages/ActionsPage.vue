@@ -1,20 +1,21 @@
 <template>
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <q-page class="q-pa-md" style="padding-top: 100px">
-      <fixed-top-title :name="typeAction[0].toUpperCase() + typeAction.slice(1)"
+      <fixed-top-title :name="$t(`links.${typeAction}`)"
         ><div class="row justify-md-start">
           <q-tabs v-model="tab" dense narrow-indicator>
             <q-tab
+              style="width: 100px"
               class="text-body1"
-              v-for="link in actionsLinks"
-              :key="link"
-              :name="link"
-              :label="link"
+              v-for="{ label, name } in actionsLinks"
+              :key="name"
+              :name="name"
+              :label="$t(label)"
             />
           </q-tabs></div
       ></fixed-top-title>
       <q-tab-panels v-model="tab">
-        <q-tab-panel v-for="link in actionsLinks" :key="link" :name="link">
+        <q-tab-panel v-for="{ name } in actionsLinks" :key="name" :name="name">
           <template v-if="filteredActions.length">
             <template v-for="(action, index) in filteredActions" :key="action.id">
               <transition appear enter-active-class="animated fadeIn">
@@ -40,7 +41,7 @@
                     </template>
                     <template v-if="action.lifeTime !== 'upcoming'" #button>
                       <action-dialog
-                        label="enter"
+                        :label="$t('common.enter')"
                         class="absolute-bottom-right"
                         :title="action.name"
                         :typeAction="typeAction"

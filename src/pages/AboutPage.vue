@@ -1,7 +1,7 @@
 <template>
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <q-page class="q-pa-md" style="padding-top: 65px">
-      <fixed-top-title name="About" />
+      <fixed-top-title :name="$t('links.about')" />
       <small-page-container class="q-pt-md">
         <div class="col-12 col-sm-4 row">
           <q-card square flat style="z-index: 1" class="q-pr-sm-xl">

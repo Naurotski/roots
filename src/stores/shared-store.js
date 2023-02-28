@@ -3,13 +3,17 @@ import { ref } from 'vue'
 
 export const useSharedStore = defineStore('shared', () => {
   const essentialLinks = ref([
-    { name: 'Home', path: '/home' },
-    { name: 'Artists', path: '/artists' },
-    { name: 'Exhibitions', path: '/actions/exhibitions' },
-    { name: 'Events', path: '/actions/events' },
-    { name: 'About', path: '/about' }
+    { name: 'links.home', path: '/home' },
+    { name: 'links.artists', path: '/artists' },
+    { name: 'links.exhibitions', path: '/actions/exhibitions' },
+    { name: 'links.events', path: '/actions/events' },
+    { name: 'links.about', path: '/about' }
   ])
-  const actionsLinks = ref(['current', 'upcoming', 'archive'])
+  const actionsLinks = ref([
+    { label: 'links.current', name: 'current' },
+    { label: 'links.upcoming', name: 'upcoming' },
+    { label: 'links.archive', name: 'archive' }
+  ])
   const rightDrawerOpen = ref(false)
 
   const toggleRightDrawer = () => (rightDrawerOpen.value = !rightDrawerOpen.value)

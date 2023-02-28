@@ -31,7 +31,7 @@
       <small-page-container>
         <shared-card
           :data-card="{
-            name: 'About',
+            name: $t('links.about'),
             url: artistData.urlPortrait,
             description: artistData.description
           }"
@@ -63,7 +63,7 @@
       <q-separator />
       <small-page-container v-if="artistData.education">
         <q-toolbar>
-          <q-toolbar-title class="text-h5">Education</q-toolbar-title>
+          <q-toolbar-title class="text-h5">{{ $t('artist.education') }}</q-toolbar-title>
         </q-toolbar>
         <p class="text-justify text-body1" style="white-space: pre-line">
           {{ artistData.education }}
@@ -72,7 +72,7 @@
       <q-separator v-if="artistData.exhibitions || artistData.press" />
       <small-page-container v-if="artistData.exhibitions">
         <q-toolbar>
-          <q-toolbar-title class="text-h5">Exhibitions</q-toolbar-title>
+          <q-toolbar-title class="text-h5">{{ $t('links.exhibitions') }}</q-toolbar-title>
         </q-toolbar>
         <p class="text-justify text-body1" style="white-space: pre-line">
           {{ artistData.exhibitions }}
@@ -81,7 +81,7 @@
       <q-separator v-if="artistData.press" />
       <small-page-container v-if="artistData.press">
         <q-toolbar class="text-primary">
-          <q-toolbar-title class="text-h5"> Press </q-toolbar-title>
+          <q-toolbar-title class="text-h5">{{ $t('artist.press') }}</q-toolbar-title>
         </q-toolbar>
         <p class="text-justify text-body1" style="white-space: pre-line">
           {{ artistData.press }}

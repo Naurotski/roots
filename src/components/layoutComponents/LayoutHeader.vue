@@ -13,14 +13,15 @@
       </q-toolbar-title>
       <q-tabs narrow-indicator stretch class="gt-xs">
         <q-route-tab
+          style="width: 100px"
           class="text-body1"
           v-for="{ name, path } in essentialLinks"
           :key="name"
-          :name="name"
-          :label="name"
+          :label="$t(name)"
           :to="path"
         />
       </q-tabs>
+      <language-switcher style="width: 80px" />
       <q-btn
         size="lg"
         class="lt-sm q-mr-md"
@@ -38,9 +39,13 @@
 <script>
 import { useSharedStore } from 'stores/shared-store.js'
 import { storeToRefs } from 'pinia'
+import LanguageSwitcher from 'components/LanguageSwitcher.vue'
 
 export default {
   name: 'LayoutHeader',
+  components: {
+    LanguageSwitcher
+  },
   setup() {
     const sharedStore = useSharedStore()
     const { essentialLinks } = storeToRefs(sharedStore)
