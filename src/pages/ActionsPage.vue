@@ -17,7 +17,7 @@
       <q-tab-panels v-model="tab">
         <q-tab-panel v-for="{ name } in actionsLinks" :key="name" :name="name">
           <template v-if="filteredActions.length">
-            <template v-for="(action, index) in filteredActions" :key="action.id">
+            <template v-for="(action, index) in filteredActionsI18n" :key="action.id">
               <transition appear enter-active-class="animated fadeIn">
                 <small-page-container class="q-pb-md">
                   <shared-card
@@ -66,7 +66,8 @@ import { useSharedStore } from 'stores/shared-store.js'
 import { useActionStore } from 'stores/actions-store.js'
 import { storeToRefs } from 'pinia'
 import { useMeta } from 'quasar'
-import { toRefs, ref, watchEffect } from 'vue'
+import { toRefs, ref, watchEffect, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
@@ -90,6 +91,7 @@ export default {
   },
 
   setup(props) {
+    const { locale } = useI18n({ useScope: 'global' })
     const { typeAction } = toRefs(props)
     const tab = ref('upcoming')
     const shredStore = useSharedStore()
@@ -109,6 +111,23 @@ export default {
         filteredActions.value = filterEventsDraft.value.filter(
           (event) => event.lifeTime === tab.value
         )
+      }
+    })
+    const filteredActionsI18n = computed(() => {
+      if (locale.value === 'it') {
+        return filteredActions.value.map((action) => ({
+          ...action,
+          city: action.cityIt,
+          description: action.descriptionIt,
+          name: action.nameIt,
+          works: action.works.map((item) => ({
+            ...item,
+            description: item.descriptionIt,
+            name: item.nameIt
+          }))
+        }))
+      } else {
+        return filteredActions.value
       }
     })
 
@@ -131,7 +150,8 @@ export default {
     return {
       tab,
       actionsLinks,
-      filteredActions
+      filteredActions,
+      filteredActionsI18n
     }
   }
 }

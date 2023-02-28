@@ -95,12 +95,12 @@
 import { toRefs, computed } from 'vue'
 import { useArtistsStore } from 'stores/artists-store.js'
 import { storeToRefs } from 'pinia'
+import { useMeta } from 'quasar'
+import { useI18n } from 'vue-i18n'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import ArtistWorkDialog from 'components/dialogs/ArtidstWorkDialog.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
-
-import { useMeta } from 'quasar'
 
 export default {
   name: 'ArtistProfilePage',
@@ -117,6 +117,7 @@ export default {
     }
   },
   setup(props) {
+    const { locale } = useI18n({ useScope: 'global' })
     const { artistId } = toRefs(props)
     const artistsStore = useArtistsStore()
     const { filterArtistsDraft } = storeToRefs(artistsStore)
@@ -124,9 +125,24 @@ export default {
     if (!filterArtistsDraft.value.length) getArtists()
     const artistData = computed(() => {
       if (filterArtistsDraft.value.length) {
-        return filterArtistsDraft.value.find((item) => {
-          return item.artistId === artistId.value
-        })
+        let localData = filterArtistsDraft.value.find((item) => item.artistId === artistId.value)
+        if (locale.value === 'it') {
+          return {
+            ...localData,
+            description: localData.descriptionIt,
+            education: localData.educationIt,
+            exhibitions: localData.exhibitionsIt,
+            press: localData.pressIt,
+            works: localData.works.map((work) => ({
+              ...work,
+              description: work.descriptionIt,
+              materials: work.materialsIt,
+              name: work.nameIt
+            }))
+          }
+        } else {
+          return { ...localData }
+        }
       } else {
         return []
       }
