@@ -31,7 +31,7 @@
       <small-page-container>
         <shared-card
           :data-card="{
-            name: $t('links.about'),
+            name: $t('artist.about'),
             url: artistData.urlPortrait,
             description: artistData.description
           }"

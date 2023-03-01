@@ -14,6 +14,7 @@ export default {
   },
   artist: {
     education: 'Education',
-    press: 'Press'
+    press: 'Press',
+    about: 'About'
   }
 }

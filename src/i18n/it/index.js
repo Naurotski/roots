@@ -4,7 +4,7 @@ export default {
   },
   links: {
     home: 'Home',
-    about: 'Bio',
+    about: 'Chi siamo',
     artists: 'Artisti',
     events: 'Eventi',
     exhibitions: 'Mostre',
@@ -13,7 +13,8 @@ export default {
     archive: 'Archivio'
   },
   artist: {
-    education: 'Educazione',
-    press: 'Pressa'
+    education: 'Formazione',
+    press: 'Pressa',
+    about: 'Bio'
   }
 }
