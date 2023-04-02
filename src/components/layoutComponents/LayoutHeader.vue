@@ -15,9 +15,9 @@
         <q-route-tab
           style="width: 100px"
           class="text-body1"
-          v-for="{ name, path } in essentialLinks"
-          :key="name"
-          :label="$t(name)"
+          v-for="{ label, path } in essentialLinks"
+          :key="label"
+          :label="$t(label)"
           :to="path"
         />
       </q-tabs>

@@ -10,7 +10,13 @@ export default {
     exhibitions: 'Exhibitions',
     current: 'Current',
     upcoming: 'Upcoming',
-    archive: 'Archive'
+    archive: 'Archive',
+    sale: 'For sale',
+    painting: 'Painting',
+    graphics: 'Graphics',
+    sculpture: 'Sculpture',
+    photography: 'Photography',
+    installation: 'Installation'
   },
   artist: {
     education: 'Education',

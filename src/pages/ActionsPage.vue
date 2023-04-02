@@ -66,8 +66,9 @@ import { useSharedStore } from 'stores/shared-store.js'
 import { useActionStore } from 'stores/actions-store.js'
 import { storeToRefs } from 'pinia'
 import { useMeta } from 'quasar'
-import { toRefs, ref, watchEffect, computed } from 'vue'
+import { toRefs, ref, watchEffect, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useQuasar } from 'quasar'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
@@ -91,9 +92,13 @@ export default {
   },
 
   setup(props) {
+    const $q = useQuasar()
     const { locale } = useI18n({ useScope: 'global' })
     const { typeAction } = toRefs(props)
-    const tab = ref('upcoming')
+    const tab = ref($q.localStorage.getItem('tab-actions') || 'archive')
+    watch(tab, () => {
+      $q.localStorage.set('tab-actions', tab.value)
+    })
     const shredStore = useSharedStore()
     const { actionsLinks } = storeToRefs(shredStore)
     const actionsStore = useActionStore()

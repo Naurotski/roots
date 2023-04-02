@@ -4,27 +4,23 @@
       <fixed-top-title :name="artistData.name" />
       <div class="q-gutter-sm row justify-around q-my-md">
         <div v-for="work in artistData.works" :key="work.urlImageWork">
-          <artist-work-dialog :work="work" :artistName="artistData.name">
-            <template #button="{ onUseActivator }">
-              <div style="position: relative" v-if="work.urlImageWork.includes('video')">
-                <q-video style="height: 25vh" :src="work.urlImageWork" @click="onUseActivator" />
-                <div
-                  style="position: absolute; top: 5px; height: 100%; width: 100%; opacity: 0.1"
-                  @click="onUseActivator"
-                  class="bg-grey-2 cursor-pointer"
-                ></div>
-              </div>
-
-              <img
-                v-else
-                class="cursor-pointer"
-                :src="work.urlImageWork"
-                style="height: 25vh"
-                :alt="artistData.name"
-                @click="onUseActivator"
-              />
-            </template>
-          </artist-work-dialog>
+          <router-link v-if="work.urlImageWork.includes('video')" :to="`/work/${work.id}`">
+            <div style="position: relative">
+              <q-video style="height: 25vh" :src="work.urlImageWork" />
+              <div
+                style="position: absolute; top: 5px; height: 100%; width: 100%; opacity: 0.1"
+                class="bg-grey-2 cursor-pointer"
+              ></div>
+            </div>
+          </router-link>
+          <router-link v-else :to="`/work/${work.id}`">
+            <img
+              class="cursor-pointer"
+              :src="work.urlImageWork"
+              style="height: 25vh; width: 100%"
+              :alt="artistData.name"
+            />
+          </router-link>
         </div>
       </div>
       <q-separator />
@@ -99,7 +95,6 @@ import { useMeta } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
-import ArtistWorkDialog from 'components/dialogs/ArtidstWorkDialog.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
 
 export default {
@@ -107,7 +102,6 @@ export default {
   components: {
     FixedTopTitle,
     SmallPageContainer,
-    ArtistWorkDialog,
     SharedCard
   },
   props: {

@@ -18,6 +18,13 @@ const routes = [
         name: 'Exhibitions',
         props: true,
         component: () => import('pages/ActionsPage.vue')
+      },
+      { path: 'sale', name: 'Sale', component: () => import('pages/SalePage.vue') },
+      {
+        path: 'work/:workId',
+        props: true,
+        name: 'Work',
+        component: () => import('pages/WorkPage.vue')
       }
     ]
   },

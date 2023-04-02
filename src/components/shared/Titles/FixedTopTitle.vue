@@ -8,7 +8,9 @@
           name !== 'Exhibitions' && name !== 'Events' && name !== 'Mostre' && name !== 'Eventi'
       }"
     >
-      {{ name }}
+      <slot name="link">
+        {{ name }}
+      </slot>
     </div>
     <slot />
     <q-separator />
