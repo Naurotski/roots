@@ -1,9 +1,26 @@
 <template>
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <q-page class="q-pa-md" style="padding-top: 100px">
-      <fixed-top-title :name="$t(`links.sale`)"
-        ><div class="row justify-md-start">
-          <q-tabs v-model="tab" dense narrow-indicator>
+      <fixed-top-title :name="$t(`links.sale`)">
+        <template #button>
+          <q-btn class="lt-sm q-mr-md" flat dense icon="menu" aria-label="Menu">
+            <q-menu auto-close>
+              <q-list style="min-width: 100px">
+                <q-item
+                  clickable
+                  v-for="{ label, name } in saleLinks"
+                  @click="tab = name"
+                  :key="name"
+                >
+                  <q-item-section>{{ $t(label) }}</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+        </template>
+        <span class="q-ml-lg lt-sm text-h5">{{ $t(`links.${tab}`) }}</span>
+        <div class="row justify-md-start">
+          <q-tabs v-model="tab" dense narrow-indicator class="gt-xs">
             <q-tab
               style="width: 100px"
               class="text-body1"
@@ -12,8 +29,9 @@
               :name="name"
               :label="$t(label)"
             />
-          </q-tabs></div
-      ></fixed-top-title>
+          </q-tabs>
+        </div>
+      </fixed-top-title>
       <q-tab-panels v-model="tab">
         <q-tab-panel v-for="{ name } in saleLinks" :key="name" :name="name">
           <transition appear enter-active-class="animated fadeIn">
@@ -72,6 +90,7 @@ export default {
     const $q = useQuasar()
     const sharedStore = useSharedStore()
     const { saleLinks } = storeToRefs(sharedStore)
+    const { toggleLeftDrawer } = sharedStore
     const artistsStore = useArtistsStore()
     const { filterArtistsDraft, allWorks } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
@@ -87,7 +106,8 @@ export default {
       saleLinks,
       tab,
       filterWorksRubrics,
-      allWorks
+      allWorks,
+      toggleLeftDrawer
     }
   }
 }

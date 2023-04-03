@@ -5,9 +5,15 @@
       class="text-h4 q-ml-md"
       :class="{
         'q-mb-sm':
-          name !== 'Exhibitions' && name !== 'Events' && name !== 'Mostre' && name !== 'Eventi'
+          name !== 'Exhibitions' &&
+          name !== 'Events' &&
+          name !== 'Mostre' &&
+          name !== 'Eventi' &&
+          name !== 'For sale' &&
+          name !== 'In vendita'
       }"
     >
+      <slot name="button" />
       <slot name="link">
         {{ name }}
       </slot>
