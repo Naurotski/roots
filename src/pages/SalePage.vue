@@ -36,11 +36,22 @@
         <q-tab-panel v-for="{ name } in saleLinks" :key="name" :name="name">
           <transition appear enter-active-class="animated fadeIn">
             <small-page-container class="q-pb-md">
-              <div class="q-gutter-lg row justify-around q-my-md">
-                <div v-for="work in allWorks" :key="work.urlImageWork">
-                  <router-link v-if="work.urlImageWork.includes('video')" :to="`/work/${work.id}`">
+              <div class="q-gutter-lg row wrap justify-around q-my-md">
+                <div
+                  v-for="{ id, name, urlImageWork } in allWorks"
+                  :key="urlImageWork"
+                  style="max-width: 300px"
+                >
+                  <router-link
+                    v-if="urlImageWork.includes('video')"
+                    :to="`/work/${id}`"
+                    style="text-decoration: none; color: #1d1d1d"
+                  >
                     <div style="position: relative">
-                      <q-video style="height: 25vh" :src="work.urlImageWork" />
+                      <q-video
+                        :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
+                        :src="urlImageWork"
+                      />
                       <div
                         style="
                           position: absolute;
@@ -52,18 +63,30 @@
                         class="bg-grey-2"
                       />
                     </div>
+                    <div class="text-body1 q-mt-md">
+                      <b>{{ name }}</b>
+                      <p>Lorem ipsum dolor sit amet.</p>
+                    </div>
                   </router-link>
-                  <router-link v-else :to="`/work/${work.id}`">
-                    <img
-                      :src="work.urlImageWork"
-                      style="height: 25vh; width: 100%"
-                      :alt="work.name"
-                    />
+                  <router-link
+                    v-else
+                    :to="`/work/${id}`"
+                    style="text-decoration: none; color: #1d1d1d"
+                  >
+                    <q-img
+                      :src="urlImageWork"
+                      fit="contain"
+                      :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
+                    >
+                    </q-img>
+                    <div class="text-body1 q-mt-md">
+                      <b>{{ name }}</b>
+                      <p>11x8x7cm, machine lace and Fiber Emballage.</p>
+                      <p>€ 1000</p>
+                    </div>
                   </router-link>
                 </div>
               </div>
-              <!--              <pre>{{ $t(`links.${tab}`) }}</pre>-->
-              <!--              <pre>allWorks - {{ filterWorksRubrics }}</pre>-->
             </small-page-container>
           </transition>
         </q-tab-panel>
