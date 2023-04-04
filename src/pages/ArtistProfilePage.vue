@@ -138,7 +138,7 @@ export default {
           return { ...localData }
         }
       } else {
-        return []
+        return {}
       }
     })
     useMeta(() => {

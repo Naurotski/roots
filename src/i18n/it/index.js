@@ -1,6 +1,8 @@
 export default {
   common: {
-    enter: 'entrare'
+    enter: 'entrare',
+    buy: 'Acquista',
+    close: 'Chiudi'
   },
   links: {
     home: 'Home',
@@ -22,5 +24,18 @@ export default {
     education: 'Formazione',
     press: 'Pressa',
     about: 'Bio'
+  },
+  dialoguePayment: {
+    delivery:
+      "Puoi acquistare qualsiasi opera d'arte con consegna gratuita in tutto il mondo. Su richiesta dell'acquirente, un dipinto o un'opera d'arte in vetro colorato può essere incorniciata a un costo aggiuntivo. \nSi prega di controllare tutte le informazioni sull'imballaggio delle opere d'arte e sulla consegna prima di confermare l'acquisto. Tutte le opzioni di contatto sono disponibili nella sezione \"Contatti\". \nAlla consegna fuori dall'UE, per ogni dipinto, emettiamo documenti di accompagnamento che consentono di esportare gli oggetti d'arte. Potrebbero essere necessarie altre 2-3 settimane.",
+    redirect:
+      'Verrai reindirizzato alla pagina della piattaforma Stripe per elaborare il pagamento.',
+    firstName: 'Nome',
+    lastName: 'Cognome',
+    country: 'Paese',
+    postalCode: 'Codice Postale',
+    city: 'Città',
+    address: 'Indirizzo',
+    phone: 'Telefono'
   }
 }

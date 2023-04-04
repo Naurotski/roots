@@ -13,9 +13,9 @@ export const useArtistsStore = defineStore('artists', () => {
   const filterArtistsDraft = computed(() => artistsList.value.filter((artist) => !artist.draft))
   const allWorks = computed(() => {
     let localArray = []
-    artistsList.value.forEach((artist) => localArray.push(...artist.works))
+    filterArtistsDraft.value.forEach((artist) => localArray.push(...artist.works))
     return localArray
-  }) //заменить artistsList на filterArtistsDraft
+  })
   const getArtists = () => {
     onValue(fbRef(db, 'artists/'), (snapshot) => {
       const data = snapshot.val()

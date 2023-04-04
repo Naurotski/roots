@@ -38,7 +38,7 @@
             <small-page-container class="q-pb-md">
               <div class="q-gutter-lg row wrap justify-around q-my-md">
                 <div
-                  v-for="{ id, name, urlImageWork } in allWorks"
+                  v-for="{ id, name, materials, price, urlImageWork } in filterWorksRubrics"
                   :key="urlImageWork"
                   style="max-width: 300px"
                 >
@@ -65,7 +65,8 @@
                     </div>
                     <div class="text-body1 q-mt-md">
                       <b>{{ name }}</b>
-                      <p>Lorem ipsum dolor sit amet.</p>
+                      <p>{{ materials }}</p>
+                      <p>{{ `€ ${price}` }}</p>
                     </div>
                   </router-link>
                   <router-link
@@ -81,8 +82,8 @@
                     </q-img>
                     <div class="text-body1 q-mt-md">
                       <b>{{ name }}</b>
-                      <p>11x8x7cm, machine lace and Fiber Emballage.</p>
-                      <p>€ 1000</p>
+                      <p>{{ materials }}</p>
+                      <p>{{ `€ ${price}` }}</p>
                     </div>
                   </router-link>
                 </div>
@@ -103,6 +104,7 @@ import { useArtistsStore } from 'stores/artists-store.js'
 import { storeToRefs } from 'pinia'
 import { computed, ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
 export default {
   name: 'SalePage',
   components: {
@@ -110,6 +112,7 @@ export default {
     SmallPageContainer
   },
   setup() {
+    const { locale } = useI18n({ useScope: 'global' })
     const $q = useQuasar()
     const sharedStore = useSharedStore()
     const { saleLinks } = storeToRefs(sharedStore)
@@ -122,9 +125,23 @@ export default {
       $q.localStorage.set('tab', tab.value)
     })
     if (!filterArtistsDraft.value.length) getArtists()
-    const filterWorksRubrics = computed(() =>
-      allWorks.value.filter((work) => work.rubric === tab.value && work.price)
-    )
+    const filterWorksRubrics = computed(() => {
+      if (allWorks.value.length) {
+        let localArray = allWorks.value.filter((work) => work.rubric === tab.value && work.price)
+        if (locale.value === 'it') {
+          return localArray.map((item) => ({
+            ...item,
+            description: item.descriptionIt,
+            materials: item.materialsIt,
+            name: item.nameIt
+          }))
+        } else {
+          return localArray
+        }
+      } else {
+        return []
+      }
+    })
     return {
       saleLinks,
       tab,
