@@ -56,6 +56,7 @@ import { useArtistsStore } from 'stores/artists-store.js'
 import { storeToRefs } from 'pinia'
 import { computed, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useMeta } from 'quasar'
 export default {
   name: 'WorkPage',
   components: {
@@ -103,6 +104,21 @@ export default {
         }
       } else {
         return []
+      }
+    })
+    useMeta(() => {
+      console.log('typeAction.value')
+      return {
+        title: `Roots | ${work.value.name}`,
+        meta: {
+          description: {
+            name: 'description',
+            content: work.value.description
+          },
+          ogTitle: {
+            property: 'og:title'
+          }
+        }
       }
     })
     return {

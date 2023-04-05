@@ -103,8 +103,23 @@ import { useSharedStore } from 'stores/shared-store.js'
 import { useArtistsStore } from 'stores/artists-store.js'
 import { storeToRefs } from 'pinia'
 import { computed, ref, watch } from 'vue'
-import { useQuasar } from 'quasar'
+import { useQuasar, useMeta } from 'quasar'
 import { useI18n } from 'vue-i18n'
+
+const metaData = {
+  title: 'Roots | For sale',
+  meta: {
+    description: {
+      name: 'description',
+      content:
+        'Roots Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+    },
+    ogTitle: {
+      property: 'og:title'
+    }
+  }
+}
+
 export default {
   name: 'SalePage',
   components: {
@@ -142,6 +157,7 @@ export default {
         return []
       }
     })
+    useMeta(metaData)
     return {
       saleLinks,
       tab,

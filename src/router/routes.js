@@ -15,7 +15,7 @@ const routes = [
       { path: 'about', name: 'About', component: () => import('pages/AboutPage.vue') },
       {
         path: '/actions/:typeAction',
-        name: 'Exhibitions',
+        name: 'ActionsPage',
         props: true,
         component: () => import('pages/ActionsPage.vue')
       },

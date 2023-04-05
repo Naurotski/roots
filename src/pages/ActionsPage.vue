@@ -135,11 +135,13 @@ export default {
         return filteredActions.value
       }
     })
-
+    const ucFirst = (str) => {
+      if (!str) return str
+      return str[0].toUpperCase() + str.slice(1)
+    }
     useMeta(() => {
       return {
-        title: 'Roots',
-        titleTemplate: (title) => `${title} | ${typeAction.value}`,
+        title: `Roots | ${ucFirst(typeAction.value)}`,
         meta: {
           description: {
             name: 'description',
