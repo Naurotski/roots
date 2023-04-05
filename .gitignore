@@ -2,7 +2,7 @@
 .thumbs.db
 node_modules
 firebaseConfig.js
-
+pk_live.js
 # Quasar core related directories
 .quasar
 /dist

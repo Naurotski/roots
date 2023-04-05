@@ -137,6 +137,7 @@
 <script>
 import { isValidEmailAddress } from 'src/composables/isValidEmailAddress.js'
 import { reactive, ref, toRefs } from 'vue'
+import { useStripeStore } from 'stores/stripe-store.js'
 export default {
   name: 'PayDialog',
   props: {
@@ -147,6 +148,8 @@ export default {
   },
   setup(props) {
     const { work } = toRefs(props)
+    const stripeStore = useStripeStore()
+    const { payStripe } = stripeStore
     const activator = ref(false)
     const user = reactive({
       firstName: '',
@@ -162,7 +165,7 @@ export default {
       activator.value = !activator.value
     }
     const onSubmit = () => {
-      let ffff = {
+      payStripe({
         id: work.value.id,
         name: work.value.name,
         description: work.value.description,
@@ -178,8 +181,7 @@ export default {
           typeExercise: 'this.goods',
           titleStudiosPrice: 'this.painting.id'
         }
-      }
-      console.log(ffff)
+      })
       activator.value = !activator.value
     }
     return {

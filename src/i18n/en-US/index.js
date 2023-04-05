@@ -2,7 +2,11 @@ export default {
   common: {
     enter: 'enter',
     buy: 'buy',
-    close: 'close'
+    close: 'close',
+    oops: 'Oops. Nothing here...',
+    thank: 'Thank you for your payment!',
+    acquired: 'You have acquired a work of Nadzeya Naurotskaya',
+    delivery: 'For delivery, we will contact you by email within 24 hours.'
   },
   links: {
     home: 'Home',

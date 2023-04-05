@@ -2,9 +2,14 @@
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <div class="fullscreen bg-grey text-white text-center q-pa-md flex flex-center">
       <div>
-        <div style="font-size: 30vh">404</div>
+        <div style="font-size: 8vh">{{ $t('common.thank') }}</div>
 
-        <div class="text-h2" style="opacity: 0.4">{{ $t('common.oops') }}</div>
+        <div class="text-h4" style="opacity: 0.4">
+          {{ $t('common.acquired') }}
+        </div>
+        <div class="text-h4" style="opacity: 0.4">
+          {{ $t('common.delivery') }}
+        </div>
 
         <q-btn
           class="q-mt-xl"
@@ -21,18 +26,19 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
 import { useMeta } from 'quasar'
 
 const metaData = {
   title: 'Roots',
-  titleTemplate: (title) => `${title} | Error`
+  titleTemplate: (title) => `${title} | Thank You`
 }
 
-export default defineComponent({
-  name: 'ErrorNotFound',
+export default {
+  name: 'ThankYouPage',
   setup() {
     useMeta(metaData)
   }
-})
+}
 </script>
+
+<style scoped></style>

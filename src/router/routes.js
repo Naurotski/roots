@@ -28,7 +28,11 @@ const routes = [
       }
     ]
   },
-
+  {
+    path: '/thankYou',
+    name: 'ThankYou',
+    component: () => import('pages/ThankYouPage.vue')
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

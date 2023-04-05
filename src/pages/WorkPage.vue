@@ -107,7 +107,6 @@ export default {
       }
     })
     useMeta(() => {
-      console.log('typeAction.value')
       return {
         title: `Roots | ${work.value.name}`,
         meta: {

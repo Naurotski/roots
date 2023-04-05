@@ -2,7 +2,11 @@ export default {
   common: {
     enter: 'entrare',
     buy: 'Acquista',
-    close: 'Chiudi'
+    close: 'Chiudi',
+    oops: "Ops. Qui non c'è niente...",
+    thank: 'Grazie per il tuo pagamento!',
+    acquired: "Hai acquisito un'opera di Nadzeya Naurotskaya",
+    delivery: 'Per la consegna, ti contatteremo via e-mail entro 24 ore'
   },
   links: {
     home: 'Home',

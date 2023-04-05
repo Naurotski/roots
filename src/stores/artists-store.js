@@ -8,7 +8,6 @@ export const useArtistsStore = defineStore('artists', () => {
   const setArtistList = (artists) => {
     artists.forEach((artist) => artist.works.forEach((work) => (work.artistName = artist.name)))
     artistsList.value = artists
-    console.log(artistsList.value)
   }
   const filterArtistsDraft = computed(() => artistsList.value.filter((artist) => !artist.draft))
   const allWorks = computed(() => {
