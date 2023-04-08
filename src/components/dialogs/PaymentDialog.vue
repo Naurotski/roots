@@ -178,8 +178,8 @@ export default {
         metadata: {
           name: work.value.name,
           studioId: work.value.id,
-          typeExercise: 'this.goods',
-          titleStudiosPrice: 'this.painting.id'
+          typeExercise: 'work',
+          titleStudiosPrice: work.value.id
         }
       })
       activator.value = !activator.value

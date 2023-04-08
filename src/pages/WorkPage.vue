@@ -108,11 +108,11 @@ export default {
     })
     useMeta(() => {
       return {
-        title: `Roots | ${work.value.name}`,
+        title: `Roots | ${work.value?.name}`,
         meta: {
           description: {
             name: 'description',
-            content: work.value.description
+            content: work.value?.description
           },
           ogTitle: {
             property: 'og:title'
