@@ -5,7 +5,7 @@ export default {
     close: 'close',
     oops: 'Oops. Nothing here...',
     thank: 'Thank you for your payment!',
-    acquired: 'You have acquired a work of Nadzeya Naurotskaya',
+    acquired: 'You have acquired a work of ',
     delivery: 'For delivery, we will contact you by email within 24 hours.'
   },
   links: {

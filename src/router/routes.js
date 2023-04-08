@@ -29,8 +29,9 @@ const routes = [
     ]
   },
   {
-    path: '/thankYou',
+    path: '/thankYou/:workId',
     name: 'ThankYou',
+    props: true,
     component: () => import('pages/ThankYouPage.vue')
   },
   // Always leave this as last one,

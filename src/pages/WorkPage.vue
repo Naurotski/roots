@@ -42,6 +42,7 @@
           </q-card-section>
         </div>
         <q-btn flat size="xl" icon="mdi-arrow-left-bold" @click="$router.go(-1)" />
+        <!--        <router-link :to="`/thankYou/${workId}`">Work</router-link>-->
       </small-page-container>
     </q-page>
   </transition>
