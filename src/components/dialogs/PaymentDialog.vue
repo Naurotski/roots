@@ -179,7 +179,8 @@ export default {
           name: work.value.name,
           studioId: work.value.id,
           typeExercise: 'work',
-          titleStudiosPrice: work.value.id
+          titleStudiosPrice: work.value.artistId,
+          workIndex: work.value.index
         }
       })
       activator.value = !activator.value
