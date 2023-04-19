@@ -12,7 +12,9 @@
         <div class="text-body1">{{ `€ ${work.price}` }}</div>
       </q-card-section>
       <q-card-section class="text-body1">
-        <div class="text-body1">{{ $t('dialoguePayment.delivery') }}</div>
+        <div style="white-space: pre-line" class="text-body1">
+          {{ $t('dialoguePayment.delivery') }}
+        </div>
       </q-card-section>
 
       <q-form ref="paymentForm" @submit.prevent="onSubmit" class="row justify-center">

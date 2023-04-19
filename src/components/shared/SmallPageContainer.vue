@@ -1,6 +1,6 @@
 <template>
   <div class="row justify-center">
-    <div class="row" style="width: 100%; max-width: 1400px">
+    <div class="row" style="width: 100%; max-width: 1400px" v-bind="$attrs">
       <slot />
     </div>
   </div>
@@ -8,7 +8,8 @@
 
 <script>
 export default {
-  name: 'SmallPageContainer'
+  name: 'SmallPageContainer',
+  inheritAttrs: false
 }
 </script>
 

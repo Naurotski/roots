@@ -6,7 +6,8 @@ export default {
     oops: "Ops. Qui non c'è niente...",
     thank: 'Grazie per il tuo pagamento!',
     acquired: "Hai acquisito un'opera di ",
-    delivery: 'Per la consegna, ti contatteremo via e-mail entro 24 ore'
+    delivery: 'Per la consegna, ti contatteremo via e-mail entro 24 ore',
+    unfortunately: 'Spiacenti, al momento non ci sono eventi in corso.'
   },
   links: {
     home: 'Home',
@@ -22,7 +23,8 @@ export default {
     graphics: 'Grafica',
     sculpture: 'Scultura',
     photography: 'Fotografia',
-    installation: 'Installazione'
+    installation: 'Installazione',
+    books: 'Libri'
   },
   artist: {
     education: 'Formazione',
@@ -31,7 +33,7 @@ export default {
   },
   dialoguePayment: {
     delivery:
-      "Puoi acquistare qualsiasi opera d'arte con consegna gratuita in tutto il mondo. Su richiesta dell'acquirente, un dipinto o un'opera d'arte in vetro colorato può essere incorniciata a un costo aggiuntivo. \nSi prega di controllare tutte le informazioni sull'imballaggio delle opere d'arte e sulla consegna prima di confermare l'acquisto. Tutte le opzioni di contatto sono disponibili nella sezione \"Contatti\". \nAlla consegna fuori dall'UE, per ogni dipinto, emettiamo documenti di accompagnamento che consentono di esportare gli oggetti d'arte. Potrebbero essere necessarie altre 2-3 settimane.",
+      "Puoi acquistare qualsiasi opera d'arte con spedizione gratuita in tutto il mondo. Si prega di controllare tutte le informazioni sull'opera e sulla spedizione prima di confermare l'acquisto. Tutte le opzioni di contatto sono disponibili nella sezione 'Contatti'. In caso di consegna al di fuori dell'UE, emettiamo documenti di accompagnamento per ogni dipinto, consentendo l'esportazione di oggetti d'arte. Questo potrebbe richiedere altre 2-3 settimane.",
     redirect:
       'Verrai reindirizzato alla pagina della piattaforma Stripe per elaborare il pagamento.',
     firstName: 'Nome',

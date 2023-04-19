@@ -17,11 +17,12 @@ export const useSharedStore = defineStore('shared', () => {
   ])
   const saleLinks = ref([
     { label: 'links.painting', name: 'painting' },
-    { label: 'links.graphics', name: 'graphics' },
+
     { label: 'links.sculpture', name: 'sculpture' },
     { label: 'links.photography', name: 'photography' },
-    { label: 'links.installation', name: 'installation' }
+    { label: 'links.books', name: 'books' }
   ])
+  //{ label: 'links.graphics', name: 'graphics' },   { label: 'links.installation', name: 'installation' }
   const rightDrawerOpen = ref(false)
 
   const toggleRightDrawer = () => (rightDrawerOpen.value = !rightDrawerOpen.value)

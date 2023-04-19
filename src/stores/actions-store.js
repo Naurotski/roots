@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { onValue, ref as dbRef } from 'firebase/database'
 import { db } from 'boot/firebase.js'
 import { date } from 'quasar'
+import { Loading } from 'quasar'
 
 export const useActionStore = defineStore('Action', () => {
   const exhibitionsList = ref([])
@@ -12,9 +13,9 @@ export const useActionStore = defineStore('Action', () => {
   const setActionsList = ({ actionsData, typeAction }) => {
     const localList = actionsData
       .sort((a, b) => {
-        if (new Date(a.openingDate) > new Date(b.openingDate)) return 1
+        if (new Date(a.openingDate) < new Date(b.openingDate)) return 1
         if (new Date(a.openingDate) === new Date(b.openingDate)) return 0
-        if (new Date(a.openingDate) < new Date(b.openingDate)) return -1
+        if (new Date(a.openingDate) > new Date(b.openingDate)) return -1
       })
       .map((item) => ({
         ...item,
@@ -36,16 +37,24 @@ export const useActionStore = defineStore('Action', () => {
     }
   }
   const getExhibitions = () => {
+    Loading.show({
+      backgroundColor: 'black'
+    })
     onValue(dbRef(db, 'exhibitions/'), (snapshot) => {
       if (snapshot.val()) {
+        Loading.hide()
         const data = snapshot.val()
         setActionsList({ actionsData: Object.values(data), typeAction: 'exhibitions' })
       }
     })
   }
   const getEvents = () => {
+    Loading.show({
+      backgroundColor: 'black'
+    })
     onValue(dbRef(db, 'events/'), (snapshot) => {
       if (snapshot.val()) {
+        Loading.hide()
         const data = snapshot.val()
         setActionsList({ actionsData: Object.values(data), typeAction: 'events' })
       }

@@ -14,7 +14,7 @@
             />
           </q-tabs></div
       ></fixed-top-title>
-      <q-tab-panels v-model="tab">
+      <q-tab-panels v-model="tab" v-if="!$q.loading.isActive">
         <q-tab-panel v-for="{ name } in actionsLinks" :key="name" :name="name">
           <template v-if="filteredActions.length">
             <template v-for="(action, index) in filteredActionsI18n" :key="action.id">
@@ -90,7 +90,6 @@ export default {
       require: true
     }
   },
-
   setup(props) {
     const $q = useQuasar()
     const { locale } = useI18n({ useScope: 'global' })

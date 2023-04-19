@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-center">
-    <h3>No Results</h3>
+  <div class="text-center">
+    <h3>{{ $t('common.unfortunately') }}</h3>
   </div>
 </template>
 

@@ -6,7 +6,8 @@ export default {
     oops: 'Oops. Nothing here...',
     thank: 'Thank you for your payment!',
     acquired: 'You have acquired a work of ',
-    delivery: 'For delivery, we will contact you by email within 24 hours.'
+    delivery: 'For delivery, we will contact you by email within 24 hours.',
+    unfortunately: 'Unfortunately, there are currently no events in progress.'
   },
   links: {
     home: 'Home',
@@ -22,7 +23,8 @@ export default {
     graphics: 'Graphics',
     sculpture: 'Sculpture',
     photography: 'Photography',
-    installation: 'Installation'
+    installation: 'Installation',
+    books: 'Books'
   },
   artist: {
     education: 'Education',
@@ -31,7 +33,7 @@ export default {
   },
   dialoguePayment: {
     delivery:
-      'You can buy any artwork with free worldwide delivery. At a buyer’s request, a painting or a stained-glass artwork can be framed for additional fee. \nPlease check all the information about the packaging of artworks and delivery before confirming a purchase. All the contact options can be found in the "Contacts" section. \nUpon delivery outside the EU, for each painting, we issue accompanying documents allowing to export the art objects. This may take additional 2-3 weeks.',
+      'You can buy any artwork with free worldwide shipping. Please check all artwork and shipping information before confirming your purchase. All contact options can be found in the "Contacts" section. When delivering outside the EU, we issue accompanying documents for each painting, allowing the export of art objects. This may take another 2-3 weeks.',
     redirect: 'To process the payment you will be redirected to the Stripe platform page',
     firstName: 'First Name',
     lastName: 'Last Name',

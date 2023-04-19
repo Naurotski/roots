@@ -35,58 +35,51 @@
       <q-tab-panels v-model="tab">
         <q-tab-panel v-for="{ name } in saleLinks" :key="name" :name="name">
           <transition appear enter-active-class="animated fadeIn">
-            <small-page-container class="q-pb-md">
-              <div class="q-gutter-lg row wrap justify-around q-my-md">
-                <div
-                  v-for="{ id, name, materials, price, urlImageWork } in filterWorksRubrics"
-                  :key="urlImageWork"
-                  style="max-width: 300px"
+            <small-page-container class="justify-around">
+              <div
+                class="q-ma-lg"
+                v-for="{ id, name, materials, price, urlImageWork } in filterWorksRubrics"
+                :key="urlImageWork"
+                style="width: 300px"
+              >
+                <router-link
+                  v-if="urlImageWork.includes('video')"
+                  :to="`/work/${id}`"
+                  style="text-decoration: none; color: #1d1d1d"
                 >
-                  <router-link
-                    v-if="urlImageWork.includes('video')"
-                    :to="`/work/${id}`"
-                    style="text-decoration: none; color: #1d1d1d"
-                  >
-                    <div style="position: relative">
-                      <q-video
-                        :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
-                        :src="urlImageWork"
-                      />
-                      <div
-                        style="
-                          position: absolute;
-                          top: 5px;
-                          height: 100%;
-                          width: 100%;
-                          opacity: 0.1;
-                        "
-                        class="bg-grey-2"
-                      />
-                    </div>
-                    <div class="text-body1 q-mt-md">
-                      <b>{{ name }}</b>
-                      <p>{{ materials }}</p>
-                      <p>{{ `€ ${price}` }}</p>
-                    </div>
-                  </router-link>
-                  <router-link
-                    v-else
-                    :to="`/work/${id}`"
-                    style="text-decoration: none; color: #1d1d1d"
-                  >
-                    <q-img
-                      :src="urlImageWork"
-                      fit="contain"
+                  <div style="position: relative">
+                    <q-video
                       :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
-                    >
-                    </q-img>
-                    <div class="text-body1 q-mt-md">
-                      <b>{{ name }}</b>
-                      <p>{{ materials }}</p>
-                      <p>{{ `€ ${price}` }}</p>
-                    </div>
-                  </router-link>
-                </div>
+                      :src="urlImageWork"
+                    />
+                    <div
+                      style="position: absolute; top: 5px; height: 100%; width: 100%; opacity: 0.1"
+                      class="bg-grey-2"
+                    />
+                  </div>
+                  <div class="text-body1 q-mt-md">
+                    <b>{{ name }}</b>
+                    <p>{{ materials }}</p>
+                    <p>{{ `€ ${price}` }}</p>
+                  </div>
+                </router-link>
+                <router-link
+                  v-else
+                  :to="`/work/${id}`"
+                  style="text-decoration: none; color: #1d1d1d"
+                >
+                  <q-img
+                    :src="urlImageWork"
+                    fit="contain"
+                    :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
+                  >
+                  </q-img>
+                  <div class="text-body1 q-mt-md">
+                    <b>{{ name }}</b>
+                    <p>{{ materials }}</p>
+                    <p>{{ `€ ${price}` }}</p>
+                  </div>
+                </router-link>
               </div>
             </small-page-container>
           </transition>
