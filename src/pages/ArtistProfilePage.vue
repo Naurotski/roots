@@ -2,27 +2,42 @@
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <q-page class="q-pa-md" style="padding-top: 65px">
       <fixed-top-title :name="artistData.name" />
-      <div class="q-gutter-sm row justify-around q-my-md">
-        <div v-for="work in artistData.works" :key="work.urlImageWork">
-          <router-link v-if="work.urlImageWork.includes('video')" :to="`/work/${work.id}`">
+      <small-page-container class="justify-around">
+        <div
+          class="q-ma-lg"
+          v-for="work in artistData.works"
+          :key="work.urlImageWork"
+          style="width: 300px"
+        >
+          <router-link
+            v-if="work.urlImageWork.includes('video')"
+            :to="`/work/${work.id}`"
+            style="text-decoration: none; color: #1d1d1d"
+          >
             <div style="position: relative">
-              <q-video style="height: 25vh" :src="work.urlImageWork" />
+              <q-video
+                :style="$q.screen.xs ? 'max-height: 300px' : 'height: 200px'"
+                :src="work.urlImageWork"
+              />
               <div
                 style="position: absolute; top: 5px; height: 100%; width: 100%; opacity: 0.1"
-                class="bg-grey-2 cursor-pointer"
+                class="bg-grey-2"
               ></div>
             </div>
           </router-link>
-          <router-link v-else :to="`/work/${work.id}`">
-            <img
-              class="cursor-pointer"
+          <router-link
+            v-else
+            :to="`/work/${work.id}`"
+            style="text-decoration: none; color: #1d1d1d"
+          >
+            <q-img
               :src="work.urlImageWork"
-              style="height: 25vh; width: 100%"
-              :alt="artistData.name"
+              :style="$q.screen.xs ? 'max-height: 300px' : 'height: 200px'"
+              fit="contain"
             />
           </router-link>
         </div>
-      </div>
+      </small-page-container>
       <q-separator />
       <small-page-container>
         <shared-card
