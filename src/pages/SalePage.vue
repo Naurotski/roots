@@ -18,6 +18,7 @@
             </q-menu>
           </q-btn>
         </template>
+        <q-separator class="lt-sm" />
         <span class="q-ml-lg lt-sm text-h5">{{ $t(`links.${tab}`) }}</span>
         <div class="row justify-md-start">
           <q-tabs v-model="tab" dense narrow-indicator class="gt-xs">
@@ -72,8 +73,7 @@
                     :src="urlImageWork"
                     fit="contain"
                     :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
-                  >
-                  </q-img>
+                  />
                   <div class="text-body1 q-mt-md">
                     <b>{{ name }}</b>
                     <p>{{ materials }}</p>
