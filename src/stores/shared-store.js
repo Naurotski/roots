@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { ref as dbRef, onValue } from 'firebase/database'
+import { db } from 'boot/firebase.js'
 
 export const useSharedStore = defineStore('shared', () => {
   const essentialLinks = ref([
@@ -24,8 +26,22 @@ export const useSharedStore = defineStore('shared', () => {
   ])
   //{ label: 'links.graphics', name: 'graphics' },   { label: 'links.installation', name: 'installation' }
   const rightDrawerOpen = ref(false)
-
   const toggleRightDrawer = () => (rightDrawerOpen.value = !rightDrawerOpen.value)
 
-  return { essentialLinks, actionsLinks, saleLinks, rightDrawerOpen, toggleRightDrawer }
+  const carouselHomePage = ref([])
+  const getCarouselHomePage = () => {
+    onValue(dbRef(db, 'carouselHomePage/'), (snapshot) => {
+      if (snapshot.val()) carouselHomePage.value = snapshot.val()
+    })
+  }
+
+  return {
+    essentialLinks,
+    actionsLinks,
+    saleLinks,
+    rightDrawerOpen,
+    carouselHomePage,
+    toggleRightDrawer,
+    getCarouselHomePage
+  }
 })

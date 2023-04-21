@@ -2,23 +2,15 @@
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <q-page class="q-pa-md" style="padding-top: 65px">
       <fixed-top-title :name="artistData.name" />
-      <small-page-container class="justify-around">
-        <div
-          class="q-ma-lg"
-          v-for="work in artistData.works"
-          :key="work.urlImageWork"
-          style="width: 300px"
-        >
+      <div class="flex justify-around q-gutter-sm">
+        <div class="q-my-lg" v-for="work in artistData.works" :key="work.urlImageWork">
           <router-link
             v-if="work.urlImageWork.includes('video')"
             :to="`/work/${work.id}`"
             style="text-decoration: none; color: #1d1d1d"
           >
             <div style="position: relative">
-              <q-video
-                :style="$q.screen.xs ? 'max-height: 300px' : 'height: 200px'"
-                :src="work.urlImageWork"
-              />
+              <q-video style="height: 25vh" :src="work.urlImageWork" />
               <div
                 style="position: absolute; top: 5px; height: 100%; width: 100%; opacity: 0.1"
                 class="bg-grey-2"
@@ -30,14 +22,15 @@
             :to="`/work/${work.id}`"
             style="text-decoration: none; color: #1d1d1d"
           >
-            <q-img
+            <img
               :src="work.urlImageWork"
-              :style="$q.screen.xs ? 'max-height: 300px' : 'height: 200px'"
-              fit="contain"
+              style="max-width: 350px"
+              :style="$q.screen.xs ? 'max-height: 300px' : 'height: 25vh'"
+              alt="image"
             />
           </router-link>
         </div>
-      </small-page-container>
+      </div>
       <q-separator />
       <small-page-container>
         <shared-card

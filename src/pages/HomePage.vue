@@ -14,12 +14,12 @@
         transition-duration="3000"
       >
         <q-carousel-slide
-          v-for="({ urlImageWork, artistName }, index) in allWorks"
+          v-for="({ urlImageWork, artistName }, index) in carouselHomePage"
           :name="index"
           :img-src="urlImageWork"
           :key="urlImageWork"
         >
-          <div class="absolute-bottom custom-caption">
+          <div :class="$q.screen.xs ? 'absolute-center' : 'absolute-bottom'" class="custom-caption">
             <div class="text-h2">{{ artistName }}</div>
           </div>
         </q-carousel-slide>
@@ -31,7 +31,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { useMeta } from 'quasar'
-import { useArtistsStore } from 'stores/artists-store.js'
+import { useSharedStore } from 'stores/shared-store.js'
 import { storeToRefs } from 'pinia'
 
 const metaData = {
@@ -50,15 +50,15 @@ const metaData = {
 export default defineComponent({
   name: 'HomePage',
   setup() {
-    const artistsStore = useArtistsStore()
-    const { filterArtistsDraft, allWorks } = storeToRefs(artistsStore)
-    const { getArtists } = artistsStore
-    if (!filterArtistsDraft.value.length) getArtists()
     const slide = ref(0)
+    const sharedStore = useSharedStore()
+    const { carouselHomePage } = storeToRefs(sharedStore)
+    const { getCarouselHomePage } = sharedStore
+    if (!carouselHomePage.value.length) getCarouselHomePage()
     useMeta(metaData)
     return {
-      allWorks,
-      slide
+      slide,
+      carouselHomePage
     }
   }
 })
