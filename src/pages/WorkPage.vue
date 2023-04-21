@@ -53,10 +53,10 @@ import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import CarouselComponent from 'components/shared/CarouselComponent.vue'
 import PaymentDialog from 'components/dialogs/PaymentDialog.vue'
+import { findWork } from 'src/composables/findWork.js'
 import { useArtistsStore } from 'stores/artists-store.js'
 import { storeToRefs } from 'pinia'
 import { computed, toRefs } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useMeta } from 'quasar'
 export default {
   name: 'WorkPage',
@@ -73,29 +73,12 @@ export default {
     }
   },
   setup(props) {
-    const { locale } = useI18n({ useScope: 'global' })
     const { workId } = toRefs(props)
     const artistsStore = useArtistsStore()
     const { filterArtistsDraft, allWorks } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
     if (!filterArtistsDraft.value.length) getArtists()
-    const work = computed(() => {
-      if (allWorks.value.length) {
-        let localData = allWorks.value.find((item) => String(item.id) === workId.value)
-        if (locale.value === 'it') {
-          return {
-            ...localData,
-            description: localData.descriptionIt,
-            materials: localData.materialsIt,
-            name: localData.nameIt
-          }
-        } else {
-          return { ...localData }
-        }
-      } else {
-        return null
-      }
-    })
+    const work = computed(() => findWork(allWorks, workId))
     const allUrlImagesWork = computed(() => {
       if (work.value) {
         if (work.value.urlSecondImagesWork) {

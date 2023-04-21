@@ -27,10 +27,10 @@
 
 <script>
 import { useMeta } from 'quasar'
-import { useI18n } from 'vue-i18n'
 import { computed, toRefs } from 'vue'
 import { useArtistsStore } from 'stores/artists-store.js'
 import { storeToRefs } from 'pinia'
+import { findWork } from 'src/composables/findWork.js'
 
 const metaData = {
   title: 'Roots',
@@ -46,29 +46,12 @@ export default {
     }
   },
   setup(props) {
-    const { locale } = useI18n({ useScope: 'global' })
     const { workId } = toRefs(props)
     const artistsStore = useArtistsStore()
     const { filterArtistsDraft, allWorks } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
     if (!filterArtistsDraft.value.length) getArtists()
-    const work = computed(() => {
-      if (allWorks.value.length) {
-        let localData = allWorks.value.find((item) => String(item.id) === workId.value)
-        if (locale.value === 'it') {
-          return {
-            ...localData,
-            description: localData.descriptionIt,
-            materials: localData.materialsIt,
-            name: localData.nameIt
-          }
-        } else {
-          return { ...localData }
-        }
-      } else {
-        return null
-      }
-    })
+    const work = computed(() => findWork(allWorks, workId))
     useMeta(metaData)
     return {
       work
