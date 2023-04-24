@@ -82,14 +82,24 @@
           {{ artistData.exhibitions }}
         </p>
       </small-page-container>
-      <q-separator v-if="artistData.press" />
-      <small-page-container v-if="artistData.press">
+      <q-separator v-if="typeof artistData.press === 'object'" />
+      <small-page-container v-if="typeof artistData.press === 'object'">
         <q-toolbar class="text-primary">
           <q-toolbar-title class="text-h5">{{ $t('artist.press') }}</q-toolbar-title>
         </q-toolbar>
-        <p class="text-justify text-body1" style="white-space: pre-line">
-          {{ artistData.press }}
-        </p>
+        <ul>
+          <li v-for="{ name, link } in artistData.press" :key="name">
+            <component
+              :is="link ? 'a' : 'span'"
+              :href="link"
+              class="text-justify text-body1"
+              style="white-space: pre-line"
+              target="_blank"
+            >
+              {{ name }}
+            </component>
+          </li>
+        </ul>
       </small-page-container>
     </q-page>
   </transition>
@@ -134,7 +144,6 @@ export default {
             description: localData.descriptionIt,
             education: localData.educationIt,
             exhibitions: localData.exhibitionsIt,
-            press: localData.pressIt,
             works: localData.works.map((work) => ({
               ...work,
               description: work.descriptionIt,
