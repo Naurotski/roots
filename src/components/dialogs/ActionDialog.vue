@@ -38,6 +38,13 @@
                   class="text-justify text-body1"
                   v-text="work.description"
                 />
+                <router-link
+                  v-if="work.idSale"
+                  :to="`/work/${work.idSale}`"
+                  class="text-h6"
+                  style="color: #1d1d1d"
+                  >For sale</router-link
+                >
               </q-card-section>
             </div>
           </div>
