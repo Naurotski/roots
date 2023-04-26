@@ -25,6 +25,12 @@ const routes = [
         props: true,
         name: 'Work',
         component: () => import('pages/WorkPage.vue')
+      },
+      {
+        path: 'press',
+        props: true,
+        name: 'Press',
+        component: () => import('pages/PressPage.vue')
       }
     ]
   },
