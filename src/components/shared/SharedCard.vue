@@ -12,6 +12,7 @@
     <p class="text-justify text-body1" style="white-space: pre-line">
       {{ dataCard.description }}
     </p>
+    <slot name="press" />
     <slot name="button" />
   </div>
 </template>
