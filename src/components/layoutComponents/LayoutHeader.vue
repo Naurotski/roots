@@ -11,7 +11,7 @@
           />
         </router-link>
       </q-toolbar-title>
-      <q-tabs narrow-indicator stretch class="gt-xs">
+      <q-tabs narrow-indicator stretch class="gt-sm">
         <q-route-tab
           style="width: 100px"
           class="text-body1"
@@ -24,7 +24,7 @@
       <language-switcher style="width: 80px" />
       <q-btn
         size="lg"
-        class="lt-sm q-mr-md"
+        class="lt-md q-mr-md"
         flat
         dense
         round
