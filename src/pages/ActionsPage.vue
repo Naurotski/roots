@@ -42,19 +42,14 @@
                     <template #press>
                       <div class="text-h5">Press</div>
                       <ul>
-                        <li v-for="{ id, name, urlWork } in action.press" :key="id">
-                          <image-dialog :url="urlWork" :name="name" />
-                          <!--                      <ul>-->
-                          <!--                        <li v-for="{ id, name, urlWork } in action" :key="id">-->
-                          <!--                          <router-link-->
-                          <!--                            :to="`/press/${id}?${urlWork}`"-->
-                          <!--                            style="color: #1d1d1d"-->
-                          <!--                            class="text-body1"-->
-                          <!--                          >-->
-                          <!--                            {{ name }}-->
-                          <!--                          </router-link>-->
-                          <!--                        </li>-->
-                          <!--                      </ul>-->
+                        <li v-for="{ id, name } in action.press" :key="id">
+                          <router-link
+                            :to="`/press/${action.id}-${id}`"
+                            style="color: #1d1d1d"
+                            class="text-body1"
+                          >
+                            {{ name }}
+                          </router-link>
                         </li>
                       </ul>
                     </template>
@@ -70,7 +65,6 @@
                   </shared-card>
                 </small-page-container>
               </transition>
-              <!--              <pre>action - {{ action }}</pre>-->
               <q-separator v-if="index < filteredActions.length - 1" class="q-my-md" />
             </template>
           </template>
@@ -94,7 +88,6 @@ import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
 import ActionDialog from 'components/dialogs/ActionDialog.vue'
 import NoResults from 'components/shared/NoResults.vue'
-import ImageDialog from 'components/dialogs/ImageDialog.vue'
 
 export default {
   name: 'ActionsPage',
@@ -103,8 +96,7 @@ export default {
     SmallPageContainer,
     SharedCard,
     ActionDialog,
-    NoResults,
-    ImageDialog
+    NoResults
   },
   props: {
     typeAction: {
