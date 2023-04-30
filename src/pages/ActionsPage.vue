@@ -40,7 +40,7 @@
                       </q-card-section>
                     </template>
                     <template #press>
-                      <div class="text-h5">Press</div>
+                      <div v-if="action.press?.length" class="text-h5">Press</div>
                       <ul>
                         <li v-for="{ id, name } in action.press" :key="id">
                           <router-link
