@@ -3,11 +3,7 @@
     <layout-header />
     <layout-drawer />
     <q-page-container>
-      <router-view v-slot="{ Component }">
-        <keep-alive :max="3">
-          <component :is="Component" />
-        </keep-alive>
-      </router-view>
+      <router-view />
     </q-page-container>
     <!--    <floating-button />-->
     <layout-footer />
