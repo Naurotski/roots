@@ -2,8 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { onValue, ref as dbRef } from 'firebase/database'
 import { db } from 'boot/firebase.js'
-import { date } from 'quasar'
-import { Loading } from 'quasar'
+import { date, Loading } from 'quasar'
 
 export const useActionStore = defineStore('Action', () => {
   const exhibitionsList = ref([])

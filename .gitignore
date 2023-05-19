@@ -3,6 +3,7 @@
 node_modules
 firebaseConfig.js
 pk_live.js
+.firebase
 # Quasar core related directories
 .quasar
 /dist
