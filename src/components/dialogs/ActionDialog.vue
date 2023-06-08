@@ -25,9 +25,9 @@
                   style="text-decoration: none; color: #1d1d1d"
                   :to="work.phat"
                 >
-                  <div class="text-h5" v-text="work.artistName" />
+                  <div class="text-h5" v-text="`${work.firstName} ${work.lastName}`" />
                 </router-link>
-                <div v-else class="text-h5" v-text="work.artistName" />
+                <div v-else class="text-h5" v-text="`${work.firstName} ${work.lastName}`" />
               </q-card-section>
               <q-card-section class="q-pt-none">
                 <div class="text-h6" v-text="work.name" />
@@ -93,7 +93,7 @@ export default {
       dialogData.value.forEach((action) => {
         filterArtistsDraft.value.forEach((artist) => {
           if (action.artistName === artist.name) {
-            action.phat = `/artists/${action.artistName.split(' ').join('')}`
+            action.phat = `/artists/${artist.artistId}`
           }
         })
       })

@@ -1,7 +1,7 @@
 <template>
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <q-page class="q-pa-md" style="padding-top: 65px">
-      <fixed-top-title :name="artistData.name" />
+      <fixed-top-title :name="`${artistData.firstName} ${artistData.lastName}`" />
       <div class="flex justify-around q-gutter-sm">
         <div class="q-my-lg" v-for="work in artistData.works" :key="work.urlImageWork">
           <router-link

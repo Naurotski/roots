@@ -6,13 +6,18 @@ import { ref as fbRef, onValue } from 'firebase/database'
 export const useArtistsStore = defineStore('artists', () => {
   const artistsList = ref([])
   const setArtistList = (artists) => {
-    artists.forEach((artist) =>
+    artists.forEach((artist) => {
+      let [firstName, lastName] = artist.name.split(' ')
+      artist.firstName = firstName.split(/(?!^)(?=\p{Lu})/u).join(' ')
+      artist.lastName = lastName.split(/(?!^)(?=\p{Lu})/u).join(' ')
       artist.works.forEach((work, index) => {
+        work.firstName = artist.firstName
+        work.lastName = artist.lastName
         work.artistName = artist.name
         work.artistId = artist.artistId
         work.index = index
       })
-    )
+    })
     artistsList.value = artists
   }
   const filterArtistsDraft = computed(() => artistsList.value.filter((artist) => !artist.draft))

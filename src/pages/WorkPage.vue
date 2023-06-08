@@ -4,10 +4,10 @@
       <fixed-top-title :name="work.artistName">
         <template #link>
           <router-link
-            :to="`/artists/${work.artistName.split(' ').join('')}`"
+            :to="`/artists/${work.artistId}`"
             style="text-decoration: none; color: #1d1d1d"
           >
-            {{ work.artistName }}
+            {{ work.firstName }} {{ work.lastName }}
           </router-link>
         </template>
       </fixed-top-title>

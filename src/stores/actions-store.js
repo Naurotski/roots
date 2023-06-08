@@ -27,7 +27,15 @@ export const useActionStore = defineStore('Action', () => {
             ? 'archive'
             : 'current',
         openingDate: date.formatDate(item.openingDate, 'DD/MM/YYYY'),
-        closingDate: date.formatDate(item.closingDate, 'DD/MM/YYYY')
+        closingDate: date.formatDate(item.closingDate, 'DD/MM/YYYY'),
+        works: item.works.map((work) => {
+          if (work.artistName) {
+            let [firstName, lastName] = work.artistName.split(' ')
+            work.firstName = firstName.split(/(?!^)(?=\p{Lu})/u).join(' ')
+            work.lastName = lastName.split(/(?!^)(?=\p{Lu})/u).join(' ')
+          }
+          return { ...work }
+        })
       }))
     if (typeAction === 'exhibitions') {
       exhibitionsList.value = localList
