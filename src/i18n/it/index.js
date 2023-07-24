@@ -7,7 +7,8 @@ export default {
     thank: 'Grazie per il tuo pagamento!',
     acquired: "Hai acquisito un'opera di ",
     delivery: 'Per la consegna, ti contatteremo via e-mail entro 24 ore',
-    unfortunately: 'Spiacenti, al momento non ci sono eventi in corso.'
+    unfortunately: 'Spiacenti, al momento non ci sono eventi in corso.',
+    address: 'Indirizzo'
   },
   links: {
     home: 'Home',

@@ -7,7 +7,8 @@ export default {
     thank: 'Thank you for your payment!',
     acquired: 'You have acquired a work of ',
     delivery: 'For delivery, we will contact you by email within 24 hours.',
-    unfortunately: 'Unfortunately, there are currently no events in progress.'
+    unfortunately: 'Unfortunately, there are currently no events in progress.',
+    address: 'Address'
   },
   links: {
     home: 'Home',

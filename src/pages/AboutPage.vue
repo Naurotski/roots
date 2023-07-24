@@ -54,8 +54,21 @@
             <br />
             Asya Zuyeva, direttore della comunicazione +393884733424
           </p>
+          <br />
+          <p class="text-justify text-body1" style="white-space: pre-line">
+            Corte San Domenico B, 56125 Pisa
+          </p>
         </div>
       </small-page-container>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2883.9473532719735!2d10.397497211949661!3d43.711643148528154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12d59157a75704df%3A0xa11c4b4e375b7021!2sRoots%20Gallery!5e0!3m2!1sru!2sit!4v1690212549316!5m2!1sru!2sit"
+        width="100%"
+        height="500"
+        style="border: 0"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
     </q-page>
   </transition>
 </template>
