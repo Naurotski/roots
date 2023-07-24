@@ -8,7 +8,8 @@ export default {
     acquired: 'You have acquired a work of ',
     delivery: 'For delivery, we will contact you by email within 24 hours.',
     unfortunately: 'Unfortunately, there are currently no events in progress.',
-    address: 'Address'
+    address: 'Address',
+    more: 'more'
   },
   links: {
     home: 'Home',

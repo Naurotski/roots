@@ -8,7 +8,8 @@ export default {
     acquired: "Hai acquisito un'opera di ",
     delivery: 'Per la consegna, ti contatteremo via e-mail entro 24 ore',
     unfortunately: 'Spiacenti, al momento non ci sono eventi in corso.',
-    address: 'Indirizzo'
+    address: 'Indirizzo',
+    more: 'più'
   },
   links: {
     home: 'Home',

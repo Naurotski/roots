@@ -2,15 +2,26 @@
   <q-toolbar>
     <q-toolbar-title class="text-h5">{{ dataCard.name }}</q-toolbar-title>
   </q-toolbar>
-  <div class="col-12 col-sm-4 row">
+  <div class="col-12 col-sm-4">
     <q-card square flat style="z-index: 1" class="q-pr-sm-xl">
-      <img :src="dataCard.url" :alt="dataCard.name" />
+      <q-img :src="dataCard.url" :alt="dataCard.name" :ratio="16 / 9" />
       <slot name="underPicture" />
     </q-card>
   </div>
   <div class="col-12 col-sm-8 relative-position" v-bind="$attrs">
     <p class="text-justify text-body1" style="white-space: pre-line">
-      {{ dataCard.description }}
+      {{ description }}
+      <span
+        style="cursor: pointer; color: #0d47a1"
+        v-if="dataCard.description.length >= 700 && !show"
+        @click="show = !show"
+        >{{ $t('common.more') }}</span
+      ><span
+        style="cursor: pointer; color: #0d47a1"
+        v-if="dataCard.description.length >= 700 && show"
+        @click="show = !show"
+        >&#8679;</span
+      >
     </p>
     <slot name="press" />
     <slot name="button" />
@@ -18,6 +29,7 @@
 </template>
 
 <script>
+import { computed, ref, toRefs } from 'vue'
 export default {
   name: 'SharedCard',
   props: {
@@ -26,7 +38,22 @@ export default {
       require: true
     }
   },
-  inheritAttrs: false
+  inheritAttrs: false,
+  setup(props) {
+    const show = ref(false)
+    const { dataCard } = toRefs(props)
+    const description = computed(() => {
+      if (dataCard.value.description.length < 700 || show.value) {
+        return dataCard.value.description
+      } else {
+        return `${dataCard.value.description.substring(0, 700)}...`
+      }
+    })
+    return {
+      show,
+      description
+    }
+  }
 }
 </script>
 
