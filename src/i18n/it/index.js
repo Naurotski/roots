@@ -9,7 +9,8 @@ export default {
     delivery: 'Per la consegna, ti contatteremo via e-mail entro 24 ore',
     unfortunately: 'Spiacenti, al momento non ci sono eventi in corso.',
     address: 'Indirizzo',
-    more: 'più'
+    more: 'più',
+    goExhibition: 'Vai Mostra'
   },
   links: {
     home: 'Home',

@@ -9,7 +9,8 @@ export default {
     delivery: 'For delivery, we will contact you by email within 24 hours.',
     unfortunately: 'Unfortunately, there are currently no events in progress.',
     address: 'Address',
-    more: 'more'
+    more: 'more',
+    goExhibition: 'Go Exhibition'
   },
   links: {
     home: 'Home',

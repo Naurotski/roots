@@ -29,9 +29,14 @@ export const useSharedStore = defineStore('shared', () => {
   const toggleRightDrawer = () => (rightDrawerOpen.value = !rightDrawerOpen.value)
 
   const carouselHomePage = ref([])
-  const getCarouselHomePage = () => {
-    onValue(dbRef(db, 'carouselHomePage/'), (snapshot) => {
-      if (snapshot.val()) carouselHomePage.value = snapshot.val()
+  const selectedExhibitionsData = ref({})
+  const getHomePageData = () => {
+    onValue(dbRef(db, 'HomePage/'), (snapshot) => {
+      if (snapshot.val()) {
+        let dataPage = snapshot.val()
+        carouselHomePage.value = dataPage.carousel
+        selectedExhibitionsData.value = dataPage.selectedExhibition
+      }
     })
   }
 
@@ -41,7 +46,8 @@ export const useSharedStore = defineStore('shared', () => {
     saleLinks,
     rightDrawerOpen,
     carouselHomePage,
+    selectedExhibitionsData,
     toggleRightDrawer,
-    getCarouselHomePage
+    getHomePageData
   }
 })

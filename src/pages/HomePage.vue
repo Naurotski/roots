@@ -23,14 +23,32 @@
             <div class="text-h2">{{ artistName }}</div>
           </div>
         </q-carousel-slide>
+        <template v-slot:control>
+          <q-carousel-control
+            :position="$q.screen.xs ? 'bottom' : 'bottom-right'"
+            :offset="[30, $q.screen.xs ? 50 : 30]"
+            class="text-white rounded-borders text-center"
+            style="background: rgba(0, 0, 0, 0.3); padding: 4px 8px"
+          >
+            <q-btn
+              size="xl"
+              text-color="white text-weight-bolder"
+              unelevated
+              :to="`actions/exhibitions?lifeTime=${lifeTimeExhibition}&id=${selectedExhibitionsData.id}`"
+              :label="$t('common.goExhibition')"
+              no-caps
+              icon-right="mdi-arrow-right-bold"
+            />
+          </q-carousel-control>
+        </template>
       </q-carousel>
     </q-page>
   </transition>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import { useMeta } from 'quasar'
+import { computed, defineComponent, ref } from 'vue'
+import { date, useMeta } from 'quasar'
 import { useSharedStore } from 'stores/shared-store.js'
 import { storeToRefs } from 'pinia'
 
@@ -52,13 +70,26 @@ export default defineComponent({
   setup() {
     const slide = ref(0)
     const sharedStore = useSharedStore()
-    const { carouselHomePage } = storeToRefs(sharedStore)
-    const { getCarouselHomePage } = sharedStore
-    if (!carouselHomePage.value.length) getCarouselHomePage()
+    const { carouselHomePage, selectedExhibitionsData } = storeToRefs(sharedStore)
+    const { getHomePageData } = sharedStore
+    if (!carouselHomePage.value.length) getHomePageData()
+    const lifeTimeExhibition = computed(() =>
+      date.formatDate(selectedExhibitionsData.value.openingDate, 'x') > Date.now()
+        ? 'upcoming'
+        : new Date(
+            new Date(selectedExhibitionsData.value.closingDate).setDate(
+              new Date(selectedExhibitionsData.value.closingDate).getDate() + 1
+            )
+          ) < Date.now()
+        ? 'archive'
+        : 'current'
+    )
     useMeta(metaData)
     return {
       slide,
-      carouselHomePage
+      carouselHomePage,
+      lifeTimeExhibition,
+      selectedExhibitionsData
     }
   }
 })

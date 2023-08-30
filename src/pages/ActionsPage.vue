@@ -17,7 +17,12 @@
       <q-tab-panels v-model="tab" v-if="!$q.loading.isActive">
         <q-tab-panel v-for="{ name } in actionsLinks" :key="name" :name="name">
           <template v-if="filteredActions.length">
-            <template v-for="(action, index) in filteredActionsI18n" :key="action.id">
+            <div
+              v-for="(action, index) in filteredActionsI18n"
+              :key="action.id"
+              ref="itemRefs"
+              :id="`d${action.id}`"
+            >
               <transition appear enter-active-class="animated fadeIn">
                 <small-page-container class="q-pb-md">
                   <shared-card
@@ -66,7 +71,7 @@
                 </small-page-container>
               </transition>
               <q-separator v-if="index < filteredActions.length - 1" class="q-my-md" />
-            </template>
+            </div>
           </template>
           <no-results v-else />
         </q-tab-panel>
@@ -79,10 +84,10 @@
 import { useSharedStore } from 'stores/shared-store.js'
 import { useActionStore } from 'stores/actions-store.js'
 import { storeToRefs } from 'pinia'
-import { useMeta } from 'quasar'
+import { useMeta, useQuasar } from 'quasar'
 import { toRefs, ref, watchEffect, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useQuasar } from 'quasar'
+import { useRoute } from 'vue-router'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
@@ -105,12 +110,27 @@ export default {
     }
   },
   setup(props) {
+    const route = useRoute()
+    const itemRefs = ref([])
+    const elem = computed(() => itemRefs.value.find((item) => item.id === `d${route.query.id}`))
     const $q = useQuasar()
     const { locale } = useI18n({ useScope: 'global' })
     const { typeAction } = toRefs(props)
-    const tab = ref($q.localStorage.getItem('tab-actions') || 'archive')
+    const tab = ref(route.query.lifeTime || $q.localStorage.getItem('tab-actions') || 'archive')
+
+    const unwatch = watchEffect(() => {
+      if (elem.value) {
+        setTimeout(() => {
+          elem.value.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          })
+        }, 500)
+      }
+    })
     watch(tab, () => {
       $q.localStorage.set('tab-actions', tab.value)
+      unwatch()
     })
     const shredStore = useSharedStore()
     const { actionsLinks } = storeToRefs(shredStore)
@@ -124,6 +144,15 @@ export default {
         filteredActions.value = filterExhibitionsDraft.value.filter(
           (exhibition) => exhibition.lifeTime === tab.value
         )
+        //дублируется с action-store,  скоректировать при переносе events  на InterventArt --------------
+        if (tab.value === 'upcoming' || tab.value === 'current') {
+          filteredActions.value.sort((a, b) => {
+            if (+new Date(a.openingDate) < +new Date(b.openingDate)) return 1
+            if (+new Date(a.openingDate) === +new Date(b.openingDate)) return 0
+            if (+new Date(a.openingDate) > +new Date(b.openingDate)) return -1
+          })
+        }
+        // ---------------------  дублируется с action-store,  скоректировать при переносе events  на InterventArt
       } else {
         if (!filterEventsDraft.value.length) getEvents()
         filteredActions.value = filterEventsDraft.value.filter(
@@ -171,7 +200,8 @@ export default {
       tab,
       actionsLinks,
       filteredActions,
-      filteredActionsI18n
+      filteredActionsI18n,
+      itemRefs
     }
   }
 }

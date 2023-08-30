@@ -33,11 +33,21 @@
                 <div class="text-h6" v-text="work.name" />
               </q-card-section>
               <q-card-section>
-                <p
-                  style="white-space: pre-line"
-                  class="text-justify text-body1"
-                  v-text="work.description"
-                />
+                <p style="white-space: pre-line" class="text-justify text-body1">
+                  {{ description }}
+                  <span
+                    style="cursor: pointer; color: #0d47a1"
+                    v-if="work.description.length >= 400 && !show"
+                    @click="show = !show"
+                    >{{ $t('common.more') }}</span
+                  ><span
+                    style="cursor: pointer; color: #0d47a1"
+                    v-if="work.description.length >= 400 && show"
+                    @click="show = !show"
+                  >
+                    <br />&#8679;</span
+                  >
+                </p>
                 <router-link
                   v-if="work.idSale"
                   :to="`/work/${work.idSale}`"
@@ -79,12 +89,20 @@ export default {
     }
   },
   setup(props) {
+    const show = ref(false)
     const activator = ref(false)
     const slide = ref(0)
     const useActivator = () => (activator.value = true)
     const { dialogData } = toRefs(props)
     const urlImages = computed(() => dialogData.value.map((item) => item.urlWork))
     const work = computed(() => dialogData.value[slide.value])
+    const description = computed(() => {
+      if (work.value.description.length < 400 || show.value) {
+        return work.value.description
+      } else {
+        return `${work.value.description.substring(0, 400)}...`
+      }
+    })
     const artistsStore = useArtistsStore()
     const { filterArtistsDraft } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
@@ -104,7 +122,9 @@ export default {
       activator,
       useActivator,
       urlImages,
-      work
+      show,
+      work,
+      description
     }
   }
 }

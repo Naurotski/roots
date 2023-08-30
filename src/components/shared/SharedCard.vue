@@ -2,9 +2,9 @@
   <q-toolbar>
     <q-toolbar-title class="text-h5">{{ dataCard.name }}</q-toolbar-title>
   </q-toolbar>
-  <div class="col-12 col-sm-4">
+  <div class="col-12 col-sm-3">
     <q-card square flat style="z-index: 1" class="q-pr-sm-xl">
-      <q-img :src="dataCard.url" :alt="dataCard.name" :ratio="16 / 9" />
+      <q-img :src="dataCard.url" :alt="dataCard.name" :ratio="1" />
       <slot name="underPicture" />
     </q-card>
   </div>
@@ -20,7 +20,8 @@
         style="cursor: pointer; color: #0d47a1"
         v-if="dataCard.description.length >= 700 && show"
         @click="show = !show"
-        >&#8679;</span
+      >
+        <br />&#8679;</span
       >
     </p>
     <slot name="press" />
