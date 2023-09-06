@@ -144,15 +144,9 @@ export default {
         filteredActions.value = filterExhibitionsDraft.value.filter(
           (exhibition) => exhibition.lifeTime === tab.value
         )
-        //дублируется с action-store,  скоректировать при переносе events  на InterventArt --------------
         if (tab.value === 'upcoming' || tab.value === 'current') {
-          filteredActions.value.sort((a, b) => {
-            if (+new Date(a.openingDate) < +new Date(b.openingDate)) return 1
-            if (+new Date(a.openingDate) === +new Date(b.openingDate)) return 0
-            if (+new Date(a.openingDate) > +new Date(b.openingDate)) return -1
-          })
+          filteredActions.value.reverse()
         }
-        // ---------------------  дублируется с action-store,  скоректировать при переносе events  на InterventArt
       } else {
         if (!filterEventsDraft.value.length) getEvents()
         filteredActions.value = filterEventsDraft.value.filter(

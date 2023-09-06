@@ -25,7 +25,7 @@
         </q-carousel-slide>
         <template v-slot:control>
           <q-carousel-control
-            :position="$q.screen.xs ? 'bottom' : 'bottom-right'"
+            :position="$q.screen.xs ? 'top' : 'bottom-right'"
             :offset="[30, $q.screen.xs ? 50 : 30]"
             class="text-white rounded-borders text-center"
             style="background: rgba(0, 0, 0, 0.3); padding: 4px 8px"
