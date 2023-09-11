@@ -7,7 +7,7 @@
       <q-dialog v-model="activator" full-width>
         <q-card>
           <q-toolbar class="q-pl-xl q-pt-md">
-            <q-toolbar-title class="text-h4">
+            <q-toolbar-title class="text-h5" style="white-space: pre-line">
               {{ title }}
             </q-toolbar-title>
             <q-btn flat round icon="close" v-close-popup />

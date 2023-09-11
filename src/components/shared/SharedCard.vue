@@ -1,6 +1,8 @@
 <template>
   <q-toolbar>
-    <q-toolbar-title class="text-h5">{{ dataCard.name }}</q-toolbar-title>
+    <q-toolbar-title style="white-space: pre-line" class="text-h5">{{
+      dataCard.name
+    }}</q-toolbar-title>
   </q-toolbar>
   <div class="col-12 col-sm-3">
     <q-card square flat style="z-index: 1" class="q-pr-sm-xl">
