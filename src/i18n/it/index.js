@@ -10,7 +10,7 @@ export default {
     unfortunately: 'Spiacenti, al momento non ci sono eventi in corso.',
     address: 'Indirizzo',
     more: 'più',
-    goExhibition: 'Vai Mostra'
+    goExhibition: 'Mostra'
   },
   links: {
     home: 'Home',
