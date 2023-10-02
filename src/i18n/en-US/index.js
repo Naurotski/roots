@@ -27,7 +27,8 @@ export default {
     sculpture: 'Sculpture',
     photography: 'Photography',
     installation: 'Installation',
-    books: 'Books'
+    books: 'Books',
+    digital: 'Digital'
   },
   artist: {
     education: 'Education',

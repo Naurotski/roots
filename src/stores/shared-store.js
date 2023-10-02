@@ -21,7 +21,8 @@ export const useSharedStore = defineStore('shared', () => {
     { label: 'links.painting', name: 'painting' },
     { label: 'links.sculpture', name: 'sculpture' },
     { label: 'links.photography', name: 'photography' },
-    { label: 'links.books', name: 'books' }
+    { label: 'links.books', name: 'books' },
+    { label: 'links.digital', name: 'digital' }
   ])
   //{ label: 'links.graphics', name: 'graphics' },   { label: 'links.installation', name: 'installation' }
   const rightDrawerOpen = ref(false)
