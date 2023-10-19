@@ -100,7 +100,7 @@ import { useQuasar, useMeta } from 'quasar'
 import { useI18n } from 'vue-i18n'
 
 const metaData = {
-  title: 'Roots | For sale',
+  title: 'Roots Gallery | For sale',
   meta: {
     description: {
       name: 'description',

@@ -177,7 +177,7 @@ export default {
     }
     useMeta(() => {
       return {
-        title: `Roots | ${ucFirst(typeAction.value)}`,
+        title: `Roots Gallery | ${ucFirst(typeAction.value)}`,
         meta: {
           description: {
             name: 'description',

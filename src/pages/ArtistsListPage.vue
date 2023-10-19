@@ -28,7 +28,7 @@ import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import { useMeta } from 'quasar'
 
 const metaData = {
-  title: 'Roots',
+  title: 'Roots Gallery',
   titleTemplate: (title) => `${title} | Artists`,
   meta: {
     description: {

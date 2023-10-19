@@ -160,7 +160,7 @@ export default {
     })
     useMeta(() => {
       return {
-        title: 'Roots',
+        title: 'Roots Gallery',
         titleTemplate: (title) => `${title} | ${artistData.value.name}`,
         meta: {
           description: {

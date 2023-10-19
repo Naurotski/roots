@@ -79,7 +79,7 @@ import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import { useMeta } from 'quasar'
 
 const metaData = {
-  title: 'Roots',
+  title: 'Roots Gallery',
   titleTemplate: (title) => `${title} | About`,
   meta: {
     description: {
