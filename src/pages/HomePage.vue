@@ -14,13 +14,16 @@
         transition-duration="3000"
       >
         <q-carousel-slide
-          v-for="({ urlImageWork, artistName }, index) in carouselHomePage"
+          v-for="(
+            { urlImageWork, artistName, openingDate, closingDate }, index
+          ) in carouselHomePage"
           :name="index"
           :img-src="urlImageWork"
           :key="urlImageWork"
         >
           <div :class="$q.screen.xs ? 'absolute-center' : 'absolute-bottom'" class="custom-caption">
             <div class="text-h2">{{ artistName }}</div>
+            <div class="text-h6" v-text="`${openingDate} - ${closingDate}`" />
           </div>
         </q-carousel-slide>
         <template v-slot:control>
