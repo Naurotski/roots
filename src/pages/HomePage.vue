@@ -21,15 +21,22 @@
           :img-src="urlImageWork"
           :key="urlImageWork"
         >
-          <div :class="$q.screen.xs ? 'absolute-center' : 'absolute-bottom'" class="custom-caption">
+          <div
+            :class="$q.screen.xs ? 'absolute-center' : 'absolute-bottom'"
+            class="custom-caption full-width"
+          >
             <div class="text-h2">{{ artistName }}</div>
-            <div class="text-h6" v-text="`${openingDate} - ${closingDate}`" />
+            <div
+              class="text-h6"
+              v-text="`${openingDate} - ${closingDate}`"
+              :class="{ 'text-body1': $q.screen.xs }"
+            />
           </div>
         </q-carousel-slide>
         <template v-slot:control>
           <q-carousel-control
             :position="$q.screen.xs ? 'top' : 'bottom-right'"
-            :offset="[30, $q.screen.xs ? 50 : 30]"
+            :offset="[30, $q.screen.xs ? 30 : 30]"
             class="text-white rounded-borders text-center"
             style="background: rgba(0, 0, 0, 0.3); padding: 4px 8px"
           >
