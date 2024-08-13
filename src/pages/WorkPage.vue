@@ -32,17 +32,17 @@
               class="text-justify text-body1"
               v-text="work.description"
             />
-            <!--            <p-->
-            <!--              v-if="work.price"-->
-            <!--              style="white-space: pre-line"-->
-            <!--              class="text-justify text-body1"-->
-            <!--              v-text="`€ ${work.price}`"-->
-            <!--            />-->
-            <!--            <payment-dialog v-if="work.price" :work="work" />-->
+            <p
+              v-if="work.price"
+              style="white-space: pre-line"
+              class="text-justify text-body1"
+              v-text="`€ ${work.price}`"
+            />
+            <payment-dialog v-if="work.price" :work="work" />
           </q-card-section>
         </div>
         <q-btn flat size="xl" icon="mdi-arrow-left-bold" @click="$router.go(-1)" />
-        <!--        <router-link :to="`/thankYou/${workId}`">Work</router-link>-->
+        <!--                <router-link :to="`/thankYou/${workId}`">Work</router-link>-->
       </small-page-container>
     </q-page>
   </transition>
@@ -52,7 +52,7 @@
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import CarouselComponent from 'components/shared/CarouselComponent.vue'
-// import PaymentDialog from 'components/dialogs/PaymentDialog.vue'
+import PaymentDialog from 'components/dialogs/PaymentDialog.vue'
 import { findWork } from 'src/composables/findWork.js'
 import { useArtistsStore } from 'stores/artists-store.js'
 import { storeToRefs } from 'pinia'
@@ -63,8 +63,8 @@ export default {
   components: {
     FixedTopTitle,
     SmallPageContainer,
-    CarouselComponent
-    // PaymentDialog
+    CarouselComponent,
+    PaymentDialog
   },
   props: {
     workId: {
@@ -92,7 +92,7 @@ export default {
     })
     useMeta(() => {
       return {
-        title: `Roots | ${work.value?.name}`,
+        title: `Aorta Social Art Gallery | ${work.value?.name}`,
         meta: {
           description: {
             name: 'description',

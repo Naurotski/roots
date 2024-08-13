@@ -10,7 +10,9 @@ export default {
     unfortunately: 'Unfortunately, there are currently no events in progress.',
     address: 'Address',
     more: 'more',
-    goExhibition: 'Go Exhibition'
+    goExhibition: 'Go Exhibition',
+    shopArt: 'shop artworks',
+    shop: 'shop'
   },
   links: {
     home: 'Home',

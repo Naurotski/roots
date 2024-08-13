@@ -3,9 +3,9 @@
     <q-page class="q-pa-md" style="padding-top: 65px">
       <fixed-top-title :name="$t('links.about')" />
       <small-page-container class="q-pt-md">
-        <div class="col-12 col-sm-4 row">
-          <q-card square flat style="z-index: 1" class="q-pr-sm-xl">
-            <img src="~assets/icon.png" alt="roots-logo" style="max-height: 400px" />
+        <div class="col-12 col-sm-4">
+          <q-card flat>
+            <img src="~assets/icon1.png" alt="roots-logo" />
           </q-card>
         </div>
         <div class="col-12 col-sm-8 relative-position" v-bind="$attrs">
@@ -79,7 +79,7 @@ import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import { useMeta } from 'quasar'
 
 const metaData = {
-  title: 'Roots Gallery',
+  title: 'Aorta Social Art Gallery',
   titleTemplate: (title) => `${title} | About`,
   meta: {
     description: {

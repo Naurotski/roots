@@ -9,8 +9,8 @@ export const useSharedStore = defineStore('shared', () => {
     { label: 'links.artists', path: '/artists' },
     { label: 'links.exhibitions', path: '/actions/exhibitions' },
     // { label: 'links.events', path: '/actions/events' },
-    { label: 'links.about', path: '/about' }
-    // { label: 'links.sale', path: '/sale' }
+    { label: 'links.about', path: '/about' },
+    { label: 'links.sale', path: '/sale' }
   ])
   const actionsLinks = ref([
     { label: 'links.current', name: 'current' },

@@ -33,7 +33,7 @@ import { storeToRefs } from 'pinia'
 import { findWork } from 'src/composables/findWork.js'
 
 const metaData = {
-  title: 'Roots Gallery',
+  title: 'Aorta Social Art Gallery',
   titleTemplate: (title) => `${title} | Thank You`
 }
 

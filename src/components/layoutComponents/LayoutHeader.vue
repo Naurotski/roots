@@ -1,13 +1,12 @@
 <template>
-  <q-header bordered class="bg-white text-primary">
-    <q-toolbar>
+  <q-header class="bg-white text-primary">
+    <q-toolbar class="q-dark">
       <q-toolbar-title>
         <router-link :to="{ name: 'Home' }" style="text-decoration: none">
           <q-img
-            class="q-ml-md"
-            style="max-width: 100px; height: 80px"
+            style="max-width: 300px; height: 80px"
             fit="contain"
-            src="~assets/roots-logo.png"
+            src="~assets/aorta-logo.png"
           />
         </router-link>
       </q-toolbar-title>

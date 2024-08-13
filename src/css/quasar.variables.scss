@@ -26,7 +26,14 @@ $warning   : #F2C037;
 $body1:     (size: 1.1rem,     line-height: 1.5rem,   letter-spacing: .03125em,  weight: 400) !default;
 
 
-@import url('https://fonts.googleapis.com/css2?family=Saira+Condensed&display=swap');
-$typography-font-family : 'Saira Condensed', sans-serif !default;
+//@import url('https://fonts.googleapis.com/css2?family=Saira+Condensed&display=swap');
+//$typography-font-family : 'Saira Condensed', sans-serif !default;
 
+@font-face {
+  font-family: corbel-light;
+  src: url(../assets/fonts/Corbel/Corbel.woff) format('woff'),
+       url(../assets/fonts/Corbel/Corbel.woff2) format('woff2'),
+       url(../assets/fonts/Corbel/Corbel.ttf) format('truetype');
+}
+$typography-font-family : 'corbel-light' !default;
 $animate-duration : 1.5s !default

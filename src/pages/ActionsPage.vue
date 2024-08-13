@@ -177,12 +177,12 @@ export default {
     }
     useMeta(() => {
       return {
-        title: `Roots Gallery | ${ucFirst(typeAction.value)}`,
+        title: `Aorta Social Art Gallery | ${ucFirst(typeAction.value)}`,
         meta: {
           description: {
             name: 'description',
             content:
-              'Roots Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
           },
           ogTitle: {
             property: 'og:title'

@@ -48,13 +48,13 @@
                     <br />&#8679;</span
                   >
                 </p>
-                <!--                <router-link-->
-                <!--                  v-if="work.idSale"-->
-                <!--                  :to="`/work/${work.idSale}`"-->
-                <!--                  class="text-h6"-->
-                <!--                  style="color: #1d1d1d"-->
-                <!--                  >For sale</router-link-->
-                <!--                >-->
+                <router-link
+                  v-if="work.idSale"
+                  :to="`/work/${work.idSale}`"
+                  class="text-h6"
+                  style="color: #1d1d1d"
+                  >For sale</router-link
+                >
               </q-card-section>
             </div>
           </div>

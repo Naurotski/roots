@@ -25,7 +25,7 @@ import { defineComponent } from 'vue'
 import { useMeta } from 'quasar'
 
 const metaData = {
-  title: 'Roots Gallery',
+  title: 'Aorta Social Art Gallery',
   titleTemplate: (title) => `${title} | Error`
 }
 

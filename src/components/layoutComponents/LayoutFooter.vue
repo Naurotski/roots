@@ -1,16 +1,16 @@
 <template>
-  <q-footer :reveal="$route.name === 'Home'" bordered class="bg-white text-primary">
-    <div class="row justify-center q-mt-md">
+  <q-footer :reveal="$route.name === 'Home'" bordered class="text-primary">
+    <div class="row justify-center q-mt-md q-dark">
       <a
         v-for="item in socialMedia"
         :key="item.icon"
         :href="item.path"
         target="_blank"
-        style="text-decoration: none; color: #1d1d1d"
+        style="text-decoration: none; color: white"
       >
         <q-icon :name="item.icon" size="sm" class="q-mr-md"
       /></a>
-      <p class="text-body1">&copy; {{ date }} Roots</p>
+      <p class="text-body1">&copy; {{ date }} Aorta</p>
     </div>
   </q-footer>
 </template>

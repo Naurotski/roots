@@ -1,9 +1,7 @@
 <template>
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <q-page>
-      <!--      <q-img alt="logo" src="~assets/3F0A9210.jpg" class="fixed" height="90vh" />-->
       <q-carousel
-        class="fixed"
         animated
         v-model="slide"
         height="85vh"
@@ -26,6 +24,9 @@
             class="custom-caption full-width"
           >
             <div class="text-h2">{{ artistName }}</div>
+            <div class="text-h5">
+              {{ locale === 'it' ? selectedExhibitionsData.nameIt : selectedExhibitionsData.name }}
+            </div>
             <div
               class="text-h6"
               v-text="`${openingDate} - ${closingDate}`"
@@ -52,6 +53,14 @@
           </q-carousel-control>
         </template>
       </q-carousel>
+      <title-line class="q-mt-lg">
+        {{ $t('common.shopArt').toUpperCase() }}
+      </title-line>
+      <transition appear enter-active-class="animated fadeIn">
+        <small-page-container class="justify-around">
+          <works-list :works-list="worksList" />
+        </small-page-container>
+      </transition>
     </q-page>
   </transition>
 </template>
@@ -59,16 +68,21 @@
 <script>
 import { computed, defineComponent, ref } from 'vue'
 import { date, useMeta } from 'quasar'
-import { useSharedStore } from 'stores/shared-store.js'
 import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
+import { useSharedStore } from 'stores/shared-store.js'
+import { useArtistsStore } from 'stores/artists-store.js'
+import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
+import WorksList from 'components/WorksList.vue'
+import TitleLine from 'components/TitleLine.vue'
 
 const metaData = {
-  title: 'Roots Gallery',
+  title: 'Aorta Social Art Gallery ',
   meta: {
     description: {
       name: 'description',
       content:
-        'Roots Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+        'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
     },
     ogTitle: {
       property: 'og:title'
@@ -77,12 +91,24 @@ const metaData = {
 }
 export default defineComponent({
   name: 'HomePage',
+  components: {
+    SmallPageContainer,
+    WorksList,
+    TitleLine
+  },
   setup() {
     const slide = ref(0)
+    const { locale } = useI18n({ useScope: 'global' })
     const sharedStore = useSharedStore()
     const { carouselHomePage, selectedExhibitionsData } = storeToRefs(sharedStore)
     const { getHomePageData } = sharedStore
+    const artistsStore = useArtistsStore()
+    const { allWorks } = storeToRefs(artistsStore)
     if (!carouselHomePage.value.length) getHomePageData()
+    setTimeout(() => {
+      console.log(allWorks.value)
+      console.log(carouselHomePage.value)
+    }, 500)
     const lifeTimeExhibition = computed(() =>
       date.formatDate(selectedExhibitionsData.value.openingDate, 'x') > Date.now()
         ? 'upcoming'
@@ -94,12 +120,31 @@ export default defineComponent({
         ? 'archive'
         : 'current'
     )
+    const worksList = computed(() => {
+      if (allWorks.value.length) {
+        let localArray = allWorks.value.filter((work) => work.price)
+        if (locale.value === 'it') {
+          return localArray.map((item) => ({
+            ...item,
+            description: item.descriptionIt,
+            materials: item.materialsIt,
+            name: item.nameIt
+          }))
+        } else {
+          return localArray
+        }
+      } else {
+        return []
+      }
+    })
     useMeta(metaData)
     return {
+      locale,
       slide,
       carouselHomePage,
       lifeTimeExhibition,
-      selectedExhibitionsData
+      selectedExhibitionsData,
+      worksList
     }
   }
 })
