@@ -12,7 +12,10 @@ export default {
     more: 'più',
     goExhibition: 'Mostra',
     shopArt: 'shop artworks',
-    shop: 'shop'
+    shop: 'shop',
+    technicalWork: 'Lavoro Tecnico',
+    maintenance:
+      'Il nostro sito web è temporaneamente non disponibile a causa di lavori tecnici. Ricontrolla più tardi'
   },
   links: {
     home: 'Home',
