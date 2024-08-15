@@ -12,24 +12,24 @@
         transition-duration="3000"
       >
         <q-carousel-slide
-          v-for="(
-            { urlImageWork, artistName, openingDate, closingDate }, index
-          ) in carouselHomePage"
+          v-for="({ imageUrl }, index) in carouselHomePage"
           :name="index"
-          :img-src="urlImageWork"
-          :key="urlImageWork"
+          :img-src="imageUrl"
+          :key="imageUrl"
         >
           <div
             :class="$q.screen.xs ? 'absolute-center' : 'absolute-bottom'"
             class="custom-caption full-width"
           >
-            <div class="text-h2">{{ artistName }}</div>
-            <div class="text-h5">
+            <!--            <div class="text-h2">{{ artistName }}</div>-->
+            <div class="text-h4">
               {{ locale === 'it' ? selectedExhibitionsData.nameIt : selectedExhibitionsData.name }}
             </div>
             <div
               class="text-h6"
-              v-text="`${openingDate} - ${closingDate}`"
+              v-text="
+                `${selectedExhibitionsData.openingDate} - ${selectedExhibitionsData.closingDate}`
+              "
               :class="{ 'text-body1': $q.screen.xs }"
             />
           </div>
@@ -58,7 +58,7 @@
       </title-line>
       <transition appear enter-active-class="animated fadeIn">
         <small-page-container class="justify-around">
-          <works-list :works-list="worksList" />
+          <works-list :works-list="worksForSale" />
         </small-page-container>
       </transition>
     </q-page>
@@ -71,7 +71,7 @@ import { date, useMeta } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useSharedStore } from 'stores/shared-store.js'
-import { useArtistsStore } from 'stores/artists-store.js'
+
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import WorksList from 'components/WorksList.vue'
 import TitleLine from 'components/TitleLine.vue'
@@ -100,15 +100,9 @@ export default defineComponent({
     const slide = ref(0)
     const { locale } = useI18n({ useScope: 'global' })
     const sharedStore = useSharedStore()
-    const { carouselHomePage, selectedExhibitionsData } = storeToRefs(sharedStore)
+    const { carouselHomePage, selectedExhibitionsData, worksForSale } = storeToRefs(sharedStore)
     const { getHomePageData } = sharedStore
-    const artistsStore = useArtistsStore()
-    const { allWorks } = storeToRefs(artistsStore)
     if (!carouselHomePage.value.length) getHomePageData()
-    setTimeout(() => {
-      console.log(allWorks.value)
-      console.log(carouselHomePage.value)
-    }, 500)
     const lifeTimeExhibition = computed(() =>
       date.formatDate(selectedExhibitionsData.value.openingDate, 'x') > Date.now()
         ? 'upcoming'
@@ -121,8 +115,8 @@ export default defineComponent({
         : 'current'
     )
     const worksList = computed(() => {
-      if (allWorks.value.length) {
-        let localArray = allWorks.value.filter((work) => work.price)
+      if (worksForSale.value.length) {
+        let localArray = worksForSale.value.filter((work) => work.price)
         if (locale.value === 'it') {
           return localArray.map((item) => ({
             ...item,
@@ -144,7 +138,8 @@ export default defineComponent({
       carouselHomePage,
       lifeTimeExhibition,
       selectedExhibitionsData,
-      worksList
+      worksList,
+      worksForSale
     }
   }
 })

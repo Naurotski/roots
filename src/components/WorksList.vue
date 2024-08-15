@@ -48,7 +48,7 @@ export default {
   name: 'WorksList',
   props: {
     worksList: {
-      type: Object,
+      type: Array,
       required: true
     }
   }
