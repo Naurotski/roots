@@ -53,7 +53,7 @@
           </q-carousel-control>
         </template>
       </q-carousel>
-      <title-line class="q-mt-lg">
+      <title-line v-if="worksForSale.length" class="q-mt-lg">
         {{ $t('common.shopArt').toUpperCase() }}
       </title-line>
       <transition appear enter-active-class="animated fadeIn">

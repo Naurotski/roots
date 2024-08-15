@@ -29,16 +29,16 @@ export const useSharedStore = defineStore('shared', () => {
   const toggleRightDrawer = () => (rightDrawerOpen.value = !rightDrawerOpen.value)
 
   const carouselHomePage = ref([])
-  const selectedExhibitionsData = ref([])
-  const worksForSale = ref({})
+  const selectedExhibitionsData = ref({})
+  const worksForSale = ref([])
   const getHomePageData = () => {
     console.log('getHomePageData----------------------------------')
     onValue(dbRef(db, 'HomePageAorta/'), async (snapshot) => {
       if (snapshot.val()) {
         let dataPage = snapshot.val()
-        carouselHomePage.value = dataPage.imagesUrlForCarousel
-        selectedExhibitionsData.value = dataPage.selectedExhibition
-        worksForSale.value = dataPage.worksForSale
+        carouselHomePage.value = dataPage.imagesUrlForCarousel || []
+        selectedExhibitionsData.value = dataPage.selectedExhibition || {}
+        worksForSale.value = dataPage.worksForSale || []
         // const cacheCarouselHomePage = await caches.open('carouselList')
         // await Promise.all(
         //   dataPage.imagesUrlForCarousel.map((item) => cacheCarouselHomePage.add(item.imageUrl))
