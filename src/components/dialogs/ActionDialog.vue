@@ -12,14 +12,14 @@
             </q-toolbar-title>
             <q-btn flat round icon="close" v-close-popup />
           </q-toolbar>
-          <div class="row">
+          <div class="row" :class="{ 'justify-center': !showDescription }">
             <div class="col-12 col-sm-8">
               <q-card-section>
                 <carousel-component :url-images="urlImages" @update:slide="slide = $event" />
               </q-card-section>
             </div>
-            <div class="col-12 col-sm-4 q-pt-sm-md">
-              <q-card-section v-if="typeAction !== 'events'" class="q-pt-none">
+            <div v-if="showDescription" class="col-12 col-sm-4 q-pt-sm-md">
+              <q-card-section v-if="typeAction !== 'events' && work.firstName" class="q-pt-none">
                 <router-link
                   v-if="work.phat"
                   style="text-decoration: none; color: #1d1d1d"
@@ -29,11 +29,15 @@
                 </router-link>
                 <div v-else class="text-h5" v-text="`${work.firstName} ${work.lastName}`" />
               </q-card-section>
-              <q-card-section class="q-pt-none">
+              <q-card-section v-if="work.name" class="q-pt-none">
                 <div class="text-h6" v-text="work.name" />
               </q-card-section>
               <q-card-section>
-                <p style="white-space: pre-line" class="text-justify text-body1">
+                <p
+                  v-if="work.description"
+                  style="white-space: pre-line"
+                  class="text-justify text-body1"
+                >
                   {{ description }}
                   <span
                     style="cursor: pointer; color: #0d47a1"
@@ -116,6 +120,13 @@ export default {
         })
       })
     )
+    const showDescription = computed(
+      () =>
+        !!work.value.firstName ||
+        !!work.value.description ||
+        !!work.value.name ||
+        !!work.value.idSale
+    )
 
     return {
       slide,
@@ -124,7 +135,8 @@ export default {
       urlImages,
       show,
       work,
-      description
+      description,
+      showDescription
     }
   }
 }
