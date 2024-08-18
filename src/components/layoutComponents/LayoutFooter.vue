@@ -23,7 +23,7 @@ export default {
     const date = ref(new Date().getFullYear())
     const socialMedia = ref([
       { icon: 'mdi-facebook', path: 'https://www.facebook.com/profile.php?id=100088816940231' },
-      { icon: 'mdi-instagram', path: 'https://www.instagram.com/roots_art_gallery/' }
+      { icon: 'mdi-instagram', path: 'https://www.instagram.com/aorta_artsocial_gallery/' }
     ])
     return {
       date,

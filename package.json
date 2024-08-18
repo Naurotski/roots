@@ -1,8 +1,8 @@
 {
-  "name": "roots",
+  "name": "Aorta",
   "version": "0.0.1",
-  "description": "Art Gallery",
-  "productName": "Roots",
+  "description": "Aorta Social Art Gallery",
+  "productName": "Aorta",
   "author": "Naurotski <6602796@gmail.com>",
   "private": true,
   "scripts": {
