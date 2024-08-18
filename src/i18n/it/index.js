@@ -11,7 +11,7 @@ export default {
     address: 'Indirizzo',
     more: 'più',
     goExhibition: 'Mostra',
-    shopArt: 'shop artworks',
+    shopArt: 'arte in vendita',
     shop: 'shop',
     technicalWork: 'Lavoro Tecnico',
     maintenance:
