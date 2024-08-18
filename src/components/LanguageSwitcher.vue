@@ -6,22 +6,14 @@
         :key="label"
         clickable
         v-close-popup
+        :active="value === locale"
+        active-class="bg-teal-1"
         @click="locale = value"
       >
         <q-item-section>{{ label }}</q-item-section>
       </q-item>
     </q-list>
   </q-btn-dropdown>
-  <!--  <q-select-->
-  <!--    class="q-ml-md"-->
-  <!--    v-model="locale"-->
-  <!--    :options="localeOptions"-->
-  <!--    dense-->
-  <!--    borderless-->
-  <!--    emit-value-->
-  <!--    map-options-->
-  <!--    options-dense-->
-  <!--  />-->
 </template>
 
 <script>

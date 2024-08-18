@@ -23,7 +23,6 @@
         <div class="row justify-md-start">
           <q-tabs v-model="tab" dense narrow-indicator class="gt-xs">
             <q-tab
-              style="width: 100px"
               class="text-body1"
               v-for="{ label, name } in saleLinks"
               :key="name"
