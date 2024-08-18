@@ -32,7 +32,6 @@ export const useSharedStore = defineStore('shared', () => {
   const selectedExhibitionsData = ref({})
   const worksForSale = ref([])
   const getHomePageData = () => {
-    console.log('getHomePageData----------------------------------')
     onValue(dbRef(db, 'HomePageAorta/'), async (snapshot) => {
       if (snapshot.val()) {
         let dataPage = snapshot.val()

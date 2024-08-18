@@ -15,12 +15,12 @@
       {{ description }}
       <span
         style="cursor: pointer; color: #0d47a1"
-        v-if="dataCard.description.length >= 700 && !show"
+        v-if="dataCard.description?.length >= 700 && !show"
         @click="show = !show"
         >{{ $t('common.more') }}</span
       ><span
         style="cursor: pointer; color: #0d47a1"
-        v-if="dataCard.description.length >= 700 && show"
+        v-if="dataCard.description?.length >= 700 && show"
         @click="show = !show"
       >
         <br />&#8679;</span
@@ -46,10 +46,10 @@ export default {
     const show = ref(false)
     const { dataCard } = toRefs(props)
     const description = computed(() => {
-      if (dataCard.value.description.length < 700 || show.value) {
+      if (dataCard.value.description?.length < 700 || show.value) {
         return dataCard.value.description
       } else {
-        return `${dataCard.value.description.substring(0, 700)}...`
+        return `${dataCard.value.description?.substring(0, 700)}...`
       }
     })
     return {

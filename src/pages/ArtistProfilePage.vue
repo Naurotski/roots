@@ -2,34 +2,25 @@
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <q-page class="q-pa-md" style="padding-top: 65px">
       <fixed-top-title :name="`${artistData.firstName} ${artistData.lastName}`" />
-      <div class="flex justify-around q-gutter-sm">
-        <div class="q-my-lg" v-for="work in artistData.works" :key="work.urlImageWork">
-          <router-link
-            v-if="work.urlImageWork.includes('video')"
-            :to="`/work/${work.id}`"
-            style="text-decoration: none; color: #1d1d1d"
-          >
-            <div style="position: relative">
-              <q-video style="height: 25vh" :src="work.urlImageWork" />
-              <div
-                style="position: absolute; top: 5px; height: 100%; width: 100%; opacity: 0.1"
-                class="bg-grey-2"
-              ></div>
-            </div>
-          </router-link>
-          <router-link
-            v-else
-            :to="`/work/${work.id}`"
-            style="text-decoration: none; color: #1d1d1d"
-          >
-            <img
-              :src="work.urlImageWork"
-              style="max-width: 350px"
-              :style="$q.screen.xs ? 'max-height: 300px' : 'height: 25vh'"
-              alt="image"
-            />
-          </router-link>
-        </div>
+      <div class="q-gutter-md row wrap justify-around q-mb-md">
+        <q-card style="height: 250px" v-for="work in artistData.works" :key="work.urlImageWork">
+          <template v-if="work.urlImageWork.includes('video')">
+            <router-link :to="`/work/${work.id}`">
+              <div style="position: relative">
+                <q-video style="height: 25vh" :src="work.urlImageWork" />
+                <div
+                  style="position: absolute; top: 5px; height: 100%; width: 100%; opacity: 0.1"
+                  class="bg-grey-2"
+                ></div>
+              </div>
+            </router-link>
+          </template>
+          <template v-else>
+            <router-link :to="`/work/${work.id}`">
+              <img :src="work.urlImageWork" style="height: 250px; width: 250px" alt="image" />
+            </router-link>
+          </template>
+        </q-card>
       </div>
       <q-separator />
       <small-page-container>
