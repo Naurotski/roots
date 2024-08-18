@@ -35,6 +35,12 @@ export default {
     books: 'Books',
     digital: 'Digital'
   },
+  auth: {
+    singIn: 'Sing In',
+    hello: 'Hello',
+    yourAccount: 'Your Account',
+    signOut: 'Sign Out'
+  },
   artist: {
     education: 'Education',
     press: 'Press',

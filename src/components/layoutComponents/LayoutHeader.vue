@@ -20,10 +20,11 @@
           :to="path"
         />
       </q-tabs>
-      <language-switcher style="width: 80px" />
+      <language-switcher style="width: 60px" />
+      <your-account-button />
       <q-btn
         size="lg"
-        class="lt-md q-mr-md"
+        class="lt-md"
         flat
         dense
         round
@@ -39,11 +40,13 @@
 import { useSharedStore } from 'stores/shared-store.js'
 import { storeToRefs } from 'pinia'
 import LanguageSwitcher from 'components/LanguageSwitcher.vue'
+import YourAccountButton from 'components/YourAccountButton.vue'
 
 export default {
   name: 'LayoutHeader',
   components: {
-    LanguageSwitcher
+    LanguageSwitcher,
+    YourAccountButton
   },
   setup() {
     const sharedStore = useSharedStore()

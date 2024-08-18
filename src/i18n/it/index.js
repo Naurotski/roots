@@ -35,6 +35,12 @@ export default {
     books: 'Libri',
     digital: 'Digital'
   },
+  auth: {
+    singIn: 'Accedi',
+    hello: 'Ciao',
+    yourAccount: 'Il mio account',
+    signOut: 'Esci'
+  },
   artist: {
     education: 'Formazione',
     press: 'Pressa',
