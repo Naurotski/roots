@@ -23,6 +23,42 @@
       </q-item>
     </q-list>
   </q-btn-dropdown>
+
+  <q-dialog v-model="dialog" backdrop-filter="blur(4px)">
+    <transition :name="transitionName">
+      <q-card v-if="showFirstDiv">
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h4">Div1</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate
+          voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam
+          exercitationem aut, natus minima, porro labore.
+        </q-card-section>
+        <q-card-actions>
+          <button @click="toggleDiv">Toggle Div</button>
+        </q-card-actions>
+      </q-card>
+      <q-card v-else>
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">Close icon</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+        <q-card-section>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aperiam distinctio incidunt
+          inventore iusto minima molestias nam nemo nostrum optio perspiciatis quia repellendus
+          temporibus, ut vel. Aut dolore eius provident!
+        </q-card-section>
+        <q-card-actions>
+          <button @click="toggleDiv">Toggle Div</button>
+        </q-card-actions>
+      </q-card>
+    </transition>
+  </q-dialog>
 </template>
 
 <script>
@@ -32,20 +68,33 @@ export default {
   setup() {
     const login = ref(false)
     const status = ref(false)
+    const dialog = ref(false)
+    const showFirstDiv = ref(true)
+    const transitionName = ref('slide-right')
     const loginUser = () => {
       console.log('loginUser')
-      login.value = true
+      if (dialog.value) {
+        login.value = true
+        dialog.value = true
+      }
     }
     const logoutUser = () => {
       console.log('logoutUser')
       login.value = false
     }
-
+    const toggleDiv = () => {
+      transitionName.value = showFirstDiv.value ? 'slide-left' : 'slide-right'
+      showFirstDiv.value = !showFirstDiv.value
+    }
     return {
       login,
       status,
+      dialog,
+      showFirstDiv,
+      transitionName,
       loginUser,
-      logoutUser
+      logoutUser,
+      toggleDiv
     }
   }
 }
