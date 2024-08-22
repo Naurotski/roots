@@ -8,6 +8,8 @@
         :active="locale === value"
         active-class="bg-teal-1"
         v-close-popup
+        :active="value === locale"
+        active-class="bg-teal-1"
         @click="locale = value"
       >
         <q-item-section>{{ label }}</q-item-section>

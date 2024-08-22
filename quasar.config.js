@@ -194,15 +194,13 @@ module.exports = configure(function (/* ctx */) {
 
       builder: {
         // https://www.electron.build/configuration/configuration
-
-        appId: 'roots'
+        appId: 'aorta'
       }
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-browser-extensions/configuring-bex
     bex: {
       contentScripts: ['my-content-script']
-
       // extendBexScriptsConf (esbuildConf) {}
       // extendBexManifestJson (json) {}
     }
