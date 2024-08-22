@@ -1,14 +1,25 @@
 <template>
-  <q-dialog v-model="dialog">
-    <q-card class="container" @click="onPan" style="width: 600px; height: 600px; overflow: hidden">
+  <q-dialog
+    v-model="dialog"
+    backdrop-filter="blur(4px)"
+    :maximized="$q.screen.xs"
+    :transition-show="$q.screen.xs ? 'slide-up' : 'fade'"
+    :transition-hide="$q.screen.xs ? 'slide-down' : 'fade'"
+  >
+    <q-card
+      class="container"
+      @click="onPan"
+      style="width: 600px; overflow: hidden; border-radius: 25px"
+      :style="$q.screen.xs ? 'height: 100%' : 'height: 600px'"
+    >
       <log-in
-        class="block-1 bg-grey"
+        class="block-1 q-pa-lg"
         :style="contentStyle"
         style="width: 100%"
         @closeDialog="dialog = false"
       />
       <registration-user
-        class="block-2 bg-green"
+        class="block-2 q-pa-lg"
         :style="actionsStyle"
         style="width: 100%"
         @closeDialog="dialog = false"

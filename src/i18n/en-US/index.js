@@ -15,7 +15,8 @@ export default {
     shop: 'shop',
     technicalWork: 'Technical Work',
     maintenance:
-      'Our website is temporarily unavailable due to technical work. Please check back later'
+      'Our website is temporarily unavailable due to technical work. Please check back later',
+    or: 'OR'
   },
   links: {
     home: 'Home',
@@ -40,8 +41,10 @@ export default {
     hello: 'Hello',
     yourAccount: 'Your Account',
     signOut: 'Sign Out',
-    logIn: 'Log in to Aorta',
-    join: 'Join Aorta for free'
+    logIn: 'Log in with',
+    logInAorta: 'Log in to Aorta',
+    joinAorta: 'Join Aorta',
+    continue: 'Continue with'
   },
   artist: {
     education: 'Education',

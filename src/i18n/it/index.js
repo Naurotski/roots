@@ -15,7 +15,8 @@ export default {
     shop: 'shop',
     technicalWork: 'Lavoro Tecnico',
     maintenance:
-      'Il nostro sito web è temporaneamente non disponibile a causa di lavori tecnici. Ricontrolla più tardi'
+      'Il nostro sito web è temporaneamente non disponibile a causa di lavori tecnici. Ricontrolla più tardi',
+    or: 'OPPURE'
   },
   links: {
     home: 'Home',
@@ -40,8 +41,10 @@ export default {
     hello: 'Ciao',
     yourAccount: 'Il mio account',
     signOut: 'Esci',
-    logIn: 'Accedi ad Aorta',
-    join: 'Unisciti ad Aorta gratuitamente'
+    logIn: 'Accedi con',
+    logInAorta: 'Accedi ad Aorta',
+    joinAorta: 'Unisciti ad Aorta',
+    continue: 'Continua con'
   },
   artist: {
     education: 'Formazione',

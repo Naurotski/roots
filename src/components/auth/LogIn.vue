@@ -1,10 +1,26 @@
 <template>
   <div>
     <q-card-section class="row">
-      <div class="text-h4">{{ $t('auth.logIn') }}</div>
+      <div class="text-h5">{{ $t('auth.logInAorta') }}</div>
       <q-space />
       <q-btn icon="close" flat round dense @click="$emit('closeDialog')" />
     </q-card-section>
+    <q-card-section class="q-gutter-y-sm">
+      <auth-providers-buttons>
+        <template #apple>
+          {{ `${$t('auth.logIn')} Apple` }}
+        </template>
+        <template #google>
+          {{ `${$t('auth.logIn')} Google` }}
+        </template>
+        <template #facebook>
+          {{ `${$t('auth.logIn')} Facebook` }}
+        </template>
+      </auth-providers-buttons>
+    </q-card-section>
+    <title-line-center>
+      {{ $t('common.or') }}
+    </title-line-center>
   </div>
 
   <!--  <form @submit.prevent="submitForm">-->
@@ -80,10 +96,16 @@
 </template>
 
 <script>
+import TitleLineCenter from 'components/TitleLineCenter.vue'
+import AuthProvidersButtons from 'components/auth/AuthProvidersButtons.vue'
 export default {
   name: 'LogIn',
+  components: {
+    TitleLineCenter,
+    AuthProvidersButtons
+  },
   emits: ['closeDialog']
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="sass" />
