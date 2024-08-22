@@ -40,7 +40,7 @@
 import { useSharedStore } from 'stores/shared-store.js'
 import { storeToRefs } from 'pinia'
 import LanguageSwitcher from 'components/LanguageSwitcher.vue'
-import YourAccountButton from 'components/YourAccountButton.vue'
+import YourAccountButton from 'components/auth/YourAccountButton.vue'
 
 export default {
   name: 'LayoutHeader',

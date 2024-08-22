@@ -39,7 +39,9 @@ export default {
     singIn: 'Sing In',
     hello: 'Hello',
     yourAccount: 'Your Account',
-    signOut: 'Sign Out'
+    signOut: 'Sign Out',
+    logIn: 'Log in to Aorta',
+    join: 'Join Aorta for free'
   },
   artist: {
     education: 'Education',
