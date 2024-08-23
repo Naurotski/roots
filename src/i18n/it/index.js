@@ -41,10 +41,17 @@ export default {
     hello: 'Ciao',
     yourAccount: 'Il mio account',
     signOut: 'Esci',
-    logIn: 'Accedi con',
+    logIn: 'Accedi',
+    logInW: 'Accedi con',
+    logInEmail: "Accedi con un'email",
     logInAorta: 'Accedi ad Aorta',
     joinAorta: 'Unisciti ad Aorta',
-    continue: 'Continua con'
+    continue: 'Continua con',
+    forgot: 'Hai dimenticato la password?',
+    don: 'Non hai un account?',
+    already: 'Hai già un account?',
+    rules:
+      "Unendoti ad Aorta, accetti i nostri Termini e condizioni d'uso e di vendita e l'Informativa sulla privacy."
   },
   artist: {
     education: 'Formazione',

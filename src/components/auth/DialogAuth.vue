@@ -5,10 +5,10 @@
     :maximized="$q.screen.xs"
     :transition-show="$q.screen.xs ? 'slide-up' : 'fade'"
     :transition-hide="$q.screen.xs ? 'slide-down' : 'fade'"
+    @hide="switched = false"
   >
     <q-card
       class="container"
-      @click="onPan"
       style="width: 600px; overflow: hidden; border-radius: 25px"
       :style="$q.screen.xs ? 'height: 100%' : 'height: 600px'"
     >
@@ -17,12 +17,14 @@
         :style="contentStyle"
         style="width: 100%"
         @closeDialog="dialog = false"
+        @switch="switched = true"
       />
       <registration-user
         class="block-2 q-pa-lg"
         :style="actionsStyle"
         style="width: 100%"
         @closeDialog="dialog = false"
+        @switch="switched = false"
       />
     </q-card>
   </q-dialog>
@@ -66,15 +68,11 @@ export default {
         transform: `translateX(${switched.value ? 0 : 100}%)`
       }
     })
-    const onPan = () => {
-      switched.value = !switched.value
-    }
     return {
       switched,
       dialog,
       contentStyle,
-      actionsStyle,
-      onPan
+      actionsStyle
     }
   }
 }

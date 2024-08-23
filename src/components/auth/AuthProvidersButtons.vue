@@ -1,8 +1,8 @@
 <template>
-  <q-btn outline rounded color="primary" class="full-width"
+  <q-btn no-caps outline rounded color="primary" class="full-width"
     ><q-icon left name="mdi-apple" /><slot name="apple" />
   </q-btn>
-  <q-btn outline rounded color="primary" class="full-width"
+  <q-btn no-caps outline rounded color="primary" class="full-width"
     ><svg
       xmlns="http://www.w3.org/2000/svg"
       width="20"
@@ -28,7 +28,7 @@
       /></svg
     ><slot name="google" />
   </q-btn>
-  <q-btn outline rounded color="primary" class="full-width"
+  <q-btn no-caps outline rounded color="primary" class="full-width"
     ><q-icon left name="mdi-facebook" class="text-blue" /><slot name="facebook" />
   </q-btn>
 </template>

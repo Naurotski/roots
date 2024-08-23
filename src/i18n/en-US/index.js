@@ -41,10 +41,16 @@ export default {
     hello: 'Hello',
     yourAccount: 'Your Account',
     signOut: 'Sign Out',
-    logIn: 'Log in with',
+    logIn: 'Log in',
+    logInW: 'Log in with',
+    logInEmail: 'Log in with an email',
     logInAorta: 'Log in to Aorta',
     joinAorta: 'Join Aorta',
-    continue: 'Continue with'
+    continue: 'Continue with',
+    forgot: 'Forgot your password?',
+    don: "Don't have an account?",
+    already: 'Already have an account?',
+    rules: 'By joining Aorta, you agree to our Terms of Conditions of Use & Sale and Privacy Policy'
   },
   artist: {
     education: 'Education',
