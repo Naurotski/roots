@@ -26,20 +26,19 @@
     <form @submit.prevent="submitForm">
       <q-card-section>
         <q-input
-          v-if="tab !== 'login'"
-          ref="firstName"
-          v-model="formData.firstName"
+          ref="displayName"
+          v-model="formData.displayName"
+          lazy-rules
+          label="Name"
+          dense
+          outlined
+          stack-label
+          autocomplete="given-name"
           :rules="[
             (val) => (val && val.length > 0) || 'Please type something',
             (v) => v.length <= 15 || 'Not more than 15 characters',
             (v) => /^[^\s*_]*$/.test(v) || 'Input cannot contain spaces, `*`, or `_`'
           ]"
-          lazy-rules
-          label="First Name"
-          dense
-          outlined
-          stack-label
-          autocomplete="given-name"
         />
         <q-input
           ref="email"
@@ -62,7 +61,7 @@
           dense
           outlined
           stack-label
-          autocomplete="current-password"
+          autocomplete="new-password"
           :rules="[(val) => val.length >= 6 || 'Please enter at least 6 characters.']"
         />
         <q-btn
@@ -89,6 +88,7 @@
 
 <script>
 import { ref } from 'vue'
+import { useAuthStore } from 'stores/auth-store.js'
 import AuthProvidersButtons from 'components/auth/AuthProvidersButtons.vue'
 import TitleLineCenter from 'components/TitleLineCenter.vue'
 import { isValidEmailAddress } from 'src/composables/isValidEmailAddress.js'
@@ -99,26 +99,27 @@ export default {
     TitleLineCenter
   },
   emits: ['closeDialog', 'switch'],
-  setup() {
-    const firstName = ref(null)
+  setup(props, { emit }) {
+    const authStore = useAuthStore()
+    const { registerUser } = authStore
+    const displayName = ref(null)
     const email = ref(null)
     const password = ref(null)
     const formData = ref({
-      firstName: '',
+      displayName: '',
       email: '',
       password: ''
     })
     function submitForm() {
-      firstName.value.validate()
+      displayName.value.validate()
       email.value.validate()
       password.value.validate()
-      if (!email.value.hasError && !password.value.hasError && !firstName.value.hasError) {
-        // loginUser(formData.value)
-        console.log('formData ----', formData.value)
+      if (!email.value.hasError && !password.value.hasError && !displayName.value.hasError) {
+        registerUser(formData.value).then(() => emit('closeDialog'))
       }
     }
     return {
-      firstName,
+      displayName,
       email,
       password,
       formData,

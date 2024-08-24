@@ -34,6 +34,11 @@ const routes = isMaintenanceMode
           },
           { path: 'sale', name: 'Sale', component: () => import('pages/SalePage.vue') },
           {
+            path: 'account',
+            name: 'Your Account',
+            component: () => import('pages/YourAccountPage.vue')
+          },
+          {
             path: 'work/:workId',
             props: true,
             name: 'Work',

@@ -3,57 +3,60 @@
     style="width: 100px"
     no-caps
     v-model="status"
-    :disable-dropdown="!login && !status"
+    :disable-dropdown="!loggedIn && !status"
     auto-close
     stretch
     flat
-    @click="loginUser"
+    @click="singIn"
     ><template v-slot:label>
-      <div v-if="login" class="text-center overflow-hidden">{{ $t('auth.hello') }}<br />Nadia</div>
+      <div v-if="loggedIn" class="text-center overflow-hidden">
+        {{ $t('auth.hello') }}<br />{{ userData.displayName }}
+      </div>
       <div v-else class="text-center">{{ $t('auth.singIn') }}</div>
     </template>
     <q-list>
-      <q-item v-close-popup clickable @click="locale = value">
+      <q-item clickable to="/account">
         <q-item-section> {{ $t('auth.yourAccount') }} </q-item-section>
       </q-item>
     </q-list>
     <q-list>
-      <q-item v-close-popup clickable @click="logoutUser">
+      <q-item clickable @click="logoutUser">
         <q-item-section>{{ $t('auth.signOut') }}</q-item-section>
       </q-item>
     </q-list>
   </q-btn-dropdown>
-  <carousel-auth v-model="dialog" />
+  <dialog-auth v-model="dialog" />
 </template>
 
 <script>
 import { ref } from 'vue'
-import CarouselAuth from 'components/auth/DialogAuth.vue'
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from 'stores/auth-store.js'
+import DialogAuth from 'components/auth/DialogAuth.vue'
+
 export default {
   name: 'YourAccountButton',
   components: {
-    CarouselAuth
+    DialogAuth
   },
   setup() {
-    const login = ref(false)
+    const authStore = useAuthStore()
+    const { loggedIn, userData } = storeToRefs(authStore)
+    console.log(userData)
+    const { logoutUser } = authStore
     const status = ref(false)
     const dialog = ref(false)
-    const loginUser = () => {
-      console.log('loginUser')
-      if (!dialog.value && !login.value) {
-        login.value = true
+    const singIn = () => {
+      if (!dialog.value && !loggedIn.value) {
         dialog.value = true
       }
     }
-    const logoutUser = () => {
-      console.log('logoutUser')
-      login.value = false
-    }
     return {
-      login,
+      loggedIn,
+      userData,
       status,
       dialog,
-      loginUser,
+      singIn,
       logoutUser
     }
   }

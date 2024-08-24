@@ -44,7 +44,7 @@
           dense
           outlined
           stack-label
-          :autocomplete="tab !== 'login' ? 'new-password' : 'current-password'"
+          autocomplete="current-password"
           :rules="[(val) => val.length >= 6 || 'Please enter at least 6 characters.']"
         />
         <div class="text-body1" :class="{ 'text-body2': $q.screen.xs }">
@@ -71,9 +71,11 @@
 
 <script>
 import { ref } from 'vue'
+import { useAuthStore } from 'stores/auth-store.js'
 import TitleLineCenter from 'components/TitleLineCenter.vue'
 import AuthProvidersButtons from 'components/auth/AuthProvidersButtons.vue'
 import { isValidEmailAddress } from 'src/composables/isValidEmailAddress.js'
+
 export default {
   name: 'LogIn',
   components: {
@@ -81,7 +83,9 @@ export default {
     AuthProvidersButtons
   },
   emits: ['closeDialog', 'switch'],
-  setup() {
+  setup(props, { emit }) {
+    const authStore = useAuthStore()
+    const { loginUser } = authStore
     const email = ref(null)
     const password = ref(null)
     const formData = ref({
@@ -89,12 +93,10 @@ export default {
       password: ''
     })
     function submitForm() {
-      console.log('submitForm')
       email.value.validate()
       password.value.validate()
       if (!email.value.hasError && !password.value.hasError) {
-        // loginUser(formData.value)
-        console.log('formData ----', formData.value)
+        loginUser(formData.value).then(() => emit('closeDialog'))
       }
     }
     return {
