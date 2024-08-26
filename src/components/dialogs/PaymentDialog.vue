@@ -20,10 +20,11 @@
       <q-form ref="paymentForm" @submit.prevent="onSubmit" class="row justify-center">
         <q-card-section class="col-12 col-sm-4">
           <q-input
-            clearable
             v-model="user.firstName"
+            clearable
             :label="$t('dialoguePayment.firstName')"
             lazy-rules
+            autocomplete="given-name"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
               (v) => v.length <= 30 || 'Not more than 30 characters'
@@ -32,10 +33,11 @@
         </q-card-section>
         <q-card-section class="col-12 col-sm-4">
           <q-input
-            clearable
             v-model="user.lastName"
+            clearable
             :label="$t('dialoguePayment.lastName')"
             lazy-rules
+            autocomplete="family-name"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
               (v) => v.length <= 30 || 'Not more than 30 characters'
@@ -44,10 +46,12 @@
         </q-card-section>
         <q-card-section class="col-12 col-sm-4">
           <q-input
-            clearable
             v-model="user.email"
+            clearable
             label="Email"
+            type="email"
             lazy-rules
+            autocomplete="email"
             :rules="[(val) => isValidEmailAddress(val) || 'Please enter a valid email address.']"
           />
         </q-card-section>
@@ -138,7 +142,10 @@
 
 <script>
 import { isValidEmailAddress } from 'src/composables/isValidEmailAddress.js'
-import { reactive, ref, toRefs } from 'vue'
+import { reactive, ref, toRefs, watch } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useQuasar } from 'quasar'
+import { useAuthStore } from 'stores/auth-store.js'
 import { useStripeStore } from 'stores/stripe-store.js'
 export default {
   name: 'PayDialog',
@@ -149,9 +156,16 @@ export default {
     }
   },
   setup(props) {
+    const $q = useQuasar()
     const { work } = toRefs(props)
+    console.log(work)
+    const authStore = useAuthStore()
+    const { loggedIn, userData } = storeToRefs(authStore)
+    const { updateUser } = authStore
     const stripeStore = useStripeStore()
     const { payStripe } = stripeStore
+    console.log(payStripe)
+    console.log(updateUser)
     const activator = ref(false)
     const user = reactive({
       firstName: '',
@@ -166,25 +180,56 @@ export default {
     const closeDialog = () => {
       activator.value = !activator.value
     }
+    watch(
+      userData,
+      (val) => {
+        user.firstName = val.firstName || val.displayName || ''
+        user.lastName = val.lastName || ''
+        user.email = val.email || ''
+        user.address = val.address || ''
+        user.city = val.city || ''
+        user.country = val.country || ''
+        user.postalCode = val.postalCode || ''
+        user.phone = val.phone || ''
+      },
+      { immediate: true, deep: true }
+    )
     const onSubmit = () => {
-      payStripe({
-        id: work.value.id,
-        name: work.value.name,
-        description: work.value.description,
-        email: user.email,
-        images: work.value.urlImageWork,
-        amount: work.value.price * 100,
-        currency: 'eur',
-        quantity: 1,
-        dataUser: user,
-        metadata: {
-          name: work.value.name,
-          studioId: work.value.id,
-          typeExercise: 'work',
-          titleStudiosPrice: work.value.artistId,
-          workIndex: work.value.index
-        }
-      })
+      if (!loggedIn.value) {
+        console.log('-------------------------------')
+        $q.dialog({
+          title: 'Attention!!!',
+          message: 'Are you sure you want to delete?',
+          cancel: true,
+          persistent: true,
+          position: 'bottom'
+        }).onOk(async () => {
+          console.log('+++++++++++++++++++++++++')
+        })
+      } else {
+        console.log(userData.value)
+        console.log(user)
+        console.log(userData.value === user)
+        // updateUser({ path: `users/${userData.value.userId}`, payload: user })
+      }
+      // payStripe({
+      //   id: work.value.id,
+      //   name: work.value.name,
+      //   description: work.value.description,
+      //   email: user.email,
+      //   images: work.value.urlImageWork,
+      //   amount: work.value.price * 100,
+      //   currency: 'eur',
+      //   quantity: 1,
+      //   dataUser: user,
+      //   metadata: {
+      //     name: work.value.name,
+      //     studioId: work.value.id,
+      //     typeExercise: 'work',
+      //     titleStudiosPrice: work.value.artistId,
+      //     workIndex: work.value.index
+      //   }
+      // })
       activator.value = !activator.value
     }
     return {

@@ -99,7 +99,7 @@ export default {
     TitleLineCenter
   },
   emits: ['closeDialog', 'switch'],
-  setup(props, { emit }) {
+  setup() {
     const authStore = useAuthStore()
     const { registerUser } = authStore
     const displayName = ref(null)
@@ -115,7 +115,7 @@ export default {
       email.value.validate()
       password.value.validate()
       if (!email.value.hasError && !password.value.hasError && !displayName.value.hasError) {
-        registerUser(formData.value).then(() => emit('closeDialog'))
+        registerUser(formData.value)
       }
     }
     return {

@@ -31,9 +31,12 @@
 </template>
 
 <script>
-import { ref, computed, toRefs } from 'vue'
+import { ref, computed, toRefs, watch } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from 'stores/auth-store.js'
 import LogIn from 'components/auth/LogIn.vue'
 import RegistrationUser from 'components/auth/RegistrationUser.vue'
+
 export default {
   name: 'DialogAuth',
   components: {
@@ -50,6 +53,8 @@ export default {
   setup(props, { emit }) {
     const switched = ref(false)
     const { modelValue } = toRefs(props)
+    const authStore = useAuthStore()
+    const { loggedIn } = storeToRefs(authStore)
     const dialog = computed({
       get() {
         return modelValue.value
@@ -67,6 +72,9 @@ export default {
       return {
         transform: `translateX(${switched.value ? 0 : 100}%)`
       }
+    })
+    watch(loggedIn, (val) => {
+      if (val) dialog.value = false
     })
     return {
       switched,

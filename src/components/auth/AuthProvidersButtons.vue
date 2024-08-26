@@ -2,7 +2,7 @@
   <q-btn no-caps outline rounded color="primary" class="full-width"
     ><q-icon left name="mdi-apple" /><slot name="apple" />
   </q-btn>
-  <q-btn no-caps outline rounded color="primary" class="full-width"
+  <q-btn no-caps outline rounded color="primary" class="full-width" @click="logInGoogle"
     ><svg
       xmlns="http://www.w3.org/2000/svg"
       width="20"
@@ -34,8 +34,16 @@
 </template>
 
 <script>
+import { useAuthStore } from 'stores/auth-store.js'
 export default {
-  name: 'AuthProvidersButtons'
+  name: 'AuthProvidersButtons',
+  setup() {
+    const authStore = useAuthStore()
+    const { logInGoogle } = authStore
+    return {
+      logInGoogle
+    }
+  }
 }
 </script>
 

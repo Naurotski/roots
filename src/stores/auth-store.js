@@ -6,15 +6,18 @@ import {
   updateProfile,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  signInWithPopup,
+  GoogleAuthProvider
 } from 'firebase/auth'
-import { ref as dbRef, set } from 'firebase/database'
+import { ref as dbRef, set, update, onValue, off } from 'firebase/database'
 import { auth, db } from 'boot/firebase.js'
 
 import { showErrorMessage } from 'src/composables/show-error-message.js'
 export const useAuthStore = defineStore('auth', () => {
   const loggedIn = ref(false)
   const userData = ref({})
+  const providerGoogle = new GoogleAuthProvider()
 
   const registerUser = async ({ displayName, email, password }) => {
     console.log('registerUser')
@@ -43,10 +46,32 @@ export const useAuthStore = defineStore('auth', () => {
       throw error
     }
   }
+  const logInGoogle = async () => {
+    console.log('logInGoogle')
+    try {
+      Loading.show()
+      auth.languageCode = 'it'
+      const result = await signInWithPopup(auth, providerGoogle)
+      console.log(result)
+      if (result._tokenResponse.isNewUser) {
+        console.log(result._tokenResponse.isNewUser)
+        await set(dbRef(db, `users/${result.user.uid}`), {
+          email: result.user.email,
+          firstName: result.user.displayName.split(' ')[0] || '',
+          lastName: result.user.displayName.split(' ')[1] || ''
+        })
+      }
+      Loading.hide()
+    } catch (error) {
+      showErrorMessage(error.message)
+      throw error
+    }
+  }
   const logoutUser = async () => {
     console.log('logoutUser')
     try {
       Loading.show()
+      await off(dbRef(db, `users/${userData.value.userId}`))
       await signOut(auth)
       Loading.hide()
     } catch (error) {
@@ -54,7 +79,7 @@ export const useAuthStore = defineStore('auth', () => {
       throw error
     }
   }
-  function handleAuthStateChange() {
+  const handleAuthStateChange = () => {
     console.log('handleAuthStateChange')
     onAuthStateChanged(auth, async (user) => {
       Loading.hide()
@@ -62,23 +87,45 @@ export const useAuthStore = defineStore('auth', () => {
         console.log('onAuthStateChanged-user - ', user)
         loggedIn.value = true
         LocalStorage.set('loggedIn', true)
-        userData.value = { userId: user.uid, displayName: user.displayName, email: user.email }
+        userData.value = {
+          userId: user.uid,
+          displayName: user.displayName.split(' ')[0],
+          email: user.email,
+          emailVerified: user.emailVerified
+        }
+        onValue(dbRef(db, `users/${user.uid}`), (snapshot) => {
+          const data = snapshot.val()
+          console.log('onValue-userUid - ', data)
+          userData.value = { ...userData.value, ...data }
+        })
       } else {
         console.log('onAuthStateChanged -  No user')
-        console.log(this.router.options.history.location)
         userData.value = {}
         loggedIn.value = false
         LocalStorage.set('loggedIn', false)
-        if (this.router.options.history.location === '/account') this.router.replace('/')
+        // if (this.router.options.history.location === '/account') this.router.replace('/')
       }
     })
+  }
+  const updateUser = async ({ path, payload }) => {
+    console.log('updateUser - ', path, payload)
+    try {
+      Loading.show()
+      await update(dbRef(db, path), payload)
+      Loading.hide()
+    } catch (error) {
+      showErrorMessage(error.message)
+      throw error
+    }
   }
   return {
     loggedIn,
     userData,
     registerUser,
     loginUser,
+    logInGoogle,
     logoutUser,
-    handleAuthStateChange
+    handleAuthStateChange,
+    updateUser
   }
 })

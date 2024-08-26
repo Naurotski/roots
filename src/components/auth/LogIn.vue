@@ -83,7 +83,7 @@ export default {
     AuthProvidersButtons
   },
   emits: ['closeDialog', 'switch'],
-  setup(props, { emit }) {
+  setup() {
     const authStore = useAuthStore()
     const { loginUser } = authStore
     const email = ref(null)
@@ -96,7 +96,7 @@ export default {
       email.value.validate()
       password.value.validate()
       if (!email.value.hasError && !password.value.hasError) {
-        loginUser(formData.value).then(() => emit('closeDialog'))
+        loginUser(formData.value)
       }
     }
     return {
