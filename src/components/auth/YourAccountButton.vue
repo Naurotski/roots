@@ -25,37 +25,30 @@
       </q-item>
     </q-list>
   </q-btn-dropdown>
-  <dialog-auth v-model="dialog" />
 </template>
 
 <script>
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'stores/auth-store.js'
-import DialogAuth from 'components/auth/DialogAuth.vue'
 
 export default {
   name: 'YourAccountButton',
-  components: {
-    DialogAuth
-  },
   setup() {
     const authStore = useAuthStore()
-    const { loggedIn, userData } = storeToRefs(authStore)
-    console.log(userData)
+    const { loggedIn, userData, loginDialog } = storeToRefs(authStore)
+    const { showLoginDialog } = authStore
     const { logoutUser } = authStore
     const status = ref(false)
-    const dialog = ref(false)
     const singIn = () => {
-      if (!dialog.value && !loggedIn.value) {
-        dialog.value = true
+      if (!loginDialog.value && !loggedIn.value) {
+        showLoginDialog(true)
       }
     }
     return {
       loggedIn,
       userData,
       status,
-      dialog,
       singIn,
       logoutUser
     }

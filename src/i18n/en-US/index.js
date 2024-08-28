@@ -3,6 +3,7 @@ export default {
     enter: 'enter',
     buy: 'buy',
     close: 'close',
+    continue: 'continue',
     oops: 'Oops. Nothing here...',
     thank: 'Thank you for your payment!',
     acquired: 'You have acquired a work of ',
@@ -16,7 +17,8 @@ export default {
     technicalWork: 'Technical Work',
     maintenance:
       'Our website is temporarily unavailable due to technical work. Please check back later',
-    or: 'OR'
+    or: 'OR',
+    attention: 'Attention!'
   },
   links: {
     home: 'Home',
@@ -46,7 +48,7 @@ export default {
     logInEmail: 'Log in with an email',
     logInAorta: 'Log in to Aorta',
     joinAorta: 'Join Aorta',
-    continue: 'Continue with',
+    continueWith: 'Continue with',
     forgot: 'Forgot your password?',
     don: "Don't have an account?",
     already: 'Already have an account?',
@@ -58,6 +60,7 @@ export default {
     about: 'About'
   },
   dialoguePayment: {
+    loginRequired: 'To make a purchase you need to log in to your account or register',
     delivery:
       'You can buy any artwork with free worldwide shipping. Please check all artwork and shipping information before confirming your purchase. All contact options can be found in the "Contacts" section. When delivering outside the EU, we issue accompanying documents for each painting, allowing the export of art objects. This may take another 2-3 weeks.',
     redirect: 'To process the payment you will be redirected to the Stripe platform page',

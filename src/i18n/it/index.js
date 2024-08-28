@@ -3,6 +3,7 @@ export default {
     enter: 'entrare',
     buy: 'Acquista',
     close: 'Chiudi',
+    continue: 'continuare',
     oops: "Ops. Qui non c'è niente...",
     thank: 'Grazie per il tuo pagamento!',
     acquired: "Hai acquisito un'opera di ",
@@ -16,7 +17,8 @@ export default {
     technicalWork: 'Lavoro Tecnico',
     maintenance:
       'Il nostro sito web è temporaneamente non disponibile a causa di lavori tecnici. Ricontrolla più tardi',
-    or: 'OPPURE'
+    or: 'OPPURE',
+    attention: 'Attenzione!'
   },
   links: {
     home: 'Home',
@@ -59,6 +61,8 @@ export default {
     about: 'Bio'
   },
   dialoguePayment: {
+    loginRequired:
+      'Per effettuare un acquisto è necessario accedere al proprio account o registrarsi',
     delivery:
       "Puoi acquistare qualsiasi opera d'arte con spedizione gratuita in tutto il mondo. Si prega di controllare tutte le informazioni sull'opera e sulla spedizione prima di confermare l'acquisto. Tutte le opzioni di contatto sono disponibili nella sezione 'Contatti'. In caso di consegna al di fuori dell'UE, emettiamo documenti di accompagnamento per ogni dipinto, consentendo l'esportazione di oggetti d'arte. Questo potrebbe richiedere altre 2-3 settimane.",
     redirect:

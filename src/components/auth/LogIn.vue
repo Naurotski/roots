@@ -3,7 +3,7 @@
     <q-card-section class="row">
       <div class="text-h5">{{ $t('auth.logInAorta') }}</div>
       <q-space />
-      <q-btn icon="close" flat round dense @click="$emit('closeDialog')" />
+      <q-btn icon="close" flat round dense @click="closeDialog" />
     </q-card-section>
     <q-card-section class="q-gutter-y-sm">
       <auth-providers-buttons>
@@ -82,17 +82,18 @@ export default {
     TitleLineCenter,
     AuthProvidersButtons
   },
-  emits: ['closeDialog', 'switch'],
+  emits: ['switch'],
   setup() {
     const authStore = useAuthStore()
-    const { loginUser } = authStore
+    const { loginUser, showLoginDialog } = authStore
     const email = ref(null)
     const password = ref(null)
     const formData = ref({
       email: '',
       password: ''
     })
-    function submitForm() {
+    const closeDialog = () => showLoginDialog(false)
+    const submitForm = () => {
       email.value.validate()
       password.value.validate()
       if (!email.value.hasError && !password.value.hasError) {
@@ -104,6 +105,7 @@ export default {
       password,
       formData,
       isValidEmailAddress,
+      closeDialog,
       submitForm
     }
   }

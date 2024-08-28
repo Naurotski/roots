@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { Loading, LocalStorage } from 'quasar'
 import {
   createUserWithEmailAndPassword,
@@ -15,9 +15,16 @@ import { auth, db } from 'boot/firebase.js'
 
 import { showErrorMessage } from 'src/composables/show-error-message.js'
 export const useAuthStore = defineStore('auth', () => {
+  const loginDialog = ref(false)
   const loggedIn = ref(false)
   const userData = ref({})
   const providerGoogle = new GoogleAuthProvider()
+
+  watch(loggedIn, (val) => {
+    if (val) loginDialog.value = false
+  })
+
+  const showLoginDialog = (val) => (loginDialog.value = val)
 
   const registerUser = async ({ displayName, email, password }) => {
     console.log('registerUser')
@@ -50,7 +57,6 @@ export const useAuthStore = defineStore('auth', () => {
     console.log('logInGoogle')
     try {
       Loading.show()
-      auth.languageCode = 'it'
       const result = await signInWithPopup(auth, providerGoogle)
       console.log(result)
       if (result._tokenResponse.isNewUser) {
@@ -119,8 +125,10 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
   return {
+    loginDialog,
     loggedIn,
     userData,
+    showLoginDialog,
     registerUser,
     loginUser,
     logInGoogle,

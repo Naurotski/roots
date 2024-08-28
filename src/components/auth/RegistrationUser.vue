@@ -5,18 +5,18 @@
     >
       <div class="text-h5">{{ $t('auth.joinAorta') }}</div>
       <q-space />
-      <q-btn icon="close" flat round dense @click="$emit('closeDialog')" />
+      <q-btn icon="close" flat round dense @click="closeDialog" />
     </q-card-actions>
     <q-card-section class="q-gutter-y-sm">
       <auth-providers-buttons>
         <template #apple>
-          {{ `${$t('auth.continue')} Apple` }}
+          {{ `${$t('auth.continueWith')} Apple` }}
         </template>
         <template #google>
-          {{ `${$t('auth.continue')} Google` }}
+          {{ `${$t('auth.continueWith')} Google` }}
         </template>
         <template #facebook>
-          {{ `${$t('auth.continue')} Facebook` }}
+          {{ `${$t('auth.continueWith')} Facebook` }}
         </template>
       </auth-providers-buttons>
     </q-card-section>
@@ -98,10 +98,10 @@ export default {
     AuthProvidersButtons,
     TitleLineCenter
   },
-  emits: ['closeDialog', 'switch'],
+  emits: ['switch'],
   setup() {
     const authStore = useAuthStore()
-    const { registerUser } = authStore
+    const { registerUser, showLoginDialog } = authStore
     const displayName = ref(null)
     const email = ref(null)
     const password = ref(null)
@@ -110,7 +110,8 @@ export default {
       email: '',
       password: ''
     })
-    function submitForm() {
+    const closeDialog = () => showLoginDialog(false)
+    const submitForm = () => {
       displayName.value.validate()
       email.value.validate()
       password.value.validate()
@@ -124,6 +125,7 @@ export default {
       password,
       formData,
       isValidEmailAddress,
+      closeDialog,
       submitForm
     }
   }

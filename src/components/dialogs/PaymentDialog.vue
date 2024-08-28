@@ -145,6 +145,7 @@ import { isValidEmailAddress } from 'src/composables/isValidEmailAddress.js'
 import { reactive, ref, toRefs, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store.js'
 import { useStripeStore } from 'stores/stripe-store.js'
 export default {
@@ -157,6 +158,7 @@ export default {
   },
   setup(props) {
     const $q = useQuasar()
+    const { t } = useI18n()
     const { work } = toRefs(props)
     console.log(work)
     const authStore = useAuthStore()
@@ -196,15 +198,23 @@ export default {
     )
     const onSubmit = () => {
       if (!loggedIn.value) {
-        console.log('-------------------------------')
         $q.dialog({
-          title: 'Attention!!!',
-          message: 'Are you sure you want to delete?',
+          title: t('common.attention'),
+          html: true,
+          //Проверить перевод!!!!!!!!!!!!!!!!!!!!!!
+          message: `<div class="text-center">
+        ${t('dialoguePayment.loginRequired')}
+      </div>`,
           cancel: true,
           persistent: true,
-          position: 'bottom'
+          position: $q.screen.xs ? 'bottom' : 'standard',
+          ok: {
+            label: t('common.continue'),
+            flat: true
+          }
         }).onOk(async () => {
           console.log('+++++++++++++++++++++++++')
+          activator.value = !activator.value
         })
       } else {
         console.log(userData.value)
@@ -230,7 +240,6 @@ export default {
       //     workIndex: work.value.index
       //   }
       // })
-      activator.value = !activator.value
     }
     return {
       activator,
