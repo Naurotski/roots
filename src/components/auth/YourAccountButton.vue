@@ -31,12 +31,15 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'stores/auth-store.js'
+import { useUserStore } from 'stores/user-store.js'
 
 export default {
   name: 'YourAccountButton',
   setup() {
     const authStore = useAuthStore()
-    const { loggedIn, userData, loginDialog } = storeToRefs(authStore)
+    const { loggedIn, loginDialog } = storeToRefs(authStore)
+    const userStore = useUserStore()
+    const { userData } = storeToRefs(userStore)
     const { showLoginDialog } = authStore
     const { logoutUser } = authStore
     const status = ref(false)

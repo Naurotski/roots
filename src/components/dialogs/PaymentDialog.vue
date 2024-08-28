@@ -147,6 +147,7 @@ import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store.js'
+import { useUserStore } from 'stores/user-store.js'
 import { useStripeStore } from 'stores/stripe-store.js'
 export default {
   name: 'PayDialog',
@@ -162,8 +163,10 @@ export default {
     const { work } = toRefs(props)
     console.log(work)
     const authStore = useAuthStore()
-    const { loggedIn, userData } = storeToRefs(authStore)
-    const { updateUser } = authStore
+    const { loggedIn } = storeToRefs(authStore)
+    const userStore = useUserStore()
+    const { userData } = storeToRefs(userStore)
+    const { updateUser } = userStore
     const stripeStore = useStripeStore()
     const { payStripe } = stripeStore
     console.log(payStripe)

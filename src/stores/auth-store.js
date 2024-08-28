@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import { ref, watch } from 'vue'
 import { Loading, LocalStorage } from 'quasar'
 import {
@@ -10,15 +10,19 @@ import {
   signInWithPopup,
   GoogleAuthProvider
 } from 'firebase/auth'
-import { ref as dbRef, set, update, onValue, off } from 'firebase/database'
+import { ref as dbRef, set, onValue, off } from 'firebase/database'
 import { auth, db } from 'boot/firebase.js'
+import { useUserStore } from 'stores/user-store.js'
 
 import { showErrorMessage } from 'src/composables/show-error-message.js'
 export const useAuthStore = defineStore('auth', () => {
   const loginDialog = ref(false)
   const loggedIn = ref(false)
-  const userData = ref({})
   const providerGoogle = new GoogleAuthProvider()
+
+  const userStore = useUserStore()
+  const { userData } = storeToRefs(userStore)
+  const { setUserData } = userStore
 
   watch(loggedIn, (val) => {
     if (val) loginDialog.value = false
@@ -93,37 +97,26 @@ export const useAuthStore = defineStore('auth', () => {
         console.log('onAuthStateChanged-user - ', user)
         loggedIn.value = true
         LocalStorage.set('loggedIn', true)
-        userData.value = {
+        setUserData({
           userId: user.uid,
           displayName: user.displayName.split(' ')[0],
           email: user.email,
           emailVerified: user.emailVerified
-        }
+        })
         onValue(dbRef(db, `users/${user.uid}`), (snapshot) => {
           const data = snapshot.val()
           console.log('onValue-userUid - ', data)
-          userData.value = { ...userData.value, ...data }
+          setUserData(data)
         })
       } else {
         console.log('onAuthStateChanged -  No user')
-        userData.value = {}
+        setUserData('logoutUser')
         loggedIn.value = false
         LocalStorage.set('loggedIn', false)
-        // if (this.router.options.history.location === '/account') this.router.replace('/')
       }
     })
   }
-  const updateUser = async ({ path, payload }) => {
-    console.log('updateUser - ', path, payload)
-    try {
-      Loading.show()
-      await update(dbRef(db, path), payload)
-      Loading.hide()
-    } catch (error) {
-      showErrorMessage(error.message)
-      throw error
-    }
-  }
+
   return {
     loginDialog,
     loggedIn,
@@ -133,7 +126,6 @@ export const useAuthStore = defineStore('auth', () => {
     loginUser,
     logInGoogle,
     logoutUser,
-    handleAuthStateChange,
-    updateUser
+    handleAuthStateChange
   }
 })

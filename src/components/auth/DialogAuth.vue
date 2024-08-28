@@ -16,7 +16,6 @@
         class="block-1 q-pa-lg"
         :style="contentStyle"
         style="width: 100%"
-        @closeDialog="dialog = false"
         @switch="switched = true"
       />
       <registration-user
@@ -31,7 +30,7 @@
 </template>
 
 <script>
-import { ref, computed, toRefs, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'stores/auth-store.js'
 import LogIn from 'components/auth/LogIn.vue'
@@ -50,17 +49,17 @@ export default {
     }
   },
   emits: ['update:modelValue'],
-  setup(props, { emit }) {
+  setup() {
     const switched = ref(false)
-    const { modelValue } = toRefs(props)
     const authStore = useAuthStore()
-    const { loggedIn } = storeToRefs(authStore)
+    const { loginDialog } = storeToRefs(authStore)
+    const { showLoginDialog } = authStore
     const dialog = computed({
       get() {
-        return modelValue.value
+        return loginDialog.value
       },
       set(val) {
-        emit('update:modelValue', val)
+        showLoginDialog(val)
       }
     })
     const contentStyle = computed(() => {
@@ -72,9 +71,6 @@ export default {
       return {
         transform: `translateX(${switched.value ? 0 : 100}%)`
       }
-    })
-    watch(loggedIn, (val) => {
-      if (val) dialog.value = false
     })
     return {
       switched,

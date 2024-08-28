@@ -4,17 +4,20 @@
 </template>
 
 <script>
+import { watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'stores/auth-store.js'
-import { watch } from 'vue'
+import { useUserStore } from 'stores/user-store.js'
 
 export default {
   name: 'YourAccountPage',
   setup() {
     const router = useRouter()
     const authStore = useAuthStore()
-    const { loggedIn, userData } = storeToRefs(authStore)
+    const { loggedIn } = storeToRefs(authStore)
+    const userStore = useUserStore()
+    const { userData } = storeToRefs(userStore)
     watch(loggedIn, (val) => {
       if (!val) router.replace('/')
     })
