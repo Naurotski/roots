@@ -29,6 +29,7 @@ export const useUserStore = defineStore('user', () => {
       throw error
     }
   }
+
   return {
     userData,
     setUserData,

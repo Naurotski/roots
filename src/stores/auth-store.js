@@ -8,6 +8,7 @@ import {
   signOut,
   onAuthStateChanged,
   signInWithPopup,
+  fetchSignInMethodsForEmail,
   GoogleAuthProvider
 } from 'firebase/auth'
 import { ref as dbRef, set, onValue, off } from 'firebase/database'
@@ -50,8 +51,9 @@ export const useAuthStore = defineStore('auth', () => {
     console.log('loginUser')
     try {
       Loading.show()
-      await signInWithEmailAndPassword(auth, email, password)
+      const result = await signInWithEmailAndPassword(auth, email, password)
       Loading.hide()
+      return result
     } catch (error) {
       showErrorMessage(error.message)
       throw error
@@ -72,6 +74,7 @@ export const useAuthStore = defineStore('auth', () => {
         })
       }
       Loading.hide()
+      return result
     } catch (error) {
       showErrorMessage(error.message)
       throw error
@@ -116,7 +119,18 @@ export const useAuthStore = defineStore('auth', () => {
       }
     })
   }
-
+  const checkUserExistence = async (email) => {
+    console.log('checkUserExistence =======', email)
+    try {
+      Loading.show()
+      const result = await fetchSignInMethodsForEmail(auth, email)
+      Loading.hide()
+      return result
+    } catch (error) {
+      showErrorMessage(error.message)
+      throw error
+    }
+  }
   return {
     loginDialog,
     loggedIn,
@@ -126,6 +140,7 @@ export const useAuthStore = defineStore('auth', () => {
     loginUser,
     logInGoogle,
     logoutUser,
-    handleAuthStateChange
+    handleAuthStateChange,
+    checkUserExistence
   }
 })

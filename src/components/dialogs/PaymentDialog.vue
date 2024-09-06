@@ -1,7 +1,7 @@
 <template>
   <q-btn :label="$t('common.buy')" @click="activator = true" />
   <q-dialog v-model="activator" persistent>
-    <q-card style="max-width: 900px">
+    <q-card style="max-width: 900px; border-radius: 25px">
       <q-toolbar class="q-pt-md">
         <q-toolbar-title class="text-h5">
           {{ work.name }}
@@ -108,11 +108,13 @@
             clearable
             class="col-12 col-sm-6"
             v-model="user.phone"
+            type="tel"
             :label="$t('dialoguePayment.phone')"
             lazy-rules
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
-              (v) => v.length <= 30 || 'Not more than 30 characters'
+              (v) => v.length <= 30 || 'Not more than 30 characters',
+              (v) => isValidPhone(v) || 'Please enter a valid phone number'
             ]"
           />
         </q-card-section>
@@ -125,32 +127,29 @@
         </q-card-section>
       </q-form>
     </q-card>
-    <!--    <q-card style="min-width: 350px">-->
-    <!--      <q-card-section>-->
-    <!--        <div class="text-h6">Your address</div>-->
-    <!--      </q-card-section>-->
-    <!--      <q-card-section class="q-pt-none">-->
-    <!--        <q-input dense v-model="address" autofocus @keyup.enter="prompt = false" />-->
-    <!--      </q-card-section>-->
-    <!--      <q-card-actions align="right" class="text-primary">-->
-    <!--        <q-btn flat label="Cancel" v-close-popup />-->
-    <!--        <q-btn flat label="Add address" v-close-popup />-->
-    <!--      </q-card-actions>-->
-    <!--    </q-card>-->
   </q-dialog>
+  <login-required-dialog
+    v-model="requiredDialog"
+    :auth-provider="authProvider"
+    :email="user.email"
+    @allowPayment="onSubmit"
+  />
 </template>
 
 <script>
 import { isValidEmailAddress } from 'src/composables/isValidEmailAddress.js'
 import { reactive, ref, toRefs, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useQuasar } from 'quasar'
-import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store.js'
 import { useUserStore } from 'stores/user-store.js'
 import { useStripeStore } from 'stores/stripe-store.js'
+import LoginRequiredDialog from 'components/auth/LoginRequiredDialog.vue'
+import { isValidPhone } from 'src/composables/isValidPhone.js'
 export default {
   name: 'PayDialog',
+  components: {
+    LoginRequiredDialog
+  },
   props: {
     work: {
       type: Object,
@@ -158,12 +157,11 @@ export default {
     }
   },
   setup(props) {
-    const $q = useQuasar()
-    const { t } = useI18n()
     const { work } = toRefs(props)
     console.log(work)
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
+    const { checkUserExistence } = authStore
     const userStore = useUserStore()
     const { userData } = storeToRefs(userStore)
     const { updateUser } = userStore
@@ -172,6 +170,8 @@ export default {
     console.log(payStripe)
     console.log(updateUser)
     const activator = ref(false)
+    const requiredDialog = ref(false)
+    const authProvider = ref([])
     const user = reactive({
       firstName: '',
       lastName: '',
@@ -182,6 +182,7 @@ export default {
       postalCode: '',
       phone: ''
     })
+    const localUser = ref({})
     const closeDialog = () => {
       activator.value = !activator.value
     }
@@ -199,30 +200,22 @@ export default {
       },
       { immediate: true, deep: true }
     )
-    const onSubmit = () => {
+    const onSubmit = async () => {
       if (!loggedIn.value) {
-        $q.dialog({
-          title: t('common.attention'),
-          html: true,
-          //Проверить перевод!!!!!!!!!!!!!!!!!!!!!!
-          message: `<div class="text-center">
-        ${t('dialoguePayment.loginRequired')}
-      </div>`,
-          cancel: true,
-          persistent: true,
-          position: $q.screen.xs ? 'bottom' : 'standard',
-          ok: {
-            label: t('common.continue'),
-            flat: true
-          }
-        }).onOk(async () => {
-          console.log('+++++++++++++++++++++++++')
-          activator.value = !activator.value
-        })
+        localUser.value = { ...user }
+        authProvider.value = await checkUserExistence(user.email)
+        requiredDialog.value = true
       } else {
         console.log(userData.value)
+        console.log(localUser.value)
         console.log(user)
-        console.log(userData.value === user)
+        let localObj = localUser.value.email ? localUser.value : user
+        const diffObj = Object.keys(localObj).reduce((result, key) => {
+          if (!(key in userData.value)) result[key] = localObj[key]
+          return result
+        }, {})
+        console.log(diffObj)
+        // activator.value = false
         // updateUser({ path: `users/${userData.value.userId}`, payload: user })
       }
       // payStripe({
@@ -234,7 +227,7 @@ export default {
       //   amount: work.value.price * 100,
       //   currency: 'eur',
       //   quantity: 1,
-      //   dataUser: user,
+      //   dataUser: localUser.value,
       //   metadata: {
       //     name: work.value.name,
       //     studioId: work.value.id,
@@ -246,7 +239,10 @@ export default {
     }
     return {
       activator,
+      requiredDialog,
+      authProvider,
       user,
+      isValidPhone,
       isValidEmailAddress,
       closeDialog,
       onSubmit
