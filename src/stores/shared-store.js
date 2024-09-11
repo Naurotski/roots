@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { ref as dbRef, onValue } from 'firebase/database'
 import { db } from 'boot/firebase.js'
+import axios from 'axios'
+import { showErrorMessage } from 'src/composables/show-error-message.js'
 
 export const useSharedStore = defineStore('shared', () => {
   const essentialLinks = ref([
@@ -26,11 +28,21 @@ export const useSharedStore = defineStore('shared', () => {
   ])
   //{ label: 'links.graphics', name: 'graphics' },   { label: 'links.installation', name: 'installation' }
   const rightDrawerOpen = ref(false)
-  const toggleRightDrawer = () => (rightDrawerOpen.value = !rightDrawerOpen.value)
-
   const carouselHomePage = ref([])
   const selectedExhibitionsData = ref({})
   const worksForSale = ref([])
+  const listCountry = ref([])
+
+  const sortedCountries = computed(() =>
+    listCountry.value.sort((a, b) => {
+      if (a.countryName > b.countryName) return 1
+      if (a.countryName < b.countryName) return -1
+      return 0
+    })
+  )
+
+  const toggleRightDrawer = () => (rightDrawerOpen.value = !rightDrawerOpen.value)
+
   const getHomePageData = () => {
     onValue(dbRef(db, 'HomePageAorta/'), async (snapshot) => {
       if (snapshot.val()) {
@@ -46,6 +58,21 @@ export const useSharedStore = defineStore('shared', () => {
     })
   }
 
+  const getCountries = async () => {
+    console.log('getCountries')
+    try {
+      const response = await axios.get('https://restcountries.com/v3.1/all')
+      listCountry.value = response.data
+        .filter((item) => item.idd.root)
+        .map((country) => ({
+          countryName: country.name.common,
+          callingCode: `${country.idd.root}${country.idd.suffixes?.[0]}`
+        }))
+    } catch (error) {
+      showErrorMessage(error.message)
+      throw error
+    }
+  }
   return {
     essentialLinks,
     actionsLinks,
@@ -54,7 +81,9 @@ export const useSharedStore = defineStore('shared', () => {
     carouselHomePage,
     selectedExhibitionsData,
     worksForSale,
+    sortedCountries,
     toggleRightDrawer,
-    getHomePageData
+    getHomePageData,
+    getCountries
   }
 })

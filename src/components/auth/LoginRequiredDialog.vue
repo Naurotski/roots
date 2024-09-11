@@ -11,7 +11,7 @@
         <q-space />
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-actions>
-      <div v-if="authProvider.length">
+      <div>
         <q-card-section>
           <div class="text-center">
             {{ textMessage }}
@@ -40,7 +40,7 @@
       </div>
       <q-card-actions align="right" class="text-primary">
         <q-btn
-          v-if="authProvider.length && authProvider[0] !== 'google.com'"
+          v-if="authProvider[0] !== 'google.com'"
           flat
           :label="$t('common.continue')"
           @click="continueBuy"
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { computed, toRefs, watch, ref, onUnmounted } from 'vue'
+import { computed, toRefs, watch, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store.js'
 import GoogleButton from 'components/auth/GoogleButton.vue'
@@ -78,9 +78,8 @@ export default {
   setup(props, { emit }) {
     const { t } = useI18n()
     const { modelValue, authProvider, email } = toRefs(props)
-    console.log(modelValue.value)
     const authStore = useAuthStore()
-    const { loginUser, logInGoogle } = authStore
+    const { loginUser, logInGoogle, showLoginDialog } = authStore
     const textMessage = ref('')
     const pass = ref(null)
     const password = ref('')
@@ -105,6 +104,11 @@ export default {
       }
     })
     const continueBuy = async () => {
+      console.log(authProvider.value)
+      if (!authProvider.value.length) {
+        showLoginDialog(true)
+        emit('update:modelValue', false)
+      }
       if (authProvider.value[0] === 'password') {
         pass.value.validate()
         if (!pass.value.hasError) {
@@ -127,7 +131,6 @@ export default {
       textMessage.value = ''
       password.value = ''
     }
-    onUnmounted(() => console.log('onUnmounted++++++++++++++++++'))
     return {
       dialog,
       pass,

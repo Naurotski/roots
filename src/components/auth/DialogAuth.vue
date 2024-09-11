@@ -22,7 +22,6 @@
         class="block-2 q-pa-lg"
         :style="actionsStyle"
         style="width: 100%"
-        @closeDialog="dialog = false"
         @switch="switched = false"
       />
     </q-card>
@@ -30,9 +29,10 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'stores/auth-store.js'
+import { useStripeStore } from 'stores/stripe-store.js'
 import LogIn from 'components/auth/LogIn.vue'
 import RegistrationUser from 'components/auth/RegistrationUser.vue'
 
@@ -42,18 +42,13 @@ export default {
     LogIn,
     RegistrationUser
   },
-  props: {
-    modelValue: {
-      type: Boolean,
-      required: true
-    }
-  },
-  emits: ['update:modelValue'],
   setup() {
     const switched = ref(false)
     const authStore = useAuthStore()
     const { loginDialog } = storeToRefs(authStore)
     const { showLoginDialog } = authStore
+    const stripeStore = useStripeStore()
+    const { deliveryData } = storeToRefs(stripeStore)
     const dialog = computed({
       get() {
         return loginDialog.value
@@ -71,6 +66,9 @@ export default {
       return {
         transform: `translateX(${switched.value ? 0 : 100}%)`
       }
+    })
+    watch(deliveryData, (val) => {
+      if (val.email) switched.value = true
     })
     return {
       switched,

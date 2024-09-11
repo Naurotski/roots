@@ -56,15 +56,19 @@
           />
         </q-card-section>
         <q-card-section class="col-12 col-sm-4">
-          <q-input
-            clearable
+          <q-select
             v-model="user.country"
+            :options="options"
+            option-value="countryName"
+            option-label="countryName"
             :label="$t('dialoguePayment.country')"
+            options-dense
+            emit-value
+            use-input
+            input-debounce="0"
+            @filter="filterFn"
             lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-              (v) => v.length <= 30 || 'Not more than 30 characters'
-            ]"
+            :rules="[(val) => (val && val.length > 0) || 'Please choose something']"
           />
         </q-card-section>
         <q-card-section class="col-12 col-sm-4">
@@ -106,15 +110,26 @@
         <q-card-section class="col-12 col-sm-4">
           <q-input
             clearable
-            class="col-12 col-sm-6"
             v-model="user.phone"
             type="tel"
             :label="$t('dialoguePayment.phone')"
             lazy-rules
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
-              (v) => v.length <= 30 || 'Not more than 30 characters',
               (v) => isValidPhone(v) || 'Please enter a valid phone number'
+            ]"
+          />
+        </q-card-section>
+        <q-card-section v-if="user.country === 'Italy'" class="col-12 col-sm-4">
+          <q-input
+            clearable
+            v-model="user.codiceFiscale"
+            type="tel"
+            label="codice fiscale"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+              (v) => v.length <= 30 || 'Not more than 30 characters'
             ]"
           />
         </q-card-section>
@@ -138,11 +153,12 @@
 
 <script>
 import { isValidEmailAddress } from 'src/composables/isValidEmailAddress.js'
-import { reactive, ref, toRefs, watch } from 'vue'
+import { ref, toRefs, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'stores/auth-store.js'
 import { useUserStore } from 'stores/user-store.js'
 import { useStripeStore } from 'stores/stripe-store.js'
+import { useSharedStore } from 'stores/shared-store.js'
 import LoginRequiredDialog from 'components/auth/LoginRequiredDialog.vue'
 import { isValidPhone } from 'src/composables/isValidPhone.js'
 export default {
@@ -166,13 +182,20 @@ export default {
     const { userData } = storeToRefs(userStore)
     const { updateUser } = userStore
     const stripeStore = useStripeStore()
-    const { payStripe } = stripeStore
-    console.log(payStripe)
+    const { deliveryData } = toRefs(stripeStore)
+    const { changeDeliveryData } = stripeStore
+    // const { payStripe } = stripeStore
+    const sharedStore = useSharedStore()
+    const { sortedCountries } = storeToRefs(sharedStore)
+    const { getCountries } = sharedStore
+    if (!sortedCountries.value.length) getCountries()
     console.log(updateUser)
+    const options = ref(sortedCountries.value)
     const activator = ref(false)
     const requiredDialog = ref(false)
     const authProvider = ref([])
-    const user = reactive({
+
+    const user = ref({
       firstName: '',
       lastName: '',
       email: '',
@@ -180,43 +203,75 @@ export default {
       city: '',
       country: '',
       postalCode: '',
-      phone: ''
+      phone: '',
+      codiceFiscale: ''
     })
-    const localUser = ref({})
     const closeDialog = () => {
       activator.value = !activator.value
     }
     watch(
       userData,
       (val) => {
-        user.firstName = val.firstName || val.displayName || ''
-        user.lastName = val.lastName || ''
-        user.email = val.email || ''
-        user.address = val.address || ''
-        user.city = val.city || ''
-        user.country = val.country || ''
-        user.postalCode = val.postalCode || ''
-        user.phone = val.phone || ''
+        if (!val.email) {
+          user.value = {}
+        } else {
+          user.value.firstName ||= val.firstName || val.displayName || ''
+          user.value.lastName ||= val.lastName || ''
+          user.value.email ||= val.email || ''
+          user.value.address ||= val.address || ''
+          user.value.city ||= val.city || ''
+          user.value.country ||= val.country || ''
+          user.value.postalCode ||= val.postalCode || ''
+          user.value.phone ||= val.phone || ''
+          user.value.codiceFiscale ||= val.codiceFiscale || ''
+        }
       },
       { immediate: true, deep: true }
     )
+    watch(
+      () => user.value.country,
+      (val) => {
+        if (
+          !user.value.phone ||
+          sortedCountries.value.some((elem) => elem.callingCode === user.value.phone)
+        ) {
+          user.value.phone = sortedCountries.value.find(
+            (elem) => elem.countryName === val
+          )?.callingCode
+        }
+      }
+    )
+    const filterFn = (val, update) => {
+      update(() => {
+        const needle = val.toLowerCase()
+        options.value = sortedCountries.value.filter(
+          (item) => item.countryName.toLowerCase().indexOf(needle) > -1
+        )
+      })
+    }
     const onSubmit = async () => {
+      changeDeliveryData({ ...user.value })
       if (!loggedIn.value) {
-        localUser.value = { ...user }
-        authProvider.value = await checkUserExistence(user.email)
+        authProvider.value = await checkUserExistence(user.value.email)
         requiredDialog.value = true
       } else {
-        console.log(userData.value)
-        console.log(localUser.value)
-        console.log(user)
-        let localObj = localUser.value.email ? localUser.value : user
-        const diffObj = Object.keys(localObj).reduce((result, key) => {
-          if (!(key in userData.value)) result[key] = localObj[key]
+        const diffObj = Object.keys(user.value).reduce((result, key) => {
+          if (!(key in userData.value)) result[key] = user.value[key]
           return result
         }, {})
         console.log(diffObj)
-        // activator.value = false
-        // updateUser({ path: `users/${userData.value.userId}`, payload: user })
+        console.log(Object.keys(diffObj).length)
+        if (Object.keys(diffObj).length) {
+          console.log('============================')
+          await updateUser({
+            path: `users/${userData.value.userId}`,
+            payload: diffObj
+          })
+        }
+        console.log('userData.value =====', userData.value)
+        console.log('deliveryData.value =====', deliveryData.value)
+        console.log('user =====', user.value)
+        activator.value = false
       }
       // payStripe({
       //   id: work.value.id,
@@ -227,7 +282,7 @@ export default {
       //   amount: work.value.price * 100,
       //   currency: 'eur',
       //   quantity: 1,
-      //   dataUser: localUser.value,
+      //   dataUser: userData.value,
       //   metadata: {
       //     name: work.value.name,
       //     studioId: work.value.id,
@@ -236,15 +291,21 @@ export default {
       //     workIndex: work.value.index
       //   }
       // })
+      changeDeliveryData({})
     }
+
     return {
       activator,
       requiredDialog,
       authProvider,
       user,
+      sortedCountries,
+      getCountries,
+      options,
       isValidPhone,
       isValidEmailAddress,
       closeDialog,
+      filterFn,
       onSubmit
     }
   }

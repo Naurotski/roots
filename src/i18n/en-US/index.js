@@ -61,7 +61,7 @@ export default {
   },
   dialoguePayment: {
     loginRequired: 'To make a purchase you need to log in to your account',
-    registrationRequired: '',
+    registrationRequired: 'To make a purchase you need to register',
     delivery:
       'You can buy any artwork with free worldwide shipping. Please check all artwork and shipping information before confirming your purchase. All contact options can be found in the "Contacts" section. When delivering outside the EU, we issue accompanying documents for each painting, allowing the export of art objects. This may take another 2-3 weeks.',
     redirect: 'To process the payment you will be redirected to the Stripe platform page',

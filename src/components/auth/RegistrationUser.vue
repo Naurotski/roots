@@ -69,7 +69,7 @@
           rounded
           color="black"
           class="q-mt-xs full-width"
-          :label="`${$t('auth.continue')} email`"
+          :label="`${$t('auth.continueWith')} email`"
           type="submit"
         ></q-btn>
       </q-card-section>
@@ -87,11 +87,14 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'stores/auth-store.js'
+import { useStripeStore } from 'stores/stripe-store.js'
 import AuthProvidersButtons from 'components/auth/AuthProvidersButtons.vue'
 import TitleLineCenter from 'components/TitleLineCenter.vue'
 import { isValidEmailAddress } from 'src/composables/isValidEmailAddress.js'
+
 export default {
   name: 'RegistrationUser',
   components: {
@@ -102,6 +105,8 @@ export default {
   setup() {
     const authStore = useAuthStore()
     const { registerUser, showLoginDialog } = authStore
+    const stripeStore = useStripeStore()
+    const { deliveryData } = storeToRefs(stripeStore)
     const displayName = ref(null)
     const email = ref(null)
     const password = ref(null)
@@ -110,6 +115,16 @@ export default {
       email: '',
       password: ''
     })
+    watch(
+      deliveryData,
+      (val) => {
+        if (val.email) {
+          formData.value.displayName = val.firstName
+          formData.value.email = val.email
+        }
+      },
+      { immediate: true }
+    )
     const closeDialog = () => showLoginDialog(false)
     const submitForm = () => {
       displayName.value.validate()

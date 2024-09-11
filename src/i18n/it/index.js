@@ -62,7 +62,7 @@ export default {
   },
   dialoguePayment: {
     loginRequired: 'Per effettuare un acquisto è necessario accedere al proprio account',
-    registrationRequired: '',
+    registrationRequired: 'Per effettuare un acquisto è necessario registrarsi',
     delivery:
       "Puoi acquistare qualsiasi opera d'arte con spedizione gratuita in tutto il mondo. Si prega di controllare tutte le informazioni sull'opera e sulla spedizione prima di confermare l'acquisto. Tutte le opzioni di contatto sono disponibili nella sezione 'Contatti'. In caso di consegna al di fuori dell'UE, emettiamo documenti di accompagnamento per ogni dipinto, consentendo l'esportazione di oggetti d'arte. Questo potrebbe richiedere altre 2-3 settimane.",
     redirect:

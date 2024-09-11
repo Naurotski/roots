@@ -41,9 +41,12 @@ export const useAuthStore = defineStore('auth', () => {
       await set(dbRef(db, `users/${response.user.uid}`), {
         email
       })
+      setUserData({
+        displayName
+      })
       Loading.hide()
     } catch (error) {
-      showErrorMessage(error.message)
+      showErrorMessage(error.message.match(/\((.*?)\)/)[1])
       throw error
     }
   }
@@ -55,7 +58,7 @@ export const useAuthStore = defineStore('auth', () => {
       Loading.hide()
       return result
     } catch (error) {
-      showErrorMessage(error.message)
+      showErrorMessage(error.message.match(/\((.*?)\)/)[1])
       throw error
     }
   }
@@ -88,13 +91,13 @@ export const useAuthStore = defineStore('auth', () => {
       await signOut(auth)
       Loading.hide()
     } catch (error) {
-      showErrorMessage(error.message)
+      showErrorMessage(error.message.match(/\((.*?)\)/)[1])
       throw error
     }
   }
   const handleAuthStateChange = () => {
     console.log('handleAuthStateChange')
-    onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(auth, (user) => {
       Loading.hide()
       if (user) {
         console.log('onAuthStateChanged-user - ', user)
@@ -102,7 +105,7 @@ export const useAuthStore = defineStore('auth', () => {
         LocalStorage.set('loggedIn', true)
         setUserData({
           userId: user.uid,
-          displayName: user.displayName.split(' ')[0],
+          displayName: user.displayName?.split(' ')[0] || '',
           email: user.email,
           emailVerified: user.emailVerified
         })
