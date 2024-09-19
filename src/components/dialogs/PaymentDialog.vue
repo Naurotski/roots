@@ -59,7 +59,6 @@
           <q-select
             v-model="user.country"
             :options="options"
-            option-value="countryName"
             option-label="countryName"
             :label="$t('dialoguePayment.country')"
             options-dense
@@ -68,7 +67,9 @@
             input-debounce="0"
             @filter="filterFn"
             lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'Please choose something']"
+            :rules="[
+              (val) => (val.countryName && val.countryName.length > 0) || 'Please choose something'
+            ]"
           />
         </q-card-section>
         <q-card-section class="col-12 col-sm-4">
@@ -120,12 +121,12 @@
             ]"
           />
         </q-card-section>
-        <q-card-section v-if="user.country === 'Italy'" class="col-12 col-sm-4">
+        <q-card-section v-if="user.country?.countryName === 'Italy'" class="col-12 col-sm-4">
           <q-input
             clearable
-            v-model="user.codiceFiscale"
+            v-model="user.taxId"
             type="tel"
-            label="codice fiscale"
+            label="Codice Fiscale"
             lazy-rules
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
@@ -141,6 +142,8 @@
           <q-btn :label="$t('common.buy')" type="submit" color="primary" />
         </q-card-section>
       </q-form>
+      <pre>user - {{ user }}</pre>
+      <pre>userData - {{ userData }}</pre>
     </q-card>
   </q-dialog>
   <login-required-dialog
@@ -155,7 +158,7 @@
 import { isValidEmailAddress } from 'src/composables/isValidEmailAddress.js'
 import { ref, toRefs, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useAuthStore } from 'stores/auth-store.js'
+import { useAuthStore } from 'stores/auth-store'
 import { useUserStore } from 'stores/user-store.js'
 import { useStripeStore } from 'stores/stripe-store.js'
 import { useSharedStore } from 'stores/shared-store.js'
@@ -174,7 +177,7 @@ export default {
   },
   setup(props) {
     const { work } = toRefs(props)
-    console.log(work)
+    console.log('work.value =======', work.value)
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
     const { checkUserExistence } = authStore
@@ -182,29 +185,27 @@ export default {
     const { userData } = storeToRefs(userStore)
     const { updateUser } = userStore
     const stripeStore = useStripeStore()
-    const { deliveryData } = toRefs(stripeStore)
-    const { changeDeliveryData } = stripeStore
-    // const { payStripe } = stripeStore
+    const { shippingDetails } = toRefs(stripeStore)
+    const { changeShippingDetails } = stripeStore
+    const { payStripe } = stripeStore
     const sharedStore = useSharedStore()
     const { sortedCountries } = storeToRefs(sharedStore)
     const { getCountries } = sharedStore
     if (!sortedCountries.value.length) getCountries()
-    console.log(updateUser)
     const options = ref(sortedCountries.value)
     const activator = ref(false)
     const requiredDialog = ref(false)
     const authProvider = ref([])
-
     const user = ref({
       firstName: '',
       lastName: '',
       email: '',
       address: '',
       city: '',
-      country: '',
+      country: null,
       postalCode: '',
       phone: '',
-      codiceFiscale: ''
+      taxId: null
     })
     const closeDialog = () => {
       activator.value = !activator.value
@@ -220,26 +221,25 @@ export default {
           user.value.email ||= val.email || ''
           user.value.address ||= val.address || ''
           user.value.city ||= val.city || ''
-          user.value.country ||= val.country || ''
+          user.value.country ||= val.country || null
           user.value.postalCode ||= val.postalCode || ''
           user.value.phone ||= val.phone || ''
-          user.value.codiceFiscale ||= val.codiceFiscale || ''
+          user.value.taxId ||= val.taxId || null
         }
       },
       { immediate: true, deep: true }
     )
     watch(
       () => user.value.country,
-      (val) => {
+      () => {
         if (
           !user.value.phone ||
           sortedCountries.value.some((elem) => elem.callingCode === user.value.phone)
         ) {
-          user.value.phone = sortedCountries.value.find(
-            (elem) => elem.countryName === val
-          )?.callingCode
+          user.value.phone = user.value.country?.callingCode
         }
-      }
+      },
+      { deep: true }
     )
     const filterFn = (val, update) => {
       update(() => {
@@ -250,7 +250,7 @@ export default {
       })
     }
     const onSubmit = async () => {
-      changeDeliveryData({ ...user.value })
+      changeShippingDetails({ ...user.value })
       if (!loggedIn.value) {
         authProvider.value = await checkUserExistence(user.value.email)
         requiredDialog.value = true
@@ -269,29 +269,42 @@ export default {
           })
         }
         console.log('userData.value =====', userData.value)
-        console.log('deliveryData.value =====', deliveryData.value)
+        console.log('shippingDetails.value =====', shippingDetails.value)
         console.log('user =====', user.value)
         activator.value = false
+        await payStripe({
+          userData: {
+            userId: userData.value.userId,
+            email: userData.value.email,
+            firstName: userData.value.firstName,
+            lastName: userData.value.lastName,
+            phone: userData.value.phone,
+            city: userData.value.city,
+            country: userData.value.country,
+            address: userData.value.address,
+            postalCode: userData.value.postalCode,
+            taxId: userData.value.taxId || null
+          },
+          shippingDetails: shippingDetails.value,
+          metadata: {
+            name: work.value.name,
+            nameIt: work.value.nameIt,
+            description: work.value.description,
+            workId: work.value.id,
+            typeExercise: 'work',
+            artistId: work.value.artistId,
+            workIndex: work.value.index,
+            urlImageWork: work.value.urlImageWork,
+            artistName: work.value.artistName,
+            quantity: 1,
+            amount: work.value.price * 100,
+            currency: 'eur',
+            ...shippingDetails.value,
+            country: shippingDetails.value.country.countryName
+          }
+        })
+        changeShippingDetails({})
       }
-      // payStripe({
-      //   id: work.value.id,
-      //   name: work.value.name,
-      //   description: work.value.description,
-      //   email: user.email,
-      //   images: work.value.urlImageWork,
-      //   amount: work.value.price * 100,
-      //   currency: 'eur',
-      //   quantity: 1,
-      //   dataUser: userData.value,
-      //   metadata: {
-      //     name: work.value.name,
-      //     studioId: work.value.id,
-      //     typeExercise: 'work',
-      //     titleStudiosPrice: work.value.artistId,
-      //     workIndex: work.value.index
-      //   }
-      // })
-      changeDeliveryData({})
     }
 
     return {
@@ -302,6 +315,7 @@ export default {
       sortedCountries,
       getCountries,
       options,
+      userData,
       isValidPhone,
       isValidEmailAddress,
       closeDialog,

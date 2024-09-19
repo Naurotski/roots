@@ -48,7 +48,7 @@ export default {
     const { loginDialog } = storeToRefs(authStore)
     const { showLoginDialog } = authStore
     const stripeStore = useStripeStore()
-    const { deliveryData } = storeToRefs(stripeStore)
+    const { shippingDetails } = storeToRefs(stripeStore)
     const dialog = computed({
       get() {
         return loginDialog.value
@@ -67,7 +67,7 @@ export default {
         transform: `translateX(${switched.value ? 0 : 100}%)`
       }
     })
-    watch(deliveryData, (val) => {
+    watch(shippingDetails, (val) => {
       if (val.email) switched.value = true
     })
     return {

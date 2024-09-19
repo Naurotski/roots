@@ -6,14 +6,15 @@ import { apiAxios } from 'boot/axios'
 import { showErrorMessage } from 'src/composables/show-error-message.js'
 
 export const useStripeStore = defineStore('stripe', () => {
-  const deliveryData = ref({})
+  const shippingDetails = ref({})
 
-  const changeDeliveryData = (data) => (deliveryData.value = data)
+  const changeShippingDetails = (data) => (shippingDetails.value = data)
 
   const payStripe = async (paymentDetails) => {
+    console.log('payStripe', { ...paymentDetails })
     Loading.show()
     try {
-      const response = await apiAxios.post('/payStripePictures', { ...paymentDetails })
+      const response = await apiAxios.post('/aorta/checkoutSessionsStripe', { ...paymentDetails })
       await stripe.redirectToCheckout({
         sessionId: response.data
       })
@@ -24,5 +25,5 @@ export const useStripeStore = defineStore('stripe', () => {
       throw error
     }
   }
-  return { deliveryData, changeDeliveryData, payStripe }
+  return { shippingDetails, changeShippingDetails, payStripe }
 })

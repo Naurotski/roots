@@ -106,7 +106,7 @@ export default {
     const authStore = useAuthStore()
     const { registerUser, showLoginDialog } = authStore
     const stripeStore = useStripeStore()
-    const { deliveryData } = storeToRefs(stripeStore)
+    const { shippingDetails } = storeToRefs(stripeStore)
     const displayName = ref(null)
     const email = ref(null)
     const password = ref(null)
@@ -116,7 +116,7 @@ export default {
       password: ''
     })
     watch(
-      deliveryData,
+      shippingDetails,
       (val) => {
         if (val.email) {
           formData.value.displayName = val.firstName
