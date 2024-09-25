@@ -26,6 +26,11 @@ export const useSharedStore = defineStore('shared', () => {
     { label: 'links.books', name: 'books' },
     { label: 'links.digital', name: 'digital' }
   ])
+  const yourAccountLinks = ref([
+    { label: 'links.settings', name: 'UserSettings' },
+    { label: 'links.orders', name: 'UserOrders' },
+    { label: 'links.basket', name: 'UserBasket' }
+  ])
   //{ label: 'links.graphics', name: 'graphics' },   { label: 'links.installation', name: 'installation' }
   const rightDrawerOpen = ref(false)
   const carouselHomePage = ref([])
@@ -79,6 +84,7 @@ export const useSharedStore = defineStore('shared', () => {
     essentialLinks,
     actionsLinks,
     saleLinks,
+    yourAccountLinks,
     rightDrawerOpen,
     carouselHomePage,
     selectedExhibitionsData,

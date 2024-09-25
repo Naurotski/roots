@@ -15,7 +15,7 @@ import { useMeta } from 'quasar'
 
 const metaData = {
   title: 'Aorta Social Art Gallery',
-  titleTemplate: (title) => `${title} | Error`
+  titleTemplate: (title) => `${title} | Technical Work`
 }
 
 export default defineComponent({

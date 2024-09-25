@@ -73,7 +73,8 @@ export const useAuthStore = defineStore('auth', () => {
         await set(dbRef(db, `users/${result.user.uid}`), {
           email: result.user.email,
           firstName: result.user.displayName.split(' ')[0] || '',
-          lastName: result.user.displayName.split(' ')[1] || ''
+          lastName: result.user.displayName.split(' ')[1] || '',
+          displayPhoto: result.user.photoURL
         })
       }
       Loading.hide()

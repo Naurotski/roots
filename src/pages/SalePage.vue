@@ -72,11 +72,7 @@ const metaData = {
 
 export default {
   name: 'SalePage',
-  components: {
-    FixedTopTitle,
-    SmallPageContainer,
-    WorksList
-  },
+  components: { FixedTopTitle, SmallPageContainer, WorksList },
   setup() {
     const { locale } = useI18n({ useScope: 'global' })
     const $q = useQuasar()

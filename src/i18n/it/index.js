@@ -36,7 +36,10 @@ export default {
     photography: 'Fotografia',
     installation: 'Installazione',
     books: 'Libri',
-    digital: 'Digital'
+    digital: 'Digital',
+    settings: 'Impostazioni',
+    orders: 'Ordini',
+    basket: 'Carrello'
   },
   auth: {
     singIn: 'Accedi',

@@ -142,8 +142,6 @@
           <q-btn :label="$t('common.buy')" type="submit" color="primary" />
         </q-card-section>
       </q-form>
-      <pre>user - {{ user }}</pre>
-      <pre>userData - {{ userData }}</pre>
     </q-card>
   </q-dialog>
   <login-required-dialog

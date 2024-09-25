@@ -36,7 +36,10 @@ export default {
     photography: 'Photography',
     installation: 'Installation',
     books: 'Books',
-    digital: 'Digital'
+    digital: 'Digital',
+    settings: 'Settings',
+    orders: 'Orders',
+    basket: 'Basket'
   },
   auth: {
     singIn: 'Sing In',
