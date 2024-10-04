@@ -1,10 +1,9 @@
 <template>
   <q-page>
-    <set-new-photo
-      class="justify-center"
-      v-model:imageData="user.portraitData"
-      v-model="user.imagePortrait"
-    />
+    <set-new-photo v-model:imageData="user.portraitData" v-model="user.imagePortrait" />
+    <q-img fit="contain" :src="user.portraitData?.imageSrc" height="500px" />
+    <q-img class="q-mt-lg" fit="contain" :src="user.portraitData?.imSrc" height="500px" />
+    <pre>user - {{ user }}</pre>
   </q-page>
 </template>
 

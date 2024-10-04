@@ -48,7 +48,7 @@ export default {
     const { userData } = storeToRefs(userStore)
     const sharedStore = useSharedStore()
     const { yourAccountLinks } = storeToRefs(sharedStore)
-    const tab = ref($q.localStorage.getItem('tabYorAccount') || 'settings')
+    const tab = ref($q.localStorage.getItem('tabYorAccount') || 'UserSettings')
     watch(tab, () => {
       $q.localStorage.set('tabYorAccount', tab.value)
     })

@@ -7,29 +7,41 @@
     :transition-show="$q.screen.xs ? 'slide-up' : 'fade'"
     :transition-hide="$q.screen.xs ? 'slide-down' : 'fade'"
   >
-    <q-card>
-      <q-btn color="green" class="absolute-top-right z-max" icon="check" flat round dense v-close-popup />
-      <q-btn color="red" class="absolute-top-left z-max" icon="close" flat round dense v-close-popup />
-      <div style="height: 100%">
-        <div />
-        <avatar-selector :portrait-data="imageData" />
-        <!--          <q-img :src="imageData.imageSrc" v-bind="$attrs" />-->
-        <q-file
-          dark
-          counter
-          bg-color="primary"
-          label-color="white"
-          v-model="fileProxy"
-          accept="image/*"
-          label="Upload the portrait of the artist"
-          filled
-          style="z-index: 99"
-          :style="$q.screen.xs ? 'width: 100%' : 'width: 400px'"
-          @rejected="onRejected"
-          ><template v-slot:prepend> <q-icon name="attach_file" color="white" /> </template>
-          <template v-slot:hint> Max total upload size (1MB) </template>
-        </q-file>
-      </div>
+    <q-card class="flex flex-center" style="max-width: 500px">
+      <q-btn
+        color="green"
+        class="absolute-top-right z-max"
+        icon="check"
+        flat
+        round
+        dense
+        v-close-popup
+      />
+      <q-btn
+        color="red"
+        class="absolute-top-left z-max"
+        icon="close"
+        flat
+        round
+        dense
+        v-close-popup
+      />
+
+      <avatar-selector :portrait-data="imageData" />
+      <q-file
+        :class="{ 'absolute-bottom': $q.screen.xs }"
+        dark
+        bg-color="primary"
+        label-color="white"
+        v-model="fileProxy"
+        accept="image/*"
+        label="Upload the portrait of the artist"
+        filled
+        style="z-index: 99; width: 100%"
+        @rejected="onRejected"
+        ><template v-slot:prepend> <q-icon name="attach_file" color="white" /> </template>
+        <!--        <template v-slot:hint> Max total upload size (1MB) </template>-->
+      </q-file>
     </q-card>
   </q-dialog>
   <!--  max-file-size="1048576"-->
@@ -38,6 +50,8 @@
 import { computed, ref, toRefs } from 'vue'
 import { useQuasar } from 'quasar'
 import AvatarSelector from 'components/user/AvatarSelector.vue'
+import { compressImage } from 'src/composables/compressImage'
+
 export default {
   name: 'SetNewPhoto',
   components: { AvatarSelector },
@@ -45,7 +59,8 @@ export default {
     imageData: {
       type: Object,
       default: () => ({
-        imageSrc: ''
+        imageSrc:
+          'https://firebasestorage.googleapis.com/v0/b/first-project-6daea.appspot.com/o/admin%2FbackgroundGray.jpg?alt=media&token=298dcf1f-0545-4375-ab89-915d5e6afcbb'
       })
     },
     modelValue: {
@@ -63,18 +78,14 @@ export default {
       },
       set(value) {
         emit('update:modelValue', value)
-        console.log('value', value)
         if (value) {
           const image = new Image()
           image.src = URL.createObjectURL(value)
-          image.onload = () => {
-            console.log(image.height)
-            console.log(image.width)
-            console.log(image.src)
-            console.log(image.width / image.height)
+          image.onload = async () => {
+            const result = await compressImage(image, value.type, image.src)
             emit('update:imageData', {
               imageSrc: image.src,
-              aspectRatio: (image.width / image.height).toFixed(2)
+              imSrc: result
             })
           }
         }

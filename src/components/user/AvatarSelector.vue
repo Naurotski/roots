@@ -1,9 +1,5 @@
 <template>
   <div
-    :style="{
-      width: $q.screen.xs ? '100%' : '400px',
-      height: $q.screen.xs ? '90%' : '400px'
-    }"
     class="container relative-position"
     @mousedown="startDrag"
     @mouseup="stopDrag"
@@ -14,6 +10,7 @@
     @touchmove="drag"
   >
     <img
+      ref="img"
       v-if="portraitData.imageSrc"
       :src="portraitData.imageSrc"
       alt="alt"
@@ -21,23 +18,11 @@
       class="background-image"
     />
     <div class="overlay"></div>
-
-    <!--    <pre>translateX - {{ translateX }}</pre>-->
-    <!--    <pre>translateY - {{ translateY }}</pre>-->
-    <!--    <div class="clipped-container q-mt-xl">-->
-    <!--      <img-->
-    <!--        v-if="portraitData.imageSrc"-->
-    <!--        :src="portraitData.imageSrc"-->
-    <!--        class="clipped-image"-->
-    <!--        :style="clippedImageStyle"-->
-    <!--        alt="alt"-->
-    <!--      />-->
-    <!--    </div>-->
   </div>
 </template>
 
 <script>
-import { ref, computed, toRefs } from 'vue'
+import { ref, computed, toRefs, watch, watchEffect } from 'vue'
 export default {
   name: 'ImageSelector',
   props: {
@@ -52,22 +37,54 @@ export default {
     const { portraitData } = toRefs(props)
     const aspectRatio = ref(null)
     const isDragging = ref(false)
+    const img = ref(null)
     const lastX = ref(0)
     const lastY = ref(0)
     const translateX = ref(0)
     const translateY = ref(0)
 
-    const imageStyle = computed(() => ({
-      transform: `translate(${translateX.value}px, ${translateY.value}px)`,
-      transition: isDragging.value ? 'none' : 'transform 0.1s',
-      width: portraitData.value.aspectRatio < 1 ? '100%' : 'auto',
-      height: portraitData.value.aspectRatio >= 1 ? '100%' : 'auto'
-    }))
-    // const clippedImageStyle = computed(() => ({
-    //   transform: `translate(${translateX.value}px, ${translateY.value}px)`
-    // }))
+    const imageStyle = computed(() => {
+      return {
+        transform: `translate(${translateX.value}px, ${translateY.value}px)`,
+        transition: isDragging.value ? 'none' : 'transform 0,2s',
+        width: '100%',
+        height: '100%',
+        'object-fit': 'contain'
+      }
+    })
+    watch(
+      () => portraitData.value.imageSrc,
+      () => {
+        translateX.value = 0
+        translateY.value = 0
+      },
+      { immediate: true }
+    )
+    watchEffect(() => {
+      if (img.value) {
+        let difference
+        if (img.value.width / img.value.height > 1) {
+          difference = img.value.width / 2 - img.value.height / 2
+        } else {
+          difference = img.value.height / 2 - img.value.width / 2
+        }
+        if (difference < Math.abs(translateX.value)) {
+          if (translateX.value < 0) {
+            translateX.value = -difference
+          } else {
+            translateX.value = difference
+          }
+        }
+        if (difference < Math.abs(translateY.value)) {
+          if (translateY.value < 0) {
+            translateY.value = -difference
+          } else {
+            translateY.value = difference
+          }
+        }
+      }
+    })
     const startDrag = (event) => {
-      console.log('startDrag ---', event)
       isDragging.value = true
       lastX.value = event.clientX || event.touches[0].clientX
       lastY.value = event.clientY || event.touches[0].clientY
@@ -78,19 +95,30 @@ export default {
     }
 
     const drag = (event) => {
-      // console.log('drag ---', event)
       if (!isDragging.value) return
       const currentX = event.clientX || event.touches[0].clientX
       const currentY = event.clientY || event.touches[0].clientY
-      translateX.value += currentX - lastX.value
-      translateY.value += currentY - lastY.value
-      lastX.value = currentX
-      lastY.value = currentY
+      if (
+        img.value.width / img.value.height > 1 &&
+        (img.value.width / 2 - img.value.height / 2 > Math.abs(translateX.value) ||
+          translateX.value * (currentX - lastX.value) < 0)
+      ) {
+        translateX.value += currentX - lastX.value
+        lastX.value = currentX
+      } else if (
+        img.value.width / img.value.height < 1 &&
+        (img.value.height / 2 - img.value.width / 2 > Math.abs(translateY.value) ||
+          translateY.value * (currentY - lastY.value) < 0)
+      ) {
+        translateY.value += currentY - lastY.value
+        lastY.value = currentY
+      }
     }
     return {
       translateX,
       translateY,
       imageStyle,
+      img,
       aspectRatio,
       startDrag,
       stopDrag,
@@ -107,10 +135,10 @@ export default {
   cursor: grab
 
 .container:active
-  cursor: grabbing /* Курсор во время перетаскивания */
+  cursor: grabbing
 
-.background-image
-  //object-fit: contain /* Чтобы изображение не искажалось */
+//.background-image
+  //object-fit: contain
   //width: 100%
   //height: 100%
 //  align-items: center !important
@@ -120,22 +148,22 @@ export default {
   left: 0
   right: 0
   bottom: 0
-  background-color: rgba(236, 239, 241, 0.8) /* Полупрозрачный фон */
-  mask-image: radial-gradient(circle closest-side, transparent 95%, black 5%)
+  background-color: rgba(236, 239, 241, 0.8)
+  mask-image: radial-gradient(circle closest-side, transparent 99%, black 1%)
   mask-size: 100%
   mask-position: center
 
-.clipped-container
-  position: relative
-  width: 300px /* Задайте размеры блока */
-  height: 300px /* Задайте размеры блока */
-  overflow: hidden
-  border: 1px solid gray
-  clip-path: circle(40% at center) /* Круглая область */
-
-
-.clipped-image
-  width: 100%
-  height: 100%
-  object-fit: cover /* Чтобы изображение не искажалось */
+//.clipped-container
+//  position: relative
+//  width: 300px /* Задайте размеры блока */
+//  height: 300px /* Задайте размеры блока */
+//  overflow: hidden
+//  border: 1px solid gray
+//  clip-path: circle(40% at center) /* Круглая область */
+//
+//
+//.clipped-image
+//  width: 100%
+//  height: 100%
+//  object-fit: cover /* Чтобы изображение не искажалось */
 </style>
