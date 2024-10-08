@@ -15,7 +15,7 @@
         flat
         round
         dense
-        v-close-popup
+        @click="saveImage"
       />
       <q-btn
         color="red"
@@ -27,7 +27,7 @@
         v-close-popup
       />
 
-      <avatar-selector :portrait-data="imageData" />
+      <avatar-selector :portrait-data="imageData" @updateTranslate="(val) => (translate = val)" />
       <q-file
         :class="{ 'absolute-bottom': $q.screen.xs }"
         dark
@@ -67,11 +67,12 @@ export default {
       type: Object
     }
   },
-  emits: ['update:modelValue', 'update:imageData'],
+  emits: ['update:modelValue', 'update:imageData', 'updateImgSrc'],
   setup(props, { emit }) {
     const dialog = ref(false)
     const $q = useQuasar()
-    const { modelValue } = toRefs(props)
+    const { modelValue, imageData } = toRefs(props)
+    const translate = ref({ translateX: 0, translateY: 0 })
     const fileProxy = computed({
       get() {
         return modelValue.value
@@ -81,16 +82,24 @@ export default {
         if (value) {
           const image = new Image()
           image.src = URL.createObjectURL(value)
-          image.onload = async () => {
-            const result = await compressImage(image, value.type, image.src)
+          image.onload = () => {
+            console.log('width - ', image.width, 'height - ', image.height)
             emit('update:imageData', {
               imageSrc: image.src,
-              imSrc: result
+              width: image.width,
+              height: image.height
             })
           }
         }
       }
     })
+    const saveImage = async () => {
+      console.log('saveImage')
+      const result = await compressImage({ imgSrc: imageData.value.imageSrc, ...translate.value })
+      console.log(result)
+      emit('updateImgSrc', result)
+      dialog.value = false
+    }
     const onRejected = (rejectedEntries) => {
       $q.notify({
         type: 'negative',
@@ -100,6 +109,8 @@ export default {
     return {
       dialog,
       fileProxy,
+      translate,
+      saveImage,
       onRejected
     }
   }

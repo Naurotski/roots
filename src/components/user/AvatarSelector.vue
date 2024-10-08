@@ -33,7 +33,8 @@ export default {
       })
     }
   },
-  setup(props) {
+  emits: ['updateTranslate'],
+  setup(props, { emit }) {
     const { portraitData } = toRefs(props)
     const aspectRatio = ref(null)
     const isDragging = ref(false)
@@ -62,6 +63,9 @@ export default {
     )
     watchEffect(() => {
       if (img.value) {
+        const coefficientX = Math.floor(portraitData.value.width / img.value.width * 100) / 100
+        const coefficientY = Math.floor(portraitData.value.width / img.value.width * 100) / 100
+        console.log('width - ', img.value.width, 'height - ', img.value.height)
         let difference
         if (img.value.width / img.value.height > 1) {
           difference = img.value.width / 2 - img.value.height / 2
@@ -82,6 +86,10 @@ export default {
             translateY.value = difference
           }
         }
+        emit('updateTranslate', {
+          translateX: translateX.value * coefficientX,
+          translateY: translateY.value * coefficientY
+        })
       }
     })
     const startDrag = (event) => {

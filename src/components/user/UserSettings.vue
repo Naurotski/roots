@@ -1,9 +1,12 @@
 <template>
   <q-page>
-    <set-new-photo v-model:imageData="user.portraitData" v-model="user.imagePortrait" />
-    <q-img fit="contain" :src="user.portraitData?.imageSrc" height="500px" />
-    <q-img class="q-mt-lg" fit="contain" :src="user.portraitData?.imSrc" height="500px" />
-    <pre>user - {{ user }}</pre>
+    <set-new-photo
+      v-model:imageData="user.portraitData"
+      v-model="user.imagePortrait"
+      @updateImgSrc="setImageSrc"
+    />
+    <q-img fit="contain" :src="user.portraitData?.imageSrc" width="300px" />
+    <q-img class="q-mt-lg" fit="contain" :src="imgSrc" width="300px" style="border: 4px blue solid" />
   </q-page>
 </template>
 
@@ -24,6 +27,7 @@ export default {
     }
   },
   setup() {
+    const imgSrc = ref('')
     const userStore = useUserStore()
     const { userData } = storeToRefs(userStore)
     const user = ref({
@@ -39,7 +43,6 @@ export default {
       portraitData: null,
       imagePortrait: null
     })
-
     watchEffect(() => {
       user.value.firstName = userData.value.firstName || ''
       user.value.lastName = userData.value.lastName || ''
@@ -52,9 +55,15 @@ export default {
       user.value.taxId = userData.value.taxId
       user.value.portraitData = userData.value.portraitData
     })
+    const setImageSrc = (val) => {
+      console.log(val)
+      imgSrc.value = val
+    }
     return {
       userData,
-      user
+      user,
+      imgSrc,
+      setImageSrc
     }
   }
 }
