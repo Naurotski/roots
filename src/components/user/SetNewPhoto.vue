@@ -1,5 +1,5 @@
 <template>
-  <q-btn flat no-caps label="Set New Photo" @click="dialog = true" />
+  <q-btn flat no-caps :label="$t('settings.SetNewPhoto')" @click="dialog = true" />
   <q-dialog
     v-model="dialog"
     backdrop-filter="blur(4px)"
@@ -28,22 +28,23 @@
       />
       <avatar-selector :portrait-data="imageData" @updateTranslate="(val) => (translate = val)" />
       <q-file
-        :class="{ 'absolute-bottom': $q.screen.xs }"
-        dark
-        bg-color="primary"
-        label-color="white"
         v-model="fileProxy"
+        :class="{ 'absolute-bottom': $q.screen.xs }"
+        counter
+        max-file-size="6291456"
+        bg-color="grey"
+        label-color="white"
         accept="image/*"
-        label="Upload the portrait of the artist"
+        :label="$t('settings.SetNewPhoto')"
         filled
         style="z-index: 99; width: 100%"
         @rejected="onRejected"
         ><template v-slot:prepend> <q-icon name="attach_file" color="white" /> </template>
-        <!--        <template v-slot:hint> Max total upload size (1MB) </template>-->
+        <template v-slot:hint> Max total upload size (6MB) </template>
       </q-file>
     </q-card>
   </q-dialog>
-  <!--  max-file-size="1048576"-->
+  <!--  max-file-size="6291456"-->
 </template>
 <script>
 import { ref, toRefs, watch } from 'vue'

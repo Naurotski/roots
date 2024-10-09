@@ -1,4 +1,4 @@
-// import { Platform } from 'quasar'
+import { Platform } from 'quasar'
 
 export const compressImage = ({ imgSrc, imgType, translateX, translateY }) =>
   new Promise((resolve) => {
@@ -7,6 +7,7 @@ export const compressImage = ({ imgSrc, imgType, translateX, translateY }) =>
     const img = new Image()
     img.src = imgSrc
     img.crossOrigin = 'anonymous'
+    let canvasDataUrl
     img.onload = () => {
       console.log(img.height, img.width)
       const sideSquare = Math.min(img.width, img.height)
@@ -17,7 +18,18 @@ export const compressImage = ({ imgSrc, imgType, translateX, translateY }) =>
       console.log('x -----', x, 'y----', y, 'sideSquare ---', sideSquare)
       const ctx = canvas.getContext('2d')
       ctx.drawImage(img, x, y, sideSquare, sideSquare, 0, 0, sideSquare, sideSquare)
-      const canvasDataUrl = canvas.toDataURL(imgType)
+      canvasDataUrl = canvas.toDataURL(imgType)
+      let base64Data = canvasDataUrl.split(',')[1]
+      let byteSize = Math.round((base64Data.length * 3) / 4096)
+      console.log(byteSize)
+      if (byteSize >= 250) {
+        if (Platform.is.ios) {
+          canvasDataUrl = canvas.toDataURL(imgType, 0.1)
+        } else {
+          let quality = 150 / byteSize
+          canvasDataUrl = canvas.toDataURL(imgType, quality)
+        }
+      }
       resolve(canvasDataUrl)
     }
   })

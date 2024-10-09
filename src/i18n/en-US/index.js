@@ -75,5 +75,8 @@ export default {
     city: 'City',
     address: 'Address',
     phone: 'Phone (international format)'
+  },
+  settings: {
+    SetNewPhoto: 'Set New Photo'
   }
 }

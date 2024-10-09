@@ -77,5 +77,8 @@ export default {
     city: 'Città',
     address: 'Indirizzo',
     phone: 'Telefono (formato internazionale)'
+  },
+  settings: {
+    SetNewPhoto: 'Imposta Nuova Foto'
   }
 }
