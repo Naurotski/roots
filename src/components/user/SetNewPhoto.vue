@@ -26,7 +26,6 @@
         dense
         v-close-popup
       />
-
       <avatar-selector :portrait-data="imageData" @updateTranslate="(val) => (translate = val)" />
       <q-file
         :class="{ 'absolute-bottom': $q.screen.xs }"
@@ -47,57 +46,80 @@
   <!--  max-file-size="1048576"-->
 </template>
 <script>
-import { computed, ref, toRefs } from 'vue'
+import { ref, toRefs, watch } from 'vue'
 import { useQuasar } from 'quasar'
+import { useUserStore } from 'stores/user-store'
 import AvatarSelector from 'components/user/AvatarSelector.vue'
 import { compressImage } from 'src/composables/compressImage'
+import { storeToRefs } from 'pinia'
 
 export default {
   name: 'SetNewPhoto',
   components: { AvatarSelector },
   props: {
-    imageData: {
-      type: Object,
-      default: () => ({
-        imageSrc:
-          'https://firebasestorage.googleapis.com/v0/b/first-project-6daea.appspot.com/o/admin%2FbackgroundGray.jpg?alt=media&token=298dcf1f-0545-4375-ab89-915d5e6afcbb'
-      })
-    },
-    modelValue: {
-      type: Object
+    portraitUrl: {
+      type: String,
+      default: () =>
+        'https://firebasestorage.googleapis.com/v0/b/first-project-6daea.appspot.com/o/admin%2FbackgroundGray.jpg?alt=media&token=298dcf1f-0545-4375-ab89-915d5e6afcbb'
     }
   },
-  emits: ['update:modelValue', 'update:imageData', 'updateImgSrc'],
-  setup(props, { emit }) {
+  setup(props) {
     const dialog = ref(false)
     const $q = useQuasar()
-    const { modelValue, imageData } = toRefs(props)
+    const { portraitUrl } = toRefs(props)
+    const userStore = useUserStore()
+    const { userData } = storeToRefs(userStore)
+    console.log(userData.value)
+    const { updateUser, uploadImageToStorage } = userStore
     const translate = ref({ translateX: 0, translateY: 0 })
-    const fileProxy = computed({
-      get() {
-        return modelValue.value
-      },
-      set(value) {
-        emit('update:modelValue', value)
+    const fileProxy = ref(null)
+    const imageData = ref({})
+
+    watch(
+      fileProxy,
+      (value) => {
         if (value) {
           const image = new Image()
           image.src = URL.createObjectURL(value)
           image.onload = () => {
-            console.log('width - ', image.width, 'height - ', image.height)
-            emit('update:imageData', {
-              imageSrc: image.src,
-              width: image.width,
-              height: image.height
-            })
+            console.log('width - ', image.width, 'height - ', image.height, value.type)
+            imageData.value.imageSrc = image.src
+            imageData.value.width = image.width
+            imageData.value.height = image.height
+            imageData.value.type = value.type
           }
         }
-      }
-    })
+      },
+      { deep: true }
+    )
+    watch(
+      portraitUrl,
+      (val) => {
+        imageData.value.imageSrc = val
+        imageData.value.width = 0
+        imageData.value.height = 0
+        imageData.value.type = ''
+      },
+      { immediate: true }
+    )
+
     const saveImage = async () => {
       console.log('saveImage')
-      const result = await compressImage({ imgSrc: imageData.value.imageSrc, ...translate.value })
-      console.log(result)
-      emit('updateImgSrc', result)
+      const canvasDataUrl = await compressImage({
+        imgSrc: imageData.value.imageSrc,
+        imgType: imageData.value.type,
+        ...translate.value
+      })
+      const url = await uploadImageToStorage({
+        path: `users/${userData.value.userId}/portrait.${imageData.value.type.split('/')[1]}`,
+        url: canvasDataUrl,
+        stringEncodingType: 'data_url',
+        contentType: imageData.value.type
+      })
+      await updateUser({
+        path: `users/${userData.value.userId}`,
+        payload: { portraitUrl: url }
+      })
       dialog.value = false
     }
     const onRejected = (rejectedEntries) => {
@@ -110,6 +132,7 @@ export default {
       dialog,
       fileProxy,
       translate,
+      imageData,
       saveImage,
       onRejected
     }

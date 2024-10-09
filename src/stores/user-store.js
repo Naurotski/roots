@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { ref as dbRef, update } from 'firebase/database'
-import { db } from 'boot/firebase.js'
-import { showErrorMessage } from 'src/composables/show-error-message.js'
 import { Loading } from 'quasar'
+import { db } from 'boot/firebase.js'
+import { ref as dbRef, update } from 'firebase/database'
+import { storage } from 'boot/firebase.js'
+import { getDownloadURL, ref as storageRef, uploadString } from 'firebase/storage'
+import { showErrorMessage } from 'src/composables/show-error-message.js'
 
 export const useUserStore = defineStore('user', () => {
   const userData = ref({})
@@ -29,10 +31,24 @@ export const useUserStore = defineStore('user', () => {
       throw error
     }
   }
+  const uploadImageToStorage = async ({ path, url, stringEncodingType, contentType }) => {
+    console.log('uploadImageToStorage')
+    try {
+      if (url) {
+        let imagesRef = storageRef(storage, `${path}`)
+        await uploadString(imagesRef, url, stringEncodingType, { contentType })
+        return await getDownloadURL(imagesRef)
+      }
+    } catch (error) {
+      showErrorMessage(error.message)
+      throw error
+    }
+  }
 
   return {
     userData,
     setUserData,
-    updateUser
+    updateUser,
+    uploadImageToStorage
   }
 })

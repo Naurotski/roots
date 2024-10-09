@@ -1,17 +1,19 @@
 <template>
   <q-page>
-    <set-new-photo
-      v-model:imageData="user.portraitData"
-      v-model="user.imagePortrait"
-      @updateImgSrc="setImageSrc"
-    />
-    <q-img fit="contain" :src="user.portraitData?.imageSrc" width="300px" />
-    <q-img class="q-mt-lg" fit="contain" :src="imgSrc" width="300px" style="border: 4px blue solid" />
+    <q-avatar color="grey-4" size="200px">
+      <img v-if="user.portraitUrl" :src="user.portraitUrl" alt="photo" />
+      <span v-else>{{ user.firstName.charAt(0).toUpperCase() }}</span>
+    </q-avatar>
+    <div>
+      <set-new-photo :portrait-url="user.portraitUrl" />
+    </div>
+    <pre>userData - {{ userData }}</pre>
+    <pre>user - {{ user }}</pre>
   </q-page>
 </template>
 
 <script>
-import { ref, watchEffect } from 'vue'
+import { ref, watch } from 'vue'
 import { useUserStore } from 'stores/user-store'
 import SetNewPhoto from 'components/user/SetNewPhoto.vue'
 import { storeToRefs } from 'pinia'
@@ -20,14 +22,7 @@ export default {
   components: {
     SetNewPhoto
   },
-  props: {
-    name: {
-      type: String,
-      required: true
-    }
-  },
   setup() {
-    const imgSrc = ref('')
     const userStore = useUserStore()
     const { userData } = storeToRefs(userStore)
     const user = ref({
@@ -40,30 +35,27 @@ export default {
       postalCode: '',
       phone: '',
       taxId: null,
-      portraitData: null,
-      imagePortrait: null
+      portraitData: {}
     })
-    watchEffect(() => {
-      user.value.firstName = userData.value.firstName || ''
-      user.value.lastName = userData.value.lastName || ''
-      user.value.email = userData.value.email || ''
-      user.value.address = userData.value.address || ''
-      user.value.city = userData.value.city || ''
-      user.value.country = { ...userData.value.country } || null
-      user.value.postalCode = userData.value.postalCode || ''
-      user.value.phone = userData.value.phone || ''
-      user.value.taxId = userData.value.taxId
-      user.value.portraitData = userData.value.portraitData
-    })
-    const setImageSrc = (val) => {
-      console.log(val)
-      imgSrc.value = val
-    }
+    watch(
+      userData,
+      (value) => {
+        user.value.firstName = value.firstName || ''
+        user.value.lastName = value.lastName || ''
+        user.value.email = value.email || ''
+        user.value.address = value.address || ''
+        user.value.city = value.city || ''
+        user.value.country = { ...value.country } || null
+        user.value.postalCode = value.postalCode || ''
+        user.value.phone = value.phone || ''
+        user.value.taxId = value.taxId
+        user.value.portraitUrl = value.portraitUrl
+      },
+      { deep: true, immediate: true }
+    )
     return {
       userData,
-      user,
-      imgSrc,
-      setImageSrc
+      user
     }
   }
 }

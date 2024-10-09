@@ -28,9 +28,7 @@ export default {
   props: {
     portraitData: {
       type: Object,
-      default: () => ({
-        imageSrc: ''
-      })
+      require: true
     }
   },
   emits: ['updateTranslate'],
@@ -63,8 +61,8 @@ export default {
     )
     watchEffect(() => {
       if (img.value) {
-        const coefficientX = Math.floor(portraitData.value.width / img.value.width * 100) / 100
-        const coefficientY = Math.floor(portraitData.value.width / img.value.width * 100) / 100
+        const coefficientX = Math.floor((portraitData.value.width / img.value.width) * 100) / 100
+        const coefficientY = Math.floor((portraitData.value.width / img.value.width) * 100) / 100
         console.log('width - ', img.value.width, 'height - ', img.value.height)
         let difference
         if (img.value.width / img.value.height > 1) {
