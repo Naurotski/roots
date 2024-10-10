@@ -1,24 +1,68 @@
 <template>
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-    <q-page class="q-pa-md" style="padding-top: 100px">
-      <fixed-top-title :name="$t('auth.yourAccount')"
-        ><div class="row justify-md-start">
-          <q-tabs v-model="tab" dense narrow-indicator>
-            <q-tab
-              style="width: 120px"
-              class="text-body1"
-              v-for="{ label, name } in yourAccountLinks"
-              :key="name"
-              :name="name"
-              :label="$t(label)"
-            />
-          </q-tabs></div
-      ></fixed-top-title>
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel v-for="{ name } in yourAccountLinks" :key="name" :name="name">
-          <component :name="name" :is="name" />
-        </q-tab-panel>
-      </q-tab-panels>
+    <q-page
+      class="q-pa-md"
+      :style="$q.screen.sm || $q.screen.xs ? 'padding-top: 100px' : 'padding-top: 10px'"
+    >
+      <template v-if="$q.screen.sm || $q.screen.xs">
+        <fixed-top-title :name="$t('auth.yourAccount')"
+          ><div class="row justify-md-start">
+            <q-tabs v-model="tab" dense narrow-indicator>
+              <q-tab
+                style="width: 120px"
+                class="text-body1"
+                v-for="{ label, name } in yourAccountLinks"
+                :key="name"
+                :name="name"
+                :label="$t(label)"
+              />
+            </q-tabs></div
+        ></fixed-top-title>
+        <q-tab-panels v-model="tab" animated>
+          <q-tab-panel v-for="{ name } in yourAccountLinks" :key="name" :name="name">
+            <small-page-container>
+              <component :is="name" />
+            </small-page-container>
+          </q-tab-panel>
+        </q-tab-panels>
+      </template>
+      <div v-else>
+        <q-splitter v-model="splitterModel" style="height: 81vh">
+          <template v-slot:before>
+            <div>
+              <div class="text-h5 q-mb-xl text-center">
+                {{ $t('auth.yourAccount') }}
+                <q-separator inset />
+              </div>
+
+              <q-tabs v-model="tab" vertical>
+                <q-tab
+                  class="text-body1"
+                  v-for="{ label, name } in yourAccountLinks"
+                  :key="name"
+                  :name="name"
+                  :label="$t(label)"
+                />
+              </q-tabs>
+            </div>
+          </template>
+          <template v-slot:after>
+            <q-tab-panels
+              v-model="tab"
+              animated
+              vertical
+              transition-prev="jump-up"
+              transition-next="jump-down"
+            >
+              <q-tab-panel v-for="{ name } in yourAccountLinks" :key="name" :name="name">
+                <small-page-container>
+                  <component :is="name" />
+                </small-page-container>
+              </q-tab-panel>
+            </q-tab-panels>
+          </template>
+        </q-splitter>
+      </div>
     </q-page>
   </transition>
 </template>
@@ -35,10 +79,11 @@ import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import UserSettings from 'components/user/UserSettings.vue'
 import UserOrders from 'components/user/UserOrders.vue'
 import UserBasket from 'components/user/UserBasket.vue'
+import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 
 export default {
   name: 'YourAccountPage',
-  components: { FixedTopTitle, UserSettings, UserOrders, UserBasket },
+  components: { SmallPageContainer, FixedTopTitle, UserSettings, UserOrders, UserBasket },
   setup() {
     const $q = useQuasar()
     const router = useRouter()
@@ -49,6 +94,7 @@ export default {
     const sharedStore = useSharedStore()
     const { yourAccountLinks } = storeToRefs(sharedStore)
     const tab = ref($q.localStorage.getItem('tabYorAccount') || 'UserSettings')
+    const splitterModel = ref(15)
     watch(tab, () => {
       $q.localStorage.set('tabYorAccount', tab.value)
     })
@@ -58,7 +104,8 @@ export default {
     return {
       userData,
       yourAccountLinks,
-      tab
+      tab,
+      splitterModel
     }
   }
 }

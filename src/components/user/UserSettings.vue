@@ -1,15 +1,13 @@
 <template>
-  <q-page>
-    <q-avatar color="grey-4" size="200px">
-      <img v-if="user.portraitUrl" :src="user.portraitUrl" alt="photo" />
-      <span v-else>{{ user.firstName.charAt(0).toUpperCase() }}</span>
-    </q-avatar>
-    <div>
-      <set-new-photo :portrait-url="user.portraitUrl" />
-    </div>
-    <pre>userData - {{ userData }}</pre>
-    <pre>user - {{ user }}</pre>
-  </q-page>
+  <q-avatar color="grey-4" size="200px">
+    <img v-if="user.portraitUrl" :src="user.portraitUrl" alt="photo" />
+    <span v-else>{{ user.firstName.charAt(0).toUpperCase() }}</span>
+  </q-avatar>
+  <div>
+    <set-new-photo :portrait-url="user.portraitUrl" />
+  </div>
+  <pre>userData - {{ userData }}</pre>
+  <pre>user - {{ user }}</pre>
 </template>
 
 <script>
@@ -40,7 +38,7 @@ export default {
     watch(
       userData,
       (value) => {
-        user.value.firstName = value.firstName || ''
+        user.value.firstName = value.firstName || value.displayName || ''
         user.value.lastName = value.lastName || ''
         user.value.email = value.email || ''
         user.value.address = value.address || ''

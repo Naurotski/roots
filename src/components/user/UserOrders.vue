@@ -1,16 +1,10 @@
 <template>
-  <h2>{{ name }}</h2>
+  <h2>UserOrders</h2>
 </template>
 
 <script>
 export default {
-  name: 'UserOrders',
-  props: {
-    name: {
-      type: String,
-      required: true
-    }
-  }
+  name: 'UserOrders'
 }
 </script>
 <style scoped></style>
