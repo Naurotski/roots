@@ -2,30 +2,35 @@
   <q-btn flat no-caps :label="$t('settings.SetNewPhoto')" @click="dialog = true" />
   <q-dialog
     v-model="dialog"
+    persistent
     backdrop-filter="blur(4px)"
     :maximized="$q.screen.xs"
     :transition-show="$q.screen.xs ? 'slide-up' : 'fade'"
     :transition-hide="$q.screen.xs ? 'slide-down' : 'fade'"
   >
-    <q-card class="flex flex-center" style="max-width: 500px">
+    <q-card class="flex flex-center bg-grey-4" style="max-width: 450px">
       <q-btn
-        color="green"
         class="absolute-top-right z-max"
-        icon="check"
+        color="green"
+        icon="fa-solid fa-check"
+        size="xl"
         flat
         round
         dense
+        :disable="!fileProxy"
         @click="saveImage"
       />
       <q-btn
-        color="red"
         class="absolute-top-left z-max"
-        icon="close"
+        color="red"
+        icon="fa-solid fa-xmark"
+        size="xl"
         flat
         round
         dense
-        v-close-popup
+        @click="closeDialog"
       />
+      <!--      icon="fa-regular fa-rectangle-xmark"    icon="fa-regular fa-square-check"-->
       <avatar-selector :portrait-data="imageData" @updateTranslate="(val) => (translate = val)" />
       <q-file
         v-model="fileProxy"
@@ -70,7 +75,6 @@ export default {
     const { portraitUrl } = toRefs(props)
     const userStore = useUserStore()
     const { userData } = storeToRefs(userStore)
-    console.log(userData.value)
     const { updateUser, uploadImageToStorage } = userStore
     const translate = ref({ translateX: 0, translateY: 0 })
     const fileProxy = ref(null)
@@ -83,7 +87,6 @@ export default {
           const image = new Image()
           image.src = URL.createObjectURL(value)
           image.onload = () => {
-            console.log('width - ', image.width, 'height - ', image.height, value.type)
             imageData.value.imageSrc = image.src
             imageData.value.width = image.width
             imageData.value.height = image.height
@@ -105,7 +108,6 @@ export default {
     )
 
     const saveImage = async () => {
-      console.log('saveImage')
       const canvasDataUrl = await compressImage({
         imgSrc: imageData.value.imageSrc,
         imgType: imageData.value.type,
@@ -129,13 +131,21 @@ export default {
         message: `${rejectedEntries.length} file(s) did not pass validation constraints`
       })
     }
+    const closeDialog = () => {
+      translate.value = { translateX: 0, translateY: 0 }
+      fileProxy.value = null
+      imageData.value = {}
+      dialog.value = false
+      imageData.value.imageSrc = portraitUrl.value
+    }
     return {
       dialog,
       fileProxy,
       translate,
       imageData,
       saveImage,
-      onRejected
+      onRejected,
+      closeDialog
     }
   }
 }

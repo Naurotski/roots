@@ -21,25 +21,27 @@ export const useUserStore = defineStore('user', () => {
     }
   }
   const updateUser = async ({ path, payload }) => {
-    console.log('updateUser - ', path, payload)
     try {
       Loading.show()
       await update(dbRef(db, path), payload)
       Loading.hide()
     } catch (error) {
+      Loading.hide()
       showErrorMessage(error.message)
       throw error
     }
   }
   const uploadImageToStorage = async ({ path, url, stringEncodingType, contentType }) => {
-    console.log('uploadImageToStorage')
     try {
+      Loading.show()
       if (url) {
         let imagesRef = storageRef(storage, `${path}`)
         await uploadString(imagesRef, url, stringEncodingType, { contentType })
         return await getDownloadURL(imagesRef)
       }
+      Loading.hide()
     } catch (error) {
+      Loading.hide()
       showErrorMessage(error.message)
       throw error
     }

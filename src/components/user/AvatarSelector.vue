@@ -63,7 +63,6 @@ export default {
       if (img.value) {
         const coefficientX = Math.floor((portraitData.value.width / img.value.width) * 100) / 100
         const coefficientY = Math.floor((portraitData.value.width / img.value.width) * 100) / 100
-        console.log('width - ', img.value.width, 'height - ', img.value.height)
         let difference
         if (img.value.width / img.value.height > 1) {
           difference = img.value.width / 2 - img.value.height / 2
@@ -99,7 +98,6 @@ export default {
     const stopDrag = () => {
       isDragging.value = false
     }
-
     const drag = (event) => {
       if (!isDragging.value) return
       const currentX = event.clientX || event.touches[0].clientX
@@ -139,15 +137,8 @@ export default {
   justify-content: center
   align-items: center
   cursor: grab
-
 .container:active
   cursor: grabbing
-
-//.background-image
-  //object-fit: contain
-  //width: 100%
-  //height: 100%
-//  align-items: center !important
 .overlay
   position: absolute
   top: 0
@@ -158,18 +149,4 @@ export default {
   mask-image: radial-gradient(circle closest-side, transparent 99%, black 1%)
   mask-size: 100%
   mask-position: center
-
-//.clipped-container
-//  position: relative
-//  width: 300px /* Задайте размеры блока */
-//  height: 300px /* Задайте размеры блока */
-//  overflow: hidden
-//  border: 1px solid gray
-//  clip-path: circle(40% at center) /* Круглая область */
-//
-//
-//.clipped-image
-//  width: 100%
-//  height: 100%
-//  object-fit: cover /* Чтобы изображение не искажалось */
 </style>
