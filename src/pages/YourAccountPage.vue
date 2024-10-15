@@ -1,9 +1,6 @@
 <template>
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-    <q-page
-      class="q-pa-md"
-      :style="$q.screen.sm || $q.screen.xs ? 'padding-top: 100px' : 'padding-top: 10px'"
-    >
+    <q-page :style="$q.screen.sm || $q.screen.xs ? 'padding-top: 100px' : 'padding-top: 10px'">
       <template v-if="$q.screen.sm || $q.screen.xs">
         <fixed-top-title :name="$t('auth.yourAccount')"
           ><div class="row justify-md-start">
@@ -20,9 +17,7 @@
         ></fixed-top-title>
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel v-for="{ name } in yourAccountLinks" :key="name" :name="name">
-            <small-page-container>
-              <component :is="name" />
-            </small-page-container>
+            <component :is="name" />
           </q-tab-panel>
         </q-tab-panels>
       </template>
@@ -55,9 +50,7 @@
               transition-next="jump-down"
             >
               <q-tab-panel v-for="{ name } in yourAccountLinks" :key="name" :name="name">
-                <small-page-container>
-                  <component :is="name" />
-                </small-page-container>
+                <component :is="name" />
               </q-tab-panel>
             </q-tab-panels>
           </template>

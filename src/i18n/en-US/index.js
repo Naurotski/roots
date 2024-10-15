@@ -2,6 +2,7 @@ export default {
   common: {
     enter: 'enter',
     buy: 'buy',
+    change: 'change',
     close: 'close',
     continue: 'continue',
     oops: 'Oops. Nothing here...',

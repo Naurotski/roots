@@ -1,6 +1,12 @@
 <template>
   <q-btn :label="$t('common.buy')" @click="activator = true" />
-  <q-dialog v-model="activator" persistent>
+  <q-dialog
+    v-model="activator"
+    persistent
+    :maximized="$q.screen.xs"
+    :transition-show="$q.screen.xs ? 'slide-up' : 'fade'"
+    :transition-hide="$q.screen.xs ? 'slide-down' : 'fade'"
+  >
     <q-card style="max-width: 900px; border-radius: 25px">
       <q-toolbar class="q-pt-md">
         <q-toolbar-title class="text-h5">
@@ -153,7 +159,6 @@
 </template>
 
 <script>
-import { isValidEmailAddress } from 'src/composables/isValidEmailAddress.js'
 import { ref, toRefs, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'stores/auth-store'
@@ -161,6 +166,7 @@ import { useUserStore } from 'stores/user-store.js'
 import { useStripeStore } from 'stores/stripe-store.js'
 import { useSharedStore } from 'stores/shared-store.js'
 import LoginRequiredDialog from 'components/auth/LoginRequiredDialog.vue'
+import { isValidEmailAddress } from 'src/composables/isValidEmailAddress.js'
 import { isValidPhone } from 'src/composables/isValidPhone.js'
 export default {
   name: 'PayDialog',

@@ -1,6 +1,7 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { ref, watch } from 'vue'
 import { Loading, LocalStorage } from 'quasar'
+import { auth, db } from 'boot/firebase.js'
 import {
   createUserWithEmailAndPassword,
   updateProfile,
@@ -9,12 +10,11 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   fetchSignInMethodsForEmail,
-  GoogleAuthProvider
+  GoogleAuthProvider,
+  sendEmailVerification
 } from 'firebase/auth'
 import { ref as dbRef, set, onValue, off } from 'firebase/database'
-import { auth, db } from 'boot/firebase.js'
 import { useUserStore } from 'stores/user-store.js'
-
 import { showErrorMessage } from 'src/composables/show-error-message.js'
 export const useAuthStore = defineStore('auth', () => {
   const loginDialog = ref(false)
@@ -39,10 +39,13 @@ export const useAuthStore = defineStore('auth', () => {
       console.log(response.user.uid)
       await updateProfile(auth.currentUser, { displayName })
       await set(dbRef(db, `users/${response.user.uid}`), {
-        email
+        userId: response.user.uid
       })
       setUserData({
         displayName
+      })
+      await sendEmailVerification(auth.currentUser, {
+        url: 'https://aortagallery.com'
       })
       Loading.hide()
     } catch (error) {
@@ -71,10 +74,10 @@ export const useAuthStore = defineStore('auth', () => {
       if (result._tokenResponse.isNewUser) {
         console.log(result._tokenResponse.isNewUser)
         await set(dbRef(db, `users/${result.user.uid}`), {
-          email: result.user.email,
+          userId: result.user.uid,
           firstName: result.user.displayName.split(' ')[0] || '',
           lastName: result.user.displayName.split(' ')[1] || '',
-          displayPhoto: result.user.photoURL
+          displayPhotoURL: result.user.photoURL
         })
       }
       Loading.hide()
@@ -105,10 +108,10 @@ export const useAuthStore = defineStore('auth', () => {
         loggedIn.value = true
         LocalStorage.set('loggedIn', true)
         setUserData({
-          userId: user.uid,
           displayName: user.displayName?.split(' ')[0] || '',
           email: user.email,
-          emailVerified: user.emailVerified
+          emailVerified: user.emailVerified,
+          providerId: user.providerData[0].providerId
         })
         onValue(dbRef(db, `users/${user.uid}`), (snapshot) => {
           const data = snapshot.val()

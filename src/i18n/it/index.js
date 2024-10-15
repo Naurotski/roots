@@ -2,6 +2,7 @@ export default {
   common: {
     enter: 'entrare',
     buy: 'Acquista',
+    change: 'cambiare',
     close: 'Chiudi',
     continue: 'continuare',
     oops: "Ops. Qui non c'è niente...",
@@ -51,7 +52,7 @@ export default {
     logInEmail: "Accedi con un'email",
     logInAorta: 'Accedi ad Aorta',
     joinAorta: 'Unisciti ad Aorta',
-    continue: 'Continua con',
+    continueWith: 'Continua con',
     forgot: 'Hai dimenticato la password?',
     don: 'Non hai un account?',
     already: 'Hai già un account?',
