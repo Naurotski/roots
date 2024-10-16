@@ -11,23 +11,15 @@
     <q-card class="flex flex-center bg-grey-4" style="max-width: 450px">
       <q-btn
         class="absolute-top-right z-max"
-        color="green"
-        icon="fa-solid fa-check"
-        size="xl"
-        flat
-        round
-        dense
+        color="primary"
+        :label="$t('common.save')"
         :disable="!fileProxy"
         @click="saveImage"
       />
       <q-btn
         class="absolute-top-left z-max"
-        color="red"
-        icon="fa-solid fa-xmark"
-        size="xl"
-        flat
-        round
-        dense
+        color="grey"
+        :label="$t('common.cancel')"
         @click="closeDialog"
       />
       <!--      icon="fa-regular fa-rectangle-xmark"    icon="fa-regular fa-square-check"-->

@@ -23,131 +23,16 @@
         </div>
       </q-card-section>
 
-      <q-form ref="paymentForm" @submit.prevent="onSubmit" class="row justify-center">
-        <q-card-section class="col-12 col-sm-4">
-          <q-input
-            v-model="user.firstName"
-            clearable
-            :label="$t('dialoguePayment.firstName')"
-            lazy-rules
-            autocomplete="given-name"
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-              (v) => v.length <= 30 || 'Not more than 30 characters'
-            ]"
-          />
-        </q-card-section>
-        <q-card-section class="col-12 col-sm-4">
-          <q-input
-            v-model="user.lastName"
-            clearable
-            :label="$t('dialoguePayment.lastName')"
-            lazy-rules
-            autocomplete="family-name"
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-              (v) => v.length <= 30 || 'Not more than 30 characters'
-            ]"
-          />
-        </q-card-section>
-        <q-card-section class="col-12 col-sm-4">
-          <q-input
-            v-model="user.email"
-            clearable
-            label="Email"
-            type="email"
-            lazy-rules
-            autocomplete="email"
-            :rules="[(val) => isValidEmailAddress(val) || 'Please enter a valid email address.']"
-          />
-        </q-card-section>
-        <q-card-section class="col-12 col-sm-4">
-          <q-select
-            v-model="user.country"
-            :options="options"
-            option-label="countryName"
-            :label="$t('dialoguePayment.country')"
-            options-dense
-            emit-value
-            use-input
-            input-debounce="0"
-            @filter="filterFn"
-            lazy-rules
-            :rules="[
-              (val) => (val.countryName && val.countryName.length > 0) || 'Please choose something'
-            ]"
-          />
-        </q-card-section>
-        <q-card-section class="col-12 col-sm-4">
-          <q-input
-            clearable
-            v-model="user.postalCode"
-            :label="$t('dialoguePayment.postalCode')"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-              (v) => v.length <= 30 || 'Not more than 30 characters'
-            ]"
-          />
-        </q-card-section>
-        <q-card-section class="col-12 col-sm-4">
-          <q-input
-            clearable
-            v-model="user.city"
-            :label="$t('dialoguePayment.city')"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-              (v) => v.length <= 30 || 'Not more than 30 characters'
-            ]"
-          />
-        </q-card-section>
-        <q-card-section class="col-12 col-sm-4">
-          <q-input
-            clearable
-            v-model="user.address"
-            :label="$t('dialoguePayment.address')"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-              (v) => v.length <= 30 || 'Not more than 30 characters'
-            ]"
-          />
-        </q-card-section>
-        <q-card-section class="col-12 col-sm-4">
-          <q-input
-            clearable
-            v-model="user.phone"
-            type="tel"
-            :label="$t('dialoguePayment.phone')"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-              (v) => isValidPhone(v) || 'Please enter a valid phone number'
-            ]"
-          />
-        </q-card-section>
-        <q-card-section v-if="user.country?.countryName === 'Italy'" class="col-12 col-sm-4">
-          <q-input
-            clearable
-            v-model="user.taxId"
-            type="tel"
-            label="Codice Fiscale"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-              (v) => v.length <= 30 || 'Not more than 30 characters'
-            ]"
-          />
-        </q-card-section>
-        <q-card-section class="text-body1">
-          {{ $t('dialoguePayment.redirect') }}
-        </q-card-section>
-        <q-card-section class="row justify-end" style="width: 100%">
+      <form-user-data v-model="user" @submitForm="onSubmit">
+        <template #default>
+          <q-card-section class="text-body1">
+            {{ $t('dialoguePayment.redirect') }}
+          </q-card-section>
+        </template>
+        <template #btn>
           <q-btn class="q-mx-md" :label="$t('common.close')" @click="closeDialog" color="grey" />
-          <q-btn :label="$t('common.buy')" type="submit" color="primary" />
-        </q-card-section>
-      </q-form>
+        </template>
+      </form-user-data>
     </q-card>
   </q-dialog>
   <login-required-dialog
@@ -164,14 +49,13 @@ import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'stores/auth-store'
 import { useUserStore } from 'stores/user-store.js'
 import { useStripeStore } from 'stores/stripe-store.js'
-import { useSharedStore } from 'stores/shared-store.js'
 import LoginRequiredDialog from 'components/auth/LoginRequiredDialog.vue'
-import { isValidEmailAddress } from 'src/composables/isValidEmailAddress.js'
-import { isValidPhone } from 'src/composables/isValidPhone.js'
+import FormUserData from 'components/shared/FormUserData.vue'
 export default {
   name: 'PayDialog',
   components: {
-    LoginRequiredDialog
+    LoginRequiredDialog,
+    FormUserData
   },
   props: {
     work: {
@@ -181,7 +65,6 @@ export default {
   },
   setup(props) {
     const { work } = toRefs(props)
-    console.log('work.value =======', work.value)
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
     const { checkUserExistence } = authStore
@@ -192,11 +75,6 @@ export default {
     const { shippingDetails } = toRefs(stripeStore)
     const { changeShippingDetails } = stripeStore
     const { payStripe } = stripeStore
-    const sharedStore = useSharedStore()
-    const { sortedCountries } = storeToRefs(sharedStore)
-    const { getCountries } = sharedStore
-    if (!sortedCountries.value.length) getCountries()
-    const options = ref(sortedCountries.value)
     const activator = ref(false)
     const requiredDialog = ref(false)
     const authProvider = ref([])
@@ -233,26 +111,6 @@ export default {
       },
       { immediate: true, deep: true }
     )
-    watch(
-      () => user.value.country,
-      () => {
-        if (
-          !user.value.phone ||
-          sortedCountries.value.some((elem) => elem.callingCode === user.value.phone)
-        ) {
-          user.value.phone = user.value.country?.callingCode
-        }
-      },
-      { deep: true }
-    )
-    const filterFn = (val, update) => {
-      update(() => {
-        const needle = val.toLowerCase()
-        options.value = sortedCountries.value.filter(
-          (item) => item.countryName.toLowerCase().indexOf(needle) > -1
-        )
-      })
-    }
     const onSubmit = async () => {
       changeShippingDetails({ ...user.value })
       if (!loggedIn.value) {
@@ -266,15 +124,11 @@ export default {
         console.log(diffObj)
         console.log(Object.keys(diffObj).length)
         if (Object.keys(diffObj).length) {
-          console.log('============================')
           await updateUser({
             path: `users/${userData.value.userId}`,
             payload: diffObj
           })
         }
-        console.log('userData.value =====', userData.value)
-        console.log('shippingDetails.value =====', shippingDetails.value)
-        console.log('user =====', user.value)
         activator.value = false
         await payStripe({
           userData: {
@@ -316,14 +170,8 @@ export default {
       requiredDialog,
       authProvider,
       user,
-      sortedCountries,
-      getCountries,
-      options,
       userData,
-      isValidPhone,
-      isValidEmailAddress,
       closeDialog,
-      filterFn,
       onSubmit
     }
   }

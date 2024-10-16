@@ -64,7 +64,6 @@ export const useSharedStore = defineStore('shared', () => {
   }
 
   const getCountries = async () => {
-    console.log('getCountries')
     try {
       const response = await axios.get('https://restcountries.com/v3.1/all')
       listCountry.value = response.data

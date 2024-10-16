@@ -11,58 +11,56 @@
       </div>
     </div>
   </div>
-  <form v-if="userData.providerId === 'password'" class="row justify-center">
-    <q-input
-      ref="email"
-      v-model="user.email"
-      clearable
-      square
-      outlined
-      class="col-12 col-sm-4"
-      label="Email"
-      type="email"
-      lazy-rules
-      autocomplete="email"
-      :rules="[(val) => isValidEmailAddress(val) || 'Please enter a valid email address.']"
-    >
-      <template v-slot:append>
-        <q-btn
-          v-if="userData.email !== user.email"
-          @click="submitForm"
-          color="green"
-          fab-mini
-          dense
-          flat
-          :label="$t('common.change')"
-        />
-      </template>
-    </q-input>
-  </form>
-  <div v-else class="text-body2">{{ user.email }}</div>
-
+  <input-universal
+    ref="inputUniversal"
+    v-if="userData.providerId === 'password'"
+    v-model="user.email"
+    :original-text="userData.email"
+    type-rules="email"
+    @onSubmit="submitEmail"
+  />
+  <div v-else class="text-body2 text-center">{{ user.email }}</div>
+  <form-user-data v-model="user" @submitForm="submitForm" :deep-equal="deepEqual">
+    <template #btn>
+      <q-btn
+        :disable="deepEqual"
+        class="q-mx-md"
+        color="grey"
+        @click="cancelForm"
+        :label="$t('common.cancel')"
+      />
+    </template>
+  </form-user-data>
   <pre>user - {{ user }}</pre>
   <pre>userData - {{ userData }}</pre>
 </template>
 
 <script>
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
 import { useUserStore } from 'stores/user-store'
 import SetNewPhoto from 'components/user/SetNewPhoto.vue'
-import { isValidEmailAddress } from 'src/composables/isValidEmailAddress'
+import InputUniversal from 'components/user/InputUniversal.vue'
+import FormUserData from 'components/shared/FormUserData.vue'
+import { deepComparisonObjects } from 'src/composables/deepComparisonObjects'
 
 export default {
   name: 'UserSettings',
   components: {
-    SetNewPhoto
+    SetNewPhoto,
+    FormUserData,
+    InputUniversal
   },
   setup() {
     const $q = useQuasar()
+    const { t } = useI18n()
     const userStore = useUserStore()
     const { userData } = storeToRefs(userStore)
-    const { updateUserEmail, reauthenticate, setUserData } = userStore
-    const email = ref(null)
+    const { updateUserEmail, reauthenticate, setUserData, updateUser } = userStore
+    const fab1 = ref(false)
+    const inputUniversal = ref(null)
     const user = ref({
       firstName: '',
       lastName: '',
@@ -72,31 +70,47 @@ export default {
       country: null,
       postalCode: '',
       phone: '',
-      taxId: null,
+      taxId: '',
       portraitData: {}
+    })
+    const deepEqual = computed(() => {
+      // eslint-disable-next-line no-unused-vars
+      const { email, portraitData, portraitUrl, ...obj1 } = user.value
+      const obj2 = {
+        firstName: userData.value.firstName || userData.value.displayName || '',
+        lastName: userData.value.lastName || '',
+        address: userData.value.address || '',
+        city: userData.value.city || '',
+        country: userData.value.country ? { ...userData.value.country } : null,
+        postalCode: userData.value.postalCode || '',
+        phone: userData.value.phone || '',
+        taxId: userData.value.taxId || ''
+      }
+      return deepComparisonObjects(obj1, obj2)
     })
     watch(
       userData,
       (value) => {
-        user.value.firstName = value.firstName || value.displayName || ''
-        user.value.lastName = value.lastName || ''
-        user.value.email = value.email || ''
-        user.value.address = value.address || ''
-        user.value.city = value.city || ''
-        user.value.country = { ...value.country } || null
-        user.value.postalCode = value.postalCode || ''
-        user.value.phone = value.phone || ''
-        user.value.taxId = value.taxId
-        user.value.portraitUrl = value.portraitUrl || value.displayPhotoURL
+        if (value.userId) {
+          user.value.firstName = value.firstName || value.displayName || ''
+          user.value.lastName = value.lastName || ''
+          user.value.email = value.email || ''
+          user.value.address = value.address || ''
+          user.value.city = value.city || ''
+          user.value.country = value.country ? { ...value.country } : null
+          user.value.postalCode = value.postalCode || ''
+          user.value.phone = value.phone || ''
+          user.value.taxId = value.taxId || ''
+          user.value.portraitUrl = value.portraitUrl || value.displayPhotoURL
+        }
       },
       { deep: true, immediate: true }
     )
-    const submitForm = async () => {
-      email.value.validate()
-      if (!email.value.hasError) {
+    const submitEmail = async () => {
+      inputUniversal.value.inputText.validate()
+      if (!inputUniversal.value.inputText.hasError) {
         await updateUserEmail(user.value.email)
           .then(() => {
-            console.log('==============================')
             setUserData({ email: user.value.email })
           })
           .catch((error) => {
@@ -137,12 +151,47 @@ export default {
           })
       }
     }
+    const submitForm = () => {
+      if (!deepEqual.value) {
+        console.log('onSubmit - ')
+        // eslint-disable-next-line no-unused-vars
+        const { email, portraitData, portraitUrl, ...localObj } = user.value
+        updateUser({
+          path: `users/${userData.value.userId}`,
+          payload: localObj
+        }).then(() => {
+          const dialog = $q.dialog({
+            title: t('common.saved'),
+            position: 'bottom',
+            ok: false,
+            html: true,
+            style: {
+              textAlign: 'center'
+            }
+          })
+          setTimeout(() => dialog.hide(), 2000)
+        })
+      }
+    }
+    const cancelForm = () => {
+      user.value.firstName = userData.value.firstName || userData.value.displayName || ''
+      user.value.lastName = userData.value.lastName || ''
+      user.value.address = userData.value.address || ''
+      user.value.city = userData.value.city || ''
+      user.value.country = userData.value.country ? { ...userData.value.country } : null
+      user.value.postalCode = userData.value.postalCode || ''
+      user.value.phone = userData.value.phone || ''
+      user.value.taxId = userData.value.taxId || ''
+    }
     return {
+      fab1,
       userData,
-      email,
+      inputUniversal,
       user,
-      isValidEmailAddress,
-      submitForm
+      deepEqual,
+      submitEmail,
+      submitForm,
+      cancelForm
     }
   }
 }

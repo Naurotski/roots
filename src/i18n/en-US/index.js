@@ -2,7 +2,9 @@ export default {
   common: {
     enter: 'enter',
     buy: 'buy',
+    cancel: 'Cancel',
     change: 'change',
+    changes: 'Changes',
     close: 'close',
     continue: 'continue',
     oops: 'Oops. Nothing here...',
@@ -15,6 +17,8 @@ export default {
     goExhibition: 'Go Exhibition',
     shopArt: 'art for sale',
     shop: 'shop',
+    save: 'Save',
+    saved: 'Saved',
     technicalWork: 'Technical Work',
     maintenance:
       'Our website is temporarily unavailable due to technical work. Please check back later',

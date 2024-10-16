@@ -34,7 +34,6 @@ export const useUserStore = defineStore('user', () => {
       await update(dbRef(db, path), payload)
       Loading.hide()
     } catch (error) {
-      Loading.hide()
       showErrorMessage(error.message)
       throw error
     }
@@ -49,7 +48,6 @@ export const useUserStore = defineStore('user', () => {
       }
       Loading.hide()
     } catch (error) {
-      Loading.hide()
       showErrorMessage(error.message)
       throw error
     }
