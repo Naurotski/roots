@@ -9,7 +9,8 @@ import {
   GoogleAuthProvider,
   FacebookAuthProvider,
   reauthenticateWithPopup,
-  sendEmailVerification
+  sendEmailVerification,
+  sendPasswordResetEmail
 } from 'firebase/auth'
 import { ref as dbRef, update } from 'firebase/database'
 import { getDownloadURL, ref as storageRef, uploadString } from 'firebase/storage'
@@ -92,12 +93,27 @@ export const useUserStore = defineStore('user', () => {
       throw error
     }
   }
+  const sendPasswordReset = async (email = userData.value.email) => {
+    console.log('sendPasswordResetEmail - ')
+    try {
+      await sendPasswordResetEmail(auth, email, {
+        url: 'https://aortagallery.com'
+      })
+    } catch (error) {
+      console.log(error.message)
+      if (error.message !== 'Firebase: Error (auth/user-not-found).') {
+        showErrorMessage(error.message)
+      }
+      throw error
+    }
+  }
   return {
     userData,
     setUserData,
     updateUser,
     uploadImageToStorage,
     updateUserEmail,
-    reauthenticate
+    reauthenticate,
+    sendPasswordReset
   }
 })

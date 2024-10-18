@@ -48,7 +48,7 @@
           :rules="[(val) => val.length >= 6 || 'Please enter at least 6 characters.']"
         />
         <div class="text-body1" :class="{ 'text-body2': $q.screen.xs }">
-          <u class="cursor-pointer">{{ $t('auth.forgot') }}</u>
+          <u class="cursor-pointer" @click="passwordReset">{{ $t('auth.forgot') }}</u>
         </div>
         <q-btn
           no-caps
@@ -71,7 +71,10 @@
 
 <script>
 import { ref } from 'vue'
+import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store.js'
+import { useUserStore } from 'stores/user-store'
 import TitleLineCenter from 'components/TitleLineCenter.vue'
 import AuthProvidersButtons from 'components/auth/AuthProvidersButtons.vue'
 import { isValidEmailAddress } from 'src/composables/isValidEmailAddress.js'
@@ -84,8 +87,12 @@ export default {
   },
   emits: ['switch'],
   setup() {
+    const $q = useQuasar()
+    const { t } = useI18n()
     const authStore = useAuthStore()
     const { loginUser, showLoginDialog } = authStore
+    const userStore = useUserStore()
+    const { sendPasswordReset } = userStore
     const email = ref(null)
     const password = ref(null)
     const formData = ref({
@@ -100,13 +107,27 @@ export default {
         loginUser(formData.value)
       }
     }
+    const passwordReset = () => {
+      email.value.validate()
+      if (!email.value.hasError) {
+        sendPasswordReset(formData.value.email).finally(() => {
+          $q.notify({
+            color: 'grey',
+            timeout: 10000,
+            message: t('auth.sendPasswordReset'),
+            actions: [{ label: 'Ok', flat: true, color: 'white' }]
+          })
+        })
+      }
+    }
     return {
       email,
       password,
       formData,
       isValidEmailAddress,
       closeDialog,
-      submitForm
+      submitForm,
+      passwordReset
     }
   }
 }

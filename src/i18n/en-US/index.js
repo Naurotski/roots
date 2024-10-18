@@ -47,20 +47,23 @@ export default {
     basket: 'Basket'
   },
   auth: {
-    singIn: 'Sing In',
-    hello: 'Hello',
-    yourAccount: 'Your Account',
-    signOut: 'Sign Out',
-    logIn: 'Log in',
-    logInW: 'Log in with',
-    logInEmail: 'Log in with an email',
-    logInAorta: 'Log in to Aorta',
-    joinAorta: 'Join Aorta',
-    continueWith: 'Continue with',
-    forgot: 'Forgot your password?',
-    don: "Don't have an account?",
     already: 'Already have an account?',
-    rules: 'By joining Aorta, you agree to our Terms of Conditions of Use & Sale and Privacy Policy'
+    continueWith: 'Continue with',
+    don: "Don't have an account?",
+    forgot: 'Forgot your password?',
+    hello: 'Hello',
+    joinAorta: 'Join Aorta',
+    logIn: 'Log in',
+    logInAorta: 'Log in to Aorta',
+    logInEmail: 'Log in with an email',
+    logInW: 'Log in with',
+    rules:
+      'By joining Aorta, you agree to our Terms of Conditions of Use & Sale and Privacy Policy',
+    sendPasswordReset:
+      'If the email exists in our system, we will email you a link to reset your password. It should appear in your inbox within the next five minutes. If you still don’t see it, please check your spam folder before getting in touch!',
+    singIn: 'Sing In',
+    signOut: 'Sign Out',
+    yourAccount: 'Your Account'
   },
   artist: {
     education: 'Education',

@@ -3,6 +3,7 @@
     <q-card-section class="col-12 col-sm-4">
       <q-input
         v-model="user.firstName"
+        dense
         clearable
         :label="$t('dialoguePayment.firstName')"
         lazy-rules
@@ -16,6 +17,7 @@
     <q-card-section class="col-12 col-sm-4">
       <q-input
         v-model="user.lastName"
+        dense
         clearable
         :label="$t('dialoguePayment.lastName')"
         lazy-rules
@@ -29,6 +31,7 @@
     <q-card-section v-if="$route.name !== 'Your Account'" class="col-12 col-sm-4">
       <q-input
         v-model="user.email"
+        dense
         clearable
         label="Email"
         type="email"
@@ -41,6 +44,7 @@
       <q-select
         v-model="user.country"
         :options="options"
+        dense
         option-label="countryName"
         :label="$t('dialoguePayment.country')"
         options-dense
@@ -57,8 +61,9 @@
     </q-card-section>
     <q-card-section class="col-12 col-sm-4">
       <q-input
-        clearable
         v-model="user.postalCode"
+        dense
+        clearable
         :label="$t('dialoguePayment.postalCode')"
         lazy-rules
         :rules="[
@@ -69,8 +74,9 @@
     </q-card-section>
     <q-card-section class="col-12 col-sm-4">
       <q-input
-        clearable
         v-model="user.city"
+        dense
+        clearable
         :label="$t('dialoguePayment.city')"
         lazy-rules
         :rules="[
@@ -81,8 +87,9 @@
     </q-card-section>
     <q-card-section class="col-12 col-sm-4">
       <q-input
-        clearable
         v-model="user.address"
+        dense
+        clearable
         :label="$t('dialoguePayment.address')"
         lazy-rules
         :rules="[
@@ -93,8 +100,9 @@
     </q-card-section>
     <q-card-section class="col-12 col-sm-4">
       <q-input
-        clearable
         v-model="user.phone"
+        dense
+        clearable
         type="tel"
         :label="$t('dialoguePayment.phone')"
         lazy-rules
@@ -106,8 +114,9 @@
     </q-card-section>
     <q-card-section v-if="user.country?.countryName === 'Italy'" class="col-12 col-sm-4">
       <q-input
-        clearable
         v-model="user.taxId"
+        dense
+        clearable
         type="text"
         label="Codice Fiscale"
         lazy-rules

@@ -31,8 +31,14 @@
       />
     </template>
   </form-user-data>
-  <pre>user - {{ user }}</pre>
-  <pre>userData - {{ userData }}</pre>
+  <div class="text-center">
+    <q-btn
+      v-if="userData.providerId === 'password'"
+      :class="{ 'full-width': $q.screen.xs }"
+      label="sendPassword"
+      @click="sendPassword"
+    />
+  </div>
 </template>
 
 <script>
@@ -58,7 +64,8 @@ export default {
     const { t } = useI18n()
     const userStore = useUserStore()
     const { userData } = storeToRefs(userStore)
-    const { updateUserEmail, reauthenticate, setUserData, updateUser } = userStore
+    const { updateUserEmail, reauthenticate, setUserData, updateUser, sendPasswordReset } =
+      userStore
     const fab1 = ref(false)
     const inputUniversal = ref(null)
     const user = ref({
@@ -160,16 +167,10 @@ export default {
           path: `users/${userData.value.userId}`,
           payload: localObj
         }).then(() => {
-          const dialog = $q.dialog({
-            title: t('common.saved'),
-            position: 'bottom',
-            ok: false,
-            html: true,
-            style: {
-              textAlign: 'center'
-            }
+          $q.notify({
+            message: t('common.saved'),
+            color: 'grey'
           })
-          setTimeout(() => dialog.hide(), 2000)
         })
       }
     }
@@ -183,6 +184,17 @@ export default {
       user.value.phone = userData.value.phone || ''
       user.value.taxId = userData.value.taxId || ''
     }
+    const sendPassword = () => {
+      console.log('sendPassword')
+      sendPasswordReset().finally(() => {
+        $q.notify({
+          color: 'grey',
+          timeout: 10000,
+          message: t('auth.sendPasswordReset'),
+          actions: [{ label: 'Ok', flat: true, color: 'white' }]
+        })
+      })
+    }
     return {
       fab1,
       userData,
@@ -191,7 +203,8 @@ export default {
       deepEqual,
       submitEmail,
       submitForm,
-      cancelForm
+      cancelForm,
+      sendPassword
     }
   }
 }

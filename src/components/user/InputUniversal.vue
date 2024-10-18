@@ -3,6 +3,7 @@
     <q-input
       ref="inputText"
       v-model="text"
+      dense
       square
       outlined
       clearable

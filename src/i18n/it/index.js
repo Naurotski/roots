@@ -47,21 +47,23 @@ export default {
     basket: 'Carrello'
   },
   auth: {
-    singIn: 'Accedi',
-    hello: 'Ciao',
-    yourAccount: 'Il mio account',
-    signOut: 'Esci',
-    logIn: 'Accedi',
-    logInW: 'Accedi con',
-    logInEmail: "Accedi con un'email",
-    logInAorta: 'Accedi ad Aorta',
-    joinAorta: 'Unisciti ad Aorta',
-    continueWith: 'Continua con',
-    forgot: 'Hai dimenticato la password?',
-    don: 'Non hai un account?',
     already: 'Hai già un account?',
+    continueWith: 'Continua con',
+    don: 'Non hai un account?',
+    forgot: 'Hai dimenticato la password?',
+    hello: 'Ciao',
+    joinAorta: 'Unisciti ad Aorta',
+    logIn: 'Accedi',
+    logInAorta: 'Accedi ad Aorta',
+    logInEmail: "Accedi con un'email",
+    logInW: 'Accedi con',
     rules:
-      "Unendoti ad Aorta, accetti i nostri Termini e condizioni d'uso e di vendita e l'Informativa sulla privacy."
+      "Unendoti ad Aorta, accetti i nostri Termini e condizioni d'uso e di vendita e l'Informativa sulla privacy.",
+    sendPasswordReset:
+      "Se l'email esiste nel nostro sistema, ti invieremo un link per reimpostare la password. Dovrebbe apparire nella tua posta in arrivo entro i prossimi cinque minuti. Se ancora non la vedi, controlla la cartella spam prima di contattarci!",
+    singIn: 'Accedi',
+    signOut: 'Esci',
+    yourAccount: 'Il mio account'
   },
   artist: {
     education: 'Formazione',
