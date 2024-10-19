@@ -28,8 +28,8 @@ export const useSharedStore = defineStore('shared', () => {
   ])
   const yourAccountLinks = ref([
     { label: 'links.settings', name: 'UserSettings' },
-    { label: 'links.orders', name: 'UserOrders' },
-    { label: 'links.basket', name: 'UserBasket' }
+    { label: 'links.orders', name: 'UserOrders' }
+    // { label: 'links.basket', name: 'UserBasket' }
   ])
   //{ label: 'links.graphics', name: 'graphics' },   { label: 'links.installation', name: 'installation' }
   const rightDrawerOpen = ref(false)

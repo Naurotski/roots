@@ -39,7 +39,7 @@
   </form>
 </template>
 <script>
-import { computed, toRefs, ref, defineExpose } from 'vue'
+import { computed, toRefs, ref } from 'vue'
 import { isValidEmailAddress } from 'src/composables/isValidEmailAddress'
 export default {
   name: 'InputUniversal',
@@ -74,9 +74,6 @@ export default {
       } else {
         return []
       }
-    })
-    defineExpose({
-      inputText
     })
     return {
       inputText,

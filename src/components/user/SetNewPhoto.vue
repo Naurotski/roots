@@ -1,5 +1,5 @@
 <template>
-  <q-btn flat no-caps :label="$t('settings.SetNewPhoto')" @click="dialog = true" />
+  <q-btn flat no-caps :label="$t('settings.setNewPhoto')" @click="dialog = true" />
   <q-dialog
     v-model="dialog"
     persistent
@@ -32,7 +32,7 @@
         bg-color="grey"
         label-color="white"
         accept="image/*"
-        :label="$t('settings.SetNewPhoto')"
+        :label="$t('settings.setNewPhoto')"
         filled
         style="z-index: 99; width: 100%"
         @rejected="onRejected"

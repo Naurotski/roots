@@ -66,26 +66,28 @@ export default {
     yourAccount: 'Il mio account'
   },
   artist: {
+    about: 'Bio',
     education: 'Formazione',
-    press: 'Pressa',
-    about: 'Bio'
+    press: 'Pressa'
   },
   dialoguePayment: {
-    loginRequired: 'Per effettuare un acquisto è necessario accedere al proprio account',
-    registrationRequired: 'Per effettuare un acquisto è necessario registrarsi',
+    address: 'Indirizzo',
+    city: 'Città',
+    country: 'Paese',
     delivery:
       "Puoi acquistare qualsiasi opera d'arte con spedizione gratuita in tutto il mondo. Si prega di controllare tutte le informazioni sull'opera e sulla spedizione prima di confermare l'acquisto. Tutte le opzioni di contatto sono disponibili nella sezione 'Contatti'. In caso di consegna al di fuori dell'UE, emettiamo documenti di accompagnamento per ogni dipinto, consentendo l'esportazione di oggetti d'arte. Questo potrebbe richiedere altre 2-3 settimane.",
     redirect:
       'Verrai reindirizzato alla pagina della piattaforma Stripe per elaborare il pagamento.',
     firstName: 'Nome',
     lastName: 'Cognome',
-    country: 'Paese',
+    loginRequired: 'Per effettuare un acquisto è necessario accedere al proprio account',
+    phone: 'Telefono (formato internazionale)',
     postalCode: 'Codice Postale',
-    city: 'Città',
-    address: 'Indirizzo',
-    phone: 'Telefono (formato internazionale)'
+    registrationRequired: 'Per effettuare un acquisto è necessario registrarsi'
   },
   settings: {
-    SetNewPhoto: 'Imposta Nuova Foto'
+    datePurchase: 'Data di acquisto',
+    noPurchases: 'Non hai ancora acquisti',
+    setNewPhoto: 'Imposta Nuova Foto'
   }
 }

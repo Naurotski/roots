@@ -21,15 +21,14 @@
           </q-tab-panel>
         </q-tab-panels>
       </template>
-      <div v-else>
-        <q-splitter v-model="splitterModel" style="height: 81vh">
+      <div v-else class="row justify-center">
+        <q-splitter v-model="splitterModel" style="height: 81vh; width: 100%; max-width: 1400px">
           <template v-slot:before>
             <div>
               <div class="text-h5 q-mb-xl text-center">
                 {{ $t('auth.yourAccount') }}
                 <q-separator inset />
               </div>
-
               <q-tabs v-model="tab" vertical>
                 <q-tab
                   class="text-body1"

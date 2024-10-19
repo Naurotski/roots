@@ -1,18 +1,88 @@
 <template>
-  <q-card flat bordered class="q-mt-md" :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-2'">
-    <q-card-section>Submitted form contains the following formData (key = value):</q-card-section>
-    <q-separator />
-    <q-card-section class="row q-gutter-sm items-center">
-      <div class="q-px-sm q-py-xs bg-grey-8 text-white rounded-borders text-center text-no-wrap">
-        Lorem ipsum dolor sit amet.
+  <div v-if="!acquiredWorks.length" class="text-center">
+    <div class="text-h4">{{ $t('settings.noPurchases') }}.</div>
+    <q-btn
+      class="q-mt-md"
+      flat
+      icon-right="mdi-arrow-right-bold"
+      :label="$t('links.sale')"
+      to="/sale"
+    />
+  </div>
+  <div v-else class="row justify-around">
+    <div
+      class="q-ma-lg"
+      v-for="{ name, artistName, urlImageWork, date } in acquiredWorks"
+      :key="urlImageWork"
+      style="width: 300px"
+    >
+      <div v-if="urlImageWork.includes('video')">
+        <div style="position: relative">
+          <q-video
+            :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
+            :src="urlImageWork"
+          />
+          <div
+            style="position: absolute; top: 5px; height: 100%; width: 100%; opacity: 0.1"
+            class="bg-grey-2"
+          />
+        </div>
+        <div class="text-body1 q-mt-md">
+          <div>{{ artistName }}</div>
+          <b>{{ name }}</b>
+          <p>{{ $t('settings.datePurchase') }} - {{ date }}</p>
+        </div>
       </div>
-    </q-card-section>
-  </q-card>
+      <div v-else>
+        <q-img
+          :src="urlImageWork"
+          fit="contain"
+          :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
+        />
+        <div class="text-body1 q-mt-md">
+          <div>{{ artistName }}</div>
+          <b>{{ name }}</b>
+          <p>{{ $t('settings.datePurchase') }} - {{ date }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import { computed } from 'vue'
+import { date } from 'quasar'
+import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
+import { useUserStore } from 'stores/user-store'
+
 export default {
-  name: 'UserOrders'
+  name: 'UserOrders',
+  setup() {
+    const { locale } = useI18n({ useScope: 'global' })
+    const userStore = useUserStore()
+    const { userData } = storeToRefs(userStore)
+    const acquiredWorks = computed(() => {
+      if (userData.value.AcquiredWorks) {
+        return Object.values(userData.value.AcquiredWorks)
+          .sort((a, b) => {
+            if (a.date < b.date) return 1
+            if (a.date === b.date) return 0
+            if (a.date > b.date) return -1
+          })
+          .map((item) => ({
+            ...item,
+            name: locale.value === 'it' ? item.nameIt : item.name,
+            date: date.formatDate(item.date, 'DD/MM/YYYY')
+          }))
+      } else {
+        return []
+      }
+    })
+    return {
+      acquiredWorks
+    }
+  }
 }
 </script>
 <style scoped></style>

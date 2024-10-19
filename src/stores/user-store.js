@@ -65,7 +65,11 @@ export const useUserStore = defineStore('user', () => {
     } catch (error) {
       Loading.hide()
       if (error.message.match(/\((.*?)\)/)[1] !== 'auth/requires-recent-login') {
-        showErrorMessage(error.message)
+        if(error.name === 'FirebaseError'){
+          showErrorMessage(error.message.match(/\(([^)]+)\)/)[1].replace(/auth\/|-/g, ' '))
+        } else {
+          showErrorMessage(error.message)
+        }
       }
       throw error
     }
