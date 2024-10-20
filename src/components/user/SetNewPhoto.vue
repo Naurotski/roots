@@ -22,7 +22,6 @@
         :label="$t('common.cancel')"
         @click="closeDialog"
       />
-      <!--      icon="fa-regular fa-rectangle-xmark"    icon="fa-regular fa-square-check"-->
       <avatar-selector :portrait-data="imageData" @updateTranslate="(val) => (translate = val)" />
       <q-file
         v-model="fileProxy"
@@ -41,7 +40,6 @@
       </q-file>
     </q-card>
   </q-dialog>
-  <!--  max-file-size="6291456"-->
 </template>
 <script>
 import { ref, toRefs, watch } from 'vue'

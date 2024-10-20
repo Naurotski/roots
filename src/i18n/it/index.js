@@ -40,10 +40,11 @@ export default {
     sculpture: 'Scultura',
     photography: 'Fotografia',
     installation: 'Installazione',
+    myData: 'i Miei Dati',
     books: 'Libri',
     digital: 'Digital',
     settings: 'Impostazioni',
-    orders: 'Ordini',
+    myOrders: 'i Miei Ordini',
     basket: 'Carrello'
   },
   auth: {
@@ -63,7 +64,7 @@ export default {
       "Se l'email esiste nel nostro sistema, ti invieremo un link per reimpostare la password. Dovrebbe apparire nella tua posta in arrivo entro i prossimi cinque minuti. Se ancora non la vedi, controlla la cartella spam prima di contattarci!",
     singIn: 'Accedi',
     signOut: 'Esci',
-    yourAccount: 'Il mio account'
+    yourAccount: 'Il Mio Account'
   },
   artist: {
     about: 'Bio',

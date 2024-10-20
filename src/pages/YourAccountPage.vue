@@ -6,6 +6,7 @@
           ><div class="row justify-md-start">
             <q-tabs v-model="tab" dense narrow-indicator>
               <q-tab
+                no-caps
                 style="width: 120px"
                 class="text-body1"
                 v-for="{ label, name } in yourAccountLinks"
@@ -31,6 +32,7 @@
               </div>
               <q-tabs v-model="tab" vertical>
                 <q-tab
+                  no-caps
                   class="text-body1"
                   v-for="{ label, name } in yourAccountLinks"
                   :key="name"
@@ -68,7 +70,7 @@ import { useAuthStore } from 'stores/auth-store.js'
 import { useUserStore } from 'stores/user-store.js'
 import { useSharedStore } from 'stores/shared-store'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
-import UserSettings from 'components/user/UserSettings.vue'
+import UserSettings from 'components/user/UserData.vue'
 import UserOrders from 'components/user/UserOrders.vue'
 import UserBasket from 'components/user/UserBasket.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'

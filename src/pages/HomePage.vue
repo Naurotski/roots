@@ -147,7 +147,7 @@ export default defineComponent({
 <style lang="sass" scoped>
 .custom-caption
   text-align: center
-  padding: 80px
+  padding: 60px
   color: white
   background-color: rgba(0, 0, 0, .3)
 </style>

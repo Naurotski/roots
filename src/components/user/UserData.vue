@@ -53,7 +53,7 @@ import FormUserData from 'components/shared/FormUserData.vue'
 import { deepComparisonObjects } from 'src/composables/deepComparisonObjects'
 
 export default {
-  name: 'UserSettings',
+  name: 'UserData',
   components: {
     SetNewPhoto,
     FormUserData,

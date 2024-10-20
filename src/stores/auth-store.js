@@ -83,7 +83,11 @@ export const useAuthStore = defineStore('auth', () => {
       Loading.hide()
       return result
     } catch (error) {
-      showErrorMessage(error.message)
+      if (error.message !== 'Firebase: Error (auth/popup-closed-by-user).') {
+        showErrorMessage(error.message)
+      } else {
+        Loading.hide()
+      }
       throw error
     }
   }

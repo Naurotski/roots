@@ -9,8 +9,21 @@
     flat
     @click="singIn"
     ><template v-slot:label>
-      <div v-if="loggedIn" class="text-center overflow-hidden">
-        {{ $t('auth.hello') }}<br />{{ userData.displayName }}
+      <div v-if="loggedIn" class="row items-center no-wrap">
+        <q-avatar style="border: 2px solid white" class="flex flex-center" :class="{'no-border': userData.portraitUrl || userData.displayPhotoURL}">
+          <img
+            class="no-border"
+            v-if="userData.portraitUrl || userData.displayPhotoURL"
+            :src="userData.portraitUrl || userData.displayPhotoURL"
+            alt="photo"
+          />
+          <div v-else class="text-center">
+            {{
+              userData.firstName?.charAt(0).toUpperCase() ||
+              userData.displayName.charAt(0).toUpperCase()
+            }}
+          </div>
+        </q-avatar>
       </div>
       <div v-else class="text-center">{{ $t('auth.singIn') }}</div>
     </template>

@@ -27,8 +27,8 @@ export const useSharedStore = defineStore('shared', () => {
     { label: 'links.digital', name: 'digital' }
   ])
   const yourAccountLinks = ref([
-    { label: 'links.settings', name: 'UserSettings' },
-    { label: 'links.orders', name: 'UserOrders' }
+    { label: 'links.myData', name: 'UserSettings' },
+    { label: 'links.myOrders', name: 'UserOrders' }
     // { label: 'links.basket', name: 'UserBasket' }
   ])
   //{ label: 'links.graphics', name: 'graphics' },   { label: 'links.installation', name: 'installation' }

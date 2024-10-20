@@ -40,10 +40,11 @@ export default {
     sculpture: 'Sculpture',
     photography: 'Photography',
     installation: 'Installation',
+    myData: 'my Data',
     books: 'Books',
     digital: 'Digital',
     settings: 'Settings',
-    orders: 'Orders',
+    myOrders: 'my Orders',
     basket: 'Basket'
   },
   auth: {
