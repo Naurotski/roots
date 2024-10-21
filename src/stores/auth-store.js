@@ -11,6 +11,7 @@ import {
   signInWithPopup,
   fetchSignInMethodsForEmail,
   GoogleAuthProvider,
+  FacebookAuthProvider,
   sendEmailVerification
 } from 'firebase/auth'
 import { ref as dbRef, set, onValue, off } from 'firebase/database'
@@ -20,6 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
   const loginDialog = ref(false)
   const loggedIn = ref(false)
   const providerGoogle = new GoogleAuthProvider()
+  const providerFacebook = new FacebookAuthProvider()
 
   const userStore = useUserStore()
   const { userData } = storeToRefs(userStore)
@@ -91,6 +93,36 @@ export const useAuthStore = defineStore('auth', () => {
       throw error
     }
   }
+  const logInFacebook = async () => {
+    console.log('logInFacebook')
+    try {
+      Loading.show()
+      const result = await signInWithPopup(auth, providerFacebook)
+      console.log(result)
+      if (result._tokenResponse.isNewUser) {
+        await set(dbRef(db, `users/${result.user.uid}`), {
+          userId: result.user.uid,
+          firstName: result.user.displayName.split(' ')[0] || '',
+          lastName: result.user.displayName.split(' ')[1] || '',
+          displayPhotoURL: result.user.photoURL
+        })
+        if (!result.user.emailVerified) {
+          await sendEmailVerification(auth.currentUser, {
+            url: 'https://aortagallery.com'
+          })
+        }
+      }
+      Loading.hide()
+      return result
+    } catch (error) {
+      console.log(error.message)
+      if (error.message !== 'Firebase: Error (auth/popup-closed-by-user).') {
+        showErrorMessage(error.message)
+      }
+      Loading.hide()
+      throw error
+    }
+  }
   const logoutUser = async () => {
     console.log('logoutUser')
     try {
@@ -150,6 +182,7 @@ export const useAuthStore = defineStore('auth', () => {
     registerUser,
     loginUser,
     logInGoogle,
+    logInFacebook,
     logoutUser,
     handleAuthStateChange,
     checkUserExistence

@@ -3,7 +3,7 @@
     ><q-icon left name="mdi-apple" /><slot name="apple" />
   </q-btn>
   <google-button @click="logInGoogle"> <slot name="google" /></google-button>
-  <q-btn no-caps outline rounded color="primary" class="full-width"
+  <q-btn no-caps outline rounded color="primary" class="full-width" @click="logInFacebook"
     ><q-icon left name="mdi-facebook" class="text-blue" /><slot name="facebook" />
   </q-btn>
 </template>
@@ -18,9 +18,10 @@ export default {
   },
   setup() {
     const authStore = useAuthStore()
-    const { logInGoogle } = authStore
+    const { logInGoogle, logInFacebook } = authStore
     return {
-      logInGoogle
+      logInGoogle,
+      logInFacebook
     }
   }
 }

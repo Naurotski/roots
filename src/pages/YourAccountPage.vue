@@ -6,7 +6,6 @@
           ><div class="row justify-md-start">
             <q-tabs v-model="tab" dense narrow-indicator>
               <q-tab
-                no-caps
                 style="width: 120px"
                 class="text-body1"
                 v-for="{ label, name } in yourAccountLinks"
@@ -32,7 +31,6 @@
               </div>
               <q-tabs v-model="tab" vertical>
                 <q-tab
-                  no-caps
                   class="text-body1"
                   v-for="{ label, name } in yourAccountLinks"
                   :key="name"

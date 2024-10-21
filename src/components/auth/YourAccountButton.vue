@@ -10,7 +10,11 @@
     @click="singIn"
     ><template v-slot:label>
       <div v-if="loggedIn" class="row items-center no-wrap">
-        <q-avatar style="border: 2px solid white" class="flex flex-center" :class="{'no-border': userData.portraitUrl || userData.displayPhotoURL}">
+        <q-avatar
+          style="border: 2px solid white"
+          class="flex flex-center"
+          :class="{ 'no-border': userData.portraitUrl || userData.displayPhotoURL }"
+        >
           <img
             class="no-border"
             v-if="userData.portraitUrl || userData.displayPhotoURL"
