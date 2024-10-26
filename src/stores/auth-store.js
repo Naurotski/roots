@@ -70,7 +70,6 @@ export const useAuthStore = defineStore('auth', () => {
   const logInGoogle = async () => {
     console.log('logInGoogle')
     try {
-      Loading.show()
       const result = await signInWithPopup(auth, providerGoogle)
       console.log(result)
       if (result._tokenResponse.isNewUser) {
@@ -82,13 +81,10 @@ export const useAuthStore = defineStore('auth', () => {
           displayPhotoURL: result.user.photoURL
         })
       }
-      Loading.hide()
       return result
     } catch (error) {
       if (error.message !== 'Firebase: Error (auth/popup-closed-by-user).') {
         showErrorMessage(error.message)
-      } else {
-        Loading.hide()
       }
       throw error
     }
@@ -96,7 +92,6 @@ export const useAuthStore = defineStore('auth', () => {
   const logInFacebook = async () => {
     console.log('logInFacebook')
     try {
-      Loading.show()
       const result = await signInWithPopup(auth, providerFacebook)
       console.log(result)
       if (result._tokenResponse.isNewUser) {
@@ -112,14 +107,12 @@ export const useAuthStore = defineStore('auth', () => {
           })
         }
       }
-      Loading.hide()
       return result
     } catch (error) {
       console.log(error.message)
       if (error.message !== 'Firebase: Error (auth/popup-closed-by-user).') {
         showErrorMessage(error.message)
       }
-      Loading.hide()
       throw error
     }
   }

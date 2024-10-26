@@ -143,22 +143,24 @@ export default {
             postalCode: userData.value.postalCode,
             taxId: userData.value.taxId || null
           },
-          shippingDetails: shippingDetails.value,
           metadata: {
-            name: work.value.name,
-            nameIt: work.value.nameIt,
-            description: work.value.description,
-            workId: work.value.id,
-            typeExercise: 'work',
-            artistId: work.value.artistId,
+            workName: work.value.name,
+            workNameIt: work.value.nameIt,
             workIndex: work.value.index,
+            workId: work.value.id,
             urlImageWork: work.value.urlImageWork,
+            description:
+              work.value.description.length < 200
+                ? work.value.description
+                : `${work.value.description?.substring(0, 200)}...`,
+            artistId: work.value.artistId,
             artistName: work.value.artistName,
             quantity: 1,
             amount: work.value.price * 100,
             currency: 'eur',
             ...shippingDetails.value,
-            country: shippingDetails.value.country.countryName
+            country: shippingDetails.value.country.countryName,
+            shippingEmail: shippingDetails.value.email
           }
         })
         changeShippingDetails({})

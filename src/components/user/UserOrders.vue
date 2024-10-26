@@ -72,7 +72,7 @@ export default {
           })
           .map((item) => ({
             ...item,
-            name: locale.value === 'it' ? item.nameIt : item.name,
+            name: locale.value === 'it' ? item.workNameIt : item.workName,
             date: date.formatDate(item.date, 'DD/MM/YYYY')
           }))
       } else {
