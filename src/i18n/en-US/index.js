@@ -19,11 +19,17 @@ export default {
     shop: 'shop',
     save: 'Save',
     saved: 'Saved',
+    sendMessage: 'Send Message',
+    sentMessage: 'Message Sent',
     technicalWork: 'Technical Work',
+    title: 'Title',
     maintenance:
       'Our website is temporarily unavailable due to technical work. Please check back later',
     or: 'OR',
-    attention: 'Attention!'
+    attention: 'Attention!',
+    yourEmail: 'Your Email',
+    yourMessage: 'Your Message',
+    yourName: 'Your Name'
   },
   links: {
     home: 'Home',

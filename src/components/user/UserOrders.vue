@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!acquiredWorks.length" class="text-center">
+  <div v-if="!artWorks.length" class="text-center">
     <div class="text-h4">{{ $t('settings.noPurchases') }}.</div>
     <q-btn
       class="q-mt-md"
@@ -12,7 +12,7 @@
   <div v-else class="row justify-around">
     <div
       class="q-ma-lg"
-      v-for="{ name, artistName, urlImageWork, date } in acquiredWorks"
+      v-for="{ name, artistName, urlImageWork, date } in artWorks"
       :key="urlImageWork"
       style="width: 300px"
     >
@@ -62,9 +62,9 @@ export default {
     const { locale } = useI18n({ useScope: 'global' })
     const userStore = useUserStore()
     const { userData } = storeToRefs(userStore)
-    const acquiredWorks = computed(() => {
-      if (userData.value.AcquiredWorks) {
-        return Object.values(userData.value.AcquiredWorks)
+    const artWorks = computed(() => {
+      if (userData.value.orders?.artWorks) {
+        return Object.values(userData.value.orders.artWorks)
           .sort((a, b) => {
             if (a.date < b.date) return 1
             if (a.date === b.date) return 0
@@ -80,7 +80,7 @@ export default {
       }
     })
     return {
-      acquiredWorks
+      artWorks
     }
   }
 }

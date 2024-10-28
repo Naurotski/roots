@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { ref as dbRef, onValue } from 'firebase/database'
 import { db } from 'boot/firebase.js'
 import axios from 'axios'
+import { apiAxios } from 'boot/axios'
 import { showErrorMessage } from 'src/composables/show-error-message.js'
 
 export const useSharedStore = defineStore('shared', () => {
@@ -79,6 +80,16 @@ export const useSharedStore = defineStore('shared', () => {
       throw error
     }
   }
+  const sendMailFeedback = async (mailData) => {
+    console.log('sendMailFeedback - ', mailData)
+    try {
+      const response = await apiAxios.post('/aorta/nodemailer', { ...mailData })
+      console.log(response)
+    } catch (error) {
+      showErrorMessage(error.message)
+      throw error
+    }
+  }
   return {
     essentialLinks,
     actionsLinks,
@@ -91,6 +102,7 @@ export const useSharedStore = defineStore('shared', () => {
     sortedCountries,
     toggleRightDrawer,
     getHomePageData,
-    getCountries
+    getCountries,
+    sendMailFeedback
   }
 })

@@ -23,8 +23,7 @@
             archaic images of the unconscious. We welcome all the types of art, from painting and
             photography to installations. We support young artists, who explore social issues and
             also develop our city of Pisa as the center of social art.
-            <br /><br />aorta.gallery@gmail.com <br /><br />Nadzeya Naurotskaya, curator
-            +393925568834
+            <br /><br />aorta.gallery@gmail.com <br />Nadzeya Naurotskaya, curator +393925568834
           </p>
           <p v-else class="text-justify text-body1" style="white-space: pre-line">
             Aorta Social Art Gallery (ex-Roots Gallery) è una giovane e aspirante galleria di arte
@@ -38,15 +37,27 @@
             questioni sociali e vogliono aiutarci a far sviluppare la nostra città di Pisa come
             centro dell'arte sociale.
 
-            <br /><br />aorta.gallery@gmail.com <br /><br />Nadzeya Naurotskaya, curatrice
-            +393925568834
+            <br />
+            <br /><a
+              target="_blank"
+              style="text-decoration: none; color: black"
+              href="mailto:aorta.gallery@gmail.com"
+              >aorta.gallery@gmail.com</a
+            >
+            <br />Nadzeya Naurotskaya, curatrice +393925568834
           </p>
-          <br />
-          <p class="text-justify text-body1" style="white-space: pre-line">
+
+          <div class="text-justify text-body1" style="white-space: pre-line">
             Corso Italia 146, 56125 Pisa
-          </p>
+          </div>
+
+          <div class="row justify-center q-my-md">
+            <div class="col-12 text-h6 text-center">{{ $t('common.yourMessage') }}</div>
+            <mail-feedback class="col-12 col-md-8" />
+          </div>
         </div>
       </small-page-container>
+
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d812.0474914186576!2d10.398930428545782!3d43.71175286757088!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12d5919c1c927ded%3A0x834b906e70fe60d6!2sCorso%20Italia%2C%20146%2C%2056125%20Pisa%20PI!5e1!3m2!1sru!2sit!4v1724014576603!5m2!1sru!2sit"
         width="100%"
@@ -61,9 +72,10 @@
 </template>
 
 <script>
+import { useMeta } from 'quasar'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
-import { useMeta } from 'quasar'
+import MailFeedback from 'components/MailFeedback.vue'
 
 const metaData = {
   title: 'Aorta Social Art Gallery',
@@ -83,7 +95,8 @@ export default {
   name: 'AboutPage',
   components: {
     FixedTopTitle,
-    SmallPageContainer
+    SmallPageContainer,
+    MailFeedback
   },
   setup() {
     useMeta(metaData)

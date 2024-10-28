@@ -19,11 +19,17 @@ export default {
     shop: 'shop',
     save: 'Salva',
     saved: 'Salvato',
+    sendMessage: 'Inviare un Messaggio',
+    sentMessage: 'Messaggio Inviato',
     technicalWork: 'Lavoro Tecnico',
+    title: 'Titolo',
     maintenance:
       'Il nostro sito web è temporaneamente non disponibile a causa di lavori tecnici. Ricontrolla più tardi',
     or: 'OPPURE',
-    attention: 'Attenzione!'
+    attention: 'Attenzione!',
+    yourEmail: 'Il tuo indirizzo email',
+    yourMessage: 'Lascia un Messaggio',
+    yourName: 'Il Tuo Nome'
   },
   links: {
     home: 'Home',
