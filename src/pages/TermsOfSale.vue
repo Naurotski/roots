@@ -135,11 +135,11 @@
               accordance with Italian law and may be submitted to the competent court at the
               gallery’s location.
             </li>
-<!--            <li>-->
-<!--              The client also has the right to file a complaint with the European Online Dispute-->
-<!--              Resolution (ODR) platform, available at https://ec.europa.eu/consumers/odr, if located-->
-<!--              within the EU.-->
-<!--            </li>-->
+            <!--            <li>-->
+            <!--              The client also has the right to file a complaint with the European Online Dispute-->
+            <!--              Resolution (ODR) platform, available at https://ec.europa.eu/consumers/odr, if located-->
+            <!--              within the EU.-->
+            <!--            </li>-->
           </ul>
         </div>
       </div>
@@ -284,11 +284,11 @@
               secondo la legge italiana e potrà essere sottoposta al tribunale competente nel luogo
               della galleria.
             </li>
-<!--            <li>-->
-<!--              Il cliente ha inoltre il diritto di presentare un reclamo sulla piattaforma europea di-->
-<!--              risoluzione online delle controversie (ODR), disponibile all'indirizzo-->
-<!--              https://ec.europa.eu/consumers/odr, se si trova nell'UE.-->
-<!--            </li>-->
+            <!--            <li>-->
+            <!--              Il cliente ha inoltre il diritto di presentare un reclamo sulla piattaforma europea di-->
+            <!--              risoluzione online delle controversie (ODR), disponibile all'indirizzo-->
+            <!--              https://ec.europa.eu/consumers/odr, se si trova nell'UE.-->
+            <!--            </li>-->
           </ul>
         </div>
       </div>

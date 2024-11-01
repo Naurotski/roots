@@ -20,7 +20,8 @@
       <q-card-section class="text-body1">
         <div style="white-space: pre-line" class="text-body1">
           {{ $t('dialoguePayment.delivery') }}
-          <router-link  style=" color: black"  to="/termsSale">{{ $t('auth.termsSale') }}</router-link>.
+          <router-link style="color: black" to="/termsSale">{{ $t('auth.termsSale') }}</router-link
+          >.
         </div>
       </q-card-section>
 
