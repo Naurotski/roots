@@ -23,7 +23,12 @@
             archaic images of the unconscious. We welcome all the types of art, from painting and
             photography to installations. We support young artists, who explore social issues and
             also develop our city of Pisa as the center of social art.
-            <br /><br />aorta.gallery@gmail.com <br />Nadzeya Naurotskaya, curator +393925568834
+            <br /><br /><a
+              target="_blank"
+              style="text-decoration: none; color: black"
+              href="mailto:aorta.gallery@gmail.com"
+              >aorta.gallery@gmail.com</a
+            ><br />Nadzeya Naurotskaya, curator +393925568834
           </p>
           <p v-else class="text-justify text-body1" style="white-space: pre-line">
             Aorta Social Art Gallery (ex-Roots Gallery) è una giovane e aspirante galleria di arte

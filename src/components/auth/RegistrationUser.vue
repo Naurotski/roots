@@ -81,6 +81,9 @@
     <q-card-actions>
       <div class="text-caption full-width text-justify">
         {{ $t('auth.rules') }}
+        <router-link style="color: black" to="/termsSale">{{ $t('auth.termsSale') }}</router-link>
+        {{ $t('common.and') }}
+        <router-link style="color: black" to="/privacy">{{ $t('auth.privacyPolicy') }}</router-link>
       </div>
     </q-card-actions>
   </div>

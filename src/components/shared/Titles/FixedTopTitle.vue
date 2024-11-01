@@ -12,6 +12,7 @@
           name !== 'For sale' &&
           name !== 'In vendita'
       }"
+      v-bind="$attrs"
     >
       <slot name="button" />
       <slot name="link">

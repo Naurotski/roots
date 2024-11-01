@@ -1,5 +1,5 @@
 <template>
-  <q-btn :label="$t('common.buy')" @click="activator = true" />
+  <q-btn outline :label="$t('common.buy')" @click="activator = true" />
   <q-dialog
     v-model="activator"
     persistent
@@ -20,6 +20,7 @@
       <q-card-section class="text-body1">
         <div style="white-space: pre-line" class="text-body1">
           {{ $t('dialoguePayment.delivery') }}
+          <router-link  style=" color: black"  to="/termsSale">{{ $t('auth.termsSale') }}</router-link>.
         </div>
       </q-card-section>
 

@@ -1,5 +1,6 @@
 export default {
   common: {
+    and: 'and',
     enter: 'enter',
     buy: 'buy',
     cancel: 'Cancel',
@@ -64,8 +65,9 @@ export default {
     logInAorta: 'Log in to Aorta',
     logInEmail: 'Log in with an email',
     logInW: 'Log in with',
-    rules:
-      'By joining Aorta, you agree to our Terms of Conditions of Use & Sale and Privacy Policy',
+    rules: 'By joining Aorta, you agree to our ',
+    termsSale: 'Terms of Sale',
+    privacyPolicy: 'Privacy Policy',
     sendPasswordReset:
       'If the email exists in our system, we will email you a link to reset your password. It should appear in your inbox within the next five minutes. If you still don’t see it, please check your spam folder before getting in touch!',
     singIn: 'Sing In',
@@ -82,7 +84,7 @@ export default {
     city: 'City',
     country: 'Country',
     delivery:
-      'You can buy any artwork with free worldwide shipping. Please check all artwork and shipping information before confirming your purchase. All contact options can be found in the "Contacts" section. When delivering outside the EU, we issue accompanying documents for each painting, allowing the export of art objects. This may take another 2-3 weeks.',
+      'Before completing your purchase, please fill in the delivery information. This will allow us to process your order correctly and deliver the selected artwork to the specified address. You can find detailed purchase and delivery terms on the page ',
     redirect: 'To process the payment you will be redirected to the Stripe platform page',
     firstName: 'First Name',
     lastName: 'Last Name',

@@ -1,16 +1,40 @@
 <template>
-  <q-footer :reveal="$route.name === 'Home'" bordered class="text-primary">
-    <div class="row justify-center q-mt-md q-dark q-gutter-x-xs">
-      <a
-        v-for="item in socialMedia"
-        :key="item.icon"
-        :href="item.path"
-        target="_blank"
+  <q-footer class="q-py-md">
+    <div class="row justify-around q-gutter-xs">
+      <div>
+        <a
+          v-for="item in socialMedia"
+          :key="item.icon"
+          :href="item.path"
+          target="_blank"
+          style="text-decoration: none; color: white"
+        >
+          <q-icon :name="item.icon" size="sm" class="q-mr-md" />
+        </a>
+      </div>
+      <div class="text-body1">&copy; {{ date }} Aorta</div>
+      <router-link
+        v-if="!$q.screen.xs"
+        class="text-body1"
         style="text-decoration: none; color: white"
+        to="/termsSale"
+        >{{ $t('auth.termsSale') }}</router-link
       >
-        <q-icon :name="item.icon" size="sm" class="q-mr-md" />
-      </a>
-      <p class="text-body1">&copy; {{ date }} Aorta</p>
+      <router-link
+        v-if="!$q.screen.xs"
+        class="text-body1"
+        style="text-decoration: none; color: white"
+        to="/privacy"
+        >{{ $t('auth.privacyPolicy') }}</router-link
+      >
+    </div>
+    <div v-if="$q.screen.xs" class="row justify-around q-gutter-xs q-mt-xs">
+      <router-link class="text-body1" style="text-decoration: none; color: white" to="/termsSale">{{
+        $t('auth.termsSale')
+      }}</router-link>
+      <router-link class="text-body1" style="text-decoration: none; color: white" to="/privacy">{{
+        $t('auth.privacyPolicy')
+      }}</router-link>
     </div>
   </q-footer>
 </template>

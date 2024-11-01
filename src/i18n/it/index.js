@@ -1,5 +1,6 @@
 export default {
   common: {
+    and: 'e',
     enter: 'entrare',
     buy: 'Acquista',
     cancel: 'Cancellare',
@@ -64,8 +65,9 @@ export default {
     logInAorta: 'Accedi ad Aorta',
     logInEmail: "Accedi con un'email",
     logInW: 'Accedi con',
-    rules:
-      "Unendoti ad Aorta, accetti i nostri Termini e condizioni d'uso e di vendita e l'Informativa sulla privacy.",
+    rules: 'Unendoti ad Aorta, accetti i nostri ',
+    termsSale: 'Condizioni di Vendita',
+    privacyPolicy: "l'Informativa sulla privacy",
     sendPasswordReset:
       "Se l'email esiste nel nostro sistema, ti invieremo un link per reimpostare la password. Dovrebbe apparire nella tua posta in arrivo entro i prossimi cinque minuti. Se ancora non la vedi, controlla la cartella spam prima di contattarci!",
     singIn: 'Accedi',
@@ -82,7 +84,7 @@ export default {
     city: 'Città',
     country: 'Paese',
     delivery:
-      "Puoi acquistare qualsiasi opera d'arte con spedizione gratuita in tutto il mondo. Si prega di controllare tutte le informazioni sull'opera e sulla spedizione prima di confermare l'acquisto. Tutte le opzioni di contatto sono disponibili nella sezione 'Contatti'. In caso di consegna al di fuori dell'UE, emettiamo documenti di accompagnamento per ogni dipinto, consentendo l'esportazione di oggetti d'arte. Questo potrebbe richiedere altre 2-3 settimane.",
+      "Prima di completare l'acquisto, si prega di compilare i dati per la consegna. Questo ci permetterà di elaborare correttamente il vostro ordine e consegnare l'opera d'arte selezionata all'indirizzo specificato. Potete trovare i dettagli sulle condizioni di acquisto e consegna nella pagina",
     redirect:
       'Verrai reindirizzato alla pagina della piattaforma Stripe per elaborare il pagamento.',
     firstName: 'Nome',
