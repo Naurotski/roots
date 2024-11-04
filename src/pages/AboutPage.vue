@@ -82,20 +82,6 @@ import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import MailFeedback from 'components/MailFeedback.vue'
 
-const metaData = {
-  title: 'Aorta Social Art Gallery',
-  titleTemplate: (title) => `${title} | About`,
-  meta: {
-    description: {
-      name: 'description',
-      content:
-        'Roots Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
-    },
-    ogTitle: {
-      property: 'og:title'
-    }
-  }
-}
 export default {
   name: 'AboutPage',
   components: {
@@ -104,7 +90,22 @@ export default {
     MailFeedback
   },
   setup() {
-    useMeta(metaData)
+    useMeta(() => {
+      return {
+        title: 'Aorta Social Art Gallery',
+        titleTemplate: (title) => `${title} | About`,
+        meta: {
+          description: {
+            name: 'description',
+            content:
+              'Roots Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+          },
+          ogTitle: {
+            property: 'og:title'
+          }
+        }
+      }
+    })
   }
 }
 </script>

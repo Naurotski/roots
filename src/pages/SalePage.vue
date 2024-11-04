@@ -56,20 +56,6 @@ import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import WorksList from 'components/WorksList.vue'
 
-const metaData = {
-  title: 'Aorta Social Art Gallery | For sale',
-  meta: {
-    description: {
-      name: 'description',
-      content:
-        'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
-    },
-    ogTitle: {
-      property: 'og:title'
-    }
-  }
-}
-
 export default {
   name: 'SalePage',
   components: { FixedTopTitle, SmallPageContainer, WorksList },
@@ -104,7 +90,21 @@ export default {
         return []
       }
     })
-    useMeta(metaData)
+    useMeta(() => {
+      return {
+        title: 'Aorta Social Art Gallery | For sale',
+        meta: {
+          description: {
+            name: 'description',
+            content:
+              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+          },
+          ogTitle: {
+            property: 'og:title'
+          }
+        }
+      }
+    })
     return {
       saleLinks,
       tab,

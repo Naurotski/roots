@@ -55,12 +55,13 @@
           </template>
         </q-splitter>
       </div>
+      <pre>userData - {{ userData }}</pre>
     </q-page>
   </transition>
 </template>
 
 <script>
-import { useQuasar } from 'quasar'
+import { useMeta, useQuasar } from 'quasar'
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
@@ -92,6 +93,23 @@ export default {
     })
     watch(loggedIn, (val) => {
       if (!val) router.replace('/')
+    })
+    useMeta(() => {
+      return {
+        title: userData.value.firstName
+          ? `Aorta Social Art Gallery | ${userData.value.firstName} ${userData.value.lastName}`
+          : `Aorta Social Art Gallery | ${userData.value.displayName}`,
+        meta: {
+          description: {
+            name: 'description',
+            content:
+              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+          },
+          ogTitle: {
+            property: 'og:title'
+          }
+        }
+      }
     })
     return {
       userData,

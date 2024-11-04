@@ -33,21 +33,6 @@ import { storeToRefs } from 'pinia'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import { useMeta } from 'quasar'
 
-const metaData = {
-  title: 'Aorta Social Art Gallery',
-  titleTemplate: (title) => `${title} | Artists`,
-  meta: {
-    description: {
-      name: 'description',
-      content:
-        'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
-    },
-    ogTitle: {
-      property: 'og:title'
-    }
-  }
-}
-
 export default {
   name: 'ArtistsPage',
   components: {
@@ -58,7 +43,22 @@ export default {
     const { filterArtistsDraft } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
     if (!filterArtistsDraft.value.length) getArtists()
-    useMeta(metaData)
+    useMeta(() => {
+      return {
+        title: 'Aorta Social Art Gallery',
+        titleTemplate: (title) => `${title} | Artists`,
+        meta: {
+          description: {
+            name: 'description',
+            content:
+              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+          },
+          ogTitle: {
+            property: 'og:title'
+          }
+        }
+      }
+    })
     return {
       filterArtistsDraft
     }

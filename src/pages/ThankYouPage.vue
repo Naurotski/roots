@@ -32,11 +32,6 @@ import { useArtistsStore } from 'stores/artists-store.js'
 import { storeToRefs } from 'pinia'
 import { findWork } from 'src/composables/findWork.js'
 
-const metaData = {
-  title: 'Aorta Social Art Gallery',
-  titleTemplate: (title) => `${title} | Thank You`
-}
-
 export default {
   name: 'ThankYouPage',
   props: {
@@ -52,7 +47,12 @@ export default {
     const { getArtists } = artistsStore
     if (!filterArtistsDraft.value.length) getArtists()
     const work = computed(() => findWork(allWorks, workId))
-    useMeta(metaData)
+    useMeta(() => {
+      return {
+        title: 'Aorta Social Art Gallery',
+        titleTemplate: (title) => `${title} | Thank You`
+      }
+    })
     return {
       work
     }

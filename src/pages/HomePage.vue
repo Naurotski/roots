@@ -76,19 +76,6 @@ import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import WorksList from 'components/WorksList.vue'
 import TitleLine from 'components/TitleLine.vue'
 
-const metaData = {
-  title: 'Aorta Social Art Gallery ',
-  meta: {
-    description: {
-      name: 'description',
-      content:
-        'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
-    },
-    ogTitle: {
-      property: 'og:title'
-    }
-  }
-}
 export default defineComponent({
   name: 'HomePage',
   components: {
@@ -131,7 +118,21 @@ export default defineComponent({
         return []
       }
     })
-    useMeta(metaData)
+    useMeta(() => {
+      return {
+        title: 'Aorta Social Art Gallery ',
+        meta: {
+          description: {
+            name: 'description',
+            content:
+              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+          },
+          ogTitle: {
+            property: 'og:title'
+          }
+        }
+      }
+    })
     return {
       locale,
       slide,

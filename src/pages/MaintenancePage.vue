@@ -13,15 +13,15 @@
 import { defineComponent } from 'vue'
 import { useMeta } from 'quasar'
 
-const metaData = {
-  title: 'Aorta Social Art Gallery',
-  titleTemplate: (title) => `${title} | Technical Work`
-}
-
 export default defineComponent({
   name: 'MaintenancePage',
   setup() {
-    useMeta(metaData)
+    useMeta(() => {
+      return {
+        title: 'Aorta Social Art Gallery',
+        titleTemplate: (title) => `${title} | Technical Work`
+      }
+    })
   }
 })
 </script>

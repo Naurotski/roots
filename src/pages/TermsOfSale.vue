@@ -299,6 +299,22 @@
 <script setup>
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
+import { useMeta } from 'quasar'
+useMeta(() => {
+  return {
+    title: 'Aorta Social Art Gallery | Terms of Sale',
+    meta: {
+      description: {
+        name: 'description',
+        content:
+          'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+      },
+      ogTitle: {
+        property: 'og:title'
+      }
+    }
+  }
+})
 </script>
 
 <style scoped lang="sass">

@@ -24,15 +24,15 @@
 import { defineComponent } from 'vue'
 import { useMeta } from 'quasar'
 
-const metaData = {
-  title: 'Aorta Social Art Gallery',
-  titleTemplate: (title) => `${title} | Error`
-}
-
 export default defineComponent({
   name: 'ErrorNotFound',
   setup() {
-    useMeta(metaData)
+    useMeta(() => {
+      return {
+        title: 'Aorta Social Art Gallery',
+        titleTemplate: (title) => `${title} | Error`
+      }
+    })
   }
 })
 </script>
