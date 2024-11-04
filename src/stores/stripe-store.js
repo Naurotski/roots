@@ -11,7 +11,6 @@ export const useStripeStore = defineStore('stripe', () => {
   const changeShippingDetails = (data) => (shippingDetails.value = data)
 
   const payStripe = async (paymentDetails) => {
-    console.log('payStripe', { ...paymentDetails })
     Loading.show()
     try {
       const response = await apiAxios.post('/aorta/checkoutSessionsStripe', { ...paymentDetails })

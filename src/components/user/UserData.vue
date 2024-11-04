@@ -121,8 +121,6 @@ export default {
             setUserData({ email: user.value.email })
           })
           .catch((error) => {
-            console.log(error)
-            console.log(error.message.match(/\((.*?)\)/)[1])
             if (error.message.match(/\((.*?)\)/)[1] === 'auth/requires-recent-login') {
               $q.dialog({
                 prompt: {
@@ -142,7 +140,6 @@ export default {
                 persistent: true,
                 style: 'border-radius: 25px'
               }).onOk((data) => {
-                console.log('>>>> OK, received', data)
                 reauthenticate(data).then(
                   async () =>
                     await updateUserEmail(user.value.email)
@@ -160,7 +157,6 @@ export default {
     }
     const submitForm = () => {
       if (!deepEqual.value) {
-        console.log('onSubmit - ')
         // eslint-disable-next-line no-unused-vars
         const { email, portraitData, portraitUrl, ...localObj } = user.value
         updateUser({
@@ -185,7 +181,6 @@ export default {
       user.value.taxId = userData.value.taxId || ''
     }
     const sendPassword = () => {
-      console.log('sendPassword')
       sendPasswordReset().finally(() => {
         $q.notify({
           color: 'grey',

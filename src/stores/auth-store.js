@@ -34,11 +34,9 @@ export const useAuthStore = defineStore('auth', () => {
   const showLoginDialog = (val) => (loginDialog.value = val)
 
   const registerUser = async ({ displayName, email, password }) => {
-    console.log('registerUser')
     try {
       Loading.show()
       const response = await createUserWithEmailAndPassword(auth, email, password)
-      console.log(response.user.uid)
       await updateProfile(auth.currentUser, { displayName })
       await set(dbRef(db, `users/${response.user.uid}`), {
         userId: response.user.uid
@@ -56,7 +54,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
   const loginUser = async ({ email, password }) => {
-    console.log('loginUser')
     try {
       Loading.show()
       const result = await signInWithEmailAndPassword(auth, email, password)
@@ -68,12 +65,9 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
   const logInGoogle = async () => {
-    console.log('logInGoogle')
     try {
       const result = await signInWithPopup(auth, providerGoogle)
-      console.log(result)
       if (result._tokenResponse.isNewUser) {
-        console.log(result._tokenResponse.isNewUser)
         await set(dbRef(db, `users/${result.user.uid}`), {
           userId: result.user.uid,
           firstName: result.user.displayName.split(' ')[0] || '',
@@ -90,10 +84,8 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
   const logInFacebook = async () => {
-    console.log('logInFacebook')
     try {
       const result = await signInWithPopup(auth, providerFacebook)
-      console.log(result)
       if (result._tokenResponse.isNewUser) {
         await set(dbRef(db, `users/${result.user.uid}`), {
           userId: result.user.uid,
@@ -109,7 +101,6 @@ export const useAuthStore = defineStore('auth', () => {
       }
       return result
     } catch (error) {
-      console.log(error.message)
       if (error.message !== 'Firebase: Error (auth/popup-closed-by-user).') {
         showErrorMessage(error.message)
       }
@@ -117,7 +108,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
   const logoutUser = async () => {
-    console.log('logoutUser')
     try {
       Loading.show()
       await off(dbRef(db, `users/${userData.value.userId}`))
@@ -129,11 +119,9 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
   const handleAuthStateChange = () => {
-    console.log('handleAuthStateChange')
     onAuthStateChanged(auth, (user) => {
       Loading.hide()
       if (user) {
-        console.log('onAuthStateChanged-user - ', user)
         loggedIn.value = true
         LocalStorage.set('loggedIn', true)
         setUserData({
@@ -144,11 +132,9 @@ export const useAuthStore = defineStore('auth', () => {
         })
         onValue(dbRef(db, `users/${user.uid}`), (snapshot) => {
           const data = snapshot.val()
-          console.log('onValue-userUid - ', data)
           setUserData(data)
         })
       } else {
-        console.log('onAuthStateChanged -  No user')
         setUserData('logoutUser')
         loggedIn.value = false
         LocalStorage.set('loggedIn', false)
@@ -156,7 +142,6 @@ export const useAuthStore = defineStore('auth', () => {
     })
   }
   const checkUserExistence = async (email) => {
-    console.log('checkUserExistence =======', email)
     try {
       Loading.show()
       const result = await fetchSignInMethodsForEmail(auth, email)

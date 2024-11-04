@@ -104,7 +104,6 @@ export default {
       }
     })
     const continueBuy = async () => {
-      console.log(authProvider.value)
       if (!authProvider.value.length) {
         showLoginDialog(true)
         emit('update:modelValue', false)

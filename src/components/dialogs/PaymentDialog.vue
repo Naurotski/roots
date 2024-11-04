@@ -123,8 +123,6 @@ export default {
           if (!(key in userData.value)) result[key] = user.value[key]
           return result
         }, {})
-        console.log(diffObj)
-        console.log(Object.keys(diffObj).length)
         if (Object.keys(diffObj).length) {
           await updateUser({
             path: `users/${userData.value.userId}`,

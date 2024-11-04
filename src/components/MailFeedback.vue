@@ -103,11 +103,9 @@ export default {
       { immediate: true, deep: true }
     )
     const submitForm = () => {
-      console.log('submitForm')
       name.value.validate()
       email.value.validate()
       if (!email.value.hasError && !name.value.hasError) {
-        console.log(formData.value)
         sendMailFeedback(formData.value).then(() => {
           $q.notify({
             message: t('common.sentMessage'),

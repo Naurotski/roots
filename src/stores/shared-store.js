@@ -81,10 +81,8 @@ export const useSharedStore = defineStore('shared', () => {
     }
   }
   const sendMailFeedback = async (mailData) => {
-    console.log('sendMailFeedback - ', mailData)
     try {
       const response = await apiAxios.post('/aorta/nodemailer', { ...mailData })
-      console.log(response)
     } catch (error) {
       showErrorMessage(error.message)
       throw error

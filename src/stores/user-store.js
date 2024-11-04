@@ -54,7 +54,6 @@ export const useUserStore = defineStore('user', () => {
     }
   }
   const updateUserEmail = async (newEmail) => {
-    console.log('updateUserEmail - ', newEmail)
     try {
       Loading.show()
       await updateEmail(auth.currentUser, newEmail)
@@ -76,13 +75,10 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const reauthenticate = async (password) => {
-    console.log('reauthenticate - ', userData.value.email, password)
     try {
       if (userData.value.providerId === 'password') {
         const credential = EmailAuthProvider.credential(userData.value.email, password)
-        console.log(credential)
-        const result = await reauthenticateWithCredential(auth.currentUser, credential)
-        console.log(result)
+        await reauthenticateWithCredential(auth.currentUser, credential)
       } else {
         let provider
         if (userData.value.providerId === 'google.com') {
@@ -98,13 +94,11 @@ export const useUserStore = defineStore('user', () => {
     }
   }
   const sendPasswordReset = async (email = userData.value.email) => {
-    console.log('sendPasswordResetEmail - ')
     try {
       await sendPasswordResetEmail(auth, email, {
         url: 'https://aortagallery.com'
       })
     } catch (error) {
-      console.log(error.message)
       if (error.message !== 'Firebase: Error (auth/user-not-found).') {
         showErrorMessage(error.message)
       }
