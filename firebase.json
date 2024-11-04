@@ -11,17 +11,6 @@
         "source": "**",
         "destination": "/index.html"
       }
-    ],
-    "headers": [
-      {
-        "source": "/assets/*.js",
-        "headers": [
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "https://rootsgallery.it"
-          }
-        ]
-      }
     ]
   }
 }
