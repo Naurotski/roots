@@ -5,43 +5,47 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-  <loc>https://rootsgallery.it/home</loc>
+  <loc>https://aortagallery.com/home</loc>
   <lastmod>2024-11-01T03:00:00+00:00</lastmod>
 </url>
   <url>
-  <loc>https://rootsgallery.it/artists</loc>
+  <loc>https://aortagallery.com/artists</loc>
   <lastmod>2024-11-01T03:00:00+00:00</lastmod>
 </url>
   <url>
-    <loc>https://rootsgallery.it/about</loc>
-    <lastmod>2024-08-17T03:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://rootsgallery.it/actions/exhibitions</loc>
+    <loc>https://aortagallery.com/about</loc>
     <lastmod>2024-11-01T03:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://rootsgallery.it/sale</loc>
-    <lastmod>2024-08-17T03:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://rootsgallery.it/account</loc>
-    <lastmod>2024-11-01T03:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://rootsgallery.it/account</loc>
+    <loc>https://aortagallery.com/actions/exhibitions</loc>
     <lastmod>2024-11-01T03:00:00+00:00</lastmod>
   </url>
   <url>
-  <loc>https://rootsgallery.it/work</loc>
-  <lastmod>2024-08-17T03:00:00+00:00</lastmod>
-</url><url>
-  <loc>https://rootsgallery.it/press</loc>
-  <lastmod>2024-08-17T03:00:00+00:00</lastmod>
-</url><url>
-  <loc>https://rootsgallery.it/privacy</loc>
-  <lastmod>2024-08-17T03:00:00+00:00</lastmod>
-</url><url>
-  <loc>https://rootsgallery.it/termsSale</loc>
-  <lastmod>2024-08-17T03:00:00+00:00</lastmod>
+    <loc>https://aortagallery.com/sale</loc>
+    <lastmod>2024-11-01T03:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://aortagallery.com/account</loc>
+    <lastmod>2024-11-01T03:00:00+00:00</lastmod>
+  </url>
+  <url>
+  <loc>https://aortagallery.com/work</loc>
+  <lastmod>2024-11-01T03:00:00+00:00</lastmod>
+</url>
+  <url>
+  <loc>https://aortagallery.com/press</loc>
+  <lastmod>2024-11-01T03:00:00+00:00</lastmod>
+</url>
+  <url>
+  <loc>https://aortagallery.com/privacy</loc>
+  <lastmod>2024-11-01T03:00:00+00:00</lastmod>
+</url>
+  <url>
+  <loc>https://aortagallery.com/termsSale</loc>
+  <lastmod>2024-11-01T03:00:00+00:00</lastmod>
+</url>
+  <url>
+  <loc>https://aortagallery.com/thankYou</loc>
+  <lastmod>2024-11-01T03:00:00+00:00</lastmod>
 </url>
 </urlset>
