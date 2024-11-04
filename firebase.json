@@ -14,7 +14,7 @@
     ],
     "headers": [
       {
-        "source": "/assets/**",
+        "source": "/assets/*.js",
         "headers": [
           {
             "key": "Access-Control-Allow-Origin",
