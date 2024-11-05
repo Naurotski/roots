@@ -12,7 +12,6 @@
       </q-toolbar-title>
       <q-tabs narrow-indicator stretch class="gt-sm">
         <q-route-tab
-          style="width: 100px"
           class="text-body1"
           v-for="{ label, path } in essentialLinks"
           :key="label"
