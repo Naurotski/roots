@@ -55,7 +55,6 @@
           </template>
         </q-splitter>
       </div>
-      <pre>userData - {{ userData }}</pre>
     </q-page>
   </transition>
 </template>
