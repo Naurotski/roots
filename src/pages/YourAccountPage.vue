@@ -62,7 +62,7 @@
 <script>
 import { useMeta, useQuasar } from 'quasar'
 import { ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'stores/auth-store.js'
 import { useUserStore } from 'stores/user-store.js'
@@ -79,6 +79,7 @@ export default {
   setup() {
     const $q = useQuasar()
     const router = useRouter()
+    const route = useRoute()
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
     const userStore = useUserStore()
@@ -98,11 +99,21 @@ export default {
         title: userData.value.firstName
           ? `Aorta Social Art Gallery | ${userData.value.firstName} ${userData.value.lastName}`
           : `Aorta Social Art Gallery | ${userData.value.displayName}`,
+        link: {
+          canonical: {
+            rel: 'canonical',
+            href: `https://aortagallery.com${route.fullPath}`
+          }
+        },
         meta: {
           description: {
             name: 'description',
             content:
-              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+          },
+          keywords: {
+            name: 'keywords',
+            content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
           },
           ogTitle: {
             property: 'og:title'

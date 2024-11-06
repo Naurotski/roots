@@ -105,6 +105,7 @@ import { useI18n } from 'vue-i18n'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'ArtistProfilePage',
@@ -120,6 +121,7 @@ export default {
     }
   },
   setup(props) {
+    const route = useRoute()
     const { locale } = useI18n({ useScope: 'global' })
     const { artistId } = toRefs(props)
     const artistsStore = useArtistsStore()
@@ -153,10 +155,20 @@ export default {
       return {
         title: 'Aorta Social Art Gallery',
         titleTemplate: (title) => `${title} | ${artistData.value.name}`,
+        link: {
+          canonical: {
+            rel: 'canonical',
+            href: `https://aortagallery.com${route.fullPath}`
+          }
+        },
         meta: {
           description: {
             name: 'description',
             content: artistData.value.description?.split('.')[0]
+          },
+          keywords: {
+            name: 'keywords',
+            content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
           },
           ogTitle: {
             property: 'og:title'

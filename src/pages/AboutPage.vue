@@ -98,7 +98,11 @@ export default {
           description: {
             name: 'description',
             content:
-              'Roots Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+              'Roots Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+          },
+          keywords: {
+            name: 'keywords',
+            content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
           },
           ogTitle: {
             property: 'og:title'

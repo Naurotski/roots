@@ -111,6 +111,8 @@ export default {
   },
   setup(props) {
     const route = useRoute()
+    console.log(route)
+    console.log(route.fullPath)
     const itemRefs = ref([])
     const elem = computed(() => itemRefs.value.find((item) => item.id === `d${route.query.id}`))
     const $q = useQuasar()
@@ -178,11 +180,21 @@ export default {
     useMeta(() => {
       return {
         title: `Aorta Social Art Gallery | ${ucFirst(typeAction.value)}`,
+        link: {
+          canonical: {
+            rel: 'canonical',
+            href: `https://aortagallery.com${route.fullPath}`
+          }
+        },
         meta: {
           description: {
             name: 'description',
             content:
-              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Roots Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+          },
+          keywords: {
+            name: 'keywords',
+            content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
           },
           ogTitle: {
             property: 'og:title'

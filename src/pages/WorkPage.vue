@@ -58,6 +58,7 @@ import { useArtistsStore } from 'stores/artists-store.js'
 import { storeToRefs } from 'pinia'
 import { computed, toRefs } from 'vue'
 import { useMeta } from 'quasar'
+import { useRoute } from 'vue-router'
 export default {
   name: 'WorkPage',
   components: {
@@ -73,6 +74,7 @@ export default {
     }
   },
   setup(props) {
+    const route = useRoute()
     const { workId } = toRefs(props)
     const artistsStore = useArtistsStore()
     const { filterArtistsDraft, allWorks } = storeToRefs(artistsStore)
@@ -93,10 +95,20 @@ export default {
     useMeta(() => {
       return {
         title: `Aorta Social Art Gallery | ${work.value?.name}`,
+        link: {
+          canonical: {
+            rel: 'canonical',
+            href: `https://aortagallery.com${route.fullPath}`
+          }
+        },
         meta: {
           description: {
             name: 'description',
             content: work.value?.description
+          },
+          keywords: {
+            name: 'keywords',
+            content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
           },
           ogTitle: {
             property: 'og:title'
