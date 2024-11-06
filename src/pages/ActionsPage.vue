@@ -111,8 +111,6 @@ export default {
   },
   setup(props) {
     const route = useRoute()
-    console.log(route)
-    console.log(route.fullPath)
     const itemRefs = ref([])
     const elem = computed(() => itemRefs.value.find((item) => item.id === `d${route.query.id}`))
     const $q = useQuasar()
