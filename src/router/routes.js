@@ -10,10 +10,9 @@ const routes = isMaintenanceMode
   : [
       {
         path: '/',
-        redirect: { name: 'Home' },
         component: () => import('layouts/Layout.vue'),
         children: [
-          { path: '/home', name: 'Home', component: () => import('pages/HomePage.vue') },
+          { path: '/home', name: 'Home', alias: '', component: () => import('pages/HomePage.vue') },
           {
             path: 'artists',
             name: 'Artists',

@@ -106,6 +106,10 @@ export default {
           }
         },
         meta: {
+          robots: {
+            name: 'robots',
+            content: 'noindex, nofollow'
+          },
           description: {
             name: 'description',
             content:
