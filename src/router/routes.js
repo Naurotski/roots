@@ -50,6 +50,12 @@ const routes = isMaintenanceMode
             component: () => import('pages/PressPage.vue')
           },
           {
+            path: 'basket',
+            props: true,
+            name: 'Basket',
+            component: () => import('pages/BasketPage.vue')
+          },
+          {
             path: 'privacy',
             props: true,
             name: 'Privacy',

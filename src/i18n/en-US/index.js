@@ -97,5 +97,11 @@ export default {
     datePurchase: 'Date of purchase',
     noPurchases: 'You have no purchases yet',
     setNewPhoto: 'Set New Photo'
+  },
+  cart: {
+    cart: 'Cart',
+    cartEmpty: "You don't have any items in your cart.",
+    haveAccount: 'Have an account? Sign in to see your items.',
+    tartShopping: 'Start shopping'
   }
 }

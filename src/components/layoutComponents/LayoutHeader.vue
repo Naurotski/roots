@@ -19,15 +19,18 @@
           :to="path"
         />
       </q-tabs>
-      <language-switcher style="width: 60px" />
+      <language-switcher style="width: 60px" class="gt-sm" />
       <your-account-button />
+      <q-btn size="md" flat stretch icon="fa-solid fa-basket-shopping" to="/basket">
+        <q-badge class="q-mt-lg q-mr-xs" color="grey" floating>{{ cartCounter }}</q-badge>
+      </q-btn>
       <q-btn
-        size="lg"
+        size="md"
         class="lt-md"
         flat
         dense
         round
-        icon="menu"
+        icon="fa-solid fa-bars"
         aria-label="Menu"
         @click="toggleRightDrawer"
       />
@@ -36,8 +39,9 @@
 </template>
 
 <script>
-import { useSharedStore } from 'stores/shared-store.js'
 import { storeToRefs } from 'pinia'
+import { useSharedStore } from 'stores/shared-store.js'
+import { useStripeStore } from 'stores/stripe-store'
 import LanguageSwitcher from 'components/LanguageSwitcher.vue'
 import YourAccountButton from 'components/auth/YourAccountButton.vue'
 
@@ -51,7 +55,9 @@ export default {
     const sharedStore = useSharedStore()
     const { essentialLinks } = storeToRefs(sharedStore)
     const { toggleRightDrawer } = sharedStore
-    return { essentialLinks, toggleRightDrawer }
+    const stripeStore = useStripeStore()
+    const { cartCounter } = storeToRefs(stripeStore)
+    return { essentialLinks, cartCounter, toggleRightDrawer }
   }
 }
 </script>

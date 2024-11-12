@@ -46,9 +46,12 @@ export default {
   setup() {
     const date = ref(new Date().getFullYear())
     const socialMedia = ref([
-      { icon: 'mdi-facebook', path: 'https://www.facebook.com/profile.php?id=100088816940231' },
-      { icon: 'mdi-instagram', path: 'https://www.instagram.com/aorta.socialartgallery/' },
-      { icon: 'mdi-mail', path: 'mailto:support@aortagallery.com' }
+      {
+        icon: 'fa-brands fa-facebook',
+        path: 'https://www.facebook.com/profile.php?id=100088816940231'
+      },
+      { icon: 'fa-brands fa-instagram', path: 'https://www.instagram.com/aorta.socialartgallery/' },
+      { icon: 'fa-regular fa-envelope', path: 'mailto:support@aortagallery.com' }
     ])
     return {
       date,

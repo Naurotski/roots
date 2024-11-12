@@ -7,8 +7,10 @@ import { showErrorMessage } from 'src/composables/show-error-message.js'
 
 export const useStripeStore = defineStore('stripe', () => {
   const shippingDetails = ref({})
+  const cartCounter = ref(0)
 
   const changeShippingDetails = (data) => (shippingDetails.value = data)
+  const changeCartCounter = (quantity) => (cartCounter.value += quantity)
 
   const payStripe = async (paymentDetails) => {
     Loading.show()
@@ -24,5 +26,5 @@ export const useStripeStore = defineStore('stripe', () => {
       throw error
     }
   }
-  return { shippingDetails, changeShippingDetails, payStripe }
+  return { shippingDetails, cartCounter, changeShippingDetails, changeCartCounter, payStripe }
 })

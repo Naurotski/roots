@@ -2,8 +2,11 @@
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <q-page :style="$q.screen.sm || $q.screen.xs ? 'padding-top: 100px' : 'padding-top: 10px'">
       <template v-if="$q.screen.sm || $q.screen.xs">
-        <fixed-top-title :name="$t('auth.yourAccount')"
-          ><div class="row justify-md-start">
+        <fixed-top-title :name="$t('auth.yourAccount')">
+          <template #link>
+          <div class="row justify-between">{{$t('auth.yourAccount')}}<language-switcher style="display: flex"/></div>
+          </template>
+          <div class="row justify-md-start">
             <q-tabs v-model="tab" dense narrow-indicator>
               <q-tab
                 style="width: 120px"
@@ -72,10 +75,18 @@ import UserSettings from 'components/user/UserData.vue'
 import UserOrders from 'components/user/UserOrders.vue'
 import UserBasket from 'components/user/UserBasket.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
+import LanguageSwitcher from 'components/LanguageSwitcher.vue'
 
 export default {
   name: 'YourAccountPage',
-  components: { SmallPageContainer, FixedTopTitle, UserSettings, UserOrders, UserBasket },
+  components: {
+    LanguageSwitcher,
+    SmallPageContainer,
+    FixedTopTitle,
+    UserSettings,
+    UserOrders,
+    UserBasket
+  },
   setup() {
     const $q = useQuasar()
     const router = useRouter()

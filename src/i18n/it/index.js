@@ -98,5 +98,11 @@ export default {
     datePurchase: 'Data di acquisto',
     noPurchases: 'Non hai ancora acquisti',
     setNewPhoto: 'Imposta Nuova Foto'
+  },
+  cart: {
+    cart: 'Carrello',
+    cartEmpty: 'Non hai nessun articolo nel carrello.',
+    haveAccount: 'Hai un account? Accedi per vedere i tuoi articoli.',
+    tartShopping: 'Inizia a fare shopping'
   }
 }

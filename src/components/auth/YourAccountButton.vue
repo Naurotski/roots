@@ -55,10 +55,10 @@ export default {
   setup() {
     const authStore = useAuthStore()
     const { loggedIn, loginDialog } = storeToRefs(authStore)
-    const userStore = useUserStore()
-    const { userData } = storeToRefs(userStore)
     const { showLoginDialog } = authStore
     const { logoutUser } = authStore
+    const userStore = useUserStore()
+    const { userData } = storeToRefs(userStore)
     const status = ref(false)
     const singIn = () => {
       if (!loginDialog.value && !loggedIn.value) {
