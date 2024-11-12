@@ -22,7 +22,9 @@
       <language-switcher style="width: 60px" class="gt-sm" />
       <your-account-button />
       <q-btn size="md" flat stretch icon="fa-solid fa-basket-shopping" to="/basket">
-        <q-badge class="q-mt-lg q-mr-xs" color="grey" floating>{{ cartCounter }}</q-badge>
+        <q-badge class="q-mt-lg q-mr-xs shadow-3 glossy my-badge-class" color="grey" floating>{{
+          cartCounter
+        }}</q-badge>
       </q-btn>
       <q-btn
         size="md"

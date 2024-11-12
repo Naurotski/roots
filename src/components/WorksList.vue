@@ -1,19 +1,14 @@
 <template>
-  <div
-    class="q-ma-lg"
-    v-for="{ id, name, materials, price, urlImageWork, artistName } in worksList"
-    :key="urlImageWork"
-    style="width: 300px"
-  >
+  <div class="q-ma-lg" v-for="work in worksList" :key="work.urlImageWork" style="width: 300px">
     <router-link
-      v-if="urlImageWork.includes('video')"
-      :to="`/work/${id}`"
+      v-if="work.urlImageWork.includes('video')"
+      :to="`/work/${work.id}`"
       style="text-decoration: none; color: #1d1d1d"
     >
       <div style="position: relative">
         <q-video
           :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
-          :src="urlImageWork"
+          :src="work.urlImageWork"
         />
         <div
           style="position: absolute; top: 5px; height: 100%; width: 100%; opacity: 0.1"
@@ -21,29 +16,49 @@
         />
       </div>
       <div class="text-body1 q-mt-md">
-        <div>{{ artistName }}</div>
-        <b>{{ name }}</b>
-        <p>{{ materials }}</p>
-        <p>{{ `€ ${price}` }}</p>
+        <div>{{ work.artistName }}</div>
+        <b>{{ work.name }}</b>
+        <p>{{ work.materials }}</p>
+        <p>{{ `€ ${work.price}` }}</p>
       </div>
     </router-link>
-    <router-link v-else :to="`/work/${id}`" style="text-decoration: none; color: #1d1d1d">
+    <router-link v-else :to="`/work/${work.id}`" style="text-decoration: none; color: #1d1d1d">
       <q-img
-        :src="urlImageWork"
+        :src="work.urlImageWork"
         fit="contain"
         :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
       />
       <div class="text-body1 q-mt-md">
-        <div>{{ artistName }}</div>
-        <b>{{ name }}</b>
-        <p>{{ materials }}</p>
-        <p>{{ `€ ${price}` }}</p>
+        <div>{{ work.artistName }}</div>
+        <b>{{ work.name }}</b>
+        <p>{{ work.materials }}</p>
       </div>
     </router-link>
+    <div class="row justify-between">
+      <div class="text-subtitle1">{{ `€ ${work.price}` }}</div>
+      <q-btn
+        no-caps
+        outline
+        rounded
+        style="width: 150px"
+        :class="{ 'full-width q-mt-xs': $q.screen.xs, 'q-ml-md': !$q.screen.xs }"
+        :label="
+          cartWork.some((item) => item.id === work.id) ? $t('cart.seeCart') : $t('cart.addCart')
+        "
+        @click="
+          cartWork.some((item) => item.id === work.id) ? $router.push('/basket') : addToCart(work)
+        "
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import { storeToRefs } from 'pinia'
+import { useQuasar} from 'quasar'
+import { useI18n } from 'vue-i18n'
+import { useStripeStore } from 'stores/stripe-store'
+
 export default {
   name: 'WorksList',
   props: {
@@ -51,8 +66,28 @@ export default {
       type: Array,
       required: true
     }
+  },
+  setup() {
+    const $q = useQuasar()
+    const { t } = useI18n()
+    const stripeStore = useStripeStore()
+    const { cartWork } = storeToRefs(stripeStore)
+    const { addProductToCartWork } = stripeStore
+    const addToCart = (work) => {
+      addProductToCartWork(work)
+      $q.notify({
+        message: t('cart.addedCart'),
+        color: 'grey',
+        badgeColor: 'grey',
+        badgeClass: 'shadow-3 glossy my-badge-class'
+      })
+    }
+    return {
+      cartWork,
+      addToCart
+    }
   }
 }
 </script>
 
-<style scoped></style>
+<style lang="sass" />

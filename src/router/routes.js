@@ -12,7 +12,12 @@ const routes = isMaintenanceMode
         path: '/',
         component: () => import('layouts/Layout.vue'),
         children: [
-          { path: '/home', name: 'Home', alias: '', component: () => import('pages/HomePage.vue') },
+          {
+            path: '/home',
+            name: 'Home',
+            alias: '',
+            component: () => import('pages/HomePage.vue')
+          },
           {
             path: 'artists',
             name: 'Artists',
@@ -24,46 +29,61 @@ const routes = isMaintenanceMode
             props: true,
             component: () => import('pages/ArtistProfilePage.vue')
           },
-          { path: 'about', name: 'About', component: () => import('pages/AboutPage.vue') },
+          {
+            path: 'about',
+            name: 'About',
+            props: true,
+            component: () => import('pages/AboutPage.vue')
+          },
           {
             path: '/actions/:typeAction',
             name: 'ActionsPage',
             props: true,
             component: () => import('pages/ActionsPage.vue')
           },
-          { path: 'sale', name: 'Sale', component: () => import('pages/SalePage.vue') },
+          {
+            path: 'work/:workId',
+            name: 'Work',
+            props: true,
+            component: () => import('pages/WorkPage.vue')
+          },
+          {
+            path: 'sale',
+            name: 'Sale',
+            props: true,
+            component: () => import('pages/SalePage.vue')
+          },
+          {
+            path: 'shop',
+            name: 'Shop',
+            props: true,
+            component: () => import('pages/ShopPage.vue')
+          },
+          {
+            path: 'basket',
+            name: 'Basket',
+            props: true,
+            component: () => import('pages/BasketPage.vue')
+          },
           {
             path: 'account',
             name: 'Your Account',
             component: () => import('pages/YourAccountPage.vue')
           },
-          {
-            path: 'work/:workId',
-            props: true,
-            name: 'Work',
-            component: () => import('pages/WorkPage.vue')
-          },
+
           {
             path: 'press/:idPress',
-            props: true,
             name: 'Press',
+            props: true,
             component: () => import('pages/PressPage.vue')
           },
           {
-            path: 'basket',
-            props: true,
-            name: 'Basket',
-            component: () => import('pages/BasketPage.vue')
-          },
-          {
             path: 'privacy',
-            props: true,
             name: 'Privacy',
             component: () => import('pages/PrivacyPolicy.vue')
           },
           {
             path: 'termsSale',
-            props: true,
             name: 'Terms of Sale',
             component: () => import('pages/TermsOfSale.vue')
           }

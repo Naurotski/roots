@@ -1,10 +1,10 @@
 <template>
-  <h2>UserBasket</h2>
+  <h2>UserSettings</h2>
 </template>
 
 <script>
 export default {
-  name: 'UserBasket'
+  name: 'UserSettings'
 }
 </script>
 <style scoped></style>

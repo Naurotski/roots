@@ -35,8 +35,8 @@
           </div>
         </div>
       </div>
-      <q-btn label="+" @click="changeCartCounter(1)"/>
-      <pre>cartCounter - {{cartCounter}}</pre>
+      <pre>cartWork - {{ cartWork }}</pre>
+      <pre>cartCounter - {{ cartCounter }}</pre>
     </q-page>
   </transition>
 </template>
@@ -54,9 +54,7 @@ export default {
     const { loggedIn, loginDialog } = storeToRefs(authStore)
     const { showLoginDialog } = authStore
     const stripeStore = useStripeStore()
-    const { cartCounter } = storeToRefs(stripeStore)
-    console.log(cartCounter.value)
-    const { changeCartCounter } = stripeStore
+    const { cartWork, cartCounter } = storeToRefs(stripeStore)
     const singIn = () => {
       if (!loginDialog.value && !loggedIn.value) {
         showLoginDialog(true)
@@ -64,8 +62,8 @@ export default {
     }
     return {
       loggedIn,
+      cartWork,
       cartCounter,
-      changeCartCounter,
       singIn
     }
   }

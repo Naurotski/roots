@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import stripe from 'src/pk_live.js'
 import { Loading } from 'quasar'
@@ -7,10 +7,12 @@ import { showErrorMessage } from 'src/composables/show-error-message.js'
 
 export const useStripeStore = defineStore('stripe', () => {
   const shippingDetails = ref({})
-  const cartCounter = ref(0)
+  const cartWork = ref([])
+
+  const cartCounter = computed(() => cartWork.value.length)
 
   const changeShippingDetails = (data) => (shippingDetails.value = data)
-  const changeCartCounter = (quantity) => (cartCounter.value += quantity)
+  const addProductToCartWork = (payLoad) => cartWork.value.push(payLoad)
 
   const payStripe = async (paymentDetails) => {
     Loading.show()
@@ -26,5 +28,12 @@ export const useStripeStore = defineStore('stripe', () => {
       throw error
     }
   }
-  return { shippingDetails, cartCounter, changeShippingDetails, changeCartCounter, payStripe }
+  return {
+    shippingDetails,
+    cartWork,
+    cartCounter,
+    changeShippingDetails,
+    addProductToCartWork,
+    payStripe
+  }
 })

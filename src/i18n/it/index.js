@@ -52,7 +52,7 @@ export default {
     digital: 'Digital',
     settings: 'Impostazioni',
     myOrders: 'i Miei Ordini',
-    basket: 'Carrello'
+    shop: 'Shop'
   },
   auth: {
     already: 'Hai già un account?',
@@ -100,9 +100,12 @@ export default {
     setNewPhoto: 'Imposta Nuova Foto'
   },
   cart: {
+    addCart: 'Aggiungi al carrello',
+    addedCart: 'Aggiunto al Carrello',
     cart: 'Carrello',
     cartEmpty: 'Non hai nessun articolo nel carrello.',
     haveAccount: 'Hai un account? Accedi per vedere i tuoi articoli.',
+    seeCart: 'Vedi nel Carrello',
     tartShopping: 'Inizia a fare shopping'
   }
 }

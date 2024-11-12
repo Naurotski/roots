@@ -11,7 +11,7 @@ export const useSharedStore = defineStore('shared', () => {
     { label: 'links.home', path: '/home' },
     { label: 'links.artists', path: '/artists' },
     { label: 'links.exhibitions', path: '/actions/exhibitions' },
-    // { label: 'links.events', path: '/actions/events' },
+    { label: 'links.shop', path: '/shop' },
     { label: 'links.about', path: '/about' },
     { label: 'links.sale', path: '/sale' }
   ])
@@ -28,9 +28,9 @@ export const useSharedStore = defineStore('shared', () => {
     { label: 'links.digital', name: 'digital' }
   ])
   const yourAccountLinks = ref([
-    { label: 'links.myData', name: 'UserSettings' },
+    { label: 'links.myData', name: 'UserData' },
     { label: 'links.myOrders', name: 'UserOrders' }
-    // { label: 'links.basket', name: 'UserBasket' }
+    // { label: 'links.settings', name: 'UserSettings' }
   ])
   //{ label: 'links.graphics', name: 'graphics' },   { label: 'links.installation', name: 'installation' }
   const rightDrawerOpen = ref(false)

@@ -2,7 +2,7 @@ export default {
   common: {
     and: 'and',
     enter: 'enter',
-    buy: 'buy',
+    buy: 'Buy',
     cancel: 'Cancel',
     change: 'change',
     changes: 'Changes',
@@ -52,7 +52,7 @@ export default {
     digital: 'Digital',
     settings: 'Settings',
     myOrders: 'my Orders',
-    basket: 'Basket'
+    shop: 'Shop'
   },
   auth: {
     already: 'Already have an account?',
@@ -99,9 +99,12 @@ export default {
     setNewPhoto: 'Set New Photo'
   },
   cart: {
+    addCart: 'Add to Cart',
+    addedCart: 'Added to Cart',
     cart: 'Cart',
     cartEmpty: "You don't have any items in your cart.",
     haveAccount: 'Have an account? Sign in to see your items.',
+    seeCart: 'See in Cart',
     tartShopping: 'Start shopping'
   }
 }

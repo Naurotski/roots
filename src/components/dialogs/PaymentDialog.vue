@@ -1,5 +1,13 @@
 <template>
-  <q-btn outline :label="$t('common.buy')" @click="activator = true" />
+  <q-btn
+    no-caps
+    outline
+    rounded
+    :class="{ 'full-width': $q.screen.xs }"
+    :label="$t('common.buy')"
+    style="width: 150px"
+    @click="activator = true"
+  />
   <q-dialog
     v-model="activator"
     persistent

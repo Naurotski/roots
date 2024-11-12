@@ -4,7 +4,9 @@
       <template v-if="$q.screen.sm || $q.screen.xs">
         <fixed-top-title :name="$t('auth.yourAccount')">
           <template #link>
-          <div class="row justify-between">{{$t('auth.yourAccount')}}<language-switcher style="display: flex"/></div>
+            <div class="row justify-between">
+              {{ $t('auth.yourAccount') }}<language-switcher style="display: flex" />
+            </div>
           </template>
           <div class="row justify-md-start">
             <q-tabs v-model="tab" dense narrow-indicator>
@@ -71,9 +73,9 @@ import { useAuthStore } from 'stores/auth-store.js'
 import { useUserStore } from 'stores/user-store.js'
 import { useSharedStore } from 'stores/shared-store'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
-import UserSettings from 'components/user/UserData.vue'
+import UserData from 'components/user/UserData.vue'
 import UserOrders from 'components/user/UserOrders.vue'
-import UserBasket from 'components/user/UserBasket.vue'
+import UserSettings from 'components/user/UserSettings.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import LanguageSwitcher from 'components/LanguageSwitcher.vue'
 
@@ -85,7 +87,7 @@ export default {
     FixedTopTitle,
     UserSettings,
     UserOrders,
-    UserBasket
+    UserData
   },
   setup() {
     const $q = useQuasar()
