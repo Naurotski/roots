@@ -55,7 +55,7 @@
 
 <script>
 import { storeToRefs } from 'pinia'
-import { useQuasar} from 'quasar'
+import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { useStripeStore } from 'stores/stripe-store'
 
