@@ -14,9 +14,11 @@ import {
   FacebookAuthProvider,
   sendEmailVerification
 } from 'firebase/auth'
-import { ref as dbRef, set, onValue, off } from 'firebase/database'
+import { ref as dbRef, set, off } from 'firebase/database'
 import { useUserStore } from 'stores/user-store.js'
 import { showErrorMessage } from 'src/composables/show-error-message.js'
+import { listenForChildUser } from 'src/composables/listenForChildUser'
+
 export const useAuthStore = defineStore('auth', () => {
   const loginDialog = ref(false)
   const loggedIn = ref(false)
@@ -24,7 +26,7 @@ export const useAuthStore = defineStore('auth', () => {
   const providerFacebook = new FacebookAuthProvider()
 
   const userStore = useUserStore()
-  const { userData } = storeToRefs(userStore)
+  const { userData, ordersArtWorks } = storeToRefs(userStore)
   const { setUserData } = userStore
 
   watch(loggedIn, (val) => {
@@ -38,7 +40,7 @@ export const useAuthStore = defineStore('auth', () => {
       Loading.show()
       const response = await createUserWithEmailAndPassword(auth, email, password)
       await updateProfile(auth.currentUser, { displayName })
-      await set(dbRef(db, `users/${response.user.uid}`), {
+      await set(dbRef(db, `users/${response.user.uid}/userData`), {
         userId: response.user.uid
       })
       setUserData({
@@ -68,7 +70,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const result = await signInWithPopup(auth, providerGoogle)
       if (result._tokenResponse.isNewUser) {
-        await set(dbRef(db, `users/${result.user.uid}`), {
+        await set(dbRef(db, `users/${result.user.uid}/userData`), {
           userId: result.user.uid,
           firstName: result.user.displayName.split(' ')[0] || '',
           lastName: result.user.displayName.split(' ')[1] || '',
@@ -87,7 +89,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const result = await signInWithPopup(auth, providerFacebook)
       if (result._tokenResponse.isNewUser) {
-        await set(dbRef(db, `users/${result.user.uid}`), {
+        await set(dbRef(db, `users/${result.user.uid}/userData`), {
           userId: result.user.uid,
           firstName: result.user.displayName.split(' ')[0] || '',
           lastName: result.user.displayName.split(' ')[1] || '',
@@ -110,7 +112,9 @@ export const useAuthStore = defineStore('auth', () => {
   const logoutUser = async () => {
     try {
       Loading.show()
-      await off(dbRef(db, `users/${userData.value.userId}`))
+      await off(dbRef(db, `users/${userData.value.userId}/userData`))
+      await off(dbRef(db, `users/${userData.value.userId}/orders/artWorks`))
+      await off(dbRef(db, `users/${userData.value.userId}/cart`))
       await signOut(auth)
       Loading.hide()
     } catch (error) {
@@ -128,15 +132,16 @@ export const useAuthStore = defineStore('auth', () => {
           displayName: user.displayName?.split(' ')[0] || '',
           email: user.email,
           emailVerified: user.emailVerified,
-          providerId: user.providerData[0].providerId
+          providerId: user.providerData[0].providerId,
+          userId: user.uid
         })
-        onValue(dbRef(db, `users/${user.uid}`), (snapshot) => {
-          const data = snapshot.val()
-          setUserData(data)
-        })
+        listenForChildUser(user.uid, 'userData')
+        listenForChildUser(user.uid, 'orders/artWorks')
+        listenForChildUser(user.uid, 'cart')
       } else {
         setUserData('logoutUser')
         loggedIn.value = false
+        ordersArtWorks.value = {}
         LocalStorage.set('loggedIn', false)
       }
     })
