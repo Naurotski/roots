@@ -18,6 +18,7 @@ import { showErrorMessage } from 'src/composables/show-error-message.js'
 
 export const useUserStore = defineStore('user', () => {
   const userData = ref({})
+  const ordersArtWorks = ref({})
 
   const setUserData = (data) => {
     if (data === 'logoutUser') {
@@ -28,6 +29,12 @@ export const useUserStore = defineStore('user', () => {
         ...data
       }
     }
+  }
+  const updateUserData = ({ key, value }) => {
+    userData.value[key] = value
+  }
+  const updateOrdersArtWorks = ({ key, value }) => {
+    ordersArtWorks.value[key] = value
   }
   const updateUser = async ({ path, payload }) => {
     try {
@@ -107,7 +114,10 @@ export const useUserStore = defineStore('user', () => {
   }
   return {
     userData,
+    ordersArtWorks,
     setUserData,
+    updateUserData,
+    updateOrdersArtWorks,
     updateUser,
     uploadImageToStorage,
     updateUserEmail,

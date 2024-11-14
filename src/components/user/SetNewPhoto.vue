@@ -110,7 +110,7 @@ export default {
         contentType: imageData.value.type
       })
       await updateUser({
-        path: `users/${userData.value.userId}`,
+        path: `users/${userData.value.userId}/userData`,
         payload: { portraitUrl: url }
       })
       dialog.value = false

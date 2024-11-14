@@ -125,7 +125,7 @@ export default {
         }, {})
         if (Object.keys(diffObj).length) {
           await updateUser({
-            path: `users/${userData.value.userId}`,
+            path: `users/${userData.value.userId}/userData`,
             payload: diffObj
           })
         }

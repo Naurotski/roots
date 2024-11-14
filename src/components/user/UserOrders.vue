@@ -61,23 +61,19 @@ export default {
   setup() {
     const { locale } = useI18n({ useScope: 'global' })
     const userStore = useUserStore()
-    const { userData } = storeToRefs(userStore)
+    const { ordersArtWorks } = storeToRefs(userStore)
     const artWorks = computed(() => {
-      if (userData.value.orders?.artWorks) {
-        return Object.values(userData.value.orders.artWorks)
-          .sort((a, b) => {
-            if (a.date < b.date) return 1
-            if (a.date === b.date) return 0
-            if (a.date > b.date) return -1
-          })
-          .map((item) => ({
-            ...item,
-            name: locale.value === 'it' ? item.workNameIt : item.workName,
-            date: date.formatDate(item.date, 'DD/MM/YYYY')
-          }))
-      } else {
-        return []
-      }
+      return Object.values(ordersArtWorks.value)
+        .sort((a, b) => {
+          if (a.date < b.date) return 1
+          if (a.date === b.date) return 0
+          if (a.date > b.date) return -1
+        })
+        .map((item) => ({
+          ...item,
+          name: locale.value === 'it' ? item.workNameIt : item.workName,
+          date: date.formatDate(item.date, 'DD/MM/YYYY')
+        }))
     })
     return {
       artWorks

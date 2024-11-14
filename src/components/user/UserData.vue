@@ -160,7 +160,7 @@ export default {
         // eslint-disable-next-line no-unused-vars
         const { email, portraitData, portraitUrl, ...localObj } = user.value
         updateUser({
-          path: `users/${userData.value.userId}`,
+          path: `users/${userData.value.userId}/userData`,
           payload: localObj
         }).then(() => {
           $q.notify({
