@@ -7,13 +7,23 @@ import { showErrorMessage } from 'src/composables/show-error-message.js'
 
 export const useStripeStore = defineStore('stripe', () => {
   const shippingDetails = ref({})
-  const cartWork = ref([])
+  const cart = ref([])
 
-  const cartCounter = computed(() => cartWork.value.length)
+  const cartCounter = computed(() =>
+    cart.value.reduce((result, item) => result + +item.quantity, 0)
+  )
 
   const changeShippingDetails = (data) => (shippingDetails.value = data)
-  const addProductToCartWork = (payLoad) => cartWork.value.push(payLoad)
-
+  const addProductToCart = (product) => {
+    let index = cart.value.findIndex((item) => item.id === product.id)
+    if (index === -1) {
+      cart.value.push(product)
+    } else {
+      cart.value[index].quantity += 1
+    }
+  }
+  const changeQuantityProduct = ({ quantity, index }) => (cart.value[index].quantity = quantity)
+  const deleteProductToCart = ( index ) => cart.value.splice(index, 1)
   const payStripe = async (paymentDetails) => {
     Loading.show()
     try {
@@ -30,10 +40,12 @@ export const useStripeStore = defineStore('stripe', () => {
   }
   return {
     shippingDetails,
-    cartWork,
+    cart,
     cartCounter,
     changeShippingDetails,
-    addProductToCartWork,
+    addProductToCart,
+    changeQuantityProduct,
+    deleteProductToCart,
     payStripe
   }
 })

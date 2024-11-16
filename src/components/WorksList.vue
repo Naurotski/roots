@@ -43,10 +43,10 @@
         style="width: 150px"
         :class="{ 'full-width q-mt-xs': $q.screen.xs, 'q-ml-md': !$q.screen.xs }"
         :label="
-          cartWork.some((item) => item.id === work.id) ? $t('cart.seeCart') : $t('cart.addCart')
+          cart.some((item) => item.id === work.id) ? $t('cart.seeCart') : $t('cart.addCart')
         "
         @click="
-          cartWork.some((item) => item.id === work.id) ? $router.push('/basket') : addToCart(work)
+          cart.some((item) => item.id === work.id) ? $router.push('/basket') : addToCart(work)
         "
       />
     </div>
@@ -71,10 +71,10 @@ export default {
     const $q = useQuasar()
     const { t } = useI18n()
     const stripeStore = useStripeStore()
-    const { cartWork } = storeToRefs(stripeStore)
-    const { addProductToCartWork } = stripeStore
+    const { cart } = storeToRefs(stripeStore)
+    const { addProductToCart } = stripeStore
     const addToCart = (work) => {
-      addProductToCartWork(work)
+      addProductToCart({ ...work, quantity: 1 })
       $q.notify({
         message: t('cart.addedCart'),
         color: 'grey',
@@ -83,7 +83,7 @@ export default {
       })
     }
     return {
-      cartWork,
+      cart,
       addToCart
     }
   }

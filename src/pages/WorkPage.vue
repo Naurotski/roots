@@ -94,8 +94,8 @@ export default {
     const { filterArtistsDraft, allWorks } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
     const stripeStore = useStripeStore()
-    const { cartWork } = storeToRefs(stripeStore)
-    const { addProductToCartWork } = stripeStore
+    const { cart } = storeToRefs(stripeStore)
+    const { addProductToCart } = stripeStore
     if (!filterArtistsDraft.value.length) getArtists()
     const work = computed(() => findWork(allWorks, workId))
     const allUrlImagesWork = computed(() => {
@@ -110,11 +110,11 @@ export default {
       }
     })
     const presenceProductInCart = computed(() =>
-      cartWork.value.some((item) => String(item.id) === workId.value)
+      cart.value.some((item) => String(item.id) === workId.value)
     )
     const addToCart = (work) => {
       console.log(work)
-      addProductToCartWork(work)
+      addProductToCart({ ...work, quantity: 1 })
       $q.notify({
         message: t('cart.addedCart'),
         color: 'grey',
