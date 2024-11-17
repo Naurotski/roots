@@ -1,38 +1,66 @@
 <template>
   <div class="row justify-center q-mt-md bg-grey-2">
-    <div class="col-3">
+    <router-link style="text-decoration: none" class="col-3" :to="`/work/${dataCard.id}`">
+      <div v-if="dataCard.urlImageWork?.includes('video')">
+        <div class="gt-xs" style="position: relative" >
+          <q-video
+            :style="$q.screen.xs ? 'max-height: 150px' : 'height: 150px'"
+            :src="dataCard.urlImageWork"
+          />
+          <div
+            style="position: absolute; top: 5px; height: 100%; width: 100%; opacity: 0.1"
+            class="bg-grey-2"
+          />
+        </div>
+        <div>
+          <q-icon class="lt-sm q-mt-md" name="fa-solid fa-photo-film" size="70px" color="dark"/>
+        </div>
+
+      </div>
       <q-img
+        v-else
         :src="dataCard.urlImageWork"
         :alt="dataCard.name"
         fit="contain"
-        :style="$q.screen.xs ? 'max-height: 300px' : 'height: 150px'"
+        :style="$q.screen.xs ? 'max-height: 150px' : 'height: 150px'"
       />
-    </div>
-    <div class="col-sm-7 col-9 q-pl-xs">
+    </router-link>
+    <div class="col-sm-7 col-9 q-pl-xs column items-start justify-between">
       <div :class="{ 'text-subtitle1': $q.screen.xs }" class="text-h6 text-bold">
         {{ dataCard.name }}
       </div>
       <div :class="{ 'text-body2': $q.screen.xs }" class="text-justify text-body1">
         {{ dataCard.materials }}
       </div>
-      <q-btn
-        no-caps
-        outline
-        rounded
-        :label="$t('common.delete')"
-        @click="deleteProductToCart(dataCard.cartIndex)"
-      />
+      <div class="gt-xs">
+        <q-btn
+          no-caps
+          flat
+          :label="$t('common.delete')"
+          @click="addProductToCart({ ...dataCard, delete: true })"
+        ></q-btn>
+        <hr style="margin-top: -1px" />
+      </div>
     </div>
     <div
       class="col-sm-2 col-12 flex text-h6 text-bold"
       :class="[{ column: !$q.screen.xs }, $q.screen.xs ? 'justify-end' : 'flex-center']"
     >
+      <div class="q-mr-md lt-sm" style="border-bottom: 1px solid #B0B0B0">
+        <q-btn
+          flat
+          no-caps
+          :label="$t('common.delete')"
+          style="padding-left: -3px"
+          @click="addProductToCart({ ...dataCard, delete: true })"
+        />
+      </div>
       <q-select v-model="quantity" :options="options" options-dense lazy-rules dense>
         <template v-slot:prepend>
           <span class="text-body2 text-bold">{{ $t('cart.qty') }}</span>
         </template>
       </q-select>
-      <div :class="$q.screen.xs ? 'q-ml-md' : 'q-mt-md'">€{{ dataCard.price }}</div>
+      <div :class="$q.screen.xs ? 'q-ml-md q-mr-sm' : 'q-mt-md'">€{{ dataCard.price }}</div>
     </div>
   </div>
 </template>
@@ -54,7 +82,7 @@ export default {
     const { dataCard } = toRefs(props)
     const { t } = useI18n()
     const stripeStore = useStripeStore()
-    const { changeQuantityProduct, deleteProductToCart } = stripeStore
+    const { addProductToCart } = stripeStore
     const show = ref(false)
     const options = [`0 (${t('common.delete')})`, 1, 2, 3, 4, 5, 6]
     const quantity = computed({
@@ -63,9 +91,9 @@ export default {
       },
       set(val) {
         if (val === `0 (${t('common.delete')})`) {
-          deleteProductToCart(dataCard.value.cartIndex)
+          addProductToCart({ ...dataCard.value, delete: true })
         } else {
-          changeQuantityProduct({ quantity: val, index: dataCard.value.cartIndex })
+          addProductToCart({ ...dataCard.value, quantity: val, change: true })
         }
       }
     })
@@ -73,15 +101,10 @@ export default {
       show,
       options,
       quantity,
-      deleteProductToCart
+      addProductToCart
     }
   }
 }
 </script>
 
-<style scoped>
-.custom-dropdown {
-  max-height: 100px !important;
-  overflow-y: auto; /* Добавление прокрутки, если элементов больше */
-}
-</style>
+<style scoped />

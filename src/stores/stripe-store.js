@@ -1,29 +1,55 @@
-import { computed, ref } from 'vue'
-import { defineStore } from 'pinia'
 import stripe from 'src/pk_live.js'
+import { computed, ref } from 'vue'
+import { defineStore, storeToRefs } from 'pinia'
 import { Loading } from 'quasar'
+import { ref as dbRef, update } from 'firebase/database'
+import { db } from 'boot/firebase'
 import { apiAxios } from 'boot/axios'
 import { showErrorMessage } from 'src/composables/show-error-message.js'
+import { useUserStore } from 'stores/user-store'
 
 export const useStripeStore = defineStore('stripe', () => {
+  const userStore = useUserStore()
+  const { userData } = storeToRefs(userStore)
+
   const shippingDetails = ref({})
-  const cart = ref([])
+  const cart = ref({})
 
   const cartCounter = computed(() =>
-    cart.value.reduce((result, item) => result + +item.quantity, 0)
+    Object.values(cart.value).reduce((result, item) => result + +item.quantity, 0)
   )
-
-  const changeShippingDetails = (data) => (shippingDetails.value = data)
-  const addProductToCart = (product) => {
-    let index = cart.value.findIndex((item) => item.id === product.id)
-    if (index === -1) {
-      cart.value.push(product)
+  const updateCart = ({ key, value }) => {
+    if (value === 'delete') {
+      delete cart.value[key]
     } else {
-      cart.value[index].quantity += 1
+      cart.value[key] = value
     }
   }
   const changeQuantityProduct = ({ quantity, index }) => (cart.value[index].quantity = quantity)
-  const deleteProductToCart = ( index ) => cart.value.splice(index, 1)
+
+  const addProductToCart = async (product) => {
+    console.log('addProductToCart --', product)
+    try {
+      Loading.show()
+      if (product.delete) {
+        await update(dbRef(db, `users/${userData.value.userId}/cart`), { [product.id]: null })
+      } else if (product.change) {
+        await update(dbRef(db, `users/${userData.value.userId}/cart/${product.id}`), {
+          quantity: +product.quantity
+        })
+      } else if (cart.value[product.id]) {
+        await update(dbRef(db, `users/${userData.value.userId}/cart/${product.id}`), {
+          quantity: +cart.value[product.id].quantity + 1
+        })
+      } else {
+        await update(dbRef(db, `users/${userData.value.userId}/cart/${product.id}`), product)
+      }
+      Loading.hide()
+    } catch (error) {
+      showErrorMessage(error.message)
+      throw error
+    }
+  }
   const payStripe = async (paymentDetails) => {
     Loading.show()
     try {
@@ -42,10 +68,9 @@ export const useStripeStore = defineStore('stripe', () => {
     shippingDetails,
     cart,
     cartCounter,
-    changeShippingDetails,
+    updateCart,
     addProductToCart,
     changeQuantityProduct,
-    deleteProductToCart,
     payStripe
   }
 })

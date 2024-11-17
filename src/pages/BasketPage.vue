@@ -86,22 +86,18 @@ export default {
 
     const filteredActionsI18n = computed(() => {
       if (locale.value === 'it') {
-        return cart.value.map((item, index) => ({
+        return Object.values(cart.value).map(item => ({
           ...item,
           description: item.descriptionIt,
           materials: item.materialsIt,
-          name: item.nameIt,
-          cartIndex: index
+          name: item.nameIt
         }))
       } else {
-        return cart.value.map((item, index) => ({
-          ...item,
-          cartIndex: index
-        }))
+        return Object.values(cart.value)
       }
     })
     const subtotal = computed(() =>
-      cart.value.reduce((result, item) => result + +item.quantity * item.price, 0)
+      Object.values(cart.value).reduce((result, item) => result + +item.quantity * item.price, 0)
     )
     const singIn = () => {
       if (!loginDialog.value && !loggedIn.value) {

@@ -28,7 +28,7 @@
       </q-btn>
       <q-btn
         size="md"
-        class="lt-md"
+        class="lt-md q-ml-xs"
         flat
         dense
         round

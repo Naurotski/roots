@@ -109,9 +109,7 @@ export default {
         return []
       }
     })
-    const presenceProductInCart = computed(() =>
-      cart.value.some((item) => String(item.id) === workId.value)
-    )
+    const presenceProductInCart = computed(() => cart.value[workId.value])
     const addToCart = (work) => {
       console.log(work)
       addProductToCart({ ...work, quantity: 1 })

@@ -42,12 +42,8 @@
         rounded
         style="width: 150px"
         :class="{ 'full-width q-mt-xs': $q.screen.xs, 'q-ml-md': !$q.screen.xs }"
-        :label="
-          cart.some((item) => item.id === work.id) ? $t('cart.seeCart') : $t('cart.addCart')
-        "
-        @click="
-          cart.some((item) => item.id === work.id) ? $router.push('/basket') : addToCart(work)
-        "
+        :label="cart[work.id] ? $t('cart.seeCart') : $t('cart.addCart')"
+        @click="cart[work.id] ? $router.push('/basket') : addToCart(work)"
       />
     </div>
   </div>
