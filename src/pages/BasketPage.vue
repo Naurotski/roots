@@ -55,8 +55,6 @@
           <div class="col-2 text-bold text-h6 text-center">€{{ subtotal }}</div>
         </div>
       </div>
-
-      <!--      <pre>filteredActionsI18n -{{ filteredActionsI18n }}</pre>-->
     </q-page>
   </transition>
 </template>
@@ -86,7 +84,7 @@ export default {
 
     const filteredActionsI18n = computed(() => {
       if (locale.value === 'it') {
-        return Object.values(cart.value).map(item => ({
+        return Object.values(cart.value).map((item) => ({
           ...item,
           description: item.descriptionIt,
           materials: item.materialsIt,

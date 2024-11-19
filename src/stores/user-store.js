@@ -34,7 +34,11 @@ export const useUserStore = defineStore('user', () => {
     userData.value[key] = value
   }
   const updateOrdersArtWorks = ({ key, value }) => {
-    ordersArtWorks.value[key] = value
+    if (value === 'logoutUser') {
+      ordersArtWorks.value = {}
+    } else {
+      ordersArtWorks.value[key] = value
+    }
   }
   const updateUser = async ({ path, payload }) => {
     try {

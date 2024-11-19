@@ -53,6 +53,7 @@
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
+import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
 
 export default {
@@ -66,17 +67,25 @@ export default {
   setup() {
     const $q = useQuasar()
     const { t } = useI18n()
+    const authStore = useAuthStore()
+    const { loggedIn } = storeToRefs(authStore)
     const stripeStore = useStripeStore()
     const { cart } = storeToRefs(stripeStore)
-    const { addProductToCart } = stripeStore
+    const { addProductToCart, updateCart } = stripeStore
     const addToCart = (work) => {
-      addProductToCart({ ...work, quantity: 1 })
-      $q.notify({
-        message: t('cart.addedCart'),
-        color: 'grey',
-        badgeColor: 'grey',
-        badgeClass: 'shadow-3 glossy my-badge-class'
-      })
+      if (loggedIn.value) {
+        addProductToCart({ ...work, quantity: 1 }).then(() =>
+          $q.notify({
+            message: t('cart.addedCart'),
+            color: 'grey',
+            badgeColor: 'grey',
+            badgeClass: 'shadow-3 glossy my-badge-class'
+          })
+        )
+      } else {
+        console.log(work)
+        updateCart({ key: work.id, value: { ...work, quantity: 1 } })
+      }
     }
     return {
       cart,

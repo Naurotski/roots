@@ -16,18 +16,22 @@ import {
 } from 'firebase/auth'
 import { ref as dbRef, set, off } from 'firebase/database'
 import { useUserStore } from 'stores/user-store.js'
+import { useStripeStore } from 'stores/stripe-store'
 import { showErrorMessage } from 'src/composables/show-error-message.js'
 import { listenForChildUser } from 'src/composables/listenForChildUser'
 
 export const useAuthStore = defineStore('auth', () => {
+  const userStore = useUserStore()
+  const { userData } = storeToRefs(userStore)
+  const { updateOrdersArtWorks } = userStore
+  const { setUserData } = userStore
+  const stripeStore = useStripeStore()
+  const { updateCart, mergeCarts } = stripeStore
+
   const loginDialog = ref(false)
   const loggedIn = ref(false)
   const providerGoogle = new GoogleAuthProvider()
   const providerFacebook = new FacebookAuthProvider()
-
-  const userStore = useUserStore()
-  const { userData, ordersArtWorks } = storeToRefs(userStore)
-  const { setUserData } = userStore
 
   watch(loggedIn, (val) => {
     if (val) loginDialog.value = false
@@ -116,6 +120,7 @@ export const useAuthStore = defineStore('auth', () => {
       await off(dbRef(db, `users/${userData.value.userId}/orders/artWorks`))
       await off(dbRef(db, `users/${userData.value.userId}/cart`))
       await signOut(auth)
+      updateCart({ key: 0, value: 'logoutUser' })
       Loading.hide()
     } catch (error) {
       showErrorMessage(error.message.match(/\((.*?)\)/)[1])
@@ -123,7 +128,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
   const handleAuthStateChange = () => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       Loading.hide()
       if (user) {
         loggedIn.value = true
@@ -135,14 +140,22 @@ export const useAuthStore = defineStore('auth', () => {
           providerId: user.providerData[0].providerId,
           userId: user.uid
         })
+        if (LocalStorage.getItem('cart')) {
+          await mergeCarts(user.uid)
+        }
         listenForChildUser(user.uid, 'userData')
         listenForChildUser(user.uid, 'orders/artWorks')
         listenForChildUser(user.uid, 'cart')
       } else {
-        setUserData('logoutUser')
+        if (!loggedIn.value) {
+          Object.values(LocalStorage.getItem('cart')).forEach((item) =>
+            updateCart({ key: item.id, value: item })
+          )
+        }
         loggedIn.value = false
-        ordersArtWorks.value = {}
         LocalStorage.set('loggedIn', false)
+        setUserData('logoutUser')
+        updateOrdersArtWorks({ key: 0, value: 'logoutUser' })
       }
     })
   }

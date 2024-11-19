@@ -46,7 +46,7 @@
               style="width: 150px"
               :class="{ 'full-width q-mt-xs': $q.screen.xs, 'q-ml-md': !$q.screen.xs }"
               :label="presenceProductInCart ? $t('cart.seeCart') : $t('cart.addCart')"
-              @click="presenceProductInCart ? $router.push('/basket') : addToCart(work)"
+              @click=" addToCart(work)"
             />
           </q-card-section>
         </div>
@@ -63,6 +63,7 @@ import { useMeta, useQuasar } from 'quasar'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
+import { useAuthStore} from 'stores/auth-store'
 import { useArtistsStore } from 'stores/artists-store.js'
 import { useStripeStore } from 'stores/stripe-store'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
@@ -90,12 +91,14 @@ export default {
     const { t } = useI18n()
     const route = useRoute()
     const { workId } = toRefs(props)
+    const authStore = useAuthStore()
+    const { loggedIn } = storeToRefs(authStore)
     const artistsStore = useArtistsStore()
     const { filterArtistsDraft, allWorks } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
     const stripeStore = useStripeStore()
     const { cart } = storeToRefs(stripeStore)
-    const { addProductToCart } = stripeStore
+    const { addProductToCart, updateCart } = stripeStore
     if (!filterArtistsDraft.value.length) getArtists()
     const work = computed(() => findWork(allWorks, workId))
     const allUrlImagesWork = computed(() => {
@@ -111,15 +114,19 @@ export default {
     })
     const presenceProductInCart = computed(() => cart.value[workId.value])
     const addToCart = (work) => {
-      console.log(work)
-      addProductToCart({ ...work, quantity: 1 })
-      $q.notify({
-        message: t('cart.addedCart'),
-        color: 'grey',
-        badgeColor: 'white',
-        badgeTextColor: 'dark',
-        badgeClass: 'shadow-3 glossy my-badge-class'
-      })
+      if (loggedIn.value) {
+        addProductToCart({ ...work, quantity: 1 }).then(() =>
+          $q.notify({
+            message: t('cart.addedCart'),
+            color: 'grey',
+            badgeColor: 'grey',
+            badgeClass: 'shadow-3 glossy my-badge-class'
+          })
+        )
+      } else {
+        console.log(work)
+        updateCart({ key: work.id, value: { ...work, quantity: 1 } })
+      }
     }
     useMeta(() => {
       return {

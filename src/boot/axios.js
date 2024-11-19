@@ -8,8 +8,8 @@ import axios from 'axios'
 // "export default () => {}" function below (which runs individually
 // for each client)
 // const apiAxios = axios.create({ baseURL: 'https://metamorfosi.herokuapp.com' })
-// const apiAxios = axios.create({ baseURL: 'https://test-metamorfosi.herokuapp.com' })
-const apiAxios = axios.create({ baseURL: 'http://localhost:3000' })
+const apiAxios = axios.create({ baseURL: 'https://test-metamorfosi.herokuapp.com' })
+// const apiAxios = axios.create({ baseURL: 'http://localhost:3000' })
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

@@ -2,7 +2,7 @@
   <div class="row justify-center q-mt-md bg-grey-2">
     <router-link style="text-decoration: none" class="col-3" :to="`/work/${dataCard.id}`">
       <div v-if="dataCard.urlImageWork?.includes('video')">
-        <div class="gt-xs" style="position: relative" >
+        <div class="gt-xs" style="position: relative">
           <q-video
             :style="$q.screen.xs ? 'max-height: 150px' : 'height: 150px'"
             :src="dataCard.urlImageWork"
@@ -13,9 +13,8 @@
           />
         </div>
         <div>
-          <q-icon class="lt-sm q-mt-md" name="fa-solid fa-photo-film" size="70px" color="dark"/>
+          <q-icon class="lt-sm q-mt-md" name="fa-solid fa-photo-film" size="70px" color="dark" />
         </div>
-
       </div>
       <q-img
         v-else
@@ -37,7 +36,7 @@
           no-caps
           flat
           :label="$t('common.delete')"
-          @click="addProductToCart({ ...dataCard, delete: true })"
+          @click="deleteProduct"
         ></q-btn>
         <hr style="margin-top: -1px" />
       </div>
@@ -46,13 +45,13 @@
       class="col-sm-2 col-12 flex text-h6 text-bold"
       :class="[{ column: !$q.screen.xs }, $q.screen.xs ? 'justify-end' : 'flex-center']"
     >
-      <div class="q-mr-md lt-sm" style="border-bottom: 1px solid #B0B0B0">
+      <div class="q-mr-md lt-sm" style="border-bottom: 1px solid #b0b0b0">
         <q-btn
           flat
           no-caps
           :label="$t('common.delete')"
           style="padding-left: -3px"
-          @click="addProductToCart({ ...dataCard, delete: true })"
+          @click="deleteProduct"
         />
       </div>
       <q-select v-model="quantity" :options="options" options-dense lazy-rules dense>
@@ -68,7 +67,9 @@
 <script>
 import { computed, ref, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
+import { storeToRefs } from 'pinia'
 
 export default {
   name: 'ProductCard',
@@ -81,8 +82,10 @@ export default {
   setup(props) {
     const { dataCard } = toRefs(props)
     const { t } = useI18n()
+    const authStore = useAuthStore()
+    const { loggedIn } = storeToRefs(authStore)
     const stripeStore = useStripeStore()
-    const { addProductToCart } = stripeStore
+    const { addProductToCart, updateCart } = stripeStore
     const show = ref(false)
     const options = [`0 (${t('common.delete')})`, 1, 2, 3, 4, 5, 6]
     const quantity = computed({
@@ -90,18 +93,36 @@ export default {
         return dataCard.value.quantity
       },
       set(val) {
-        if (val === `0 (${t('common.delete')})`) {
-          addProductToCart({ ...dataCard.value, delete: true })
+        if (loggedIn.value) {
+          if (val === `0 (${t('common.delete')})`) {
+            addProductToCart({ ...dataCard.value, delete: true })
+          } else {
+            addProductToCart({ ...dataCard.value, quantity: val, change: true })
+          }
         } else {
-          addProductToCart({ ...dataCard.value, quantity: val, change: true })
+          if (val === `0 (${t('common.delete')})`) {
+            updateCart({ key: dataCard.value.id, value: 'delete' })
+          } else {
+            updateCart({
+              key: dataCard.value.id,
+              value: { ...dataCard.value, quantity: val, change: true }
+            })
+          }
         }
       }
     })
+    const deleteProduct = () => {
+      if (loggedIn.value) {
+        addProductToCart({ ...dataCard.value, delete: true })
+      } else {
+        updateCart({ key: dataCard.value.id, value: 'delete' })
+      }
+    }
     return {
       show,
       options,
       quantity,
-      addProductToCart
+      deleteProduct
     }
   }
 }
