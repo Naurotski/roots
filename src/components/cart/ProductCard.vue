@@ -32,12 +32,7 @@
         {{ dataCard.materials }}
       </div>
       <div class="gt-xs">
-        <q-btn
-          no-caps
-          flat
-          :label="$t('common.delete')"
-          @click="deleteProduct"
-        ></q-btn>
+        <q-btn no-caps flat :label="$t('common.delete')" @click="deleteProduct"></q-btn>
         <hr style="margin-top: -1px" />
       </div>
     </div>
@@ -65,7 +60,7 @@
 </template>
 
 <script>
-import { computed, ref, toRefs } from 'vue'
+import { computed, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
@@ -86,7 +81,6 @@ export default {
     const { loggedIn } = storeToRefs(authStore)
     const stripeStore = useStripeStore()
     const { addProductToCart, updateCart } = stripeStore
-    const show = ref(false)
     const options = [`0 (${t('common.delete')})`, 1, 2, 3, 4, 5, 6]
     const quantity = computed({
       get() {
@@ -119,7 +113,6 @@ export default {
       }
     }
     return {
-      show,
       options,
       quantity,
       deleteProduct

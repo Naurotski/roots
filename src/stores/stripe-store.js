@@ -61,8 +61,7 @@ export const useStripeStore = defineStore('stripe', () => {
       throw error
     }
   }
-  const mergeCarts = async (userId) =>{
-    console.log('mergeCarts -=-=-=-=-=-=-=-=')
+  const mergeCarts = async (userId) => {
     try {
       updateCart({ key: 0, value: 'logoutUser' })
       const result = await get(dbRef(db, `users/${userId}/cart`))

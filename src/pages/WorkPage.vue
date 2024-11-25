@@ -46,7 +46,7 @@
               style="width: 150px"
               :class="{ 'full-width q-mt-xs': $q.screen.xs, 'q-ml-md': !$q.screen.xs }"
               :label="presenceProductInCart ? $t('cart.seeCart') : $t('cart.addCart')"
-              @click=" addToCart(work)"
+              @click="addToCart(work)"
             />
           </q-card-section>
         </div>
@@ -63,7 +63,7 @@ import { useMeta, useQuasar } from 'quasar'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
-import { useAuthStore} from 'stores/auth-store'
+import { useAuthStore } from 'stores/auth-store'
 import { useArtistsStore } from 'stores/artists-store.js'
 import { useStripeStore } from 'stores/stripe-store'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'

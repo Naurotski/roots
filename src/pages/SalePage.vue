@@ -1,37 +1,7 @@
 <template>
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <q-page class="q-pa-md" style="padding-top: 100px">
-      <fixed-top-title :name="$t(`links.sale`)">
-        <template #button>
-          <q-btn class="lt-sm q-mr-md" flat dense icon="menu" aria-label="Menu">
-            <q-menu auto-close>
-              <q-list style="min-width: 100px">
-                <q-item
-                  clickable
-                  v-for="{ label, name } in saleLinks"
-                  @click="tab = name"
-                  :key="name"
-                >
-                  <q-item-section>{{ $t(label) }}</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
-        </template>
-        <q-separator class="lt-sm" />
-        <span class="q-ml-lg lt-sm text-h5">{{ $t(`links.${tab}`) }}</span>
-        <div class="row justify-md-start">
-          <q-tabs v-model="tab" dense narrow-indicator class="gt-xs">
-            <q-tab
-              class="text-body1"
-              v-for="{ label, name } in saleLinks"
-              :key="name"
-              :name="name"
-              :label="$t(label)"
-            />
-          </q-tabs>
-        </div>
-      </fixed-top-title>
+      <title-tabs :name-title="$t(`links.sale`)" :links="saleLinks" v-model="tab" />
       <q-tab-panels v-model="tab">
         <q-tab-panel v-for="{ name } in saleLinks" :key="name" :name="name">
           <transition appear enter-active-class="animated fadeIn">
@@ -52,13 +22,13 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useSharedStore } from 'stores/shared-store.js'
 import { useArtistsStore } from 'stores/artists-store.js'
-import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
+import TitleTabs from 'components/shared/Titles/TitleTabs.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import WorksList from 'components/WorksList.vue'
 
 export default {
   name: 'SalePage',
-  components: { FixedTopTitle, SmallPageContainer, WorksList },
+  components: { TitleTabs, SmallPageContainer, WorksList },
   setup() {
     const { locale } = useI18n({ useScope: 'global' })
     const $q = useQuasar()
