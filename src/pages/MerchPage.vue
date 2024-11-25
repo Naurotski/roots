@@ -117,7 +117,9 @@ export default {
             ...merch,
             quantity: 1,
             urlImageWork: merch.urlImage,
-            urlSecondImagesWork: merch.urlSecondImages || []} })
+            urlSecondImagesWork: merch.urlSecondImages || []
+          }
+        })
       }
     }
     return {

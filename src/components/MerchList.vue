@@ -21,7 +21,11 @@
         <p>{{ `€ ${item.price}` }}</p>
       </div>
     </router-link>
-    <router-link v-else :to="`/merch/${item.rubric}/${item.id}`" style="text-decoration: none; color: #1d1d1d">
+    <router-link
+      v-else
+      :to="`/merch/${item.rubric}/${item.id}`"
+      style="text-decoration: none; color: #1d1d1d"
+    >
       <q-img
         :src="item.urlImage"
         fit="contain"
@@ -91,7 +95,9 @@ export default {
             ...merch,
             quantity: 1,
             urlImageWork: merch.urlImage,
-            urlSecondImagesWork: merch.urlSecondImages || []} })
+            urlSecondImagesWork: merch.urlSecondImages || []
+          }
+        })
       }
     }
     return {
