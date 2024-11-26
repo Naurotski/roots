@@ -17,7 +17,11 @@
           </template>
           <template v-else>
             <router-link :to="`/work/${work.id}`">
-              <img :src="work.urlImageWork" style="height: 250px; width: 250px" alt="image" />
+              <img
+                :src="work.urlImageWork"
+                style="height: 250px; width: 250px; object-fit: contain"
+                alt="image"
+              />
             </router-link>
           </template>
         </q-card>
