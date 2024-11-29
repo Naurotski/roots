@@ -46,7 +46,6 @@
         <q-btn outline size="md" icon="mdi-arrow-left-bold" @click="$router.go(-1)" />
         <!--                <router-link :to="`/thankYou/${workId}`">Work</router-link>-->
       </small-page-container>
-      <pre>merch - {{merch}}</pre>
     </q-page>
   </transition>
 </template>
