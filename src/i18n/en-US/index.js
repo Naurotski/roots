@@ -89,7 +89,7 @@ export default {
     city: 'City',
     country: 'Country',
     delivery:
-      'Before completing your purchase, please fill in the delivery information. This will allow us to process your order correctly and deliver the selected artwork to the specified address. You can find detailed purchase and delivery terms on the page ',
+      'Before completing your purchase, please fill in the delivery information. This will allow us to process your order correctly and deliver the selected artwork or product to the specified address. You can find detailed purchase and delivery terms on the page ',
     redirect: 'To process the payment you will be redirected to the Stripe platform page',
     firstName: 'First Name',
     lastName: 'Last Name',

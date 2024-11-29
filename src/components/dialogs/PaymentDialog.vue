@@ -1,13 +1,15 @@
 <template>
-  <q-btn
-    no-caps
-    outline
-    rounded
-    :class="{ 'full-width': $q.screen.xs }"
-    :label="$t('common.buy')"
-    style="width: 150px"
-    @click="activator = true"
-  />
+  <slot :show-dialog="showDialog">
+    <q-btn
+      no-caps
+      outline
+      rounded
+      :class="{ 'full-width': $q.screen.xs }"
+      :label="$t('common.buy')"
+      style="width: 150px"
+      @click="showDialog"
+    />
+  </slot>
   <q-dialog
     v-model="activator"
     persistent
@@ -18,12 +20,14 @@
     <q-card style="max-width: 900px; border-radius: 25px">
       <q-toolbar class="q-pt-md">
         <q-toolbar-title class="text-h5">
-          {{ work.name }}
+          {{ works.map((item) => item.name).join(',') }}
         </q-toolbar-title>
         <q-btn flat round icon="close" @click="closeDialog" />
       </q-toolbar>
       <q-card-section>
-        <div class="text-body1">{{ `€ ${work.price}` }}</div>
+        <div class="text-body1">
+          {{ `€ ${works.reduce((result, item) => result + +item.price, 0)}` }}
+        </div>
       </q-card-section>
       <q-card-section class="text-body1">
         <div style="white-space: pre-line" class="text-body1">
@@ -54,13 +58,15 @@
 </template>
 
 <script>
-import { ref, toRefs, watch } from 'vue'
+import { computed, ref, toRefs, watch } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store'
 import { useUserStore } from 'stores/user-store.js'
 import { useStripeStore } from 'stores/stripe-store.js'
 import LoginRequiredDialog from 'components/auth/LoginRequiredDialog.vue'
 import FormUserData from 'components/shared/FormUserData.vue'
+
 export default {
   name: 'PayDialog',
   components: {
@@ -68,13 +74,14 @@ export default {
     FormUserData
   },
   props: {
-    work: {
-      type: Object,
+    works: {
+      type: Array,
       required: true
     }
   },
   setup(props) {
-    const { work } = toRefs(props)
+    const { works } = toRefs(props)
+    const { locale } = useI18n({ useScope: 'global' })
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
     const { checkUserExistence } = authStore
@@ -102,6 +109,50 @@ export default {
     const closeDialog = () => {
       activator.value = !activator.value
     }
+    const description = (work) => {
+      if (locale.value === 'it') {
+        return work.descriptionIt.length < 200
+          ? work.descriptionIt
+          : `${work.descriptionIt?.substring(0, 200)}...`
+      } else {
+        return work.description.length < 200
+          ? work.description
+          : `${work.description?.substring(0, 200)}...`
+      }
+    }
+    const images = (work) => {
+      console.log(work)
+      if (String(work.id).includes('-')) {
+        return [
+          work.urlImage || work.urlImageWork,
+          ...(work.urlSecondImages || work.urlSecondImagesWork).map((item) => item.url)
+        ].splice(0, 5)
+      } else {
+        return [work.urlImageWork, ...work.urlSecondImagesWork].splice(0, 5)
+      }
+    }
+    const line_items = computed(() =>
+      works.value.map((work) => {
+        return {
+          quantity: work.quantityCart || 1,
+          price_data: {
+            currency: 'eur',
+            unit_amount: work.price * 100,
+            product_data: {
+              name: locale.value === 'it' ? work.nameIt : work.name,
+              description: description(work),
+              images: images(work),
+              metadata: {
+                workIndex: work.index,
+                id: work.id,
+                artistId: work.artistId || null,
+                rubric: work.rubric
+              }
+            }
+          }
+        }
+      })
+    )
     watch(
       userData,
       (val) => {
@@ -121,6 +172,7 @@ export default {
       },
       { immediate: true, deep: true }
     )
+    const showDialog = () => (activator.value = true)
     const onSubmit = async () => {
       changeShippingDetails({ ...user.value })
       if (!loggedIn.value) {
@@ -138,7 +190,14 @@ export default {
           })
         }
         activator.value = false
+        console.log('line_items -----', line_items.value)
         await payStripe({
+          line_items: line_items.value,
+          metadata: {
+            ...shippingDetails.value,
+            country: shippingDetails.value.country.countryName,
+            shippingEmail: shippingDetails.value.email
+          },
           userData: {
             userId: userData.value.userId,
             email: userData.value.email,
@@ -150,25 +209,6 @@ export default {
             address: userData.value.address,
             postalCode: userData.value.postalCode,
             taxId: userData.value.taxId || null
-          },
-          metadata: {
-            workName: work.value.name,
-            workNameIt: work.value.nameIt,
-            workIndex: work.value.index,
-            workId: work.value.id,
-            urlImageWork: work.value.urlImageWork,
-            description:
-              work.value.description.length < 200
-                ? work.value.description
-                : `${work.value.description?.substring(0, 200)}...`,
-            artistId: work.value.artistId,
-            artistName: work.value.artistName,
-            quantity: 1,
-            amount: work.value.price * 100,
-            currency: 'eur',
-            ...shippingDetails.value,
-            country: shippingDetails.value.country.countryName,
-            shippingEmail: shippingDetails.value.email
           }
         })
         changeShippingDetails({})
@@ -181,6 +221,7 @@ export default {
       authProvider,
       user,
       userData,
+      showDialog,
       closeDialog,
       onSubmit
     }

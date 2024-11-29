@@ -74,7 +74,7 @@ export default {
     const { addProductToCart, updateCart } = stripeStore
     const addToCart = (work) => {
       if (loggedIn.value) {
-        addProductToCart({ ...work, quantity: 1 }).then(() =>
+        addProductToCart({ ...work, quantityCart: 1 }).then(() =>
           $q.notify({
             message: t('cart.addedCart'),
             color: 'grey',
@@ -84,7 +84,7 @@ export default {
         )
       } else {
         console.log(work)
-        updateCart({ key: work.id, value: { ...work, quantity: 1 } })
+        updateCart({ key: work.id, value: { ...work, quantityCart: 1 } })
       }
     }
     return {

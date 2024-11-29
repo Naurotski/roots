@@ -1,6 +1,14 @@
 <template>
   <div class="row justify-center q-mt-md bg-grey-2">
-    <router-link style="text-decoration: none" class="col-3" :to="`/work/${dataCard.id}`">
+    <router-link
+      style="text-decoration: none"
+      class="col-3 flex flex-center"
+      :to="
+        String(dataCard.id).includes('-')
+          ? `/merch/${dataCard.rubric}/${dataCard.id}`
+          : `/work/${dataCard.id}`
+      "
+    >
       <div v-if="dataCard.urlImageWork?.includes('video')">
         <div class="gt-xs" style="position: relative">
           <q-video
@@ -29,7 +37,7 @@
         {{ dataCard.name }}
       </div>
       <div :class="{ 'text-body2': $q.screen.xs }" class="text-justify text-body1">
-        {{ dataCard.materials }}
+        {{ dataCard.materials || dataCard.description }}
       </div>
       <div class="gt-xs">
         <q-btn no-caps flat :label="$t('common.delete')" @click="deleteProduct"></q-btn>
@@ -49,7 +57,7 @@
           @click="deleteProduct"
         />
       </div>
-      <q-select v-model="quantity" :options="options" options-dense lazy-rules dense>
+      <q-select v-model="quantityCart" :options="options" options-dense lazy-rules dense virtual>
         <template v-slot:prepend>
           <span class="text-body2 text-bold">{{ $t('cart.qty') }}</span>
         </template>
@@ -62,9 +70,10 @@
 <script>
 import { computed, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
-import { storeToRefs } from 'pinia'
+import { useMerchStore } from 'stores/merch-store'
 
 export default {
   name: 'ProductCard',
@@ -81,17 +90,34 @@ export default {
     const { loggedIn } = storeToRefs(authStore)
     const stripeStore = useStripeStore()
     const { addProductToCart, updateCart } = stripeStore
-    const options = [`0 (${t('common.delete')})`, 1, 2, 3, 4, 5, 6]
-    const quantity = computed({
+    const merchStore = useMerchStore()
+    const { merchList } = storeToRefs(merchStore)
+    const { listenForChildMerch } = merchStore
+    if (!merchList.value[dataCard.value.rubric]) listenForChildMerch(dataCard.value.rubric)
+    // const options = [`0 (${t('common.delete')})`, 1, 2, 3, 4, 5, 6]
+    const options = computed(() => {
+      if (!String(dataCard.value.id).includes('-')) {
+        return [`0 (${t('common.delete')})`, 1]
+      } else {
+        return [
+          `0 (${t('common.delete')})`, // Первый элемент — строка
+          ...Array.from(
+            { length: merchList.value[dataCard.value.rubric]?.[dataCard.value.id].quantity },
+            (_, index) => index + 1
+          )
+        ]
+      }
+    })
+    const quantityCart = computed({
       get() {
-        return dataCard.value.quantity
+        return dataCard.value.quantityCart
       },
       set(val) {
         if (loggedIn.value) {
           if (val === `0 (${t('common.delete')})`) {
             addProductToCart({ ...dataCard.value, delete: true })
           } else {
-            addProductToCart({ ...dataCard.value, quantity: val, change: true })
+            addProductToCart({ ...dataCard.value, quantityCart: val, change: true })
           }
         } else {
           if (val === `0 (${t('common.delete')})`) {
@@ -99,7 +125,7 @@ export default {
           } else {
             updateCart({
               key: dataCard.value.id,
-              value: { ...dataCard.value, quantity: val, change: true }
+              value: { ...dataCard.value, quantityCart: val, change: true }
             })
           }
         }
@@ -114,7 +140,7 @@ export default {
     }
     return {
       options,
-      quantity,
+      quantityCart,
       deleteProduct
     }
   }

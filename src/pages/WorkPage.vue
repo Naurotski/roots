@@ -38,15 +38,16 @@
               class="text-justify text-body1"
               v-text="`€ ${work.price}`"
             />
-            <payment-dialog v-if="work.price" :work="work" />
+            <payment-dialog v-if="work.price" :works="[work]" />
             <q-btn
+              v-if="work.price"
               no-caps
               outline
               rounded
               style="width: 150px"
               :class="{ 'full-width q-mt-xs': $q.screen.xs, 'q-ml-md': !$q.screen.xs }"
               :label="presenceProductInCart ? $t('cart.seeCart') : $t('cart.addCart')"
-              @click="addToCart(work)"
+              @click="presenceProductInCart ? $router.push('/basket') : addToCart(work)"
             />
           </q-card-section>
         </div>
@@ -115,7 +116,7 @@ export default {
     const presenceProductInCart = computed(() => cart.value[workId.value])
     const addToCart = (work) => {
       if (loggedIn.value) {
-        addProductToCart({ ...work, quantity: 1 }).then(() =>
+        addProductToCart({ ...work, quantityCart: 1 }).then(() =>
           $q.notify({
             message: t('cart.addedCart'),
             color: 'grey',
@@ -125,7 +126,7 @@ export default {
         )
       } else {
         console.log(work)
-        updateCart({ key: work.id, value: { ...work, quantity: 1 } })
+        updateCart({ key: work.id, value: { ...work, quantityCart: 1 } })
       }
     }
     useMeta(() => {

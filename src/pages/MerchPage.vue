@@ -23,21 +23,30 @@
               class="text-justify text-body1"
               v-text="`€ ${merch.price}`"
             />
-            <payment-dialog v-if="merch.price" :work="merch" />
+            <payment-dialog v-if="merch.price" :works="[merch]" />
             <q-btn
               no-caps
               outline
               rounded
               style="width: 150px"
               :class="{ 'full-width q-mt-xs': $q.screen.xs, 'q-ml-md': !$q.screen.xs }"
-              :label="presenceProductInCart ? $t('cart.seeCart') : $t('cart.addCart')"
-              @click="addToCart(merch)"
+              :label="
+                cart[merch.id] && cart[merch.id].quantityCart >= merch.quantity
+                  ? $t('cart.seeCart')
+                  : $t('cart.addCart')
+              "
+              @click="
+                cart[merch.id] && cart[merch.id].quantityCart >= merch.quantity
+                  ? $router.push('/basket')
+                  : addToCart(merch)
+              "
             />
           </q-card-section>
         </div>
         <q-btn outline size="md" icon="mdi-arrow-left-bold" @click="$router.go(-1)" />
         <!--                <router-link :to="`/thankYou/${workId}`">Work</router-link>-->
       </small-page-container>
+      <pre>merch - {{merch}}</pre>
     </q-page>
   </transition>
 </template>
@@ -94,14 +103,15 @@ export default {
         return []
       }
     })
-    const presenceProductInCart = computed(() => cart.value[merch.value])
     const addToCart = (merch) => {
       if (loggedIn.value) {
         addProductToCart({
           ...merch,
-          quantity: 1,
+          quantityCart: 1,
           urlImageWork: merch.urlImage,
-          urlSecondImagesWork: merch.urlSecondImages || []
+          urlSecondImagesWork: merch.urlSecondImages || [],
+          urlImage: null,
+          urlSecondImages: null
         }).then(() =>
           $q.notify({
             message: t('cart.addedCart'),
@@ -115,17 +125,19 @@ export default {
           key: merch.id,
           value: {
             ...merch,
-            quantity: 1,
+            quantityCart: 1,
             urlImageWork: merch.urlImage,
-            urlSecondImagesWork: merch.urlSecondImages || []
+            urlSecondImagesWork: merch.urlSecondImages || [],
+            urlImage: null,
+            urlSecondImages: null
           }
         })
       }
     }
     return {
+      cart,
       merch,
       allUrlImages,
-      presenceProductInCart,
       addToCart
     }
   }

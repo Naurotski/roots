@@ -5,13 +5,17 @@
         <template #link>
           <div v-if="cartCounter" class="row justify-between">
             {{ $t('cart.cart') }}
-            <q-btn
-              :size="$q.screen.xs ? 'sm' : 'md'"
-              no-caps
-              outline
-              rounded
-              :label="`${$t('cart.proceedCheckout')} (${cartCounter} ${$t('cart.items')})`"
-            />
+            <payment-dialog :works="Object.values(cart)"
+              ><template #default="{ showDialog }">
+                <q-btn
+                  :size="$q.screen.xs ? 'sm' : 'md'"
+                  no-caps
+                  outline
+                  rounded
+                  :label="`${$t('cart.proceedCheckout')} (${cartCounter} ${$t('cart.items')})`"
+                  @click="showDialog"
+                /> </template
+            ></payment-dialog>
           </div>
         </template>
       </fixed-top-title>
@@ -67,10 +71,12 @@ import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import ProductCard from 'components/cart/ProductCard.vue'
+import PaymentDialog from 'components/dialogs/PaymentDialog.vue'
 
 export default {
   name: 'BasketPage',
   components: {
+    PaymentDialog,
     FixedTopTitle,
     ProductCard
   },
@@ -95,7 +101,10 @@ export default {
       }
     })
     const subtotal = computed(() =>
-      Object.values(cart.value).reduce((result, item) => result + +item.quantity * item.price, 0)
+      Object.values(cart.value).reduce(
+        (result, item) => result + +item.quantityCart * item.price,
+        0
+      )
     )
     const singIn = () => {
       if (!loginDialog.value && !loggedIn.value) {

@@ -44,8 +44,16 @@
         rounded
         style="width: 150px"
         :class="{ 'full-width q-mt-xs': $q.screen.xs, 'q-ml-md': !$q.screen.xs }"
-        :label="cart[item.id] ? $t('cart.seeCart') : $t('cart.addCart')"
-        @click="cart[item.id] ? $router.push('/basket') : addToCart(item)"
+        :label="
+          cart[item.id] && cart[item.id].quantityCart >= item.quantity
+            ? $t('cart.seeCart')
+            : $t('cart.addCart')
+        "
+        @click="
+          cart[item.id] && cart[item.id].quantityCart >= item.quantity
+            ? $router.push('/basket')
+            : addToCart(item)
+        "
       />
     </div>
   </div>
@@ -77,9 +85,11 @@ export default {
       if (loggedIn.value) {
         addProductToCart({
           ...merch,
-          quantity: 1,
+          quantityCart: 1,
           urlImageWork: merch.urlImage,
-          urlSecondImagesWork: merch.urlSecondImages || []
+          urlSecondImagesWork: merch.urlSecondImages || [],
+          urlImage: null,
+          urlSecondImages: null
         }).then(() =>
           $q.notify({
             message: t('cart.addedCart'),
@@ -93,9 +103,11 @@ export default {
           key: merch.id,
           value: {
             ...merch,
-            quantity: 1,
+            quantityCart: 1,
             urlImageWork: merch.urlImage,
-            urlSecondImagesWork: merch.urlSecondImages || []
+            urlSecondImagesWork: merch.urlSecondImages || [],
+            urlImage: null,
+            urlSecondImages: undefined
           }
         })
       }

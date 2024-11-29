@@ -16,7 +16,7 @@ export const useStripeStore = defineStore('stripe', () => {
   const cart = ref({})
 
   const cartCounter = computed(() =>
-    Object.values(cart.value).reduce((result, item) => result + +item.quantity, 0)
+    Object.values(cart.value).reduce((result, item) => result + +item.quantityCart, 0)
   )
 
   const changeShippingDetails = (data) => (shippingDetails.value = data)
@@ -26,9 +26,9 @@ export const useStripeStore = defineStore('stripe', () => {
     } else if (value === 'logoutUser') {
       cart.value = {}
     } else if (value.change) {
-      cart.value[key].quantity = value.quantity
+      cart.value[key].quantityCart = value.quantityCart
     } else if (cart.value[key] && !LocalStorage.getItem('loggedIn')) {
-      cart.value[key].quantity += 1
+      cart.value[key].quantityCart += 1
     } else {
       cart.value[key] = value
     }
@@ -45,11 +45,11 @@ export const useStripeStore = defineStore('stripe', () => {
         await update(dbRef(db, `users/${userData.value.userId}/cart`), { [product.id]: null })
       } else if (product.change) {
         await update(dbRef(db, `users/${userData.value.userId}/cart/${product.id}`), {
-          quantity: +product.quantity
+          quantityCart: +product.quantityCart
         })
       } else if (cart.value[product.id]) {
         await update(dbRef(db, `users/${userData.value.userId}/cart/${product.id}`), {
-          quantity: +cart.value[product.id].quantity + 1
+          quantityCart: +cart.value[product.id].quantityCart + 1
         })
       } else {
         await update(dbRef(db, `users/${userData.value.userId}/cart/${product.id}`), product)
@@ -69,7 +69,7 @@ export const useStripeStore = defineStore('stripe', () => {
       let localCart = LocalStorage.getItem('cart')
       const addProducts = Object.keys(localCart).map((key) => {
         if (localObject[key]) {
-          localCart[key].quantity += localObject[key].quantity
+          localCart[key].quantityCart += localObject[key].quantityCart
         }
         return addProductToCart(localCart[key])
       })
@@ -81,6 +81,7 @@ export const useStripeStore = defineStore('stripe', () => {
     }
   }
   const payStripe = async (paymentDetails) => {
+    console.log('payStripe ---------', paymentDetails)
     Loading.show()
     try {
       const response = await apiAxios.post('/aorta/checkoutSessionsStripe', { ...paymentDetails })
