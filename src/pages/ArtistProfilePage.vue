@@ -129,12 +129,12 @@ export default {
     const { locale } = useI18n({ useScope: 'global' })
     const { artistId } = toRefs(props)
     const artistsStore = useArtistsStore()
-    const { filterArtistsDraft } = storeToRefs(artistsStore)
+    const { artistsList } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
-    if (!filterArtistsDraft.value.length) getArtists()
+    if (!artistsList.value.length) getArtists()
     const artistData = computed(() => {
-      if (filterArtistsDraft.value.length) {
-        let localData = filterArtistsDraft.value.find((item) => item.artistId === artistId.value)
+      if (artistsList.value.length) {
+        let localData = artistsList.value.find((item) => item.artistId === artistId.value)
         if (locale.value === 'it') {
           return {
             ...localData,

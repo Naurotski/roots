@@ -68,12 +68,13 @@
 </template>
 
 <script>
-import { computed, toRefs } from 'vue'
+import { computed, toRefs, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
 import { useMerchStore } from 'stores/merch-store'
+import { useArtistsStore } from 'stores/artists-store'
 
 export default {
   name: 'ProductCard',
@@ -92,17 +93,32 @@ export default {
     const { addProductToCart, updateCart } = stripeStore
     const merchStore = useMerchStore()
     const { merchList } = storeToRefs(merchStore)
-    const { listenForChildMerch } = merchStore
+    const { listenForChildMerch, checkExistenceMerch } = merchStore
     if (!merchList.value[dataCard.value.rubric]) listenForChildMerch(dataCard.value.rubric)
-    // const options = [`0 (${t('common.delete')})`, 1, 2, 3, 4, 5, 6]
+    const artistsStore = useArtistsStore()
+    const { allWorks } = storeToRefs(artistsStore)
+    const { getArtists } = artistsStore
+    if (!allWorks.value.length) getArtists()
+    setTimeout(() => {
+      if (
+        String(dataCard.value.id).includes('-') &&
+        !merchList.value[dataCard.value.rubric]?.[dataCard.value.id]
+      ) {
+        checkExistenceMerch(`merch/${dataCard.value.rubric}/${dataCard.value.id}`).then(
+          (result) => {
+            if (!result) deleteProduct()
+          }
+        )
+      }
+    }, 1000)
     const options = computed(() => {
       if (!String(dataCard.value.id).includes('-')) {
         return [`0 (${t('common.delete')})`, 1]
       } else {
         return [
-          `0 (${t('common.delete')})`, // Первый элемент — строка
+          `0 (${t('common.delete')})`,
           ...Array.from(
-            { length: merchList.value[dataCard.value.rubric]?.[dataCard.value.id].quantity },
+            { length: merchList.value[dataCard.value.rubric]?.[dataCard.value.id]?.quantity },
             (_, index) => index + 1
           )
         ]
@@ -113,25 +129,46 @@ export default {
         return dataCard.value.quantityCart
       },
       set(val) {
-        if (loggedIn.value) {
-          if (val === `0 (${t('common.delete')})`) {
-            addProductToCart({ ...dataCard.value, delete: true })
-          } else {
-            addProductToCart({ ...dataCard.value, quantityCart: val, change: true })
-          }
-        } else {
-          if (val === `0 (${t('common.delete')})`) {
-            updateCart({ key: dataCard.value.id, value: 'delete' })
-          } else {
-            updateCart({
-              key: dataCard.value.id,
-              value: { ...dataCard.value, quantityCart: val, change: true }
-            })
-          }
-        }
+        updateQuantityCart(val)
       }
     })
-    const deleteProduct = () => {
+    watch(
+      () => merchList.value[dataCard.value.rubric]?.[dataCard.value.id],
+      (val) => {
+        if (val) {
+          if (val.notForSale) {
+            deleteProduct()
+          } else if (val.quantity < dataCard.value.quantityCart) {
+            updateQuantityCart(val.quantity)
+          }
+        }
+      },
+      { immediate: true, deep: true }
+    )
+    watch(
+      allWorks,
+      (val) => {
+        let localWork = val.find((item) => item.id === dataCard.value.id)
+        if (!String(dataCard.value.id).includes('-') && val.length && !localWork?.price) {
+          deleteProduct()
+        }
+      },
+      { immediate: true, deep: true }
+    )
+
+    function updateQuantityCart(val) {
+      if (val === `0 (${t('common.delete')})` || val <= 0) {
+        deleteProduct()
+      } else {
+        if (loggedIn.value) {
+          addProductToCart({ ...dataCard.value, quantityCart: val, change: true })
+        } else {
+          updateCart({ key: dataCard.value.id, value: 'delete' })
+        }
+      }
+    }
+
+    function deleteProduct() {
       if (loggedIn.value) {
         addProductToCart({ ...dataCard.value, delete: true })
       } else {

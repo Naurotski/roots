@@ -28,7 +28,7 @@
           />
         </div>
         <div class="text-body1 q-mt-md">
-          <div>{{ artistName }}</div>
+          <div v-if="artistName">{{ artistName }}</div>
           <b>{{ name }}</b>
           <p>{{ $t('settings.datePurchase') }} - {{ date }}</p>
         </div>
@@ -71,7 +71,7 @@ export default {
         })
         .map((item) => ({
           ...item,
-          name: locale.value === 'it' ? item.workNameIt : item.workName,
+          name: locale.value === 'it' ? item.nameIt : item.name,
           date: date.formatDate(item.date, 'DD/MM/YYYY')
         }))
     })

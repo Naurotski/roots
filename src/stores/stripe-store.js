@@ -40,7 +40,6 @@ export const useStripeStore = defineStore('stripe', () => {
   const addProductToCart = async (product) => {
     console.log('addProductToCart --', product)
     try {
-      Loading.show()
       if (product.delete) {
         await update(dbRef(db, `users/${userData.value.userId}/cart`), { [product.id]: null })
       } else if (product.change) {
@@ -54,8 +53,6 @@ export const useStripeStore = defineStore('stripe', () => {
       } else {
         await update(dbRef(db, `users/${userData.value.userId}/cart/${product.id}`), product)
       }
-      Loading.hide()
-      return '--success--'
     } catch (error) {
       showErrorMessage(error.message)
       throw error

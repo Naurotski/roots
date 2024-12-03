@@ -125,10 +125,10 @@ export default {
       if (String(work.id).includes('-')) {
         return [
           work.urlImage || work.urlImageWork,
-          ...(work.urlSecondImages || work.urlSecondImagesWork).map((item) => item.url)
+          ...(work.urlSecondImages || work.urlSecondImagesWork || []).map((item) => item.url)
         ].splice(0, 5)
       } else {
-        return [work.urlImageWork, ...work.urlSecondImagesWork].splice(0, 5)
+        return [work.urlImageWork, ...(work.urlSecondImagesWork || [])].splice(0, 5)
       }
     }
     const line_items = computed(() =>
@@ -143,10 +143,11 @@ export default {
               description: description(work),
               images: images(work),
               metadata: {
-                workIndex: work.index,
+                workIndex: work.index ?? null,
                 id: work.id,
                 artistId: work.artistId || null,
-                rubric: work.rubric
+                rubric: work.rubric,
+                artistName: work.artistName || null
               }
             }
           }

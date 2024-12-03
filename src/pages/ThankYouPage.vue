@@ -43,9 +43,9 @@ export default {
   setup(props) {
     const { workId } = toRefs(props)
     const artistsStore = useArtistsStore()
-    const { filterArtistsDraft, allWorks } = storeToRefs(artistsStore)
+    const { artistsList, allWorks } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
-    if (!filterArtistsDraft.value.length) getArtists()
+    if (!artistsList.value.length) getArtists()
     const work = computed(() => findWork(allWorks, workId))
     useMeta(() => {
       return {

@@ -108,12 +108,12 @@ export default {
       }
     })
     const artistsStore = useArtistsStore()
-    const { filterArtistsDraft } = storeToRefs(artistsStore)
+    const { artistsList } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
-    if (!filterArtistsDraft.value.length) getArtists()
+    if (!artistsList.value.length) getArtists()
     watchEffect(() =>
       dialogData.value.forEach((action) => {
-        filterArtistsDraft.value.forEach((artist) => {
+        artistsList.value.forEach((artist) => {
           if (action.artistName === artist.name) {
             action.phat = `/artists/${artist.artistId}`
           }

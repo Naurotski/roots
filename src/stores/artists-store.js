@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { db } from 'boot/firebase.js'
-import { ref as fbRef, onValue } from 'firebase/database'
+import { ref as fbRef, onValue, query, orderByChild, equalTo } from 'firebase/database'
 
 export const useArtistsStore = defineStore('artists', () => {
   const artistsList = ref([])
@@ -20,24 +20,23 @@ export const useArtistsStore = defineStore('artists', () => {
     })
     artistsList.value = artists
   }
-  const filterArtistsDraft = computed(() => artistsList.value.filter((artist) => !artist.draft))
   const allWorks = computed(() => {
     let localArray = []
-    filterArtistsDraft.value.forEach((artist) => localArray.push(...artist.works))
+    artistsList.value.forEach((artist) => localArray.push(...artist.works))
     return localArray.sort((a, b) => {
       if (a.id < b.id) return 1
       if (a.id === b.id) return 0
       if (a.id > b.id) return -1
     })
   })
-  const getArtists = () => {
-    onValue(fbRef(db, 'artists/'), (snapshot) => {
+  const getArtists = async () => {
+    onValue(query(fbRef(db, 'artists'), orderByChild('draft'), equalTo(false)), (snapshot) => {
       const data = snapshot.val()
       setArtistList(Object.values(data))
     })
   }
   return {
-    filterArtistsDraft,
+    artistsList,
     allWorks,
     getArtists
   }

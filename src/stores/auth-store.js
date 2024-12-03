@@ -117,7 +117,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       Loading.show()
       await off(dbRef(db, `users/${userData.value.userId}/userData`))
-      await off(dbRef(db, `users/${userData.value.userId}/orders/artWorks`))
+      await off(dbRef(db, `users/${userData.value.userId}/orders`))
       await off(dbRef(db, `users/${userData.value.userId}/cart`))
       await signOut(auth)
       updateCart({ key: 0, value: 'logoutUser' })
@@ -144,7 +144,7 @@ export const useAuthStore = defineStore('auth', () => {
           await mergeCarts(user.uid)
         }
         listenForChildUser(user.uid, 'userData')
-        listenForChildUser(user.uid, 'orders/artWorks')
+        listenForChildUser(user.uid, 'orders')
         listenForChildUser(user.uid, 'cart')
       } else {
         if (!loggedIn.value) {

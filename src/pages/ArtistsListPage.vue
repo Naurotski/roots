@@ -10,7 +10,7 @@
             lastName,
             urlPortrait,
             urlWorkShowcase
-          } in filterArtistsDraft"
+          } in artistsList"
           :key="artistId"
         >
           <router-link :to="`/artists/${artistId}`">
@@ -40,9 +40,10 @@ export default {
   },
   setup() {
     const artistsStore = useArtistsStore()
-    const { filterArtistsDraft } = storeToRefs(artistsStore)
+    const { artistsList } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
-    if (!filterArtistsDraft.value.length) getArtists()
+    console.log(artistsList)
+    if (!artistsList.value.length) getArtists()
     useMeta(() => {
       return {
         title: 'Aorta Social Art Gallery',
@@ -64,7 +65,7 @@ export default {
       }
     })
     return {
-      filterArtistsDraft
+      artistsList
     }
   }
 }

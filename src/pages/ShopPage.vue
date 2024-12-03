@@ -30,22 +30,26 @@ export default {
   setup() {
     const $q = useQuasar()
     const { locale } = useI18n({ useScope: 'global' })
+    const tab = ref($q.localStorage.getItem('tabMerch') || 'mugs')
     const merchStore = useMerchStore()
     const { merchLinks, merchList } = storeToRefs(merchStore)
     const { listenForChildMerch } = merchStore
-    if (!Object.keys(merchList.value).length) {
-      merchLinks.value.forEach(({ name }) => listenForChildMerch(name))
-    }
-    const tab = ref($q.localStorage.getItem('tabMerch') || 'mugs')
-    watch(tab, () => {
-      $q.localStorage.set('tabMerch', tab.value)
-    })
+    watch(
+      tab,
+      (val) => {
+        $q.localStorage.set('tabMerch', val)
+        if (!merchList.value[val]) {
+          listenForChildMerch(val)
+        }
+      },
+      { immediate: true }
+    )
     const filterMerchList = computed(() =>
       Object.values(merchList.value[tab.value] || {})
-        .filter((item) => !item.notForSale)
+        .filter((item) => !item.notForSale && +item.quantity > 0)
         .map((item) => {
           if (locale.value === 'it') {
-            return { ...item, name: item.name, description: item.description }
+            return { ...item, name: item.nameIt, description: item.descriptionIt }
           } else {
             return { ...item }
           }

@@ -13,7 +13,7 @@ const localFunction = (parent, data) => {
     // console.log('onChildAdded-userData -', data.key, ':', data.val())
     updateUserData({ key: data.key, value: data.val() })
   }
-  if (parent === 'orders/artWorks') {
+  if (parent === 'orders') {
     // console.log('onChildAdded-artWorks -', data.key, ':', data.val())
     updateOrdersArtWorks({ key: data.key, value: data.val() })
   }

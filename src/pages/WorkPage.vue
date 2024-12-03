@@ -95,12 +95,12 @@ export default {
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
     const artistsStore = useArtistsStore()
-    const { filterArtistsDraft, allWorks } = storeToRefs(artistsStore)
+    const { artistsList, allWorks } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
     const stripeStore = useStripeStore()
     const { cart } = storeToRefs(stripeStore)
     const { addProductToCart, updateCart } = stripeStore
-    if (!filterArtistsDraft.value.length) getArtists()
+    if (!artistsList.value.length) getArtists()
     const work = computed(() => findWork(allWorks, workId))
     const allUrlImagesWork = computed(() => {
       if (work.value) {
