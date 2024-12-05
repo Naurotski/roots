@@ -163,7 +163,10 @@ export default {
         if (loggedIn.value) {
           addProductToCart({ ...dataCard.value, quantityCart: val, change: true })
         } else {
-          updateCart({ key: dataCard.value.id, value: 'delete' })
+          updateCart({
+            key: dataCard.value.id,
+            value: { ...dataCard.value, quantityCart: val, change: true }
+          })
         }
       }
     }

@@ -96,7 +96,7 @@ const routes = isMaintenanceMode
         ]
       },
       {
-        path: '/thankYou/:workId',
+        path: '/thankYou',
         name: 'ThankYou',
         props: true,
         component: () => import('pages/ThankYouPage.vue')

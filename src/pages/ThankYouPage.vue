@@ -4,9 +4,9 @@
       <div>
         <div style="font-size: 8vh">{{ $t('common.thank') }}</div>
 
-        <div v-if="work" class="text-h4" style="opacity: 0.4">
-          {{ $t('common.acquired') }}{{ work.artistName }} - {{ work.name }}.
-        </div>
+<!--        <div v-if="work" class="text-h4" style="opacity: 0.4">-->
+<!--          {{ $t('common.acquired') }}{{ work.artistName }} - {{ work.name }}.-->
+<!--        </div>-->
         <div class="text-h4" style="opacity: 0.4">
           {{ $t('common.delivery') }}
         </div>
@@ -26,37 +26,37 @@
 </template>
 
 <script>
-import { useMeta } from 'quasar'
-import { computed, toRefs } from 'vue'
-import { useArtistsStore } from 'stores/artists-store.js'
-import { storeToRefs } from 'pinia'
-import { findWork } from 'src/composables/findWork.js'
+// import { useMeta } from 'quasar'
+// import { computed, toRefs } from 'vue'
+// import { useArtistsStore } from 'stores/artists-store.js'
+// import { storeToRefs } from 'pinia'
+// import { findWork } from 'src/composables/findWork.js'
 
 export default {
-  name: 'ThankYouPage',
-  props: {
-    workId: {
-      type: String,
-      required: true
-    }
-  },
-  setup(props) {
-    const { workId } = toRefs(props)
-    const artistsStore = useArtistsStore()
-    const { artistsList, allWorks } = storeToRefs(artistsStore)
-    const { getArtists } = artistsStore
-    if (!artistsList.value.length) getArtists()
-    const work = computed(() => findWork(allWorks, workId))
-    useMeta(() => {
-      return {
-        title: 'Aorta Social Art Gallery',
-        titleTemplate: (title) => `${title} | Thank You`
-      }
-    })
-    return {
-      work
-    }
-  }
+  name: 'ThankYouPage'
+  // props: {
+  //   workId: {
+  //     type: String,
+  //     required: true
+  //   }
+  // },
+  // setup(props) {
+  //   const { workId } = toRefs(props)
+  //   const artistsStore = useArtistsStore()
+  //   const { filterArtistsDraft, allWorks } = storeToRefs(artistsStore)
+  //   const { getArtists } = artistsStore
+  //   if (!filterArtistsDraft.value.length) getArtists()
+  //   const work = computed(() => findWork(allWorks, workId))
+  //   useMeta(() => {
+  //     return {
+  //       title: 'Aorta Social Art Gallery',
+  //       titleTemplate: (title) => `${title} | Thank You`
+  //     }
+  //   })
+  //   return {
+  //     work
+  //   }
+  // }
 }
 </script>
 

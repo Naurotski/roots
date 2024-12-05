@@ -37,10 +37,17 @@
         <q-card-section v-if="authProvider[0] === 'google.com'">
           <google-button @click="loginGoogle" />
         </q-card-section>
+        <q-card-section v-if="authProvider[0] === 'facebook.com'">
+          <q-btn no-caps outline rounded color="primary" class="full-width" @click="loginFacebook"
+            ><q-icon left name="mdi-facebook" class="text-blue" />{{
+              `${$t('auth.logInW')} Facebook`
+            }}
+          </q-btn>
+        </q-card-section>
       </div>
       <q-card-actions align="right" class="text-primary">
         <q-btn
-          v-if="authProvider[0] !== 'google.com'"
+          v-if="authProvider[0] !== 'google.com' && authProvider[0] !== 'facebook.com'"
           flat
           :label="$t('common.continue')"
           @click="continueBuy"
@@ -79,7 +86,7 @@ export default {
     const { t } = useI18n()
     const { modelValue, authProvider, email } = toRefs(props)
     const authStore = useAuthStore()
-    const { loginUser, logInGoogle, showLoginDialog } = authStore
+    const { loginUser, logInGoogle, logInFacebook, showLoginDialog } = authStore
     const textMessage = ref('')
     const pass = ref(null)
     const password = ref('')
@@ -92,11 +99,15 @@ export default {
       }
     })
     watch(authProvider, (val) => {
+      console.log(val)
       switch (val[0]) {
         case 'password':
           textMessage.value = t('dialoguePayment.loginRequired')
           break
         case 'google.com':
+          textMessage.value = t('dialoguePayment.loginRequired')
+          break
+        case 'facebook.com':
           textMessage.value = t('dialoguePayment.loginRequired')
           break
         default:
@@ -126,6 +137,13 @@ export default {
         emit('allowPayment')
       }
     }
+    const loginFacebook = async () => {
+      const resultGoogle = await logInFacebook()
+      if (resultGoogle) {
+        emit('update:modelValue', false)
+        emit('allowPayment')
+      }
+    }
     const closeDialog = () => {
       textMessage.value = ''
       password.value = ''
@@ -137,6 +155,7 @@ export default {
       textMessage,
       continueBuy,
       loginGoogle,
+      loginFacebook,
       closeDialog
     }
   }

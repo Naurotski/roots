@@ -86,6 +86,7 @@ export const useAuthStore = defineStore('auth', () => {
       if (error.message !== 'Firebase: Error (auth/popup-closed-by-user).') {
         showErrorMessage(error.message)
       }
+      console.log('error ++++++', error)
       throw error
     }
   }
@@ -129,6 +130,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
   const handleAuthStateChange = () => {
     onAuthStateChanged(auth, async (user) => {
+      console.log('onAuthStateChanged ---user-', user)
       Loading.hide()
       if (user) {
         loggedIn.value = true
@@ -140,12 +142,12 @@ export const useAuthStore = defineStore('auth', () => {
           providerId: user.providerData[0].providerId,
           userId: user.uid
         })
-        if (LocalStorage.getItem('cart')) {
-          await mergeCarts(user.uid)
-        }
         listenForChildUser(user.uid, 'userData')
         listenForChildUser(user.uid, 'orders')
         listenForChildUser(user.uid, 'cart')
+        if (LocalStorage.getItem('cart')) {
+          await mergeCarts(user.uid).then(() => console.log('end merge========'))
+        }
       } else {
         if (!loggedIn.value) {
           Object.values(LocalStorage.getItem('cart')).forEach((item) =>

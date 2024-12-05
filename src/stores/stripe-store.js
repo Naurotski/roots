@@ -60,21 +60,20 @@ export const useStripeStore = defineStore('stripe', () => {
   }
   const mergeCarts = async (userId) => {
     try {
-      updateCart({ key: 0, value: 'logoutUser' })
       const result = await get(dbRef(db, `users/${userId}/cart`))
-      const localObject = result.val()
+      const localObject = result.val() || {}
       let localCart = LocalStorage.getItem('cart')
-      const addProducts = Object.keys(localCart).map((key) => {
+      for (const key in localCart) {
+        updateCart({ key, value: 'delete' })
         if (localObject[key]) {
           localCart[key].quantityCart += localObject[key].quantityCart
         }
-        return addProductToCart(localCart[key])
-      })
-      await Promise.all(addProducts)
+        await addProductToCart(localCart[key])
+      }
       LocalStorage.removeItem('cart')
-    } catch (e) {
-      showErrorMessage(e.message)
-      throw e
+    } catch (error) {
+      showErrorMessage(error.message)
+      throw error
     }
   }
   const payStripe = async (paymentDetails) => {

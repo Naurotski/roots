@@ -20,7 +20,7 @@
     <q-card style="max-width: 900px; border-radius: 25px">
       <q-toolbar class="q-pt-md">
         <q-toolbar-title class="text-h5">
-          {{ works.map((item) => item.name).join(',') }}
+          {{ works.map((item) => item.name).join(', ') }}
         </q-toolbar-title>
         <q-btn flat round icon="close" @click="closeDialog" />
       </q-toolbar>
@@ -58,9 +58,11 @@
 </template>
 
 <script>
-import { computed, ref, toRefs, watch } from 'vue'
+import { computed, ref, toRefs, watch, onBeforeUnmount } from 'vue'
+import { useQuasar } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 import { useAuthStore } from 'stores/auth-store'
 import { useUserStore } from 'stores/user-store.js'
 import { useStripeStore } from 'stores/stripe-store.js'
@@ -80,6 +82,8 @@ export default {
     }
   },
   setup(props) {
+    const $q = useQuasar()
+    const route = useRoute()
     const { works } = toRefs(props)
     const { locale } = useI18n({ useScope: 'global' })
     const authStore = useAuthStore()
@@ -180,42 +184,44 @@ export default {
         authProvider.value = await checkUserExistence(user.value.email)
         requiredDialog.value = true
       } else {
-        const diffObj = Object.keys(user.value).reduce((result, key) => {
-          if (!(key in userData.value)) result[key] = user.value[key]
-          return result
-        }, {})
-        if (Object.keys(diffObj).length) {
-          await updateUser({
-            path: `users/${userData.value.userId}/userData`,
-            payload: diffObj
-          })
-        }
-        activator.value = false
-        console.log('line_items -----', line_items.value)
-        await payStripe({
-          line_items: line_items.value,
-          metadata: {
-            ...shippingDetails.value,
-            country: shippingDetails.value.country.countryName,
-            shippingEmail: shippingDetails.value.email
-          },
-          userData: {
-            userId: userData.value.userId,
-            email: userData.value.email,
-            firstName: userData.value.firstName,
-            lastName: userData.value.lastName,
-            phone: userData.value.phone,
-            city: userData.value.city,
-            country: userData.value.country,
-            address: userData.value.address,
-            postalCode: userData.value.postalCode,
-            taxId: userData.value.taxId || null
+        if ($q.localStorage.getItem('cart')) {
+          activator.value = false
+        } else {
+          const diffObj = Object.keys(user.value).reduce((result, key) => {
+            if (!(key in userData.value)) result[key] = user.value[key]
+            return result
+          }, {})
+          if (Object.keys(diffObj).length) {
+            await updateUser({
+              path: `users/${userData.value.userId}/userData`,
+              payload: diffObj
+            })
           }
-        })
-        changeShippingDetails({})
+          await payStripe({
+            cancel_url: route.path,
+            line_items: line_items.value,
+            metadata: {
+              ...shippingDetails.value,
+              country: shippingDetails.value.country.countryName,
+              shippingEmail: shippingDetails.value.email
+            },
+            userData: {
+              userId: userData.value.userId,
+              email: userData.value.email,
+              firstName: userData.value.firstName,
+              lastName: userData.value.lastName,
+              phone: userData.value.phone,
+              city: userData.value.city,
+              country: userData.value.country,
+              address: userData.value.address,
+              postalCode: userData.value.postalCode,
+              taxId: userData.value.taxId || null
+            }
+          })
+          changeShippingDetails({})
+        }
       }
     }
-
     return {
       activator,
       requiredDialog,
