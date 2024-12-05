@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { computed, ref, toRefs, watch, onBeforeUnmount } from 'vue'
+import { computed, ref, toRefs, watch } from 'vue'
 import { useQuasar } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'

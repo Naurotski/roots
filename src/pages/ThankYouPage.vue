@@ -4,9 +4,9 @@
       <div>
         <div style="font-size: 8vh">{{ $t('common.thank') }}</div>
 
-<!--        <div v-if="work" class="text-h4" style="opacity: 0.4">-->
-<!--          {{ $t('common.acquired') }}{{ work.artistName }} - {{ work.name }}.-->
-<!--        </div>-->
+        <!--        <div v-if="work" class="text-h4" style="opacity: 0.4">-->
+        <!--          {{ $t('common.acquired') }}{{ work.artistName }} - {{ work.name }}.-->
+        <!--        </div>-->
         <div class="text-h4" style="opacity: 0.4">
           {{ $t('common.delivery') }}
         </div>
