@@ -27,6 +27,7 @@
         :src="work.urlImageWork"
         fit="contain"
         :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
+        alt="artwork"
       />
       <div class="text-body1 q-mt-md">
         <div>{{ work.artistName }}</div>

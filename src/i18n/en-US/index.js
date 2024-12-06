@@ -26,7 +26,7 @@ export default {
     sendMessage: 'Send Message',
     sentMessage: 'Message Sent',
     technicalWork: 'Technical Work',
-    thank: 'Thank you for your payment!',
+    thank: 'Thank you for your purchase!',
     title: 'Title',
     unfortunately: 'Unfortunately, there are currently no events in progress.',
     yourEmail: 'Your Email',

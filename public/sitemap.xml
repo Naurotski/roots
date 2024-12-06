@@ -4,44 +4,60 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<url>
-  <loc>https://aortagallery.com/home</loc>
-  <lastmod>2024-11-01T03:00:00+00:00</lastmod>
-</url>
   <url>
-  <loc>https://aortagallery.com/artists</loc>
-  <lastmod>2024-11-01T03:00:00+00:00</lastmod>
-</url>
+    <loc>https://aortagallery.com/home</loc>
+    <lastmod>2024-12-06T03:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://aortagallery.com/artists</loc>
+    <lastmod>2024-12-06T03:00:00+00:00</lastmod>
+  </url>
   <url>
     <loc>https://aortagallery.com/about</loc>
-    <lastmod>2024-11-01T03:00:00+00:00</lastmod>
+    <lastmod>2024-12-06T03:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://aortagallery.com/actions/exhibitions</loc>
-    <lastmod>2024-11-01T03:00:00+00:00</lastmod>
+    <lastmod>2024-12-06T03:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://aortagallery.com/sale</loc>
-    <lastmod>2024-11-01T03:00:00+00:00</lastmod>
+    <lastmod>2024-12-06T03:00:00+00:00</lastmod>
   </url>
   <url>
-  <loc>https://aortagallery.com/work</loc>
-  <lastmod>2024-11-01T03:00:00+00:00</lastmod>
-</url>
+    <loc>https://aortagallery.com/work</loc>
+    <lastmod>2024-12-06T03:00:00+00:00</lastmod>
+  </url>
   <url>
-  <loc>https://aortagallery.com/press</loc>
-  <lastmod>2024-11-01T03:00:00+00:00</lastmod>
-</url>
+    <loc>https://aortagallery.com/merch</loc>
+    <lastmod>2024-12-06T03:00:00+00:00</lastmod>
+  </url>
   <url>
-  <loc>https://aortagallery.com/privacy</loc>
-  <lastmod>2024-11-01T03:00:00+00:00</lastmod>
-</url>
+    <loc>https://aortagallery.com/sale</loc>
+    <lastmod>2024-12-06T03:00:00+00:00</lastmod>
+  </url>
   <url>
-  <loc>https://aortagallery.com/termsSale</loc>
-  <lastmod>2024-11-01T03:00:00+00:00</lastmod>
-</url>
+    <loc>https://aortagallery.com/shop</loc>
+    <lastmod>2024-12-06T03:00:00+00:00</lastmod>
+  </url>
   <url>
-  <loc>https://aortagallery.com/thankYou</loc>
-  <lastmod>2024-11-01T03:00:00+00:00</lastmod>
-</url>
+    <loc>https://aortagallery.com/basket</loc>
+    <lastmod>2024-12-06T03:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://aortagallery.com/press</loc>
+    <lastmod>2024-12-06T03:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://aortagallery.com/privacy</loc>
+    <lastmod>2024-12-06T03:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://aortagallery.com/termsSale</loc>
+    <lastmod>2024-12-06T03:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://aortagallery.com/thankYou</loc>
+    <lastmod>2024-12-06T03:00:00+00:00</lastmod>
+  </url>
 </urlset>

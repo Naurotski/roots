@@ -5,7 +5,7 @@
     }}</q-toolbar-title>
   </q-toolbar>
   <div class="col-12 col-sm-3">
-    <q-card square flat style="z-index: 1" class="q-pr-sm-xl">
+    <q-card square flat class="q-pr-sm-xl">
       <q-img :src="dataCard.url" :alt="dataCard.name" :ratio="1" />
       <slot name="underPicture" />
     </q-card>

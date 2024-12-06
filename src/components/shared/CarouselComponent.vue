@@ -17,7 +17,7 @@
     <q-carousel-slide v-for="(url, index) in urlImages" :key="url" :name="index">
       <div class="row justify-center">
         <q-video v-if="checkVideo" class="absolute-full" :src="url" />
-        <q-img v-else :src="url" fit="contain" alt="alt" class="absolute-full" />
+        <q-img v-else :src="url" fit="contain" alt="artwork" class="absolute-full" />
       </div>
     </q-carousel-slide>
     <template v-slot:control v-if="!checkVideo">

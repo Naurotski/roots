@@ -71,10 +71,7 @@ export default {
           },
           keywords: {
             name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
-          },
-          ogTitle: {
-            property: 'og:title'
+            content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy'
           }
         }
       }

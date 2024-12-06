@@ -181,7 +181,7 @@ export default {
         link: {
           canonical: {
             rel: 'canonical',
-            href: `https://aortagallery.com${route.fullPath}`
+            href: `https://aortagallery.com/actions/${typeAction.value}`
           }
         },
         meta: {
@@ -192,10 +192,7 @@ export default {
           },
           keywords: {
             name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
-          },
-          ogTitle: {
-            property: 'og:title'
+            content: 'Buy paintings, sculptures, contemporary, souvenirs art in Pisa Italy'
           }
         }
       }

@@ -13,7 +13,7 @@
       ref="img"
       v-if="portraitData.imageSrc"
       :src="portraitData.imageSrc"
-      alt="alt"
+      alt="avatar"
       :style="imageStyle"
       class="background-image"
     />

@@ -120,7 +120,7 @@ export default defineComponent({
     })
     useMeta(() => {
       return {
-        title: 'Aorta Social Art Gallery ',
+        title: 'Aorta Social Art Gallery',
         meta: {
           description: {
             name: 'description',
@@ -129,10 +129,7 @@ export default defineComponent({
           },
           keywords: {
             name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
-          },
-          ogTitle: {
-            property: 'og:title'
+            content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy'
           }
         }
       }

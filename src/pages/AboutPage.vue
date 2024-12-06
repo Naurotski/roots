@@ -5,7 +5,7 @@
       <small-page-container class="q-pt-md">
         <div class="col-12 col-sm-4">
           <q-card flat>
-            <img src="~assets/icon1.png" alt="roots-logo" />
+            <img src="~assets/icon1.png" alt="Aorta-logo" />
           </q-card>
         </div>
         <div class="col-12 col-sm-8 relative-position" v-bind="$attrs">
@@ -98,14 +98,11 @@ export default {
           description: {
             name: 'description',
             content:
-              'Roots Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+              'Aorta Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
           },
           keywords: {
             name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
-          },
-          ogTitle: {
-            property: 'og:title'
+            content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy '
           }
         }
       }

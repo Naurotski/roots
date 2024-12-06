@@ -2,7 +2,7 @@
   <div class="row justify-center">
     <div class="flex flex-center column">
       <q-avatar color="grey-4" size="150px">
-        <img v-if="user.portraitUrl" :src="user.portraitUrl" alt="photo" />
+        <img v-if="user.portraitUrl" :src="user.portraitUrl" alt="avatar" />
         <span v-else>{{ user.firstName.charAt(0).toUpperCase() }}</span>
       </q-avatar>
       <set-new-photo :portrait-url="user.portraitUrl" />
@@ -33,6 +33,8 @@
   </form-user-data>
   <div class="text-center">
     <q-btn
+      outline
+      rounded
       v-if="userData.providerId === 'password'"
       :class="{ 'full-width': $q.screen.xs }"
       label="sendPassword"

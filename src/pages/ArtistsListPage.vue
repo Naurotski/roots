@@ -8,7 +8,11 @@
           :key="artistId"
         >
           <router-link :to="`/artists/${artistId}`">
-            <q-img :src="urlWorkShowcase || urlPortrait" style="height: 300px; width: 300px">
+            <q-img
+              :src="urlWorkShowcase || urlPortrait"
+              style="height: 300px; width: 300px"
+              alt="artwork"
+            >
               <div class="absolute-bottom text-body1 text-center">
                 {{ firstName }} {{ lastName }}
               </div></q-img
@@ -48,10 +52,7 @@ export default {
           },
           keywords: {
             name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
-          },
-          ogTitle: {
-            property: 'og:title'
+            content: 'Buy paintings, sculptures, contemporary art in Pisa, souvenirs Italy'
           }
         }
       }

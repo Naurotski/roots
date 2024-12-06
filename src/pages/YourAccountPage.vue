@@ -67,7 +67,7 @@
 <script>
 import { useMeta, useQuasar } from 'quasar'
 import { ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'stores/auth-store.js'
 import { useUserStore } from 'stores/user-store.js'
@@ -92,7 +92,6 @@ export default {
   setup() {
     const $q = useQuasar()
     const router = useRouter()
-    const route = useRoute()
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
     const userStore = useUserStore()
@@ -115,7 +114,7 @@ export default {
         link: {
           canonical: {
             rel: 'canonical',
-            href: `https://aortagallery.com${route.fullPath}`
+            href: `https://aortagallery.com/account`
           }
         },
         meta: {
@@ -131,9 +130,6 @@ export default {
           keywords: {
             name: 'keywords',
             content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
-          },
-          ogTitle: {
-            property: 'og:title'
           }
         }
       }

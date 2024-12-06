@@ -5,7 +5,7 @@
       <div v-if="urlImage?.includes('video')">
         <q-video :src="urlImage" style="height: 500px" />
       </div>
-      <q-img v-else :src="urlImage" width="100%" />
+      <q-img v-else :src="urlImage" width="100%" alt="Aorta" />
       <q-btn flat size="xl" icon="mdi-arrow-left-bold" @click="$router.go(-1)" />
     </q-page>
   </transition>
@@ -16,6 +16,7 @@ import { useActionStore } from 'stores/actions-store.js'
 
 import { computed, toRefs } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useMeta } from 'quasar'
 export default {
   name: 'PressPage',
   props: {
@@ -38,6 +39,12 @@ export default {
           .find((item) => item.id === +exId)
           ?.press.find((el) => el.id === +pressId).urlWork
     )
+    useMeta(() => {
+      return {
+        title: 'Aorta Social Art Gallery',
+        titleTemplate: (title) => `${title} | Press`
+      }
+    })
     return {
       urlImage
     }

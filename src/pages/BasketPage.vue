@@ -65,6 +65,7 @@
 
 <script>
 import { computed } from 'vue'
+import { useMeta } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store'
@@ -72,6 +73,7 @@ import { useStripeStore } from 'stores/stripe-store'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import ProductCard from 'components/cart/ProductCard.vue'
 import PaymentDialog from 'components/dialogs/PaymentDialog.vue'
+
 
 export default {
   name: 'BasketPage',
@@ -111,6 +113,23 @@ export default {
         showLoginDialog(true)
       }
     }
+    useMeta(() => {
+      return {
+        title: 'Aorta Social Art Gallery',
+        titleTemplate: (title) => `${title} | Cart`,
+        meta: {
+          description: {
+            name: 'description',
+            content:
+              'Aorta Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+          },
+          keywords: {
+            name: 'keywords',
+            content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy '
+          }
+        }
+      }
+    })
     return {
       loggedIn,
       cart,

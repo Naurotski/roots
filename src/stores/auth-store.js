@@ -149,7 +149,7 @@ export const useAuthStore = defineStore('auth', () => {
           await mergeCarts(user.uid).then(() => console.log('end merge========'))
         }
       } else {
-        if (!loggedIn.value) {
+        if (!loggedIn.value && LocalStorage.getItem('cart')) {
           Object.values(LocalStorage.getItem('cart')).forEach((item) =>
             updateCart({ key: item.id, value: item })
           )

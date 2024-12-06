@@ -37,6 +37,7 @@
         <q-img
           :src="urlImageWork"
           fit="contain"
+          :alt="name"
           :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
         />
         <div class="text-body1 q-mt-md">

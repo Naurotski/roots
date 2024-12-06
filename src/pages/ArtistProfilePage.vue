@@ -20,7 +20,7 @@
               <img
                 :src="work.urlImageWork"
                 style="height: 250px; width: 250px; object-fit: contain"
-                alt="image"
+                alt="artwork"
               />
             </router-link>
           </template>
@@ -109,7 +109,6 @@ import { useI18n } from 'vue-i18n'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
-import { useRoute } from 'vue-router'
 
 export default {
   name: 'ArtistProfilePage',
@@ -125,7 +124,6 @@ export default {
     }
   },
   setup(props) {
-    const route = useRoute()
     const { locale } = useI18n({ useScope: 'global' })
     const { artistId } = toRefs(props)
     const artistsStore = useArtistsStore()
@@ -162,7 +160,7 @@ export default {
         link: {
           canonical: {
             rel: 'canonical',
-            href: `https://aortagallery.com${route.fullPath}`
+            href: `https://aortagallery.com/artists/${artistId.value}`
           }
         },
         meta: {
@@ -172,10 +170,7 @@ export default {
           },
           keywords: {
             name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
-          },
-          ogTitle: {
-            property: 'og:title'
+            content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy'
           }
         }
       }

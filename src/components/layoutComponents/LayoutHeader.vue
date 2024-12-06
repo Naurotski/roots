@@ -7,6 +7,7 @@
             style="max-width: 300px; height: 80px"
             fit="contain"
             src="~assets/aorta-logo.png"
+            alt="Aorta"
           />
         </router-link>
       </q-toolbar-title>

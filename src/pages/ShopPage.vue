@@ -17,7 +17,7 @@
 <script>
 import { ref, watch, computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useQuasar } from 'quasar'
+import { useMeta, useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { useMerchStore } from 'stores/merch-store'
 import TitleTabs from 'components/shared/Titles/TitleTabs.vue'
@@ -55,6 +55,22 @@ export default {
           }
         })
     )
+    useMeta(() => {
+      return {
+        title: 'Aorta Social Art Gallery | Shop',
+        meta: {
+          description: {
+            name: 'description',
+            content:
+              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+          },
+          keywords: {
+            name: 'keywords',
+            content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy'
+          }
+        }
+      }
+    })
     return {
       merchLinks,
       merchList,

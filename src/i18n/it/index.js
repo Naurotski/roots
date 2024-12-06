@@ -26,7 +26,7 @@ export default {
     sendMessage: 'Inviare un Messaggio',
     sentMessage: 'Messaggio Inviato',
     technicalWork: 'Lavoro Tecnico',
-    thank: 'Grazie per il tuo pagamento!',
+    thank: 'Grazie per il tuo acquisto!',
     title: 'Titolo',
     unfortunately: 'Spiacenti, al momento non ci sono eventi in corso.',
     yourEmail: 'Il tuo indirizzo email',

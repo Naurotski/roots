@@ -3,8 +3,8 @@
     <q-input
       ref="inputText"
       v-model="text"
+      rounded
       dense
-      square
       outlined
       clearable
       class="col-12 col-sm-4"

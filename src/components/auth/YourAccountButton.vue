@@ -19,7 +19,7 @@
             class="no-border"
             v-if="userData.portraitUrl || userData.displayPhotoURL"
             :src="userData.portraitUrl || userData.displayPhotoURL"
-            alt="photo"
+            alt="profile"
           />
           <div v-else class="text-center">
             {{

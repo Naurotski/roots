@@ -1,6 +1,6 @@
 <template>
   <q-form ref="paymentForm" @submit.prevent="$emit('submitForm')" class="row justify-center">
-    <q-card-section class="col-12 col-sm-4">
+    <div class="col-12 col-sm-4 q-px-md">
       <q-input
         v-model="user.firstName"
         dense
@@ -13,8 +13,8 @@
           (v) => v.length <= 30 || 'Not more than 30 characters'
         ]"
       />
-    </q-card-section>
-    <q-card-section class="col-12 col-sm-4">
+    </div>
+    <div class="col-12 col-sm-4 q-px-md">
       <q-input
         v-model="user.lastName"
         dense
@@ -27,8 +27,8 @@
           (v) => v.length <= 30 || 'Not more than 30 characters'
         ]"
       />
-    </q-card-section>
-    <q-card-section v-if="$route.name !== 'Your Account'" class="col-12 col-sm-4">
+    </div>
+    <div v-if="$route.name !== 'Your Account'" class="col-12 col-sm-4 q-px-md">
       <q-input
         v-model="user.email"
         dense
@@ -39,8 +39,8 @@
         autocomplete="email"
         :rules="[(val) => isValidEmailAddress(val) || 'Please enter a valid email address.']"
       />
-    </q-card-section>
-    <q-card-section class="col-12 col-sm-4">
+    </div>
+    <div class="col-12 col-sm-4 q-px-md">
       <q-select
         v-model="user.country"
         :options="options"
@@ -58,8 +58,8 @@
           ><span>{{ user.country?.flag }}</span></template
         ></q-select
       >
-    </q-card-section>
-    <q-card-section class="col-12 col-sm-4">
+    </div>
+    <div class="col-12 col-sm-4 q-px-md">
       <q-input
         v-model="user.postalCode"
         dense
@@ -71,8 +71,8 @@
           (v) => v.length <= 30 || 'Not more than 30 characters'
         ]"
       />
-    </q-card-section>
-    <q-card-section class="col-12 col-sm-4">
+    </div>
+    <div class="col-12 col-sm-4 q-px-md">
       <q-input
         v-model="user.city"
         dense
@@ -84,8 +84,8 @@
           (v) => v.length <= 30 || 'Not more than 30 characters'
         ]"
       />
-    </q-card-section>
-    <q-card-section class="col-12 col-sm-4">
+    </div>
+    <div class="col-12 col-sm-4 q-px-md">
       <q-input
         v-model="user.address"
         dense
@@ -97,8 +97,8 @@
           (v) => v.length <= 30 || 'Not more than 30 characters'
         ]"
       />
-    </q-card-section>
-    <q-card-section class="col-12 col-sm-4">
+    </div>
+    <div class="col-12 col-sm-4 q-px-md">
       <q-input
         v-model="user.phone"
         dense
@@ -111,8 +111,8 @@
           (v) => isValidPhone(v) || 'Please enter a valid phone number'
         ]"
       />
-    </q-card-section>
-    <q-card-section v-if="user.country?.countryName === 'Italy'" class="col-12 col-sm-4">
+    </div>
+    <div v-if="user.country?.countryName === 'Italy'" class="col-12 col-sm-4">
       <q-input
         v-model="user.taxId"
         dense
@@ -125,7 +125,7 @@
           (v) => v.length <= 30 || 'Not more than 30 characters'
         ]"
       />
-    </q-card-section>
+    </div>
     <slot />
     <q-card-section class="row justify-end" style="width: 100%">
       <slot name="btn" />

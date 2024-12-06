@@ -53,7 +53,7 @@
 <script>
 import { computed, toRefs } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useQuasar } from 'quasar'
+import { useMeta, useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
@@ -133,6 +133,28 @@ export default {
         })
       }
     }
+    useMeta(() => {
+      return {
+        title: 'Aorta Social Art Gallery',
+        titleTemplate: (title) => `${title} | ${merch.value.name}`,
+        link: {
+          canonical: {
+            rel: 'canonical',
+            href: `https://aortagallery.com/${rubric.value}/${id.value}`
+          }
+        },
+        meta: {
+          description: {
+            name: 'description',
+            content: merch.value.description?.split('.')[0]
+          },
+          keywords: {
+            name: 'keywords',
+            content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy'
+          }
+        }
+      }
+    })
     return {
       cart,
       merch,
