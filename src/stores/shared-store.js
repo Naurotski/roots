@@ -84,7 +84,11 @@ export const useSharedStore = defineStore('shared', () => {
     try {
       await apiAxios.post('/aorta/nodemailer', { ...mailData })
     } catch (error) {
-      showErrorMessage(error.message)
+      if (error.response?.data) {
+        showErrorMessage(error.response.data)
+      } else {
+        showErrorMessage(error.message)
+      }
       throw error
     }
   }

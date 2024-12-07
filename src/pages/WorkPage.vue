@@ -51,7 +51,7 @@
             />
           </q-card-section>
         </div>
-        <q-btn outline size="md" icon="mdi-arrow-left-bold" @click="$router.go(-1)" />
+        <q-btn outline rounded size="md" icon="mdi-arrow-left-bold" @click="$router.go(-1)" />
         <!--                <router-link :to="`/thankYou/${workId}`">Work</router-link>-->
       </small-page-container>
     </q-page>

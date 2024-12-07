@@ -12,7 +12,7 @@ export default {
     continue: 'continuare',
     delete: 'Rimuovi',
     delivery: 'Per la consegna, ti contatteremo via e-mail entro 24 ore',
-    enter: 'entrare',
+    enter: 'Entrare',
     goExhibition: 'Mostra',
     maintenance:
       'Il nostro sito web è temporaneamente non disponibile a causa di lavori tecnici. Ricontrolla più tardi',

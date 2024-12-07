@@ -64,7 +64,7 @@
       </small-page-container>
 
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d812.0474914186576!2d10.398930428545782!3d43.71175286757088!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12d5919c1c927ded%3A0x834b906e70fe60d6!2sCorso%20Italia%2C%20146%2C%2056125%20Pisa%20PI!5e1!3m2!1sru!2sit!4v1724014576603!5m2!1sru!2sit"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d812.0474914186576!2d10.398930428545782!3d43.71175286757088!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12d5919c1c927ded%3A0x834b906e70fe60d6!2sCorso%20Italia%2C%20146%2C%2056125%20Pisa%20PI!5e1!3m2!1sru!2sit!4v1724014576603!5m2!1sen!2sit"
         width="100%"
         height="500"
         style="border: 0"

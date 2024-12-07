@@ -2,7 +2,7 @@
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <q-page class="q-pa-md" style="padding-top: 65px">
       <fixed-top-title :name="$t('links.artists')" />
-      <div class="q-gutter-md row wrap justify-around q-my-md">
+      <small-page-container class="q-gutter-md justify-around q-my-md">
         <q-card
           v-for="{ artistId, firstName, lastName, urlPortrait, urlWorkShowcase } in artistsList"
           :key="artistId"
@@ -19,21 +19,23 @@
             >
           </router-link>
         </q-card>
-      </div>
+      </small-page-container>
     </q-page>
   </transition>
 </template>
 
 <script>
-import { useArtistsStore } from 'stores/artists-store.js'
-import { storeToRefs } from 'pinia'
-import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import { useMeta } from 'quasar'
+import { storeToRefs } from 'pinia'
+import { useArtistsStore } from 'stores/artists-store.js'
+import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
+import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 
 export default {
   name: 'ArtistsPage',
   components: {
-    FixedTopTitle
+    FixedTopTitle,
+    SmallPageContainer
   },
   setup() {
     const artistsStore = useArtistsStore()

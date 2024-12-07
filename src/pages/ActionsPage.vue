@@ -60,7 +60,6 @@
                     </template>
                     <template v-if="action.lifeTime !== 'upcoming'" #button>
                       <action-dialog
-                        :label="$t('common.enter')"
                         class="absolute-bottom-right"
                         :title="action.name"
                         :typeAction="typeAction"

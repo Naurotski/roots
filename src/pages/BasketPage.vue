@@ -74,7 +74,6 @@ import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import ProductCard from 'components/cart/ProductCard.vue'
 import PaymentDialog from 'components/dialogs/PaymentDialog.vue'
 
-
 export default {
   name: 'BasketPage',
   components: {

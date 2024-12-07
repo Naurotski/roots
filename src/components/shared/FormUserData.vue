@@ -130,10 +130,13 @@
     <q-card-section class="row justify-end" style="width: 100%">
       <slot name="btn" />
       <q-btn
+        class="bg-black"
+        outline
+        rounded
         :disable="deepEqual"
         :label="$route.name === 'Your Account' ? $t('common.save') : $t('common.buy')"
         type="submit"
-        color="primary"
+        color="white"
       />
     </q-card-section>
   </q-form>

@@ -101,11 +101,12 @@
 </template>
 
 <script>
-import { toRefs, computed } from 'vue'
-import { useArtistsStore } from 'stores/artists-store.js'
+import { toRefs, computed, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useMeta } from 'quasar'
 import { useI18n } from 'vue-i18n'
+import { useArtistsStore } from 'stores/artists-store.js'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
@@ -124,6 +125,7 @@ export default {
     }
   },
   setup(props) {
+    const router = useRouter()
     const { locale } = useI18n({ useScope: 'global' })
     const { artistId } = toRefs(props)
     const artistsStore = useArtistsStore()
@@ -153,6 +155,13 @@ export default {
         return {}
       }
     })
+    watch(
+      artistsList,
+      (val) => {
+        if (!val.find((item) => item.artistId === artistId.value)) router.push('/artists')
+      },
+      { deep: true }
+    )
     useMeta(() => {
       return {
         title: 'Aorta Social Art Gallery',
@@ -182,4 +191,4 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped></style>
+<style lang="sass" scoped />

@@ -24,8 +24,10 @@
     <template #btn>
       <q-btn
         :disable="deepEqual"
-        class="q-mx-md"
-        color="grey"
+        class="q-mx-md bg-grey"
+        outline
+        rounded
+        color="white"
         @click="cancelForm"
         :label="$t('common.cancel')"
       />

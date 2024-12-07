@@ -2,7 +2,7 @@
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <div>
       <slot name="button" @useActivator="useActivator">
-        <q-btn label="Full Width" @click="useActivator" v-bind="$attrs" />
+        <q-btn no-caps outline rounded :label="$t('common.enter')" @click="useActivator" v-bind="$attrs" />
       </slot>
       <q-dialog v-model="activator" full-width>
         <q-card>

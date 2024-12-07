@@ -44,7 +44,14 @@
           </q-card-section>
         </template>
         <template #btn>
-          <q-btn class="q-mx-md" :label="$t('common.close')" @click="closeDialog" color="grey" />
+          <q-btn
+            class="q-mx-md bg-grey"
+            outline
+            rounded
+            :label="$t('common.close')"
+            @click="closeDialog"
+            color="white"
+          />
         </template>
       </form-user-data>
     </q-card>
