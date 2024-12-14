@@ -2,15 +2,18 @@ import { defineStore, storeToRefs } from 'pinia'
 import { ref } from 'vue'
 import { ref as dbRef, onChildAdded, onChildChanged, onChildRemoved, get } from 'firebase/database'
 import { db } from 'boot/firebase'
+import { apiAxios } from 'boot/axios'
 import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
+import { Loading } from 'quasar'
+import { showErrorMessage } from 'src/composables/show-error-message'
 
 export const useMerchStore = defineStore('merch', () => {
   const merchLinks = ref([
     { label: 'links.mugs', name: 'mugs' },
     { label: 'links.bags', name: 'bags' },
-    { label: 'links.catalogues', name: 'catalogues' },
-    { label: 'links.baubles', name: 'baubles' }
+    { label: 'links.catalogues', name: 'taccuini' },
+    { label: 'links.casesForIPhone', name: 'Custodie per iphone' }
   ])
   const authStore = useAuthStore()
   const { loggedIn } = storeToRefs(authStore)
@@ -54,10 +57,30 @@ export const useMerchStore = defineStore('merch', () => {
     const result = await get(dbRef(db, path))
     return result.val()
   }
+
+  const printFul = async () => {
+    console.log('printFul----')
+    try {
+      Loading.show()
+      const response = await apiAxios.post('/printFul', {
+        path: '/store/products/370010662',
+        // token: 'XR0WXqjegp0MlCfqrf6sNW1Qff3CIbz28P6cOcHW'
+        token: 'Dt1B3dgZGl3KuWTIUiU5h3U6PzFkaSxmiFqrfa5s'
+      })
+      console.log('response======', response.data)
+      Loading.hide()
+    } catch (error) {
+      Loading.hide()
+      showErrorMessage(error.message)
+      throw error
+    }
+  }
+
   return {
     merchLinks,
     merchList,
     listenForChildMerch,
-    checkExistenceMerch
+    checkExistenceMerch,
+    printFul
   }
 })

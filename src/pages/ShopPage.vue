@@ -11,6 +11,7 @@
           </transition>
         </q-tab-panel>
       </q-tab-panels>
+      <q-btn label="printFul" @click="printFul" />
     </q-page>
   </transition>
 </template>
@@ -22,7 +23,7 @@ import { useI18n } from 'vue-i18n'
 import { useMerchStore } from 'stores/merch-store'
 import TitleTabs from 'components/shared/Titles/TitleTabs.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
-import MerchList from 'components/MerchList.vue'
+import MerchList from 'components/merch/MerchList.vue'
 
 export default {
   name: 'ShopPage',
@@ -33,7 +34,7 @@ export default {
     const tab = ref($q.localStorage.getItem('tabMerch') || 'mugs')
     const merchStore = useMerchStore()
     const { merchLinks, merchList } = storeToRefs(merchStore)
-    const { listenForChildMerch } = merchStore
+    const { listenForChildMerch, printFul } = merchStore
     watch(
       tab,
       (val) => {
@@ -75,7 +76,8 @@ export default {
       merchLinks,
       merchList,
       tab,
-      filterMerchList
+      filterMerchList,
+      printFul
     }
   }
 }
