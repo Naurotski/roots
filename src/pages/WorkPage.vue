@@ -39,16 +39,6 @@
               v-text="`€ ${work.price}`"
             />
             <payment-dialog v-if="work.price" :works="[work]" />
-            <q-btn
-              v-if="work.price"
-              no-caps
-              outline
-              rounded
-              style="width: 150px"
-              :class="{ 'full-width q-mt-xs': $q.screen.xs, 'q-ml-md': !$q.screen.xs }"
-              :label="presenceProductInCart ? $t('cart.seeCart') : $t('cart.addCart')"
-              @click="presenceProductInCart ? $router.push('/basket') : addToCart(work)"
-            />
           </q-card-section>
         </div>
         <q-btn outline rounded size="md" icon="mdi-arrow-left-bold" @click="$router.go(-1)" />

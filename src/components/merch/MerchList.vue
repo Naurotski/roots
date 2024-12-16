@@ -10,30 +10,17 @@
         :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
       />
     </router-link>
-    <div class="text-body1 q-mt-md">
+    <div class="text-body1 q-mt-md text-justify">
       <div class="text-bold">{{ item.name }}</div>
-      <description-for-card :item-description="item.description" />
+      <description-for-card
+        :item-description="item.description"
+        :number="$q.screen.xs ? 150 : 250"
+      />
     </div>
 
     <div class="row justify-between q-mt-md">
-      <div class="text-subtitle1">{{ `€ ${item.price}` }}</div>
-      <q-btn
-        no-caps
-        outline
-        rounded
-        style="width: 150px"
-        :class="{ 'full-width q-mt-xs': $q.screen.xs, 'q-ml-md': !$q.screen.xs }"
-        :label="
-          cart[item.id] && cart[item.id].quantityCart >= item.quantity
-            ? $t('cart.seeCart')
-            : $t('cart.addCart')
-        "
-        @click="
-          cart[item.id] && cart[item.id].quantityCart >= item.quantity
-            ? $router.push('/basket')
-            : addToCart(item)
-        "
-      />
+      <div class="text-h5">{{ `€ ${item.price}` }}</div>
+      <button-per-merch-list :merch="item" @event-handling="addToCart" />
     </div>
   </div>
 </template>
@@ -45,10 +32,12 @@ import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
 import DescriptionForCard from 'components/shared/DescriptionForCard.vue'
+import ButtonPerMerchList from 'components/merch/ButtonPerMerchList.vue'
 export default {
   name: 'MerchList',
   components: {
-    DescriptionForCard
+    DescriptionForCard,
+    ButtonPerMerchList
   },
   props: {
     list: {
@@ -72,7 +61,8 @@ export default {
           urlImageWork: merch.urlImage,
           urlSecondImagesWork: merch.urlSecondImages || [],
           urlImage: null,
-          urlSecondImages: null
+          urlSecondImages: null,
+          id: merch.variants ? `${merch.id}_${merch.variants[0].variantId}` : merch.id
         }).then(() =>
           $q.notify({
             message: t('cart.addedCart'),
@@ -83,14 +73,15 @@ export default {
         )
       } else {
         updateCart({
-          key: merch.id,
+          key: merch.variants ? `${merch.id}_${merch.variants[0].variantId}` : merch.id,
           value: {
             ...merch,
             quantityCart: 1,
             urlImageWork: merch.urlImage,
             urlSecondImagesWork: merch.urlSecondImages || [],
             urlImage: null,
-            urlSecondImages: undefined
+            urlSecondImages: undefined,
+            id: merch.variants ? `${merch.id}_${merch.variants[0].variantId}` : merch.id
           }
         })
       }

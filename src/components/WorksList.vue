@@ -37,15 +37,7 @@
     </router-link>
     <div class="row justify-between">
       <div class="text-subtitle1">{{ `€ ${work.price}` }}</div>
-      <q-btn
-        no-caps
-        outline
-        rounded
-        style="width: 150px"
-        :class="{ 'full-width q-mt-xs': $q.screen.xs, 'q-ml-md': !$q.screen.xs }"
-        :label="cart[work.id] ? $t('cart.seeCart') : $t('cart.addCart')"
-        @click="cart[work.id] ? $router.push('/basket') : addToCart(work)"
-      />
+      <payment-dialog :works="[work]" />
     </div>
   </div>
 </template>
@@ -56,9 +48,13 @@ import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
+import PaymentDialog from 'components/dialogs/PaymentDialog.vue'
 
 export default {
   name: 'WorksList',
+  components: {
+    PaymentDialog
+  },
   props: {
     worksList: {
       type: Array,

@@ -103,7 +103,8 @@ export default {
     })
     const subtotal = computed(() =>
       Object.values(cart.value).reduce(
-        (result, item) => result + +item.quantityCart * item.price,
+        (result, item) =>
+          result + +item.quantityCart * (item.variants ? item.variants[0].price : item.price),
         0
       )
     )

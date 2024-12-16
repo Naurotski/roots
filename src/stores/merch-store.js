@@ -9,11 +9,19 @@ import { Loading } from 'quasar'
 import { showErrorMessage } from 'src/composables/show-error-message'
 
 export const useMerchStore = defineStore('merch', () => {
+  const colorMappingPrintFul = ref({
+    'Charcoal-Black Triblend': '#333333', // Тёмно-серый, близкий к чёрному
+    'Navy Triblend': '#001F54', // Тёмно-синий
+    'Athletic Grey Triblend': '#D3D3D3', // Светло-серый
+    'White Fleck Triblend': '#F5F5F5', // Белый с вкраплениями
+    Glossy: '#000000',
+    Black: '#000000'
+  })
   const merchLinks = ref([
     { label: 'links.mugs', name: 'mugs' },
     { label: 'links.bags', name: 'bags' },
-    { label: 'links.catalogues', name: 'taccuini' },
-    { label: 'links.casesForIPhone', name: 'Custodie per iphone' }
+    { label: 'links.notebooks', name: 'notebooks' },
+    { label: 'links.casesForIPhone', name: 'casesForIPhone' }
   ])
   const authStore = useAuthStore()
   const { loggedIn } = storeToRefs(authStore)
@@ -28,18 +36,39 @@ export const useMerchStore = defineStore('merch', () => {
       if (!merchList.value[product.rubric]) {
         merchList.value[product.rubric] = {}
       }
+      if (product.variants) {
+        let maxPrice = Math.max(...product.variants.map((item) => item.price))
+        let minPrice = Math.min(...product.variants.map((item) => item.price))
+        if (maxPrice === minPrice) {
+          product.price = maxPrice
+        } else {
+          product.price = `${minPrice.toString()} - €${maxPrice.toString()}`
+        }
+      }
       merchList.value[product.rubric][product.id] = product
     }
   }
   const listenForChildMerch = (rubric) => {
     let path = `merch/${rubric}`
-    onChildAdded(dbRef(db, path), (data) => {
+    onChildAdded(dbRef(db, path), async (data) => {
       // console.log('onChildAdded-merch -', data.key, ':', data.val())
-      updateMerchList(data.val())
+      let productData = data.val()
+      if (productData.printFulProductId) {
+        const variants = await printFul(productData.printFulProductId)
+        updateMerchList({ ...productData, variants })
+      } else {
+        updateMerchList(productData)
+      }
     })
-    onChildChanged(dbRef(db, path), (data) => {
+    onChildChanged(dbRef(db, path), async (data) => {
       // console.log('onChildChanged-merch -', data.key, ':', data.val())
-      updateMerchList(data.val())
+      let productData = data.val()
+      if (productData.printFulProductId) {
+        const variants = await printFul(productData.printFulProductId)
+        updateMerchList({ ...productData, variants })
+      } else {
+        updateMerchList(productData)
+      }
     })
     onChildRemoved(dbRef(db, path), async (data) => {
       // console.log('onChildRemoved-merch -', data.key, ':', data.val())
@@ -58,17 +87,24 @@ export const useMerchStore = defineStore('merch', () => {
     return result.val()
   }
 
-  const printFul = async () => {
-    console.log('printFul----')
+  const printFul = async (productId) => {
     try {
       Loading.show()
       const response = await apiAxios.post('/printFul', {
-        path: '/store/products/370010662',
+        path: `/store/products/${productId}`,
+        token: 'Kwi4NpjaGPhmPZb9nOdrOCLok0blpO460Nj8p2Ns'
         // token: 'XR0WXqjegp0MlCfqrf6sNW1Qff3CIbz28P6cOcHW'
-        token: 'Dt1B3dgZGl3KuWTIUiU5h3U6PzFkaSxmiFqrfa5s'
+        // token: 'Dt1B3dgZGl3KuWTIUiU5h3U6PzFkaSxmiFqrfa5s'
       })
-      console.log('response======', response.data)
       Loading.hide()
+      return response.data.result.sync_variants.map((item) => {
+        return {
+          variantId: item.id,
+          size: item.size,
+          price: item.retail_price,
+          color: item.color
+        }
+      })
     } catch (error) {
       Loading.hide()
       showErrorMessage(error.message)
@@ -77,6 +113,7 @@ export const useMerchStore = defineStore('merch', () => {
   }
 
   return {
+    colorMappingPrintFul,
     merchLinks,
     merchList,
     listenForChildMerch,

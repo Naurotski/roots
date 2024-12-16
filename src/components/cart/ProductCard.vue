@@ -3,29 +3,9 @@
     <router-link
       style="text-decoration: none"
       class="col-3 flex flex-center"
-      :to="
-        String(dataCard.id).includes('-')
-          ? `/merch/${dataCard.rubric}/${dataCard.id}`
-          : `/work/${dataCard.id}`
-      "
+      :to="`/merch/${dataCard.rubric}/${dataCard.id.split('_')[0]}`"
     >
-      <div v-if="dataCard.urlImageWork?.includes('video')">
-        <div class="gt-xs" style="position: relative">
-          <q-video
-            :style="$q.screen.xs ? 'max-height: 150px' : 'height: 150px'"
-            :src="dataCard.urlImageWork"
-          />
-          <div
-            style="position: absolute; top: 5px; height: 100%; width: 100%; opacity: 0.1"
-            class="bg-grey-2"
-          />
-        </div>
-        <div>
-          <q-icon class="lt-sm q-mt-md" name="fa-solid fa-photo-film" size="70px" color="dark" />
-        </div>
-      </div>
       <q-img
-        v-else
         :src="dataCard.urlImageWork"
         :alt="dataCard.name"
         fit="contain"
@@ -37,8 +17,22 @@
         {{ dataCard.name }}
       </div>
       <div :class="{ 'text-body2': $q.screen.xs }" class="text-justify text-body1">
-        {{ dataCard.materials || dataCard.description }}
+        <description-for-card :item-description="dataCard.description" :number="$q.screen.xs ? 100 : 250"/>
       </div>
+
+      <div v-if="dataCard.variants" class="row q-my-xs">
+        <div class="text-bold text-body2" v-text="$t('merch.colour')" />
+        <div
+          class="border-black q-ml-xs border"
+          style="width: 20px; height: 20px"
+          :style="{ backgroundColor: colorMappingPrintFul[dataCard.variants[0].color] }"
+        />
+      </div>
+      <div v-if="dataCard.variants">
+        <span class="text-bold text-body2">{{ $t('merch.size') }}: </span
+        ><span>{{ dataCard.variants[0].size }}</span>
+      </div>
+
       <div class="gt-xs">
         <q-btn no-caps flat :label="$t('common.delete')" @click="deleteProduct"></q-btn>
         <hr style="margin-top: -1px" />
@@ -62,7 +56,9 @@
           <span class="text-body2 text-bold">{{ $t('cart.qty') }}</span>
         </template>
       </q-select>
-      <div :class="$q.screen.xs ? 'q-ml-md q-mr-sm' : 'q-mt-md'">€{{ dataCard.price }}</div>
+      <div :class="$q.screen.xs ? 'q-ml-md q-mr-sm' : 'q-mt-md'">
+        €{{ dataCard.variants?.[0].price || dataCard.price }}
+      </div>
     </div>
   </div>
 </template>
@@ -74,10 +70,13 @@ import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
 import { useMerchStore } from 'stores/merch-store'
-import { useArtistsStore } from 'stores/artists-store'
+import DescriptionForCard from 'components/shared/DescriptionForCard.vue'
 
 export default {
   name: 'ProductCard',
+  components: {
+    DescriptionForCard
+  },
   props: {
     dataCard: {
       type: Object,
@@ -92,38 +91,29 @@ export default {
     const stripeStore = useStripeStore()
     const { addProductToCart, updateCart } = stripeStore
     const merchStore = useMerchStore()
-    const { merchList } = storeToRefs(merchStore)
+    const { merchList, colorMappingPrintFul } = storeToRefs(merchStore)
     const { listenForChildMerch, checkExistenceMerch } = merchStore
     if (!merchList.value[dataCard.value.rubric]) listenForChildMerch(dataCard.value.rubric)
-    const artistsStore = useArtistsStore()
-    const { allWorks } = storeToRefs(artistsStore)
-    const { getArtists } = artistsStore
-    if (!allWorks.value.length) getArtists()
+
     setTimeout(() => {
-      if (
-        String(dataCard.value.id).includes('-') &&
-        !merchList.value[dataCard.value.rubric]?.[dataCard.value.id]
-      ) {
-        checkExistenceMerch(`merch/${dataCard.value.rubric}/${dataCard.value.id}`).then(
-          (result) => {
-            if (!result) deleteProduct()
-          }
-        )
+      if (!merchList.value[dataCard.value.rubric]?.[dataCard.value.id.split('_')[0]]) {
+        checkExistenceMerch(
+          `merch/${dataCard.value.rubric}/${dataCard.value.id.split('_')[0]}`
+        ).then((result) => {
+          if (!result) deleteProduct()
+        })
       }
     }, 1000)
-    const options = computed(() => {
-      if (!String(dataCard.value.id).includes('-')) {
-        return [`0 (${t('common.delete')})`, 1]
-      } else {
-        return [
-          `0 (${t('common.delete')})`,
-          ...Array.from(
-            { length: merchList.value[dataCard.value.rubric]?.[dataCard.value.id]?.quantity },
-            (_, index) => index + 1
-          )
-        ]
-      }
-    })
+    const options = computed(() => [
+      `0 (${t('common.delete')})`,
+      ...Array.from(
+        {
+          length:
+            merchList.value[dataCard.value.rubric]?.[dataCard.value.id.split('_')[0]]?.quantity
+        },
+        (_, index) => index + 1
+      )
+    ])
     const quantityCart = computed({
       get() {
         return dataCard.value.quantityCart
@@ -133,7 +123,7 @@ export default {
       }
     })
     watch(
-      () => merchList.value[dataCard.value.rubric]?.[dataCard.value.id],
+      () => merchList.value[dataCard.value.rubric]?.[dataCard.value.id.split('_')[0]],
       (val) => {
         if (val) {
           if (val.notForSale) {
@@ -141,16 +131,6 @@ export default {
           } else if (val.quantity < dataCard.value.quantityCart) {
             updateQuantityCart(val.quantity)
           }
-        }
-      },
-      { immediate: true, deep: true }
-    )
-    watch(
-      allWorks,
-      (val) => {
-        let localWork = val.find((item) => item.id === dataCard.value.id)
-        if (!String(dataCard.value.id).includes('-') && val.length && !localWork?.price) {
-          deleteProduct()
         }
       },
       { immediate: true, deep: true }
@@ -181,6 +161,7 @@ export default {
     return {
       options,
       quantityCart,
+      colorMappingPrintFul,
       deleteProduct
     }
   }

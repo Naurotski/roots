@@ -2,41 +2,78 @@
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <q-page v-if="merch" class="q-pa-md" style="padding-top: 65px">
       <small-page-container class="q-pt-md">
-        <div class="col-12 col-sm-8">
+        <div class="col-12 col-sm-6">
           <q-card-section>
             <carousel-component v-if="allUrlImages.length" :url-images="allUrlImages" />
           </q-card-section>
         </div>
-        <div class="col-12 col-sm-4 q-pt-sm-md">
-          <q-card-section class="q-pt-none">
-            <div class="text-h5" v-text="merch.name" />
-          </q-card-section>
+        <div class="col-12 col-sm-6">
           <q-card-section>
-            <p
+            <div class="text-h5 text-bold q-pt-none" v-text="merch.name" />
+            <div style="white-space: pre-line" class="text-justify text-body1">
+              <description-for-card
+                :item-description="$i18n.locale === 'en' ? merch.description : merch.descriptionIt"
+                :number="$q.screen.xs ? 250 : 700"
+              />
+            </div>
+            <div
               style="white-space: pre-line"
-              class="text-justify text-body1"
-              v-text="merch.description"
+              class="text-justify text-h5 text-bold q-my-md"
+              v-text="`€ ${variant?.price || merch.price}`"
             />
-            <p
-              v-if="merch.price"
-              style="white-space: pre-line"
-              class="text-justify text-body1"
-              v-text="`€ ${merch.price}`"
+            <div
+              v-if="colourOptions.length"
+              class="text-bold text-body1"
+              v-text="$t('merch.colour')"
             />
-            <payment-dialog v-if="merch.price" :works="[merch]" />
+            <div class="row q-gutter-xs">
+              <q-card
+                class="flex flex-center border-black shadow-3"
+                :class="{
+                  'border-black': item === productColor,
+                  'no-border': item !== productColor,
+                  'no-shadow': item === productColor
+                }"
+                v-for="item in colourOptions"
+                :key="item"
+                style="width: 40px; height: 40px; cursor: pointer"
+                @click="() => (productColor = item)"
+              >
+                <div
+                  style="width: 30px; height: 30px"
+                  :style="{ backgroundColor: colorMappingPrintFul[item] }"
+                />
+              </q-card>
+            </div>
+            <q-select
+              v-if="sizeOptions.length"
+              v-model="productSize"
+              :options="sizeOptions"
+              options-dense
+              lazy-rules
+              dense
+              virtual
+              class="q-my-md"
+              style="width: 150px"
+            >
+              <template v-slot:prepend>
+                <span class="text-body2 text-bold">{{ $t('merch.size') }}:</span>
+              </template>
+            </q-select>
             <q-btn
               no-caps
               outline
               rounded
               style="width: 150px"
+              class="q-mt-md"
               :class="{ 'full-width q-mt-xs': $q.screen.xs, 'q-ml-md': !$q.screen.xs }"
               :label="
-                cart[merch.id] && cart[merch.id].quantityCart >= merch.quantity
+                cartKey && cart[cartKey].quantityCart >= merch.quantity
                   ? $t('cart.seeCart')
                   : $t('cart.addCart')
               "
               @click="
-                cart[merch.id] && cart[merch.id].quantityCart >= merch.quantity
+                cartKey && cart[cartKey].quantityCart >= merch.quantity
                   ? $router.push('/basket')
                   : addToCart(merch)
               "
@@ -44,14 +81,13 @@
           </q-card-section>
         </div>
         <q-btn outline rounded size="md" icon="mdi-arrow-left-bold" @click="$router.go(-1)" />
-        <!--                <router-link :to="`/thankYou/${workId}`">Work</router-link>-->
       </small-page-container>
     </q-page>
   </transition>
 </template>
 
 <script>
-import { computed, toRefs } from 'vue'
+import { computed, toRefs, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMeta, useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
@@ -60,11 +96,11 @@ import { useStripeStore } from 'stores/stripe-store'
 import { useMerchStore } from 'stores/merch-store'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import CarouselComponent from 'components/shared/CarouselComponent.vue'
-import PaymentDialog from 'components/dialogs/PaymentDialog.vue'
+import DescriptionForCard from 'components/shared/DescriptionForCard.vue'
 
 export default {
   name: 'MerchPage',
-  components: { CarouselComponent, SmallPageContainer, PaymentDialog },
+  components: { CarouselComponent, SmallPageContainer, DescriptionForCard },
   props: {
     rubric: {
       type: String,
@@ -85,12 +121,30 @@ export default {
     const { cart } = storeToRefs(stripeStore)
     const { addProductToCart, updateCart } = stripeStore
     const merchStore = useMerchStore()
-    const { merchList } = storeToRefs(merchStore)
+    const { merchList, colorMappingPrintFul } = storeToRefs(merchStore)
     const { listenForChildMerch } = merchStore
+    const productColor = ref('')
+    const productSize = ref('')
+
     if (!merchList.value[rubric.value]) listenForChildMerch(rubric.value)
     const merch = computed(() => {
       return merchList.value[rubric.value]?.[id.value]
     })
+
+    const colourOptions = computed(
+      () =>
+        merch.value.variants
+          ?.filter((item) => item.size === productSize.value)
+          .map((item) => item.color)
+          .filter((item, index, array) => array.indexOf(item) === index) || []
+    )
+    const sizeOptions = computed(
+      () =>
+        merch.value.variants
+          ?.filter((item) => item.color === productColor.value)
+          .map((item) => item.size)
+          .filter((item, index, array) => array.indexOf(item) === index) || []
+    )
     const allUrlImages = computed(() => {
       if (merch.value) {
         if (merch.value.urlSecondImages) {
@@ -102,7 +156,26 @@ export default {
         return []
       }
     })
+    const variant = computed(() =>
+      merch.value.variants?.find(
+        (item) => item.color === productColor.value && item.size === productSize.value
+      )
+    )
+    const cartKey = computed(() =>
+      Object.keys(cart.value).find((item) => item.split('_')[0] === merch.value.id)
+    )
+    watch(
+      merch,
+      (val) => {
+        if (val && val.variants) {
+          productColor.value = val.variants[0].color
+          productSize.value = val.variants[0].size
+        }
+      },
+      { immediate: true, deep: true }
+    )
     const addToCart = (merch) => {
+      console.log('addToCart =========', merch)
       if (loggedIn.value) {
         addProductToCart({
           ...merch,
@@ -110,7 +183,9 @@ export default {
           urlImageWork: merch.urlImage,
           urlSecondImagesWork: merch.urlSecondImages || [],
           urlImage: null,
-          urlSecondImages: null
+          urlSecondImages: null,
+          variants: variant.value ? [variant.value] : null,
+          id: `${merch.id}_${variant.value?.variantId}` || merch.id
         }).then(() =>
           $q.notify({
             message: t('cart.addedCart'),
@@ -121,14 +196,16 @@ export default {
         )
       } else {
         updateCart({
-          key: merch.id,
+          key: `${merch.id}_${variant.value?.variantId}` || merch.id,
           value: {
             ...merch,
             quantityCart: 1,
             urlImageWork: merch.urlImage,
             urlSecondImagesWork: merch.urlSecondImages || [],
             urlImage: null,
-            urlSecondImages: null
+            urlSecondImages: null,
+            variants: variant.value ? [variant.value] : null,
+            id: `${merch.id}_${variant.value?.variantId}` || merch.id
           }
         })
       }
@@ -136,7 +213,7 @@ export default {
     useMeta(() => {
       return {
         title: 'Aorta Social Art Gallery',
-        titleTemplate: (title) => `${title} | ${merch.value.name}`,
+        titleTemplate: (title) => `${title} | ${merch.value?.name}`,
         link: {
           canonical: {
             rel: 'canonical',
@@ -146,7 +223,7 @@ export default {
         meta: {
           description: {
             name: 'description',
-            content: merch.value.description?.split('.')[0]
+            content: merch.value?.description?.split('.')[0]
           },
           keywords: {
             name: 'keywords',
@@ -156,9 +233,16 @@ export default {
       }
     })
     return {
+      colorMappingPrintFul,
       cart,
       merch,
+      variant,
+      colourOptions,
+      sizeOptions,
       allUrlImages,
+      productColor,
+      productSize,
+      cartKey,
       addToCart
     }
   }

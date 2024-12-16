@@ -117,5 +117,10 @@ export default {
     seeCart: 'See in Cart',
     subtotal: 'Subtotal',
     tartShopping: 'Start shopping'
+  },
+  merch: {
+    colour: 'colour:',
+    seeOptions: 'See options',
+    size: 'Size'
   }
 }

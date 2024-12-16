@@ -2,13 +2,14 @@
   <span class="text-justify" style="white-space: pre-line">{{ description }}</span>
   <span
     style="cursor: pointer; color: #0d47a1"
-    v-if="itemDescription.length >= 250 && !show"
+    v-if="itemDescription.length >= number && !show"
     @click="show = !show"
   >
     {{ $t('common.more') }}</span
   ><span
+    class="text-bold"
     style="cursor: pointer; color: #0d47a1"
-    v-if="itemDescription.length >= 250 && show"
+    v-if="itemDescription.length >= number && show"
     @click="show = !show"
   >
     &#8679;</span
@@ -24,16 +25,20 @@ export default {
     itemDescription: {
       type: String,
       default: () => ''
+    },
+    number: {
+      tupe: Number,
+      default: () => 250
     }
   },
   setup(props) {
-    const { itemDescription } = toRefs(props)
+    const { itemDescription, number } = toRefs(props)
     const show = ref(false)
     const description = computed(() => {
-      if (itemDescription.value.length < 250 || show.value) {
+      if (itemDescription.value.length < number.value || show.value) {
         return itemDescription.value
       } else {
-        return `${itemDescription.value.substring(0, 250)}...`
+        return `${itemDescription.value.substring(0, number.value)}...`
       }
     })
     return {

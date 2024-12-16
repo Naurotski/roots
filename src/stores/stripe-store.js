@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import { defineStore, storeToRefs } from 'pinia'
 import { Loading, LocalStorage } from 'quasar'
 import { get, ref as dbRef, update } from 'firebase/database'
-import { db } from 'boot/firebase'
+import { db, auth } from 'boot/firebase'
 import { apiAxios } from 'boot/axios'
 import { showErrorMessage } from 'src/composables/show-error-message.js'
 import { useUserStore } from 'stores/user-store'
@@ -38,7 +38,6 @@ export const useStripeStore = defineStore('stripe', () => {
   }
 
   const addProductToCart = async (product) => {
-    console.log('addProductToCart --', product)
     try {
       if (product.delete) {
         await update(dbRef(db, `users/${userData.value.userId}/cart`), { [product.id]: null })
@@ -80,7 +79,12 @@ export const useStripeStore = defineStore('stripe', () => {
     console.log('payStripe ---------', paymentDetails)
     Loading.show()
     try {
-      const response = await apiAxios.post('/aorta/checkoutSessionsStripe', { ...paymentDetails })
+      const accessToken = await auth.currentUser.getIdToken(true)
+      const response = await apiAxios.post(
+        '/aorta/checkoutSessionsStripe',
+        { ...paymentDetails },
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      )
       await stripe.redirectToCheckout({
         sessionId: response.data
       })

@@ -118,5 +118,10 @@ export default {
     seeCart: 'Vedi nel Carrello',
     subtotal: 'Totale provvisorio',
     tartShopping: 'Inizia a fare shopping'
+  },
+  merch: {
+    colour: 'colore:',
+    seeOptions: 'Vedi opzioni',
+    size: 'Taglia'
   }
 }

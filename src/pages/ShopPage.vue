@@ -11,7 +11,6 @@
           </transition>
         </q-tab-panel>
       </q-tab-panels>
-      <q-btn label="printFul" @click="printFul" />
     </q-page>
   </transition>
 </template>
@@ -34,7 +33,7 @@ export default {
     const tab = ref($q.localStorage.getItem('tabMerch') || 'mugs')
     const merchStore = useMerchStore()
     const { merchLinks, merchList } = storeToRefs(merchStore)
-    const { listenForChildMerch, printFul } = merchStore
+    const { listenForChildMerch } = merchStore
     watch(
       tab,
       (val) => {
@@ -76,8 +75,7 @@ export default {
       merchLinks,
       merchList,
       tab,
-      filterMerchList,
-      printFul
+      filterMerchList
     }
   }
 }
