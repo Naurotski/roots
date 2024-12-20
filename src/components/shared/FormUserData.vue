@@ -51,13 +51,31 @@
         emit-value
         use-input
         input-debounce="0"
-        @filter="filterFn"
         lazy-rules
+        @filter="filterFn"
+        @focus="getAllCountries"
         :rules="[(val) => (val && val.countryName.length > 0) || 'Please choose something']"
         ><template v-slot:prepend
           ><span>{{ user.country?.flag }}</span></template
         ></q-select
       >
+    </div>
+    <div v-if="optionsState.length || user.state" class="col-12 col-sm-4 q-px-md">
+      <q-select
+        v-model="user.state"
+        :options="optionsState"
+        dense
+        option-label="name"
+        :label="$t('dialoguePayment.state')"
+        options-dense
+        emit-value
+        use-input
+        input-debounce="0"
+        lazy-rules
+        @filter="filterFn"
+        @focus="getAllCountries"
+        :rules="[(val) => (val && val.name.length > 0) || 'State choose something']"
+      ></q-select>
     </div>
     <div class="col-12 col-sm-4 q-px-md">
       <q-input
@@ -134,7 +152,11 @@
         outline
         rounded
         :disable="deepEqual"
-        :label="$route.name === 'Your Account' ? $t('common.save') : $t('common.buy')"
+        :label="
+          $route.name === 'Your Account' || $route.name === 'Basket'
+            ? $t('common.save')
+            : $t('common.buy')
+        "
         type="submit"
         color="white"
       />
@@ -145,6 +167,7 @@
 import { toRefs, computed, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useSharedStore } from 'stores/shared-store'
+import { useMerchStore } from 'stores/merch-store'
 import { isValidEmailAddress } from 'src/composables/isValidEmailAddress'
 import { isValidPhone } from 'src/composables/isValidPhone'
 
@@ -165,32 +188,50 @@ export default {
     const sharedStore = useSharedStore()
     const { sortedCountries } = storeToRefs(sharedStore)
     const { getCountries } = sharedStore
-    if (!sortedCountries.value.length) getCountries()
+    const merchStore = useMerchStore()
+    const { printFulCountries } = storeToRefs(merchStore)
+    const { printFul } = merchStore
     const options = ref(sortedCountries.value)
     const { modelValue } = toRefs(props)
     const user = computed({
       get() {
+        console.log('modelValue.value ===', modelValue.value)
         return modelValue.value
       },
       set(value) {
+        console.log('user = computed ---', value)
         emit('update:modelValue', value)
       }
     })
+    const optionsState = computed(() => {
+      return (
+        printFulCountries.value.find((item) => item.code === user.value.country?.cca2)?.states || []
+      )
+    })
     watch(
       () => user.value.country,
-      (val) => {
-        if (
-          !user.value.phone ||
-          sortedCountries.value.some((elem) => elem.callingCode === user.value.phone)
-        ) {
-          user.value.phone = user.value.country?.callingCode
-        }
-        if (val.countryName !== 'Italy') {
-          user.value.taxId = ''
+      (val, oldValue) => {
+        if (val) {
+          if (
+            !user.value.phone ||
+            sortedCountries.value.some((elem) => elem.callingCode === user.value.phone)
+          ) {
+            user.value.phone = user.value.country?.callingCode
+          }
+          if (val.countryName !== 'Italy') {
+            user.value.taxId = ''
+          }
+          if (oldValue && oldValue.countryName !== val.countryName) {
+            user.value.state = ''
+          }
         }
       },
       { deep: true }
     )
+    const getAllCountries = async () => {
+      if (!sortedCountries.value.length) await getCountries()
+      if (!printFulCountries.value.length) await printFul('/countries')
+    }
     const filterFn = (val, update) => {
       update(() => {
         const needle = val.toLowerCase()
@@ -202,8 +243,10 @@ export default {
     return {
       options,
       user,
+      optionsState,
       isValidEmailAddress,
       isValidPhone,
+      getAllCountries,
       filterFn
     }
   }

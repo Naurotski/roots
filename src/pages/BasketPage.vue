@@ -49,15 +49,18 @@
           />
         </div>
       </div>
-      <div v-else>
-        <product-card v-for="work in filteredActionsI18n" :key="work.id" :data-card="work" />
-        <q-separator class="q-mt-md" />
-        <div class="row justify-end">
-          <div class="col-10 col-sm-3 text-bold text-subtitle1 text-center">
-            {{ $t('cart.subtotal') }} ({{ cartCounter }} {{ $t('cart.items') }})
+      <div v-else class="row">
+        <div class="col-12 col-md-9">
+          <product-card v-for="work in filteredActionsI18n" :key="work.id" :data-card="work" />
+          <q-separator class="q-mt-md" />
+          <div class="row justify-end">
+            <div class="col-10 col-sm-3 text-bold text-subtitle1 text-center">
+              {{ $t('cart.subtotal') }} ({{ cartCounter }} {{ $t('cart.items') }})
+            </div>
+            <div class="col-2 text-bold text-h6 text-center">€{{ subtotal }}</div>
           </div>
-          <div class="col-2 text-bold text-h6 text-center">€{{ subtotal }}</div>
         </div>
+        <order-summary :cart="cart" :cart-counter="cartCounter"/>
       </div>
     </q-page>
   </transition>
@@ -73,13 +76,15 @@ import { useStripeStore } from 'stores/stripe-store'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import ProductCard from 'components/cart/ProductCard.vue'
 import PaymentDialog from 'components/dialogs/PaymentDialog.vue'
+import OrderSummary from 'components/cart/OrderSummary.vue'
 
 export default {
   name: 'BasketPage',
   components: {
     PaymentDialog,
     FixedTopTitle,
-    ProductCard
+    ProductCard,
+    OrderSummary
   },
   setup() {
     const { locale } = useI18n({ useScope: 'global' })

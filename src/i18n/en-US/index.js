@@ -98,7 +98,8 @@ export default {
     loginRequired: 'To make a purchase you need to log in to your account',
     phone: 'Phone (international format)',
     postalCode: 'Postal Code',
-    registrationRequired: 'To make a purchase you need to register'
+    registrationRequired: 'To make a purchase you need to register',
+    state: 'State'
   },
   settings: {
     datePurchase: 'Date of purchase',
@@ -106,17 +107,25 @@ export default {
     setNewPhoto: 'Set New Photo'
   },
   cart: {
+    addAddress: 'Add address',
     addCart: 'Add to Cart',
     addedCart: 'Added to Cart',
     cart: 'Cart',
     cartEmpty: "You don't have any items in your cart.",
+    changeAddress: 'Change address',
+    deliveryDetails: 'Delivery details',
+    deliveringTo: 'Delivering to',
     haveAccount: 'Have an account? Sign in to see your items.',
     items: 'items',
+    orderSummary: 'Order Summary',
     qty: 'Qty:',
     proceedCheckout: 'Proceed to Checkout',
     seeCart: 'See in Cart',
+    shipping: 'Shipping',
     subtotal: 'Subtotal',
-    tartShopping: 'Start shopping'
+    tartShopping: 'Start shopping',
+    thisPriceIsNotFinal:
+      'This price is not final. To add shipping costs you need to specify the address.'
   },
   merch: {
     colour: 'colour:',

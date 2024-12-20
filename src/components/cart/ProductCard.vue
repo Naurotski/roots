@@ -17,7 +17,10 @@
         {{ dataCard.name }}
       </div>
       <div :class="{ 'text-body2': $q.screen.xs }" class="text-justify text-body1">
-        <description-for-card :item-description="dataCard.description" :number="$q.screen.xs ? 100 : 250"/>
+        <description-for-card
+          :item-description="dataCard.description"
+          :number="$q.screen.xs ? 100 : 250"
+        />
       </div>
 
       <div v-if="dataCard.variants" class="row q-my-xs">

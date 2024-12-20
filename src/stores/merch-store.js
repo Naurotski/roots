@@ -1,11 +1,12 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { ref } from 'vue'
+import { Loading } from 'quasar'
 import { ref as dbRef, onChildAdded, onChildChanged, onChildRemoved, get } from 'firebase/database'
 import { db } from 'boot/firebase'
 import { apiAxios } from 'boot/axios'
 import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
-import { Loading } from 'quasar'
+import printFullToken from 'src/printFullToken'
 import { showErrorMessage } from 'src/composables/show-error-message'
 
 export const useMerchStore = defineStore('merch', () => {
@@ -29,6 +30,7 @@ export const useMerchStore = defineStore('merch', () => {
   const { cart } = storeToRefs(stripeStore)
   const { addProductToCart, updateCart } = stripeStore
   const merchList = ref({})
+  const printFulCountries = ref([])
   const updateMerchList = (product) => {
     if (product.delete === true) {
       delete merchList.value[product.rubric][product.id]
@@ -54,7 +56,7 @@ export const useMerchStore = defineStore('merch', () => {
       // console.log('onChildAdded-merch -', data.key, ':', data.val())
       let productData = data.val()
       if (productData.printFulProductId) {
-        const variants = await printFul(productData.printFulProductId)
+        const variants = await getProductsPrintFul(productData.printFulProductId)
         updateMerchList({ ...productData, variants })
       } else {
         updateMerchList(productData)
@@ -64,7 +66,7 @@ export const useMerchStore = defineStore('merch', () => {
       // console.log('onChildChanged-merch -', data.key, ':', data.val())
       let productData = data.val()
       if (productData.printFulProductId) {
-        const variants = await printFul(productData.printFulProductId)
+        const variants = await getProductsPrintFul(productData.printFulProductId)
         updateMerchList({ ...productData, variants })
       } else {
         updateMerchList(productData)
@@ -87,14 +89,12 @@ export const useMerchStore = defineStore('merch', () => {
     return result.val()
   }
 
-  const printFul = async (productId) => {
+  const getProductsPrintFul = async (productId) => {
     try {
       Loading.show()
       const response = await apiAxios.post('/printFul', {
         path: `/store/products/${productId}`,
-        token: 'Kwi4NpjaGPhmPZb9nOdrOCLok0blpO460Nj8p2Ns'
-        // token: 'XR0WXqjegp0MlCfqrf6sNW1Qff3CIbz28P6cOcHW'
-        // token: 'Dt1B3dgZGl3KuWTIUiU5h3U6PzFkaSxmiFqrfa5s'
+        token: printFullToken
       })
       Loading.hide()
       return response.data.result.sync_variants.map((item) => {
@@ -111,11 +111,26 @@ export const useMerchStore = defineStore('merch', () => {
       throw error
     }
   }
-
+  const printFul = async (path) => {
+    console.log('printFul --', path)
+    try {
+      const response = await apiAxios.post('/printFul', {
+        path,
+        token: printFullToken
+      })
+      if (path === '/countries') {
+        printFulCountries.value = response.data.result
+      }
+    } catch (error) {
+      showErrorMessage(error.message)
+      throw error
+    }
+  }
   return {
     colorMappingPrintFul,
     merchLinks,
     merchList,
+    printFulCountries,
     listenForChildMerch,
     checkExistenceMerch,
     printFul

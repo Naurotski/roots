@@ -99,7 +99,8 @@ export default {
     loginRequired: 'Per effettuare un acquisto è necessario accedere al proprio account',
     phone: 'Telefono (formato internazionale)',
     postalCode: 'Codice Postale',
-    registrationRequired: 'Per effettuare un acquisto è necessario registrarsi'
+    registrationRequired: 'Per effettuare un acquisto è necessario registrarsi',
+    state: 'Stato'
   },
   settings: {
     datePurchase: 'Data di acquisto',
@@ -107,17 +108,25 @@ export default {
     setNewPhoto: 'Imposta Nuova Foto'
   },
   cart: {
+    addAddress: 'Aggiungi indirizzo',
     addCart: 'Aggiungi al carrello',
     addedCart: 'Aggiunto al Carrello',
     cart: 'Carrello',
     cartEmpty: 'Non hai nessun articolo nel carrello.',
+    changeAddress: 'Cambia indirizzo',
+    deliveryDetails: 'Dettagli di consegna',
+    deliveringTo: 'In consegna a',
     haveAccount: 'Hai un account? Accedi per vedere i tuoi articoli.',
     items: 'articoli',
+    orderSummary: "Riepilogo dell'ordine",
     qty: 'Q.tà:',
     proceedCheckout: "Procedi all'ordine",
     seeCart: 'Vedi nel Carrello',
+    shipping: 'Spedizione',
     subtotal: 'Totale provvisorio',
-    tartShopping: 'Inizia a fare shopping'
+    tartShopping: 'Inizia a fare shopping',
+    thisPriceIsNotFinal:
+      "Questo prezzo non è definitivo. Per aggiungere le spese di spedizione è necessario specificare l'indirizzo."
   },
   merch: {
     colour: 'colore:',

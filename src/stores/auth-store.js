@@ -146,7 +146,7 @@ export const useAuthStore = defineStore('auth', () => {
         listenForChildUser(user.uid, 'orders')
         listenForChildUser(user.uid, 'cart')
         if (LocalStorage.getItem('cart')) {
-          await mergeCarts(user.uid).then(() => console.log('end merge========'))
+          await mergeCarts(user.uid)
         }
       } else {
         if (!loggedIn.value && LocalStorage.getItem('cart')) {

@@ -79,6 +79,7 @@ export default {
       address: '',
       city: '',
       country: null,
+      state: null,
       postalCode: '',
       phone: '',
       taxId: '',
@@ -93,6 +94,7 @@ export default {
         address: userData.value.address || '',
         city: userData.value.city || '',
         country: userData.value.country ? { ...userData.value.country } : null,
+        state: userData.value.state ? { ...userData.value.state } : null,
         postalCode: userData.value.postalCode || '',
         phone: userData.value.phone || '',
         taxId: userData.value.taxId || ''
@@ -109,6 +111,7 @@ export default {
           user.value.address = value.address || ''
           user.value.city = value.city || ''
           user.value.country = value.country ? { ...value.country } : null
+          user.value.state = value.state ? { ...value.state } : null
           user.value.postalCode = value.postalCode || ''
           user.value.phone = value.phone || ''
           user.value.taxId = value.taxId || ''
@@ -180,6 +183,7 @@ export default {
       user.value.address = userData.value.address || ''
       user.value.city = userData.value.city || ''
       user.value.country = userData.value.country ? { ...userData.value.country } : null
+      user.value.state = userData.value.state ? { ...userData.value.state } : null
       user.value.postalCode = userData.value.postalCode || ''
       user.value.phone = userData.value.phone || ''
       user.value.taxId = userData.value.taxId || ''
