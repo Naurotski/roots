@@ -14,43 +14,58 @@
       <div v-else>
         <div class="row justify-between">
           <span class="text-body1">{{ $t('cart.shipping') }}</span>
-          <span class="text-body1">€5</span>
+          <span v-if="selectedShippingRate" class="text-body1"
+            >€{{ selectedShippingRate.rate }}</span
+          >
         </div>
         <div class="text-body1 q-mt-md">
-          {{ $t('cart.DeliveringTo') }} {{ deliveryDetails.firstName }}
+          {{ $t('cart.deliveringTo') }} {{ deliveryDetails.firstName }}
           {{ deliveryDetails.lastName }}
         </div>
         <div class="text-body2">{{ deliveryAddress }}</div>
         <div class="text-body2">Phone number:{{ deliveryDetails.phone }}</div>
       </div>
-      <delivery-details-dialog v-model="deliveryDetails" @savaDelivery="getSippingCost" />
+      <delivery-details-dialog v-model="deliveryDetails" @savaDelivery="saveSippingDetails" />
+      <div v-if="shippingRates.length" class="q-my-sm">
+        <q-radio
+          v-for="rate in shippingRates"
+          :key="rate.id"
+          v-model="selectedShippingRate"
+          :val="rate"
+          checked-icon="task_alt"
+          unchecked-icon="panorama_fish_eye"
+          :label="rate.name"
+        />
+      </div>
       <q-separator class="q-my-md" />
       <div class="row justify-between">
-        <span class="text-h6 text-bold">Total</span>
-        <span class="text-h5 text-bold">€12</span>
+        <span class="text-h6 text-bold">{{ $t('cart.total') }}</span>
+        <span class="text-h5 text-bold">€{{ subtotal + +selectedShippingRate?.rate }}</span>
       </div>
 
-      <!--      <div class="text-center">-->
-      <!--        <q-btn-->
-      <!--          :size="$q.screen.xs ? 'sm' : 'md'"-->
-      <!--          no-caps-->
-      <!--          outline-->
-      <!--          rounded-->
-      <!--          :label="`${$t('cart.proceedCheckout')} (${cartCounter} ${$t('cart.items')})`"-->
-      <!--          @click="showDialog"-->
-      <!--        />-->
-      <!--      </div>-->
+      <div class="text-center q-mt-md">
+        <q-btn
+          no-caps
+          outline
+          rounded
+          :label="`${$t('cart.proceedCheckout')} (${cartCounter} ${$t('cart.items')})`"
+        />
+      </div>
     </div>
   </div>
-  <pre>deliveryDetails - {{ deliveryDetails }}</pre>
+<!--  <pre>deliveryDetails - {{ deliveryDetails }}</pre>-->
+<!--  <pre>shippingRates - {{ shippingRates }}</pre>-->
+<!--  <pre>selectedShippingRate - {{ selectedShippingRate }}</pre>-->
 </template>
 
 <script>
 import { computed, toRefs, watch, ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store'
 import { useUserStore } from 'stores/user-store'
 import { useStripeStore } from 'stores/stripe-store'
+import { useMerchStore } from 'stores/merch-store'
 import DeliveryDetailsDialog from 'components/dialogs/DeliveryDetailsDialog.vue'
 
 export default {
@@ -67,6 +82,7 @@ export default {
     }
   },
   setup(props) {
+    const { locale } = useI18n({ useScope: 'global' })
     const { cart } = toRefs(props)
     const authStore = useAuthStore()
     const { loggedIn } = toRefs(authStore)
@@ -76,7 +92,11 @@ export default {
     const stripeStore = useStripeStore()
     const { shippingDetails } = toRefs(stripeStore)
     const { changeShippingDetails } = stripeStore
+    const merchStore = useMerchStore()
+    const { shippingRates } = storeToRefs(merchStore)
+    const { updateShippingRates, printFul } = merchStore
     const deliveryDetails = ref({})
+    const selectedShippingRate = ref(null)
     const deliveryAddress = computed(() => {
       if (deliveryDetails.value.state) {
         return `${deliveryDetails.value.address} ${deliveryDetails.value.city} ${deliveryDetails.value.postalCode} ${deliveryDetails.value.state.name} ${deliveryDetails.value.country?.countryName}`
@@ -96,20 +116,13 @@ export default {
     watch(
       userData,
       (val) => {
-        console.log('watch - userData -----', val)
-        console.log('watch - shippingDetails.value -----', shippingDetails.value)
-        console.log('watch - deliveryDetails.value -----', deliveryDetails.value)
         if (Object.keys(shippingDetails.value).length) {
           deliveryDetails.value = { ...shippingDetails.value }
         }
         if (!loggedIn.value) {
-          console.log('watch - !loggedIn.value -----')
           deliveryDetails.value = {}
           changeShippingDetails({})
         } else {
-          console.log('watch - userData2222 -----', val)
-          console.log('watch - shippingDetails.value2222 -----', shippingDetails.value)
-          console.log('watch - deliveryDetails.value222 -----', deliveryDetails.value)
           deliveryDetails.value.firstName ||= val.firstName || val.displayName || ''
           deliveryDetails.value.lastName ||= val.lastName || ''
           deliveryDetails.value.email ||= val.email || ''
@@ -124,8 +137,36 @@ export default {
       },
       { immediate: true, deep: true }
     )
+    const getSippingRates = () => {
+      if (Object.keys(deliveryDetails.value).length && Object.keys(cart.value).length) {
+        const details = {
+          recipient: {
+            address1: deliveryDetails.value.address,
+            city: deliveryDetails.value.city,
+            country_code: deliveryDetails.value.country.cca2,
+            state_code: deliveryDetails.value.state?.code,
+            zip: deliveryDetails.value.postalCode,
+            phone: deliveryDetails.value.phone
+          },
+          items: Object.values(cart.value).map((item) => ({
+            variant_id: item.variants[0].variant_id,
+            quantity: item.quantityCart
+          })),
+          currency: 'EUR',
+          locale: locale.value === 'it' ? 'it_IT' : 'en_US'
+        }
 
-    const getSippingCost = async () => {
+        printFul('/shipping/rates', details).then(
+          () => (selectedShippingRate.value = shippingRates.value[0])
+        )
+      } else {
+        updateShippingRates([])
+      }
+    }
+
+    watch([cart, locale], () => getSippingRates(), { immediate: true, deep: true })
+
+    const saveSippingDetails = async () => {
       console.log('getSippingCost--', deliveryDetails.value)
       const diffObj = Object.keys(deliveryDetails.value).reduce((result, key) => {
         if (!(key in userData.value)) result[key] = deliveryDetails.value[key]
@@ -138,13 +179,17 @@ export default {
         })
       }
       changeShippingDetails(deliveryDetails.value)
+      getSippingRates()
     }
+
     return {
       loggedIn,
       deliveryDetails,
       deliveryAddress,
       subtotal,
-      getSippingCost
+      shippingRates,
+      selectedShippingRate,
+      saveSippingDetails
     }
   }
 }

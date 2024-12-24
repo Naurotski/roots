@@ -126,7 +126,8 @@ export default {
     subtotal: 'Totale provvisorio',
     tartShopping: 'Inizia a fare shopping',
     thisPriceIsNotFinal:
-      "Questo prezzo non è definitivo. Per aggiungere le spese di spedizione è necessario specificare l'indirizzo."
+      "Questo prezzo non è definitivo. Per aggiungere le spese di spedizione è necessario specificare l'indirizzo.",
+    total: 'Totale'
   },
   merch: {
     colour: 'colore:',

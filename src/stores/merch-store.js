@@ -31,6 +31,7 @@ export const useMerchStore = defineStore('merch', () => {
   const { addProductToCart, updateCart } = stripeStore
   const merchList = ref({})
   const printFulCountries = ref([])
+  const shippingRates = ref([])
   const updateMerchList = (product) => {
     if (product.delete === true) {
       delete merchList.value[product.rubric][product.id]
@@ -50,6 +51,7 @@ export const useMerchStore = defineStore('merch', () => {
       merchList.value[product.rubric][product.id] = product
     }
   }
+  const updateShippingRates = (payload) => (shippingRates.value = payload)
   const listenForChildMerch = (rubric) => {
     let path = `merch/${rubric}`
     onChildAdded(dbRef(db, path), async (data) => {
@@ -97,12 +99,14 @@ export const useMerchStore = defineStore('merch', () => {
         token: printFullToken
       })
       Loading.hide()
+      console.log(response.data.result)
       return response.data.result.sync_variants.map((item) => {
         return {
           variantId: item.id,
           size: item.size,
           price: item.retail_price,
-          color: item.color
+          color: item.color,
+          variant_id: item.product.variant_id
         }
       })
     } catch (error) {
@@ -111,15 +115,26 @@ export const useMerchStore = defineStore('merch', () => {
       throw error
     }
   }
-  const printFul = async (path) => {
-    console.log('printFul --', path)
+  const printFul = async (path, payload) => {
+    console.log('printFul --', path, payload)
     try {
-      const response = await apiAxios.post('/printFul', {
-        path,
-        token: printFullToken
-      })
-      if (path === '/countries') {
-        printFulCountries.value = response.data.result
+      if (!payload) {
+        const response = await apiAxios.post('/printFul', {
+          path,
+          token: printFullToken
+        })
+        console.log(response.data.result)
+        if (path === '/countries') {
+          printFulCountries.value = response.data.result
+        }
+      } else {
+        const response = await apiAxios.post('/printFul', {
+          path,
+          payload,
+          token: printFullToken
+        })
+        console.log('shippingRates ---', response.data)
+        updateShippingRates(response.data.result)
       }
     } catch (error) {
       showErrorMessage(error.message)
@@ -131,6 +146,8 @@ export const useMerchStore = defineStore('merch', () => {
     merchLinks,
     merchList,
     printFulCountries,
+    shippingRates,
+    updateShippingRates,
     listenForChildMerch,
     checkExistenceMerch,
     printFul

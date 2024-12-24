@@ -125,7 +125,8 @@ export default {
     subtotal: 'Subtotal',
     tartShopping: 'Start shopping',
     thisPriceIsNotFinal:
-      'This price is not final. To add shipping costs you need to specify the address.'
+      'This price is not final. To add shipping costs you need to specify the address.',
+    total: 'Total'
   },
   merch: {
     colour: 'colour:',
