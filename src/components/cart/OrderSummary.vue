@@ -2,7 +2,7 @@
   <div class="col-12 col-md-3 q-pt-md" :class="{ 'q-pl-md': $q.screen.gt.sm }">
     <div class="bg-grey-2 full-width q-pa-md">
       <div class="text-h5 q-mb-md">{{ $t('cart.orderSummary') }}</div>
-      <div class="row justify-between">
+      <div class="row justify-between q-mb-sm">
         <span class="text-body1"
           >{{ $t('cart.subtotal') }} {{ `(${cartCounter} ${$t('cart.items')})` }}</span
         >
@@ -13,7 +13,7 @@
       </div>
       <div v-else>
         <div class="row justify-between">
-          <span class="text-body1">{{ $t('cart.shipping') }}</span>
+          <span v-if="selectedShippingRate" class="text-body1">{{ $t('cart.shipping') }}</span>
           <span v-if="selectedShippingRate" class="text-body1"
             >€{{ selectedShippingRate.rate }}</span
           >
@@ -26,7 +26,7 @@
         <div class="text-body2">Phone number:{{ deliveryDetails.phone }}</div>
       </div>
       <delivery-details-dialog v-model="deliveryDetails" @savaDelivery="saveSippingDetails" />
-      <div v-if="shippingRates.length" class="q-my-sm">
+      <div v-if="shippingRates.length && !shippingRates[0].errorMessage" class="q-my-sm">
         <q-radio
           v-for="rate in shippingRates"
           :key="rate.id"
@@ -37,8 +37,11 @@
           :label="rate.name"
         />
       </div>
+      <div v-if="shippingRates?.[0]?.errorMessage" class="q-mt-sm text-body2" style="color: red">
+        {{ shippingRates[0].errorMessage }}
+      </div>
       <q-separator class="q-my-md" />
-      <div class="row justify-between">
+      <div v-if="selectedShippingRate" class="row justify-between">
         <span class="text-h6 text-bold">{{ $t('cart.total') }}</span>
         <span class="text-h5 text-bold">€{{ subtotal + +selectedShippingRate?.rate }}</span>
       </div>
@@ -49,13 +52,14 @@
           outline
           rounded
           :label="`${$t('cart.proceedCheckout')} (${cartCounter} ${$t('cart.items')})`"
+          :disable="!selectedShippingRate"
         />
       </div>
     </div>
   </div>
-<!--  <pre>deliveryDetails - {{ deliveryDetails }}</pre>-->
-<!--  <pre>shippingRates - {{ shippingRates }}</pre>-->
-<!--  <pre>selectedShippingRate - {{ selectedShippingRate }}</pre>-->
+  <pre>deliveryDetails - {{ deliveryDetails }}</pre>
+  <pre>shippingRates - {{ shippingRates }}</pre>
+  <pre>selectedShippingRate - {{ selectedShippingRate }}</pre>
 </template>
 
 <script>
@@ -155,10 +159,9 @@ export default {
           currency: 'EUR',
           locale: locale.value === 'it' ? 'it_IT' : 'en_US'
         }
-
-        printFul('/shipping/rates', details).then(
-          () => (selectedShippingRate.value = shippingRates.value[0])
-        )
+        printFul('/shipping/rates', details)
+          .then(() => (selectedShippingRate.value = shippingRates.value[0]))
+          .catch(() => (selectedShippingRate.value = null))
       } else {
         updateShippingRates([])
       }
@@ -167,16 +170,18 @@ export default {
     watch([cart, locale], () => getSippingRates(), { immediate: true, deep: true })
 
     const saveSippingDetails = async () => {
-      console.log('getSippingCost--', deliveryDetails.value)
-      const diffObj = Object.keys(deliveryDetails.value).reduce((result, key) => {
-        if (!(key in userData.value)) result[key] = deliveryDetails.value[key]
-        return result
-      }, {})
-      if (Object.keys(diffObj).length) {
-        await updateUser({
-          path: `users/${userData.value.userId}/userData`,
-          payload: diffObj
-        })
+      console.log('saveSippingDetails--', deliveryDetails.value)
+      if (loggedIn.value) {
+        const diffObj = Object.keys(deliveryDetails.value).reduce((result, key) => {
+          if (!(key in userData.value)) result[key] = deliveryDetails.value[key]
+          return result
+        }, {})
+        if (Object.keys(diffObj).length) {
+          await updateUser({
+            path: `users/${userData.value.userId}/userData`,
+            payload: diffObj
+          })
+        }
       }
       changeShippingDetails(deliveryDetails.value)
       getSippingRates()

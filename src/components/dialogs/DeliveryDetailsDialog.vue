@@ -72,12 +72,11 @@ export default {
       }
     })
     const onSubmit = async () => {
-      console.log('onSubmit')
+      emit('savaDelivery')
       if (!loggedIn.value) {
         authProvider.value = await checkUserExistence(localData.value.email)
         requiredDialog.value = true
       } else {
-        emit('savaDelivery')
         activator.value = false
       }
     }

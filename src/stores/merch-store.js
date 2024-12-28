@@ -99,7 +99,6 @@ export const useMerchStore = defineStore('merch', () => {
         token: printFullToken
       })
       Loading.hide()
-      console.log(response.data.result)
       return response.data.result.sync_variants.map((item) => {
         return {
           variantId: item.id,
@@ -123,7 +122,6 @@ export const useMerchStore = defineStore('merch', () => {
           path,
           token: printFullToken
         })
-        console.log(response.data.result)
         if (path === '/countries') {
           printFulCountries.value = response.data.result
         }
@@ -134,10 +132,18 @@ export const useMerchStore = defineStore('merch', () => {
           token: printFullToken
         })
         console.log('shippingRates ---', response.data)
-        updateShippingRates(response.data.result)
+        if (response.data.result) {
+          updateShippingRates(response.data.result)
+        }
+        if (response.data.errorData) {
+          updateShippingRates([{ errorMessage: response.data.errorData.result }])
+          throw new Error(response.data.errorData.result)
+        }
       }
     } catch (error) {
-      showErrorMessage(error.message)
+      if (error.message !== 'Sorry, shipping to this country has been disabled!') {
+        showErrorMessage(error.message)
+      }
       throw error
     }
   }
