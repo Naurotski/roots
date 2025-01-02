@@ -8,7 +8,7 @@
         >
         <span class="text-body1" v-text="`€${subtotal}`" />
       </div>
-      <div v-if="!deliveryDetails.address">
+      <div v-if="!deliveryDetails.country">
         {{ $t('cart.thisPriceIsNotFinal') }}
       </div>
       <div v-else>
@@ -43,7 +43,9 @@
       <q-separator class="q-my-md" />
       <div v-if="selectedShippingRate" class="row justify-between">
         <span class="text-h6 text-bold">{{ $t('cart.total') }}</span>
-        <span class="text-h5 text-bold">€{{ subtotal + +selectedShippingRate?.rate }}</span>
+        <span class="text-h5 text-bold"
+          >€{{ (subtotal + +selectedShippingRate?.rate).toFixed(2) }}</span
+        >
       </div>
 
       <div class="text-center q-mt-md">
@@ -53,13 +55,20 @@
           rounded
           :label="`${$t('cart.proceedCheckout')} (${cartCounter} ${$t('cart.items')})`"
           :disable="!selectedShippingRate"
+          @click="createOrder"
         />
       </div>
     </div>
+    <login-required-dialog
+      v-if="deliveryDetails.email"
+      v-model="requiredDialog"
+      :auth-provider="authProvider"
+      :email="deliveryDetails.email"
+    />
   </div>
-  <pre>deliveryDetails - {{ deliveryDetails }}</pre>
-  <pre>shippingRates - {{ shippingRates }}</pre>
-  <pre>selectedShippingRate - {{ selectedShippingRate }}</pre>
+<!--  <pre>shippingDetails - {{ shippingDetails }}</pre>-->
+<!--  <pre>selectedShippingRate - {{ selectedShippingRate }}</pre>-->
+  <!--  <pre>cart - {{ cart }}</pre>-->
 </template>
 
 <script>
@@ -71,10 +80,11 @@ import { useUserStore } from 'stores/user-store'
 import { useStripeStore } from 'stores/stripe-store'
 import { useMerchStore } from 'stores/merch-store'
 import DeliveryDetailsDialog from 'components/dialogs/DeliveryDetailsDialog.vue'
+import LoginRequiredDialog from 'components/auth/LoginRequiredDialog.vue'
 
 export default {
   name: 'OrderSummary',
-  components: { DeliveryDetailsDialog },
+  components: { LoginRequiredDialog, DeliveryDetailsDialog },
   props: {
     cart: {
       type: Object,
@@ -85,11 +95,13 @@ export default {
       required: true
     }
   },
-  setup(props) {
+  emits: ['orderCreated'],
+  setup(props, { emit }) {
     const { locale } = useI18n({ useScope: 'global' })
     const { cart } = toRefs(props)
     const authStore = useAuthStore()
     const { loggedIn } = toRefs(authStore)
+    const { checkUserExistence } = authStore
     const userStore = useUserStore()
     const { userData } = storeToRefs(userStore)
     const { updateUser } = userStore
@@ -101,6 +113,9 @@ export default {
     const { updateShippingRates, printFul } = merchStore
     const deliveryDetails = ref({})
     const selectedShippingRate = ref(null)
+    const recipient = ref({})
+    const requiredDialog = ref(false)
+    const authProvider = ref([])
     const deliveryAddress = computed(() => {
       if (deliveryDetails.value.state) {
         return `${deliveryDetails.value.address} ${deliveryDetails.value.city} ${deliveryDetails.value.postalCode} ${deliveryDetails.value.state.name} ${deliveryDetails.value.country?.countryName}`
@@ -120,10 +135,11 @@ export default {
     watch(
       userData,
       (val) => {
+        console.log('watch - userData ----', val, shippingDetails.value)
         if (Object.keys(shippingDetails.value).length) {
           deliveryDetails.value = { ...shippingDetails.value }
         }
-        if (!loggedIn.value) {
+        if (!loggedIn.value && !Object.keys(shippingDetails.value).length) {
           deliveryDetails.value = {}
           changeShippingDetails({})
         } else {
@@ -137,21 +153,24 @@ export default {
           deliveryDetails.value.postalCode ||= val.postalCode || ''
           deliveryDetails.value.phone ||= val.phone || ''
           deliveryDetails.value.taxId ||= val.taxId || null
+          changeShippingDetails(deliveryDetails.value)
         }
       },
       { immediate: true, deep: true }
     )
     const getSippingRates = () => {
-      if (Object.keys(deliveryDetails.value).length && Object.keys(cart.value).length) {
+      console.log(Object.values(deliveryDetails.value))
+      if (deliveryDetails.value.country && Object.keys(cart.value).length) {
+        recipient.value = {
+          address1: deliveryDetails.value.address,
+          city: deliveryDetails.value.city,
+          country_code: deliveryDetails.value.country.cca2,
+          state_code: deliveryDetails.value.state?.code,
+          zip: deliveryDetails.value.postalCode,
+          phone: deliveryDetails.value.phone
+        }
         const details = {
-          recipient: {
-            address1: deliveryDetails.value.address,
-            city: deliveryDetails.value.city,
-            country_code: deliveryDetails.value.country.cca2,
-            state_code: deliveryDetails.value.state?.code,
-            zip: deliveryDetails.value.postalCode,
-            phone: deliveryDetails.value.phone
-          },
+          recipient: recipient.value,
           items: Object.values(cart.value).map((item) => ({
             variant_id: item.variants[0].variant_id,
             quantity: item.quantityCart
@@ -171,7 +190,15 @@ export default {
 
     const saveSippingDetails = async () => {
       console.log('saveSippingDetails--', deliveryDetails.value)
-      if (loggedIn.value) {
+      changeShippingDetails(deliveryDetails.value)
+      getSippingRates()
+    }
+    const createOrder = async () => {
+      console.log('createOrder')
+      if (!loggedIn.value) {
+        authProvider.value = await checkUserExistence(deliveryDetails.value.email)
+        requiredDialog.value = true
+      } else {
         const diffObj = Object.keys(deliveryDetails.value).reduce((result, key) => {
           if (!(key in userData.value)) result[key] = deliveryDetails.value[key]
           return result
@@ -182,11 +209,20 @@ export default {
             payload: diffObj
           })
         }
+        await printFul('/orders', {
+          recipient: {
+            ...recipient.value,
+            name: `${deliveryDetails.value.firstName} ${deliveryDetails.value.lastName}`
+          },
+          items: Object.values(cart.value).map((item) => ({
+            sync_variant_id: item.variants[0].variantId,
+            quantity: item.quantityCart
+          })),
+          currency: 'EUR',
+          shipping: selectedShippingRate.value.id
+        }).then((orderId) => emit('orderCreated', orderId))
       }
-      changeShippingDetails(deliveryDetails.value)
-      getSippingRates()
     }
-
     return {
       loggedIn,
       deliveryDetails,
@@ -194,7 +230,11 @@ export default {
       subtotal,
       shippingRates,
       selectedShippingRate,
-      saveSippingDetails
+      requiredDialog,
+      authProvider,
+      saveSippingDetails,
+      createOrder,
+      shippingDetails
     }
   }
 }

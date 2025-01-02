@@ -105,7 +105,7 @@ export const useMerchStore = defineStore('merch', () => {
           size: item.size,
           price: item.retail_price,
           color: item.color,
-          variant_id: item.product.variant_id
+          variant_id: item.variant_id
         }
       })
     } catch (error) {
@@ -131,13 +131,18 @@ export const useMerchStore = defineStore('merch', () => {
           payload,
           token: printFullToken
         })
-        console.log('shippingRates ---', response.data)
-        if (response.data.result) {
-          updateShippingRates(response.data.result)
+        console.log('printFul-response.data ----', response.data)
+        if (path === '/shipping/rates') {
+          if (response.data.errorData) {
+            updateShippingRates([{ errorMessage: response.data.errorData.result }])
+            throw new Error(response.data.errorData.result)
+          } else {
+            updateShippingRates(response.data.result)
+          }
         }
-        if (response.data.errorData) {
-          updateShippingRates([{ errorMessage: response.data.errorData.result }])
-          throw new Error(response.data.errorData.result)
+        if (path === '/orders') {
+          console.log(response.data)
+          return response.data.result.id
         }
       }
     } catch (error) {

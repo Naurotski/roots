@@ -32,22 +32,15 @@
       </form-user-data>
     </q-card>
   </q-dialog>
-  <login-required-dialog
-    v-model="requiredDialog"
-    :auth-provider="authProvider"
-    :email="localData.email"
-    @allowPayment="onSubmit"
-  />
 </template>
 <script>
 import { computed, ref, toRefs } from 'vue'
-import { useAuthStore } from 'stores/auth-store'
+
 import FormUserData from 'components/shared/FormUserData.vue'
-import LoginRequiredDialog from 'components/auth/LoginRequiredDialog.vue'
 
 export default {
   name: 'DeliveryDetailsDialog',
-  components: { LoginRequiredDialog, FormUserData },
+  components: { FormUserData },
   props: {
     modelValue: {
       type: Object,
@@ -57,12 +50,7 @@ export default {
   emits: ['update:modelValue', 'savaDelivery'],
   setup(props, { emit }) {
     const { modelValue } = toRefs(props)
-    const authStore = useAuthStore()
-    const { loggedIn } = toRefs(authStore)
-    const { checkUserExistence } = authStore
     const activator = ref(false)
-    const requiredDialog = ref(false)
-    const authProvider = ref([])
     const localData = computed({
       get() {
         return modelValue.value
@@ -73,19 +61,11 @@ export default {
     })
     const onSubmit = async () => {
       emit('savaDelivery')
-      if (!loggedIn.value) {
-        authProvider.value = await checkUserExistence(localData.value.email)
-        requiredDialog.value = true
-      } else {
-        activator.value = false
-      }
+      activator.value = false
     }
     return {
       activator,
       localData,
-      loggedIn,
-      requiredDialog,
-      authProvider,
       onSubmit
     }
   }

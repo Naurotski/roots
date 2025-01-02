@@ -26,7 +26,7 @@ export const useAuthStore = defineStore('auth', () => {
   const { updateOrdersArtWorks } = userStore
   const { setUserData } = userStore
   const stripeStore = useStripeStore()
-  const { updateCart, mergeCarts } = stripeStore
+  const { updateCart, mergeCarts, changeShippingDetails } = stripeStore
 
   const loginDialog = ref(false)
   const loggedIn = ref(false)
@@ -122,6 +122,7 @@ export const useAuthStore = defineStore('auth', () => {
       await off(dbRef(db, `users/${userData.value.userId}/cart`))
       await signOut(auth)
       updateCart({ key: 0, value: 'logoutUser' })
+      changeShippingDetails({})
       Loading.hide()
     } catch (error) {
       showErrorMessage(error.message.match(/\((.*?)\)/)[1])
