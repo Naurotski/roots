@@ -1,7 +1,16 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { ref } from 'vue'
 import { Loading } from 'quasar'
-import { ref as dbRef, onChildAdded, onChildChanged, onChildRemoved, get } from 'firebase/database'
+import {
+  ref as dbRef,
+  onChildAdded,
+  onChildChanged,
+  onChildRemoved,
+  get,
+  query,
+  orderByChild,
+  equalTo
+} from 'firebase/database'
 import { db } from 'boot/firebase'
 import { apiAxios } from 'boot/axios'
 import { useAuthStore } from 'stores/auth-store'
@@ -24,6 +33,17 @@ export const useMerchStore = defineStore('merch', () => {
     { label: 'links.notebooks', name: 'notebooks' },
     { label: 'links.casesForIPhone', name: 'casesForIPhone' }
   ])
+  const statusOrderPrintFul = {
+    archived: 'ordersPrintFul.archived',
+    canceled: 'ordersPrintFul.canceled',
+    draft: 'ordersPrintFul.draft',
+    failed: 'ordersPrintFul.failed',
+    fulfilled: 'ordersPrintFul.fulfilled',
+    inprocess: 'ordersPrintFul.inprocess',
+    onhold: 'ordersPrintFul.onhold',
+    partial: 'ordersPrintFul.partial',
+    pending: 'ordersPrintFul.pending'
+  }
   const authStore = useAuthStore()
   const { loggedIn } = storeToRefs(authStore)
   const stripeStore = useStripeStore()
@@ -54,16 +74,19 @@ export const useMerchStore = defineStore('merch', () => {
   const updateShippingRates = (payload) => (shippingRates.value = payload)
   const listenForChildMerch = (rubric) => {
     let path = `merch/${rubric}`
-    onChildAdded(dbRef(db, path), async (data) => {
-      // console.log('onChildAdded-merch -', data.key, ':', data.val())
-      let productData = data.val()
-      if (productData.printFulProductId) {
-        const variants = await getProductsPrintFul(productData.printFulProductId)
-        updateMerchList({ ...productData, variants })
-      } else {
-        updateMerchList(productData)
+    onChildAdded(
+      query(dbRef(db, path), orderByChild('notForSale'), equalTo(false)),
+      async (data) => {
+        // console.log('onChildAdded-merch -', data.key, ':', data.val())
+        let productData = data.val()
+        if (productData.printFulProductId) {
+          const variants = await getProductsPrintFul(productData.printFulProductId)
+          updateMerchList({ ...productData, variants })
+        } else {
+          updateMerchList(productData)
+        }
       }
-    })
+    )
     onChildChanged(dbRef(db, path), async (data) => {
       // console.log('onChildChanged-merch -', data.key, ':', data.val())
       let productData = data.val()
@@ -155,6 +178,7 @@ export const useMerchStore = defineStore('merch', () => {
   return {
     colorMappingPrintFul,
     merchLinks,
+    statusOrderPrintFul,
     merchList,
     printFulCountries,
     shippingRates,

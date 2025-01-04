@@ -66,8 +66,8 @@
       :email="deliveryDetails.email"
     />
   </div>
-<!--  <pre>shippingDetails - {{ shippingDetails }}</pre>-->
-<!--  <pre>selectedShippingRate - {{ selectedShippingRate }}</pre>-->
+  <!--  <pre>shippingDetails - {{ shippingDetails }}</pre>-->
+  <!--  <pre>selectedShippingRate - {{ selectedShippingRate }}</pre>-->
   <!--  <pre>cart - {{ cart }}</pre>-->
 </template>
 

@@ -18,8 +18,8 @@
       </fixed-top-title>
 
       <div v-if="!cartCounter">
-        <div class="text-center text-h5">{{ $t('cart.cartEmpty') }}</div>
-        <div v-if="!loggedIn" class="text-center text-body1 q-my-md">
+        <div class="text-center text-h5 q-mb-md">{{ $t('cart.cartEmpty') }}</div>
+        <div v-if="!loggedIn" class="text-center text-body1 q-mb-md">
           {{ $t('cart.haveAccount') }}
         </div>
         <div class="text-center">
@@ -57,10 +57,15 @@
             <div class="col-2 text-bold text-h6 text-center">€{{ subtotal }}</div>
           </div>
         </div>
-        <order-summary ref="orderSummary" :cart="cart" :cart-counter="cartCounter" @order-created="payOrder"/>
+        <order-summary
+          ref="orderSummary"
+          :cart="cart"
+          :cart-counter="cartCounter"
+          @order-created="payOrder"
+        />
       </div>
-      <pre>line_items - {{line_items}}</pre>
-      <pre>shippingDetails - {{shippingDetails}}</pre>
+      <!--      <pre>line_items - {{ line_items }}</pre>-->
+      <!--      <pre>shippingDetails - {{ shippingDetails }}</pre>-->
     </q-page>
   </transition>
 </template>
@@ -73,7 +78,7 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
-import { useUserStore} from 'stores/user-store'
+import { useUserStore } from 'stores/user-store'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import ProductCard from 'components/cart/ProductCard.vue'
 import OrderSummary from 'components/cart/OrderSummary.vue'
@@ -87,7 +92,7 @@ export default {
     OrderSummary
   },
   setup() {
-    const { route } = useRoute()
+    const route = useRoute()
     const { locale } = useI18n({ useScope: 'global' })
     const authStore = useAuthStore()
     const { loggedIn, loginDialog } = storeToRefs(authStore)

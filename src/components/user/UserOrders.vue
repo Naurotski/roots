@@ -1,70 +1,44 @@
 <template>
-  <div v-if="!artWorks.length" class="text-center">
-    <div class="text-h4">{{ $t('settings.noPurchases') }}.</div>
-    <q-btn
-      class="q-mt-md"
-      flat
-      icon-right="mdi-arrow-right-bold"
-      :label="$t('links.sale')"
-      to="/sale"
-    />
-  </div>
-  <div v-else class="row justify-around">
-    <div
-      class="q-ma-lg"
-      v-for="{ name, artistName, urlImageWork, date } in artWorks"
-      :key="urlImageWork"
-      style="width: 300px"
-    >
-      <div v-if="urlImageWork.includes('video')">
-        <div style="position: relative">
-          <q-video
-            :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
-            :src="urlImageWork"
-          />
-          <div
-            style="position: absolute; top: 5px; height: 100%; width: 100%; opacity: 0.1"
-            class="bg-grey-2"
-          />
-        </div>
-        <div class="text-body1 q-mt-md">
-          <div v-if="artistName">{{ artistName }}</div>
-          <b>{{ name }}</b>
-          <p>{{ $t('settings.datePurchase') }} - {{ date }}</p>
-        </div>
-      </div>
-      <div v-else>
-        <q-img
-          :src="urlImageWork"
-          fit="contain"
-          :alt="name"
-          :style="$q.screen.xs ? 'max-height: 300px' : 'height: 300px'"
-        />
-        <div class="text-body1 q-mt-md">
-          <div>{{ artistName }}</div>
-          <b>{{ name }}</b>
-          <p>{{ $t('settings.datePurchase') }} - {{ date }}</p>
-        </div>
-      </div>
+  <div v-if="!orders.length">
+    <div class="text-center text-h5 q-mb-md">{{ $t('merch.youHaveNoOrders') }}</div>
+    <div class="text-center">
+      <q-btn
+        no-caps
+        outline
+        rounded
+        color="primary"
+        style="width: 200px"
+        :class="{ 'full-width': $q.screen.xs }"
+        :label="$t('cart.tartShopping')"
+        to="/shop"
+      />
     </div>
   </div>
+  <order-card v-else :orders="orders" />
+  <pre>listRubrics = {{ listRubrics }}</pre>
+  <pre>orders = {{ orders }}</pre>
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { date } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from 'stores/user-store'
-
+import OrderCard from 'components/user/OrderCard.vue'
+import { useMerchStore } from 'stores/merch-store'
 export default {
   name: 'UserOrders',
+  components: { OrderCard },
   setup() {
     const { locale } = useI18n({ useScope: 'global' })
     const userStore = useUserStore()
-    const { ordersArtWorks } = storeToRefs(userStore)
-    const artWorks = computed(() => {
-      return Object.values(ordersArtWorks.value)
+    const { listOrders } = storeToRefs(userStore)
+    const merchStore = useMerchStore()
+    const { merchList } = storeToRefs(merchStore)
+    const { listenForChildMerch } = merchStore
+    const orders = computed(() => {
+      return Object.values(listOrders.value)
         .sort((a, b) => {
           if (a.date < b.date) return 1
           if (a.date === b.date) return 0
@@ -72,12 +46,37 @@ export default {
         })
         .map((item) => ({
           ...item,
-          name: locale.value === 'it' ? item.nameIt : item.name,
-          date: date.formatDate(item.date, 'DD/MM/YYYY')
+          date: date.formatDate(item.date, 'DD/MM/YYYY'),
+          items: Object.entries(item.items).map(([key, value]) => {
+            return {
+              ...value,
+              id: key,
+              name: locale.value === 'it' ? value.nameIt : value.name,
+              description: locale.value === 'it' ? value.descriptionIt : value.description,
+              materials: key.includes('-')
+                ? null
+                : locale.value === 'it'
+                ? value.materialsIt
+                : value.materials
+            }
+          })
         }))
     })
+    const listRubrics = computed(() => {
+      return [...new Set(orders.value.map((order) => order.items.map((el) => el.rubric)).flat())]
+    })
+    watch(listRubrics, (val) => {
+      val.forEach((item) => {
+        if (!merchList.value[item]) listenForChildMerch(item)
+      })
+    })
+
+    // options.value = sortedCountries.value.filter(
+    //   (item) => item.countryName.toLowerCase().indexOf(needle) > -1
+    // )
     return {
-      artWorks
+      orders,
+      listRubrics
     }
   }
 }

@@ -23,7 +23,7 @@ import { listenForChildUser } from 'src/composables/listenForChildUser'
 export const useAuthStore = defineStore('auth', () => {
   const userStore = useUserStore()
   const { userData } = storeToRefs(userStore)
-  const { updateOrdersArtWorks } = userStore
+  const { updateListOrders } = userStore
   const { setUserData } = userStore
   const stripeStore = useStripeStore()
   const { updateCart, mergeCarts, changeShippingDetails } = stripeStore
@@ -158,7 +158,7 @@ export const useAuthStore = defineStore('auth', () => {
         loggedIn.value = false
         LocalStorage.set('loggedIn', false)
         setUserData('logoutUser')
-        updateOrdersArtWorks({ key: 0, value: 'logoutUser' })
+        updateListOrders({ key: 0, value: 'logoutUser' })
       }
     })
   }

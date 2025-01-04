@@ -13,7 +13,6 @@ export const createLineItems = (listItems) => {
     }
   }
   const images = (item) => {
-    console.log(item)
     if (String(item.id).includes('-')) {
       return [
         item.urlImage || item.urlImageWork,
@@ -28,7 +27,7 @@ export const createLineItems = (listItems) => {
       quantity: item.quantityCart || 1,
       price_data: {
         currency: 'eur',
-        unit_amount: item.price * 100,
+        unit_amount: item.variants[0].price * 100,
         product_data: {
           name: i18n.global.locale.value === 'it' ? item.nameIt : item.name,
           description: description(item),

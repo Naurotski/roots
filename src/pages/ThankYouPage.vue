@@ -5,9 +5,9 @@
         <div class="text-h1" :class="{ 'text-h3': $q.screen.xs }" style="color: black">
           {{ $t('common.thank') }}
         </div>
-        <!--        <div v-if="work" class="text-h4" style="opacity: 0.4">-->
-        <!--          {{ $t('common.acquired') }}{{ work.artistName }} - {{ work.name }}.-->
-        <!--        </div>-->
+        <div v-if="work" class="text-h4" style="opacity: 0.4">
+          {{ $t('common.acquired') }}{{ work.artistName }} - "{{ work.name }}".
+        </div>
         <div v-if="$i18n.locale === 'en'">
           <div class="text-h3" :class="{ 'text-h5': $q.screen.xs }">
             An email with your order number has been sent to you.
@@ -44,39 +44,39 @@
 
 <script>
 import { useMeta } from 'quasar'
-// import { computed, toRefs } from 'vue'
-// import { useArtistsStore } from 'stores/artists-store.js'
-// import { storeToRefs } from 'pinia'
-// import { findWork } from 'src/composables/findWork.js'
+import { computed, toRefs } from 'vue'
+import { useArtistsStore } from 'stores/artists-store.js'
+import { storeToRefs } from 'pinia'
+import { findWork } from 'src/composables/findWork.js'
 
 export default {
   name: 'ThankYouPage',
-  setup() {
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
+  setup(props) {
+    const { id } = toRefs(props)
+    const artistsStore = useArtistsStore()
+    const { artistsList, allWorks } = storeToRefs(artistsStore)
+    const { getArtists } = artistsStore
+    console.log(artistsList.value)
+    if (!id.value.includes('-')) {
+      if (!artistsList.value.length) getArtists()
+    }
+    const work = computed(() => findWork(allWorks, id))
     useMeta(() => {
       return {
         title: 'Aorta Social Art Gallery',
         titleTemplate: (title) => `${title} | Thank You`
       }
     })
+    return {
+      work
+    }
   }
-  // props: {
-  //   workId: {
-  //     type: String,
-  //     required: true
-  //   }
-  // },
-  // setup(props) {
-  //   const { workId } = toRefs(props)
-  //   const artistsStore = useArtistsStore()
-  //   const { filterArtistsDraft, allWorks } = storeToRefs(artistsStore)
-  //   const { getArtists } = artistsStore
-  //   if (!filterArtistsDraft.value.length) getArtists()
-  //   const work = computed(() => findWork(allWorks, workId))
-
-  //   return {
-  //     work
-  //   }
-  // }
 }
 </script>
 

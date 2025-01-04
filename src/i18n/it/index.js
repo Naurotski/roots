@@ -130,8 +130,27 @@ export default {
     total: 'Totale'
   },
   merch: {
+    buyItAgain: 'Compralo di nuovo',
     colour: 'colore:',
+    orderPlaced: 'Ordine effettuato:',
+    order: 'Ordine',
     seeOptions: 'Vedi opzioni',
-    size: 'Taglia'
+    size: 'Taglia',
+    youHaveNoOrders: 'Non hai ordini'
+  },
+  ordersPrintFul: {
+    archived: "L'ordine è stato archiviato e nascosto dall'interfaccia utente.",
+    canceled: "'L'ordine è stato annullato e non può più essere elaborato.",
+    draft:
+      "L'ordine è stato creato ma non è ancora stato inviato per l'evasione. Puoi comunque modificarlo e confermarlo in seguito.",
+    failed:
+      "L'ordine è stato inoltrato per l'evasione, ma è stato restituito per la revisione a causa di un errore (problema con l'indirizzo, file di stampa mancanti, addebito non riuscito, ecc.).",
+    fulfilled: 'Tutti gli articoli sono stati spediti con successo.',
+    inprocess: "L'ordine è in fase di evasione e non può più essere annullato o modificato.",
+    onhold:
+      "Si è verificato un problema durante l'evasione dell'ordine che deve essere risolto insieme al servizio clienti prima che l'evasione possa proseguire.",
+    partial:
+      "L'ordine è stato evaso parzialmente (alcuni articoli sono già stati spediti, il resto seguirà).",
+    pending: "L'ordine è stato inoltrato per l'evasione, ma non è ancora stato accettato."
   }
 }
