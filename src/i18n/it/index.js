@@ -127,7 +127,7 @@ export default {
     tartShopping: 'Inizia a fare shopping',
     thisPriceIsNotFinal:
       "Questo prezzo non è definitivo. Per aggiungere le spese di spedizione è necessario specificare l'indirizzo.",
-    total: 'Totale'
+    total: 'Totale:'
   },
   merch: {
     buyItAgain: 'Compralo di nuovo',
@@ -136,6 +136,7 @@ export default {
     order: 'Ordine',
     seeOptions: 'Vedi opzioni',
     size: 'Taglia',
+    status: 'Stato',
     youHaveNoOrders: 'Non hai ordini'
   },
   ordersPrintFul: {

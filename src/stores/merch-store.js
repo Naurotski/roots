@@ -33,7 +33,7 @@ export const useMerchStore = defineStore('merch', () => {
     { label: 'links.notebooks', name: 'notebooks' },
     { label: 'links.casesForIPhone', name: 'casesForIPhone' }
   ])
-  const statusOrderPrintFul = {
+  const listStatusOrderPrintFul = {
     archived: 'ordersPrintFul.archived',
     canceled: 'ordersPrintFul.canceled',
     draft: 'ordersPrintFul.draft',
@@ -148,6 +148,7 @@ export const useMerchStore = defineStore('merch', () => {
         if (path === '/countries') {
           printFulCountries.value = response.data.result
         }
+        return response.data.result
       } else {
         const response = await apiAxios.post('/printFul', {
           path,
@@ -178,7 +179,7 @@ export const useMerchStore = defineStore('merch', () => {
   return {
     colorMappingPrintFul,
     merchLinks,
-    statusOrderPrintFul,
+    listStatusOrderPrintFul,
     merchList,
     printFulCountries,
     shippingRates,

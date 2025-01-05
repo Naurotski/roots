@@ -126,7 +126,7 @@ export default {
     tartShopping: 'Start shopping',
     thisPriceIsNotFinal:
       'This price is not final. To add shipping costs you need to specify the address.',
-    total: 'Total'
+    total: 'Total:'
   },
   merch: {
     buyItAgain: 'Buy it again',
@@ -135,6 +135,7 @@ export default {
     order: 'Order',
     seeOptions: 'See options',
     size: 'Size',
+    status: 'Status',
     youHaveNoOrders: 'You have no orders'
   },
   ordersPrintFul: {
