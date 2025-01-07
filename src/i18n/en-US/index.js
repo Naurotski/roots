@@ -130,9 +130,11 @@ export default {
   },
   merch: {
     buyItAgain: 'Buy it again',
+    carrier: 'Carrier:',
     colour: 'colour:',
     orderPlaced: 'Order placed:',
-    order: 'Order',
+    order: 'Order:',
+    personalDeliveryConditions: 'Personal delivery conditions',
     seeOptions: 'See options',
     size: 'Size',
     status: 'Status',
@@ -152,6 +154,8 @@ export default {
     partial:
       'The order is partially fulfilled (some items are shipped already, the rest will follow)',
     pending:
-      'The order has been submitted for fulfillment, but is not yet accepted for fulfillment.'
+      'The order has been submitted for fulfillment, but is not yet accepted for fulfillment.',
+    packageReturned: 'Package returned',
+    packageShipped: 'Package shipped'
   }
 }

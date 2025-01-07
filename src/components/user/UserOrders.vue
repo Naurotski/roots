@@ -15,8 +15,7 @@
     </div>
   </div>
   <order-card v-else v-for="order in orders" :key="order.id" :order="order" />
-  <pre>listRubrics = {{ listRubrics }}</pre>
-  <pre>orders = {{ orders }}</pre>
+  <!--  <pre>orders = {{ orders }}</pre>-->
 </template>
 
 <script>

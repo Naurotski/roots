@@ -24,10 +24,17 @@
             Se non vedi l'e-mail, controlla lo spam.
           </div>
         </div>
-        <div class="text-h3" :class="{ 'text-h5': $q.screen.xs }">
+        <div v-if="work" class="text-h3" :class="{ 'text-h5': $q.screen.xs }">
           {{ $t('common.delivery') }}
         </div>
-
+        <div v-if="work" class="text-h3" :class="{ 'text-h5': $q.screen.xs }">
+          <div v-if="$i18n.locale === 'en'">
+            You can track information about your order in your personal account.
+          </div>
+          <div>
+            Puoi tenere traccia delle informazioni sul tuo ordine nel tuo account personale.
+          </div>
+        </div>
         <q-btn
           class="q-mt-xl"
           color="white"

@@ -1,15 +1,23 @@
 <template>
   <div class="row q-my-xs">
-    <div class="col-3">
+    <div class="col-3 relative-position flex flex-center">
       <q-img
         :src="item.urlImageWork"
         :alt="item.name"
         fit="contain"
         :style="$q.screen.xs ? 'max-height: 150px' : 'height: 150px'"
-      />
+      ></q-img>
+      <q-badge
+        v-if="item.quantity && item.quantity !== 1"
+        class="absolute shadow-3 glossy my-badge-class"
+        color="grey"
+        style="bottom: 15px"
+        :style="$q.screen.xs ? 'right: 15px' : 'right: 55px'"
+        >{{ item.quantity }}</q-badge
+      >
     </div>
     <div class="col-9 q-px-xs column">
-      <div :class="{ 'text-subtitle1': $q.screen.xs }" class="text-h6 text-bold">
+      <div :class="{ 'text-subtitle2': $q.screen.xs }" class="text-h6 text-bold">
         {{ item.name }}
       </div>
       <div :class="{ 'text-body2': $q.screen.xs }" class="text-justify text-body1">

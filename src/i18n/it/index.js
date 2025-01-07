@@ -131,9 +131,11 @@ export default {
   },
   merch: {
     buyItAgain: 'Compralo di nuovo',
+    carrier: 'Vettore:',
     colour: 'colore:',
     orderPlaced: 'Ordine effettuato:',
-    order: 'Ordine',
+    order: 'Ordine:',
+    personalDeliveryConditions: 'Termini di consegna personali',
     seeOptions: 'Vedi opzioni',
     size: 'Taglia',
     status: 'Stato',
@@ -152,6 +154,8 @@ export default {
       "Si è verificato un problema durante l'evasione dell'ordine che deve essere risolto insieme al servizio clienti prima che l'evasione possa proseguire.",
     partial:
       "L'ordine è stato evaso parzialmente (alcuni articoli sono già stati spediti, il resto seguirà).",
-    pending: "L'ordine è stato inoltrato per l'evasione, ma non è ancora stato accettato."
+    pending: "L'ordine è stato inoltrato per l'evasione, ma non è ancora stato accettato.",
+    packageReturned: 'Pacco restituito',
+    packageShipped: 'Pacco spedito'
   }
 }

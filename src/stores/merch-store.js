@@ -42,7 +42,9 @@ export const useMerchStore = defineStore('merch', () => {
     inprocess: 'ordersPrintFul.inprocess',
     onhold: 'ordersPrintFul.onhold',
     partial: 'ordersPrintFul.partial',
-    pending: 'ordersPrintFul.pending'
+    pending: 'ordersPrintFul.pending',
+    package_returned: 'ordersPrintFul.packageReturned',
+    package_shipped: 'ordersPrintFul.packageShipped'
   }
   const authStore = useAuthStore()
   const { loggedIn } = storeToRefs(authStore)
