@@ -27,11 +27,11 @@
         <div v-if="work" class="text-h3" :class="{ 'text-h5': $q.screen.xs }">
           {{ $t('common.delivery') }}
         </div>
-        <div v-if="work" class="text-h3" :class="{ 'text-h5': $q.screen.xs }">
+        <div v-else class="text-h4" :class="{ 'text-h6': $q.screen.xs }">
           <div v-if="$i18n.locale === 'en'">
             You can track information about your order in your personal account.
           </div>
-          <div>
+          <div v-else>
             Puoi tenere traccia delle informazioni sul tuo ordine nel tuo account personale.
           </div>
         </div>
