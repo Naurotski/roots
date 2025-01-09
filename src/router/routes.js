@@ -1,4 +1,4 @@
-const isMaintenanceMode = false
+const isMaintenanceMode = true
 
 const routes = isMaintenanceMode
   ? [

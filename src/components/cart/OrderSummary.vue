@@ -120,7 +120,7 @@ export default {
       if (deliveryDetails.value.state) {
         return `${deliveryDetails.value.address} ${deliveryDetails.value.city} ${deliveryDetails.value.postalCode} ${deliveryDetails.value.state.name} ${deliveryDetails.value.country?.countryName}`
       } else if (deliveryDetails.value.country?.countryName === 'Italy') {
-        return `${deliveryDetails.value.address} ${deliveryDetails.value.city} ${deliveryDetails.value.postalCode} ${deliveryDetails.value.country?.countryName} taxId: ${deliveryDetails.value.taxId}}`
+        return `${deliveryDetails.value.address} ${deliveryDetails.value.city} ${deliveryDetails.value.postalCode} ${deliveryDetails.value.country?.countryName} taxId: ${deliveryDetails.value.taxId}`
       } else {
         return `${deliveryDetails.value.address} ${deliveryDetails.value.city} ${deliveryDetails.value.postalCode} ${deliveryDetails.value.country?.countryName} `
       }
