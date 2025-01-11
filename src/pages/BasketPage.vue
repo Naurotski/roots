@@ -59,13 +59,12 @@
         </div>
         <order-summary
           ref="orderSummary"
+          v-model="selectedShippingRate"
           :cart="cart"
           :cart-counter="cartCounter"
           @order-created="payOrder"
         />
       </div>
-      <!--      <pre>line_items - {{ line_items }}</pre>-->
-      <!--      <pre>shippingDetails - {{ shippingDetails }}</pre>-->
     </q-page>
   </transition>
 </template>
@@ -103,6 +102,7 @@ export default {
     const userStore = useUserStore()
     const { userData } = storeToRefs(userStore)
     const orderSummary = ref()
+    const selectedShippingRate = ref(null)
     const filteredActionsI18n = computed(() => {
       if (locale.value === 'it') {
         return Object.values(cart.value).map((item) => ({
@@ -122,16 +122,32 @@ export default {
         0
       )
     )
-    console.log('cart.value -------', cart.value)
-    const line_items = computed(() => createLineItems(Object.values(cart.value)) || [])
-
+    const line_items = computed(() => {
+      if (selectedShippingRate.value) {
+        return (
+          createLineItems([
+            ...Object.values(cart.value),
+            {
+              id: 'shipping',
+              quantity: 1,
+              rate: selectedShippingRate.value.rate,
+              name: 'Shipping',
+              nameIt: 'Spedizione',
+              description: selectedShippingRate.value.name,
+              descriptionIt: selectedShippingRate.value.name
+            }
+          ]) || []
+        )
+      } else {
+        return []
+      }
+    })
     const singIn = () => {
       if (!loginDialog.value && !loggedIn.value) {
         showLoginDialog(true)
       }
     }
     const payOrder = async (printFulOrderId) => {
-      console.log('payOrder ---', printFulOrderId)
       await payStripe({
         cancel_url: route.path,
         line_items: line_items.value,
@@ -176,6 +192,7 @@ export default {
       loggedIn,
       cart,
       cartCounter,
+      selectedShippingRate,
       filteredActionsI18n,
       subtotal,
       orderSummary,

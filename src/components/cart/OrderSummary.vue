@@ -66,9 +66,6 @@
       :email="deliveryDetails.email"
     />
   </div>
-  <!--  <pre>shippingDetails - {{ shippingDetails }}</pre>-->
-  <!--  <pre>selectedShippingRate - {{ selectedShippingRate }}</pre>-->
-  <!--  <pre>cart - {{ cart }}</pre>-->
 </template>
 
 <script>
@@ -86,6 +83,10 @@ export default {
   name: 'OrderSummary',
   components: { LoginRequiredDialog, DeliveryDetailsDialog },
   props: {
+    modelValue: {
+      type: Object,
+      default: () => null
+    },
     cart: {
       type: Object,
       required: true
@@ -95,10 +96,10 @@ export default {
       required: true
     }
   },
-  emits: ['orderCreated'],
+  emits: ['update:modelValue', 'orderCreated'],
   setup(props, { emit }) {
     const { locale } = useI18n({ useScope: 'global' })
-    const { cart } = toRefs(props)
+    const { modelValue, cart } = toRefs(props)
     const authStore = useAuthStore()
     const { loggedIn } = toRefs(authStore)
     const { checkUserExistence } = authStore
@@ -112,10 +113,18 @@ export default {
     const { shippingRates } = storeToRefs(merchStore)
     const { updateShippingRates, printFul } = merchStore
     const deliveryDetails = ref({})
-    const selectedShippingRate = ref(null)
+    const selectedShippingRate = computed({
+      get() {
+        return modelValue.value
+      },
+      set(val) {
+        emit('update:modelValue', val)
+      }
+    })
     const recipient = ref({})
     const requiredDialog = ref(false)
     const authProvider = ref([])
+
     const deliveryAddress = computed(() => {
       if (deliveryDetails.value.state) {
         return `${deliveryDetails.value.address} ${deliveryDetails.value.city} ${deliveryDetails.value.postalCode} ${deliveryDetails.value.state.name} ${deliveryDetails.value.country?.countryName}`
@@ -179,8 +188,8 @@ export default {
           locale: locale.value === 'it' ? 'it_IT' : 'en_US'
         }
         printFul('/shipping/rates', details)
-          .then(() => (selectedShippingRate.value = shippingRates.value[0]))
-          .catch(() => (selectedShippingRate.value = null))
+          .then(() => emit('update:modelValue', shippingRates.value[0]))
+          .catch(() => emit('update:modelValue', null))
       } else {
         updateShippingRates([])
       }
