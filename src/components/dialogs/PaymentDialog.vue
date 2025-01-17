@@ -132,7 +132,6 @@ export default {
       }
     }
     const images = (work) => {
-      console.log(work)
       if (String(work.id).includes('-')) {
         return [
           work.urlImage || work.urlImageWork,

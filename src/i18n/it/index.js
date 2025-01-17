@@ -105,6 +105,7 @@ export default {
   settings: {
     datePurchase: 'Data di acquisto',
     noPurchases: 'Non hai ancora acquisti',
+    sendPasswordReset: 'Invia reimposta password',
     setNewPhoto: 'Imposta Nuova Foto'
   },
   cart: {

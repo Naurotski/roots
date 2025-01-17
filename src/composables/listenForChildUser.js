@@ -32,7 +32,7 @@ export const listenForChildUser = (uid, parent) => {
   })
   onChildRemoved(dbRef(db, path), (data) => {
     if (parent === 'userData') {
-      console.log('onChildRemoved-userData -', data.key, ':', data.val())
+      // console.log('onChildRemoved-userData -', data.key, ':', data.val())
     }
     if (parent === 'cart') {
       // console.log('onChildRemoved-cart -', data.key, ':', data.val())

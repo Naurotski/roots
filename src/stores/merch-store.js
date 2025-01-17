@@ -52,6 +52,7 @@ export const useMerchStore = defineStore('merch', () => {
   const { cart } = storeToRefs(stripeStore)
   const { addProductToCart, updateCart } = stripeStore
   const merchList = ref({})
+  const merchHomePageList = ref([])
   const printFulCountries = ref([])
   const shippingRates = ref([])
   const updateMerchList = (product) => {
@@ -72,6 +73,18 @@ export const useMerchStore = defineStore('merch', () => {
       }
       merchList.value[product.rubric][product.id] = product
     }
+  }
+  const updateMerchHomePageList = (item) => {
+    if (item.variants) {
+      let maxPrice = Math.max(...item.variants.map((item) => item.price))
+      let minPrice = Math.min(...item.variants.map((item) => item.price))
+      if (maxPrice === minPrice) {
+        item.price = maxPrice
+      } else {
+        item.price = `${minPrice.toString()} - €${maxPrice.toString()}`
+      }
+    }
+    merchHomePageList.value.push(item)
   }
   const updateShippingRates = (payload) => (shippingRates.value = payload)
   const listenForChildMerch = (rubric) => {
@@ -140,7 +153,6 @@ export const useMerchStore = defineStore('merch', () => {
     }
   }
   const printFul = async (path, payload) => {
-    console.log('printFul --', path, payload)
     try {
       if (!payload) {
         const response = await apiAxios.post('/printFul', {
@@ -157,7 +169,6 @@ export const useMerchStore = defineStore('merch', () => {
           payload,
           token: printFullToken
         })
-        console.log('printFul-response.data ----', response.data)
         if (path === '/shipping/rates') {
           if (response.data.errorData) {
             updateShippingRates([{ errorMessage: response.data.errorData.result }])
@@ -167,7 +178,6 @@ export const useMerchStore = defineStore('merch', () => {
           }
         }
         if (path === '/orders') {
-          console.log(response.data)
           return response.data.result.id
         }
       }
@@ -183,11 +193,14 @@ export const useMerchStore = defineStore('merch', () => {
     merchLinks,
     listStatusOrderPrintFul,
     merchList,
+    merchHomePageList,
     printFulCountries,
     shippingRates,
+    updateMerchHomePageList,
     updateShippingRates,
     listenForChildMerch,
     checkExistenceMerch,
+    getProductsPrintFul,
     printFul
   }
 })

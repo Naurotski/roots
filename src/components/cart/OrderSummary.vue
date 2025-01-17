@@ -144,7 +144,6 @@ export default {
     watch(
       userData,
       (val) => {
-        console.log('watch - userData ----', val, shippingDetails.value)
         if (Object.keys(shippingDetails.value).length) {
           deliveryDetails.value = { ...shippingDetails.value }
         }
@@ -168,7 +167,6 @@ export default {
       { immediate: true, deep: true }
     )
     const getSippingRates = () => {
-      console.log(Object.values(deliveryDetails.value))
       if (deliveryDetails.value.country && Object.keys(cart.value).length) {
         recipient.value = {
           address1: deliveryDetails.value.address,
@@ -198,12 +196,10 @@ export default {
     watch([cart, locale], () => getSippingRates(), { immediate: true, deep: true })
 
     const saveSippingDetails = async () => {
-      console.log('saveSippingDetails--', deliveryDetails.value)
       changeShippingDetails(deliveryDetails.value)
       getSippingRates()
     }
     const createOrder = async () => {
-      console.log('createOrder')
       if (!loggedIn.value) {
         authProvider.value = await checkUserExistence(deliveryDetails.value.email)
         requiredDialog.value = true

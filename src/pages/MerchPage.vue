@@ -175,7 +175,6 @@ export default {
       { immediate: true, deep: true }
     )
     const addToCart = (merch) => {
-      console.log('addToCart =========', merch)
       if (loggedIn.value) {
         addProductToCart({
           ...merch,

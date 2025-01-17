@@ -195,11 +195,9 @@ export default {
     const { modelValue } = toRefs(props)
     const user = computed({
       get() {
-        console.log('modelValue.value ===', modelValue.value)
         return modelValue.value
       },
       set(value) {
-        console.log('user = computed ---', value)
         emit('update:modelValue', value)
       }
     })

@@ -99,7 +99,6 @@ export default {
       }
     })
     watch(authProvider, (val) => {
-      console.log(val)
       switch (val[0]) {
         case 'password':
           textMessage.value = t('dialoguePayment.loginRequired')

@@ -104,6 +104,7 @@ export default {
   settings: {
     datePurchase: 'Date of purchase',
     noPurchases: 'You have no purchases yet',
+    sendPasswordReset: 'Send password reset',
     setNewPhoto: 'Set New Photo'
   },
   cart: {

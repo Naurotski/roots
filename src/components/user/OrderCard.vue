@@ -106,8 +106,6 @@ export default {
       }
     )
     const getStatusOrder = () => {
-      console.log('getStatusOrder ---', order.value.statusOrder)
-      console.log('getStatusOrder ---', order.value.printFulOrderId)
       if (order.value.printFulOrderId) {
         if (order.value.statusOrder) {
           statusOrder.value = listStatusOrderPrintFul[order.value.statusOrder]

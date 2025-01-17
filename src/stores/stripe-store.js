@@ -76,7 +76,6 @@ export const useStripeStore = defineStore('stripe', () => {
     }
   }
   const payStripe = async (paymentDetails) => {
-    console.log('payStripe ---------', paymentDetails)
     Loading.show()
     try {
       const accessToken = await auth.currentUser.getIdToken(true)

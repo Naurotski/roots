@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
+import axios from 'axios'
 import { ref as dbRef, onValue } from 'firebase/database'
 import { db } from 'boot/firebase.js'
-import axios from 'axios'
 import { apiAxios } from 'boot/axios'
+import { useMerchStore } from 'stores/merch-store'
 import { showErrorMessage } from 'src/composables/show-error-message.js'
 
 export const useSharedStore = defineStore('shared', () => {
@@ -33,6 +34,8 @@ export const useSharedStore = defineStore('shared', () => {
     // { label: 'links.settings', name: 'UserSettings' }
   ])
   //{ label: 'links.graphics', name: 'graphics' },   { label: 'links.installation', name: 'installation' }
+  const merchStore = useMerchStore()
+  const { getProductsPrintFul, updateMerchHomePageList } = merchStore
   const rightDrawerOpen = ref(false)
   const carouselHomePage = ref([])
   const selectedExhibitionsData = ref({})
@@ -56,6 +59,13 @@ export const useSharedStore = defineStore('shared', () => {
         carouselHomePage.value = dataPage.imagesUrlForCarousel || []
         selectedExhibitionsData.value = dataPage.selectedExhibition || {}
         worksForSale.value = dataPage.worksForSale || []
+        let productData = dataPage.merchHomePage
+        if (productData) {
+          for (const item of productData) {
+            const variants = await getProductsPrintFul(item.printFulProductId)
+            updateMerchHomePageList({ ...item, variants })
+          }
+        }
         // const cacheCarouselHomePage = await caches.open('carouselList')
         // await Promise.all(
         //   dataPage.imagesUrlForCarousel.map((item) => cacheCarouselHomePage.add(item.imageUrl))

@@ -53,12 +53,20 @@
           </q-carousel-control>
         </template>
       </q-carousel>
-      <title-line v-if="worksForSale.length" class="q-mt-lg">
+      <title-line v-if="worksList.length" class="q-mt-lg">
         {{ $t('common.shopArt').toUpperCase() }}
       </title-line>
       <transition appear enter-active-class="animated fadeIn">
         <small-page-container class="justify-around">
-          <works-list :works-list="worksForSale" />
+          <works-list :works-list="worksList" />
+        </small-page-container>
+      </transition>
+      <title-line v-if="filterMerchList.length" class="q-mt-lg">
+        {{ $t('links.shop').toUpperCase() }}
+      </title-line>
+      <transition appear enter-active-class="animated fadeIn">
+        <small-page-container class="justify-around">
+          <merch-list :list="filterMerchList" />
         </small-page-container>
       </transition>
     </q-page>
@@ -71,14 +79,17 @@ import { date, useMeta } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useSharedStore } from 'stores/shared-store.js'
+import { useMerchStore } from 'stores/merch-store'
 
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import WorksList from 'components/WorksList.vue'
 import TitleLine from 'components/TitleLine.vue'
+import MerchList from 'components/merch/MerchList.vue'
 
 export default defineComponent({
   name: 'HomePage',
   components: {
+    MerchList,
     SmallPageContainer,
     WorksList,
     TitleLine
@@ -90,6 +101,8 @@ export default defineComponent({
     const { carouselHomePage, selectedExhibitionsData, worksForSale } = storeToRefs(sharedStore)
     const { getHomePageData } = sharedStore
     if (!carouselHomePage.value.length) getHomePageData()
+    const merchStore = useMerchStore()
+    const { merchHomePageList } = storeToRefs(merchStore)
     const lifeTimeExhibition = computed(() =>
       date.formatDate(selectedExhibitionsData.value.openingDate, 'x') > Date.now()
         ? 'upcoming'
@@ -118,6 +131,15 @@ export default defineComponent({
         return []
       }
     })
+    const filterMerchList = computed(() =>
+      merchHomePageList.value.map((item) => {
+        if (locale.value === 'it') {
+          return { ...item, name: item.nameIt, description: item.descriptionIt }
+        } else {
+          return { ...item }
+        }
+      })
+    )
     useMeta(() => {
       return {
         title: 'Aorta Social Art Gallery',
@@ -141,7 +163,7 @@ export default defineComponent({
       lifeTimeExhibition,
       selectedExhibitionsData,
       worksList,
-      worksForSale
+      filterMerchList
     }
   }
 })

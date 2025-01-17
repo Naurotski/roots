@@ -69,7 +69,6 @@ export default {
     const artistsStore = useArtistsStore()
     const { artistsList, allWorks } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
-    console.log(artistsList.value)
     if (!id.value.includes('-')) {
       if (!artistsList.value.length) getArtists()
     }

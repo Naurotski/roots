@@ -37,9 +37,10 @@
     <q-btn
       outline
       rounded
+      no-caps
       v-if="userData.providerId === 'password'"
       :class="{ 'full-width': $q.screen.xs }"
-      label="sendPassword"
+      :label="$t('settings.sendPasswordReset')"
       @click="sendPassword"
     />
   </div>
@@ -191,6 +192,7 @@ export default {
     const sendPassword = () => {
       sendPasswordReset().finally(() => {
         $q.notify({
+          position: 'top',
           color: 'grey',
           timeout: 10000,
           message: t('auth.sendPasswordReset'),

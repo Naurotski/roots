@@ -80,7 +80,6 @@ export default {
           })
         )
       } else {
-        console.log(work)
         updateCart({ key: work.id, value: { ...work, quantityCart: 1 } })
       }
     }
