@@ -310,9 +310,9 @@ useMeta(() => {
         content:
           'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
       },
-      keywords: {
-        name: 'keywords',
-        content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy '
+      robots: {
+        name: 'robots',
+        content: 'noindex, nofollow'
       }
     }
   }

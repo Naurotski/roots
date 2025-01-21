@@ -19,7 +19,13 @@ export default defineComponent({
     useMeta(() => {
       return {
         title: 'Aorta Social Art Gallery',
-        titleTemplate: (title) => `${title} | Technical Work`
+        titleTemplate: (title) => `${title} | Technical Work`,
+        meta: {
+          robots: {
+            name: 'robots',
+            content: 'noindex, nofollow'
+          }
+        }
       }
     })
   }

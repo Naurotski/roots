@@ -42,7 +42,13 @@ export default {
     useMeta(() => {
       return {
         title: 'Aorta Social Art Gallery',
-        titleTemplate: (title) => `${title} | Press`
+        titleTemplate: (title) => `${title} | Press`,
+        meta: {
+          robots: {
+            name: 'robots',
+            content: 'noindex, nofollow'
+          }
+        }
       }
     })
     return {

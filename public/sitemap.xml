@@ -18,7 +18,22 @@
   <url>
     <loc>https://aortagallery.com/about</loc>
     <lastmod>2025-01-11T16:23:04.736Z</lastmod>
-    <changefreq>monthly</changefreq><priority>1.0</priority></url><url><loc>https://aortagallery.com/actions/exhibitions</loc><lastmod>2025-01-11T16:23:04.736Z</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url><url><loc>https://aortagallery.com/sale</loc><lastmod>2025-01-11T16:23:04.736Z</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url><url><loc>https://aortagallery.com/shop</loc><lastmod>2025-01-11T16:23:04.736Z</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url><url><loc>https://aortagallery.com/basket</loc><lastmod>2025-01-11T16:23:04.736Z</lastmod><changefreq>monthly</changefreq><priority>0.2</priority></url>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://aortagallery.com/actions/exhibitions</loc>
+    <lastmod>2025-01-11T16:23:04.736Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aortagallery.com/sale</loc>
+    <lastmod>2025-01-11T16:23:04.736Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url><loc>https://aortagallery.com/shop</loc><lastmod>2025-01-11T16:23:04.736Z</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url><url><loc>https://aortagallery.com/basket</loc><lastmod>2025-01-11T16:23:04.736Z</lastmod><changefreq>monthly</changefreq><priority>0.2</priority></url>
   <url>
     <loc>https://aortagallery.com/privacy</loc>
     <lastmod>2025-01-11T16:23:04.736Z</lastmod>

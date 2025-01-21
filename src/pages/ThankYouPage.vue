@@ -76,7 +76,13 @@ export default {
     useMeta(() => {
       return {
         title: 'Aorta Social Art Gallery',
-        titleTemplate: (title) => `${title} | Thank You`
+        titleTemplate: (title) => `${title} | Thank You`,
+        meta: {
+          robots: {
+            name: 'robots',
+            content: 'noindex, nofollow'
+          }
+        }
       }
     })
     return {

@@ -152,6 +152,16 @@ export default defineComponent({
           keywords: {
             name: 'keywords',
             content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy'
+          },
+          robots: {
+            name: 'robots',
+            content: 'index, follow'
+          }
+        },
+        link: {
+          canonical: {
+            rel: 'canonical',
+            href: 'https://aortagallery.com/home'
           }
         }
       }

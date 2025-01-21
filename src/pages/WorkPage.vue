@@ -133,6 +133,10 @@ export default {
           keywords: {
             name: 'keywords',
             content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
+          },
+          robots: {
+            name: 'robots',
+            content: 'index, follow'
           }
         }
       }

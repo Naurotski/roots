@@ -55,6 +55,16 @@ export default {
           keywords: {
             name: 'keywords',
             content: 'Buy paintings, sculptures, contemporary art in Pisa, souvenirs Italy'
+          },
+          robots: {
+            name: 'robots',
+            content: 'index, follow'
+          }
+        },
+        link: {
+          canonical: {
+            rel: 'canonical',
+            href: 'https://aortagallery.com/artists'
           }
         }
       }
