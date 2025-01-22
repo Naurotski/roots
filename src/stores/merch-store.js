@@ -1,6 +1,7 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { ref } from 'vue'
 import { Loading } from 'quasar'
+import { useRoute} from 'vue-router'
 import {
   ref as dbRef,
   onChildAdded,
@@ -46,6 +47,7 @@ export const useMerchStore = defineStore('merch', () => {
     package_returned: 'ordersPrintFul.packageReturned',
     package_shipped: 'ordersPrintFul.packageShipped'
   }
+  const route = useRoute()
   const authStore = useAuthStore()
   const { loggedIn } = storeToRefs(authStore)
   const stripeStore = useStripeStore()
@@ -131,7 +133,7 @@ export const useMerchStore = defineStore('merch', () => {
 
   const getProductsPrintFul = async (productId) => {
     try {
-      Loading.show()
+      if (route.name === 'Shop') Loading.show()
       const response = await apiAxios.post('/printFul', {
         path: `/store/products/${productId}`,
         token: printFullToken
