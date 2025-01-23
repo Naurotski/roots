@@ -46,7 +46,7 @@
               text-color="white text-weight-bolder"
               unelevated
               :to="`actions/exhibitions?lifeTime=${lifeTimeExhibition}&id=${selectedExhibitionsData.id}`"
-              :label="$t('common.goExhibition')"
+              :label="$t('common.exhibition')"
               no-caps
               icon-right="mdi-arrow-right-bold"
             />

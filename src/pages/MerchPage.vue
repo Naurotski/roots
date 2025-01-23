@@ -1,13 +1,13 @@
 <template>
   <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-    <q-page v-if="merch" class="q-pa-md" style="padding-top: 65px">
-      <small-page-container class="q-pt-md">
-        <div class="col-12 col-sm-6">
+    <q-page v-if="merch" class="flex flex-center q-pb-md">
+      <small-page-container>
+        <div class="col-12 col-sm-7">
           <q-card-section>
             <carousel-component v-if="allUrlImages.length" :url-images="allUrlImages" />
           </q-card-section>
         </div>
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-sm-5">
           <q-card-section>
             <div class="text-h5 text-bold q-pt-none" v-text="merch.name" />
             <div style="white-space: pre-line" class="text-justify text-body1">
@@ -80,7 +80,14 @@
             />
           </q-card-section>
         </div>
-        <q-btn outline rounded size="md" icon="mdi-arrow-left-bold" @click="$router.go(-1)" />
+        <q-btn
+          class="q-ml-md"
+          outline
+          rounded
+          size="md"
+          icon="mdi-arrow-left-bold"
+          @click="$router.go(-1)"
+        />
       </small-page-container>
     </q-page>
   </transition>

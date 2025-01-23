@@ -1,7 +1,7 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { ref } from 'vue'
 import { Loading } from 'quasar'
-import { useRoute} from 'vue-router'
+import { useRoute } from 'vue-router'
 import {
   ref as dbRef,
   onChildAdded,
