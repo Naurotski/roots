@@ -158,5 +158,10 @@ export default {
       'The order has been submitted for fulfillment, but is not yet accepted for fulfillment.',
     packageReturned: 'Package returned',
     packageShipped: 'Package shipped'
+  },
+  meta: {
+    homeDescription:
+      'Innovative art gallery in Pisa: contemporary art, virtual reality, and exhibitions in Pisa.',
+    homeTitle: 'Aorta Social Art Gallery'
   }
 }

@@ -96,7 +96,7 @@ export default defineComponent({
   },
   setup() {
     const slide = ref(0)
-    const { locale } = useI18n({ useScope: 'global' })
+    const { locale, t } = useI18n({ useScope: 'global' })
     const sharedStore = useSharedStore()
     const { carouselHomePage, selectedExhibitionsData, worksForSale } = storeToRefs(sharedStore)
     const { getHomePageData } = sharedStore
@@ -142,16 +142,15 @@ export default defineComponent({
     )
     useMeta(() => {
       return {
-        title: 'Aorta Social Art Gallery',
+        title: t('meta.homeTitle'),
         meta: {
           description: {
             name: 'description',
-            content:
-              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+            content: t('meta.homeDescription')
           },
           keywords: {
             name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy'
+            content: t('meta.homeDescription')
           },
           robots: {
             name: 'robots',

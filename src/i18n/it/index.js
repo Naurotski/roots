@@ -158,5 +158,10 @@ export default {
     pending: "L'ordine è stato inoltrato per l'evasione, ma non è ancora stato accettato.",
     packageReturned: 'Pacco restituito',
     packageShipped: 'Pacco spedito'
+  },
+  meta: {
+    homeDescription:
+      "Galleria d'arte innovativa a Pisa: arte contemporanea, realtà virtuale ed esposizioni a Pisa.",
+    homeTitle: "Aorta Galleria d'Arte Sociale"
   }
 }
