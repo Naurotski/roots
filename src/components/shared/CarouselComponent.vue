@@ -5,8 +5,7 @@
       visible
       class="col-2"
       style="height: 500px"
-      :horizontal-offset="[0, 15]"
-      :thumb-style="{ borderRadius: '5px', background: 'red', width: '10px', opacity: 0.5 }"
+      :horizontal-offset="[0, 10]"
     >
       <div class="column flex-center q-gutter-y-sm">
         <div
@@ -68,17 +67,24 @@
       </q-carousel>
     </div>
   </div>
-  <div v-if="$q.screen.lt.lg && urlImages.length > 1" class="text-center">
-    <q-radio
-      v-model="slide"
-      checked-icon="fiber_manual_record"
-      unchecked-icon="panorama_fish_eye"
-      v-for="(item, index) in urlImages"
-      :key="item"
-      :val="index"
-      size="xs"
-    />
-  </div>
+  <q-scroll-area
+    visible
+    v-if="$q.screen.lt.lg && urlImages.length > 1"
+    class="q-mt-md"
+    style="width: 100%; height: 50px"
+  >
+    <div class="no-wrap flex-center">
+      <q-radio
+        v-model="slide"
+        checked-icon="fiber_manual_record"
+        unchecked-icon="panorama_fish_eye"
+        v-for="(item, index) in urlImages"
+        :key="item"
+        :val="index"
+        size="xs"
+      />
+    </div>
+  </q-scroll-area>
 </template>
 
 <script>
