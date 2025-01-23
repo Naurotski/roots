@@ -1,21 +1,37 @@
 <template>
   <div class="row">
-    <div
-      v-if="$q.screen.gt.md"
-      class="q-gutter-y-sm col-2 column flex-center"
+    <q-scroll-area
+      v-if="$q.screen.gt.md && urlImages.length > 1"
+      visible
+      class="col-2"
+      style="height: 500px"
+      :horizontal-offset="[0, 15]"
+      :thumb-style="{ borderRadius: '5px', background: 'red', width: '10px', opacity: 0.5 }"
     >
-      <img
-        class="cursor-pointer"
-        v-for="(url, index) in urlImages"
-        :key="url"
-        :src="url"
-        height="50px"
-        @click="slide = index"
-        :style="index === slide ? 'border: 2px solid black' : 'border: none'"
-        alt="photo"
-      />
-    </div>
-    <div :class="$q.screen.gt.md ? 'col-10' : 'col-12'">
+      <div class="column flex-center q-gutter-y-sm">
+        <div
+          v-for="(url, index) in urlImages"
+          :key="url"
+          class="cursor-pointer"
+          @click="slide = index"
+        >
+          <q-icon
+            v-if="url.includes('video')"
+            :style="index === slide ? 'border: 2px solid red' : 'border: none'"
+            name="fa-solid fa-film"
+            size="xl"
+          />
+          <img
+            v-else
+            :src="url"
+            height="50px"
+            :style="index === slide ? 'border: 2px solid red' : 'border: none'"
+            alt="photo"
+          />
+        </div>
+      </div>
+    </q-scroll-area>
+    <div :class="$q.screen.gt.md && urlImages.length > 1 ? 'col-10' : 'col-12'">
       <q-carousel
         v-model="slide"
         swipeable
