@@ -164,18 +164,18 @@ export default {
     artistsDescription:
       "Mostre a Pisa che presentano giovani artisti nella galleria d'arte contemporanea di Pisa.",
     artistsKeywords:
-      "Artista contemporaneo Opere d'arte di Pittore contemporaneo Scultore moderno Biografia di Esposizioni di Mostre personali Tecniche artistiche di Artista emergente Stile artistico di Galleria opere Artista toscano Arte moderna di Esposizioni a Pisa",
+      "Artista contemporaneo, Opere d'arte di, Pittore contemporaneo, Scultore moderno, Biografia di, Esposizioni di, Mostre personali, Tecniche artistiche di, Artista emergente, Stile artistico di, Galleria opere, Artista toscano, Arte moderna di, Esposizioni a Pisa",
     forSale: 'Acquista opere di giovani artisti contemporanei in una galleria a Pisa.',
     forSaleKeywords:
-      "Prezzi opere d'arte Acquisto sicuro online Spedizione opere d'arte Fotografia artistica contemporanea Arte digitale da acquistare Stampe artistiche in vendita Acquista opere d'arte contemporanea Opere d'arte in vendita Compra dipinti moderni Sculture in vendita Arte contemporanea da collezione Compra opere uniche di Vendita quadri Pisa Arte moderna in vendita Collezione d'arte contemporanea Galleria d'arte contemporanea online Vendita dipinti Pisa Opere uniche di artisti toscani Compra arte contemporanea originale Investimenti in arte moderna Pittura astratta in vendita",
+      "Prezzi opere d'arte, Acquisto sicuro online, Spedizione opere d'arte, Fotografia artistica contemporanea, Arte digitale da acquistare, Stampe artistiche in vendita, Acquista opere d'arte contemporanea, Opere d'arte in vendita, Compra dipinti moderni, Sculture in vendita, Arte contemporanea da collezione, Compra opere uniche di, Vendita quadri Pisa, Arte moderna in vendita, Collezione d'arte contemporanea, Galleria d'arte contemporanea online, Vendita dipinti Pisa, Opere uniche di artisti toscani, Compra arte contemporanea originale, Investimenti in arte moderna, Pittura astratta in vendita",
     homeDescription:
       "Galleria d'arte innovativa a Pisa: arte contemporanea, realtà virtuale ed esposizioni a Pisa.",
     homeKeywords:
-      "Galleria d'arte contemporanea Pisa Arte moderna Pisa Esposizioni d'arte Pisa Mostre d'arte contemporanea Eventi culturali Pisa Pittura contemporanea Scultura moderna Pisa Installazioni artistiche Artisti emergenti Italia Gallerie d'arte in Toscana Turismo culturale Pisa Arte visiva contemporanea Collezioni d'arte Pisa Eventi d'arte Toscana Spazio espositivo Pisa",
+      "Galleria d'arte contemporanea Pisa, Arte moderna Pisa, Esposizioni d'arte Pisa, Mostre d'arte contemporanea, Eventi culturali Pisa, Pittura contemporanea, Scultura moderna Pisa, Installazioni artistiche, Artisti emergenti, Italia Gallerie d'arte in Toscana, Turismo culturale Pisa, Arte visiva contemporanea, Collezioni d'arte Pisa, Eventi d'arte Toscana, Spazio espositivo Pisa",
     homeTitle: "Aorta Galleria d'Arte Sociale",
     shopDescription:
       'Souvenir da Pisa: arte contemporanea per tutti come ricordo di esposizioni uniche a Pisa.',
     shopKeywords:
-      "Offerte su merchandising artistico Spedizione gadget artistici Compra online regali unici Merchandising artistico online Compra gadget ispirati all’arte T-shirt artistiche in vendita Poster d'arte contemporanea Accessori ispirati all'arte moderna Souvenir d'arte Pisa Regali per amanti dell’arte Merchandising galleria d’arte Shopping online di arte moderna Borse con stampe artistiche Prodotti esclusivi d’arte Design contemporaneo per il tuo stile Tazze e accessori d’arte Merchandising artistico personalizzato Collezione moda ispirata all'arte"
+      "Offerte su merchandising artistico, Spedizione gadget artistici, Compra online regali unici, Merchandising artistico online, Compra gadget ispirati all’arte, T-shirt artistiche in vendita, Poster d'arte contemporanea, Accessori ispirati all'arte moderna, Souvenir d'arte Pisa, Regali per amanti dell’arte, Merchandising galleria d’arte, Shopping online di arte moderna, Borse con stampe artistiche, Prodotti esclusivi d’arte, Design contemporaneo per il tuo stile, Tazze e accessori d’arte, Merchandising artistico personalizzato, Collezione moda ispirata all'arte"
   }
 }

@@ -164,18 +164,18 @@ export default {
     artistsDescription:
       "Exhibitions in Pisa showcasing young artists at Pisa's contemporary art gallery.",
     artistsKeywords:
-      'Contemporary artist Artworks by Contemporary painter Modern sculptor Art installations by Biography of  Exhibitions by Solo exhibitions  Artistic techniques Emerging artist Artistic style of  Gallery of works by Tuscan artist Modern art by Exhibitions in Pisa',
+      'Contemporary artist, Artworks by, Contemporary painter, Modern sculptor, Art installations by, Biography of,  Exhibitions by, Solo exhibitions,  Artistic techniques, Emerging artist, Artistic style of,  Gallery of works by, Tuscan artist, Modern art by, Exhibitions in Pisa',
     forSale: 'Buy works by young contemporary artists at a gallery in Pisa.',
     forSaleKeywords:
-      'Art shipping Secure online purchase Artworks pricing Art prints for sale Digital art to buy Contemporary artistic photography Buy contemporary art Artworks for sale Purchase modern paintings Sculptures for sale Collectible contemporary art Buy unique works by [Имя художника] Paintings for sale in Pisa Modern art for sale Contemporary art collection Online contemporary art gallery Paintings for sale Pisa Unique artworks by Tuscan artists Buy original contemporary art Investing in modern art Abstract paintings for sale',
+      'Art shipping, Secure online purchase, Artworks pricing, Art prints for sale, Digital art to buy, Contemporary artistic photography, Buy contemporary art, Artworks for sale, Purchase modern paintings, Sculptures for sale, Collectible contemporary art, Buy unique works by, Paintings for sale in Pisa, Modern art for sale, Contemporary art collection, Online contemporary art gallery, Paintings for sale, Pisa Unique artworks by, Tuscan artists, Buy original contemporary art, Investing in modern art, Abstract paintings for sale',
     homeDescription:
       'Innovative art gallery in Pisa: contemporary art, virtual reality, and exhibitions in Pisa.',
     homeKeywords:
-      'Contemporary art gallery Pisa Modern art Pisa  Art exhibitions Pisa Contemporary art shows Cultural events Pisa Contemporary painting Modern sculpture Pisa Art installations Emerging artists Italy Art galleries in Tuscany Cultural tourism Pisa Contemporary visual art Art collections Pisa Art events Tuscany Exhibition space Pisa',
+      'Contemporary art gallery Pisa, Modern art Pisa,  Art exhibitions Pisa, Contemporary art shows, Cultural events Pisa, Contemporary painting, Modern sculpture Pisa, Art installations, Emerging artists Italy, Art galleries in Tuscany, Cultural tourism Pisa, Contemporary visual art, Art collections Pisa, Art events Tuscany, Exhibition space Pisa',
     homeTitle: 'Aorta Social Art Gallery, ',
     shopDescription:
       'Souvenirs from Pisa: contemporary art for everyone as a memory of unique exhibitions in Pisa.',
     shopKeywords:
-      'Art merchandise discounts Art-themed gadgets shipping Shop unique gifts online Artistic merchandise online Buy art-inspired gadgets Art-themed T-shirts for sale Contemporary art posters Accessories inspired by modern art Art souvenirs Pisa Gifts for art lovers Art gallery merchandise Modern art shopping online Tote bags with artistic prints Exclusive art products Contemporary design for your style Art-themed mugs and accessories Personalized artistic merchandise Fashion collection inspired by art'
+      'Art merchandise discounts, Art-themed gadgets shipping, Shop unique gifts online, Artistic merchandise online, Buy art-inspired gadgets, Art-themed T-shirts for sale, Contemporary art posters, Accessories inspired by modern art, Art souvenirs Pisa, Gifts for art lovers, Art gallery merchandise, Modern art shopping online, Tote bags with artistic prints, Exclusive art products, Contemporary design for your style, Art-themed mugs and accessories, Personalized artistic merchandise, Fashion collection inspired by art'
   }
 }
