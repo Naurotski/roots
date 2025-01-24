@@ -162,6 +162,52 @@ export default defineComponent({
             rel: 'canonical',
             href: 'https://aortagallery.com/home'
           }
+        },
+        script: {
+          jsonLd: {
+            type: 'application/ld+json',
+            json: {
+              "@context": "https://schema.org",
+              "@type": "ArtGallery",
+              "name": "Aorta Social Art Gallery",
+              "url": "https://aortagallery.com",
+              "logo": "~assets/icon1.png",
+              "image": "~assets/aorta-logo.png",
+              "description": "Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.",
+              "address": {
+              "@type": "PostalAddress",
+                "postalCode": "56125",
+                "addressLocality": "Pisa",
+                "addressCountry": "IT",
+                "streetAddress": "Corso Italia 146",
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 43.7117760654017,
+                "longitude": 10.399556980989269
+              },
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": [
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                    "Sunday"
+                  ],
+                  "opens": "12:00",
+                  "closes": "20:00"
+                }
+              ],
+              "sameAs": [
+                "https://www.facebook.com/profile.php?id=100088816940231",
+                "https://www.instagram.com/aorta.socialartgallery/"
+              ]
+            }
+          }
         }
       }
     })
