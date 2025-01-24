@@ -305,11 +305,6 @@ useMeta(() => {
     title: 'Aorta Social Art Gallery',
     titleTemplate: (title) => `${title} | Terms of Sale`,
     meta: {
-      description: {
-        name: 'description',
-        content:
-          'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
-      },
       robots: {
         name: 'robots',
         content: 'noindex, nofollow'

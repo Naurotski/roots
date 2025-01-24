@@ -69,6 +69,7 @@ import { useMeta, useQuasar } from 'quasar'
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store.js'
 import { useUserStore } from 'stores/user-store.js'
 import { useSharedStore } from 'stores/shared-store'
@@ -91,6 +92,7 @@ export default {
   },
   setup() {
     const $q = useQuasar()
+    const { t } = useI18n()
     const router = useRouter()
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
@@ -109,8 +111,8 @@ export default {
     useMeta(() => {
       return {
         title: userData.value.firstName
-          ? `Aorta Social Art Gallery | ${userData.value.firstName} ${userData.value.lastName}`
-          : `Aorta Social Art Gallery | ${userData.value.displayName}`,
+          ? `${t('meta.homeTitle')} | ${userData.value.firstName} ${userData.value.lastName}`
+          : `${t('meta.homeTitle')} | ${userData.value.displayName}`,
         link: {
           canonical: {
             rel: 'canonical',
@@ -121,15 +123,6 @@ export default {
           robots: {
             name: 'robots',
             content: 'noindex, nofollow'
-          },
-          description: {
-            name: 'description',
-            content:
-              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
-          },
-          keywords: {
-            name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
           }
         }
       }

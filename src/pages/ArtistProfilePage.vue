@@ -126,7 +126,7 @@ export default {
   },
   setup(props) {
     const router = useRouter()
-    const { locale } = useI18n({ useScope: 'global' })
+    const { locale, t } = useI18n({ useScope: 'global' })
     const { artistId } = toRefs(props)
     const artistsStore = useArtistsStore()
     const { artistsList } = storeToRefs(artistsStore)
@@ -164,26 +164,29 @@ export default {
     )
     useMeta(() => {
       return {
-        title: 'Aorta Social Art Gallery',
+        title: t('meta.homeTitle'),
         titleTemplate: (title) => `${title} | ${artistData.value.name}`,
-        link: {
-          canonical: {
-            rel: 'canonical',
-            href: `https://aortagallery.com/artists/${artistId.value}`
-          }
-        },
         meta: {
           description: {
             name: 'description',
-            content: artistData.value.description?.split('.')[0]
+            content:
+              locale.value === 'it'
+                ? artistData.value.descriptionIt?.split('.')[0]
+                : artistData.value.description?.split('.')[0]
           },
           keywords: {
             name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy'
+            content: t('meta.artistsKeywords')
           },
           robots: {
             name: 'robots',
             content: 'index, follow'
+          }
+        },
+        link: {
+          canonical: {
+            rel: 'canonical',
+            href: `https://aortagallery.com/artists/${artistId.value}`
           }
         }
       }

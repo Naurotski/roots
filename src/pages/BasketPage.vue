@@ -176,18 +176,9 @@ export default {
         title: 'Aorta Social Art Gallery',
         titleTemplate: (title) => `${title} | Cart`,
         meta: {
-          description: {
-            name: 'description',
-            content:
-              'Aorta Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
-          },
-          keywords: {
-            name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy '
-          },
           robots: {
             name: 'robots',
-            content: 'index, follow'
+            content: 'noindex, nofollow'
           }
         },
         link: {

@@ -110,13 +110,18 @@ export default {
   },
   setup(props) {
     const route = useRoute()
-    const itemRefs = ref([])
-    const elem = computed(() => itemRefs.value.find((item) => item.id === `d${route.query.id}`))
     const $q = useQuasar()
-    const { locale } = useI18n({ useScope: 'global' })
+    const { locale, t } = useI18n({ useScope: 'global' })
     const { typeAction } = toRefs(props)
+    const itemRefs = ref([])
+    const filteredActions = ref([])
     const tab = ref(route.query.lifeTime || $q.localStorage.getItem('tab-actions') || 'archive')
-
+    const elem = computed(() => itemRefs.value.find((item) => item.id === `d${route.query.id}`))
+    const shredStore = useSharedStore()
+    const { actionsLinks } = storeToRefs(shredStore)
+    const actionsStore = useActionStore()
+    const { filterExhibitionsDraft, filterEventsDraft } = storeToRefs(actionsStore)
+    const { getExhibitions, getEvents } = actionsStore
     const unwatch = watchEffect(() => {
       if (elem.value) {
         setTimeout(() => {
@@ -131,12 +136,6 @@ export default {
       $q.localStorage.set('tab-actions', tab.value)
       unwatch()
     })
-    const shredStore = useSharedStore()
-    const { actionsLinks } = storeToRefs(shredStore)
-    const actionsStore = useActionStore()
-    const { filterExhibitionsDraft, filterEventsDraft } = storeToRefs(actionsStore)
-    const { getExhibitions, getEvents } = actionsStore
-    const filteredActions = ref([])
     watchEffect(() => {
       if (typeAction.value === 'exhibitions') {
         if (!filterExhibitionsDraft.value.length) getExhibitions()
@@ -176,26 +175,25 @@ export default {
     }
     useMeta(() => {
       return {
-        title: `Aorta Social Art Gallery | ${ucFirst(typeAction.value)}`,
-        link: {
-          canonical: {
-            rel: 'canonical',
-            href: `https://aortagallery.com/actions/${typeAction.value}`
-          }
-        },
+        title: `${t('meta.homeTitle')} | ${ucFirst(typeAction.value)}`,
         meta: {
           description: {
             name: 'description',
-            content:
-              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+            content: t('meta.homeDescription')
           },
           keywords: {
             name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary, souvenirs art in Pisa Italy'
+            content: t('meta.homeKeywords')
           },
           robots: {
             name: 'robots',
             content: 'index, follow'
+          }
+        },
+        link: {
+          canonical: {
+            rel: 'canonical',
+            href: `https://aortagallery.com/actions/${typeAction.value}`
           }
         }
       }

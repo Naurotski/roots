@@ -27,6 +27,7 @@
 <script>
 import { useMeta } from 'quasar'
 import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
 import { useArtistsStore } from 'stores/artists-store.js'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
@@ -38,23 +39,23 @@ export default {
     SmallPageContainer
   },
   setup() {
+    const { t } = useI18n()
     const artistsStore = useArtistsStore()
     const { artistsList } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
     if (!artistsList.value.length) getArtists()
     useMeta(() => {
       return {
-        title: 'Aorta Social Art Gallery',
-        titleTemplate: (title) => `${title} | Artists`,
+        title: t('meta.homeTitle'),
+        titleTemplate: (title) => `${title} | ${t('links.artists')}`,
         meta: {
           description: {
             name: 'description',
-            content:
-              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+            content: t('meta.artistsDescription')
           },
           keywords: {
             name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art in Pisa, souvenirs Italy'
+            content: t('meta.artistsKeywords')
           },
           robots: {
             name: 'robots',

@@ -53,6 +53,7 @@
       </small-page-container>
     </q-page>
   </transition>
+  <pre>work - {{work}}</pre>
 </template>
 
 <script>
@@ -87,7 +88,7 @@ export default {
   },
   setup(props) {
     const $q = useQuasar()
-    const { t } = useI18n()
+    const { locale, t } = useI18n({ useScope: 'global' })
     const { workId } = toRefs(props)
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
@@ -127,27 +128,29 @@ export default {
     }
     useMeta(() => {
       return {
-        title: `Aorta Social Art Gallery | ${work.value?.name}`,
+        title: `${t('meta.homeTitle')}| ${
+          locale.value === 'it' ? work.value?.nameIt : work.value?.name
+        }`,
+        meta: {
+          description: {
+            name: 'description',
+            content: locale.value === 'it' ? work.value?.materialsIt : work.value?.materials
+          },
+          keywords: {
+            name: 'keywords',
+            content: t('meta.forSaleKeywords')
+          },
+          robots: {
+            name: 'robots',
+            content: 'index, follow'
+          }
+        },
         link: {
           canonical: {
             rel: 'canonical',
             href: `https://aortagallery.com/work/${workId.value}`
           }
         },
-        meta: {
-          description: {
-            name: 'description',
-            content: work.value?.materials
-          },
-          keywords: {
-            name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art in Pisa Italy'
-          },
-          robots: {
-            name: 'robots',
-            content: 'index, follow'
-          }
-        }
       }
     })
     return {

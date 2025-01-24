@@ -29,7 +29,7 @@ export default {
   components: { SmallPageContainer, TitleTabs, MerchList },
   setup() {
     const $q = useQuasar()
-    const { locale } = useI18n({ useScope: 'global' })
+    const { locale, t } = useI18n({ useScope: 'global' })
     const tab = ref($q.localStorage.getItem('tabMerch') || 'mugs')
     const merchStore = useMerchStore()
     const { merchLinks, merchList } = storeToRefs(merchStore)
@@ -57,16 +57,15 @@ export default {
     )
     useMeta(() => {
       return {
-        title: 'Aorta Social Art Gallery | Shop',
+        title: `${t('meta.homeTitle')} | ${t('links.shop')}`,
         meta: {
           description: {
             name: 'description',
-            content:
-              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+            content: t('meta.shopDescription')
           },
           keywords: {
             name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy'
+            content: t('meta.shopKeywords')
           },
           robots: {
             name: 'robots',

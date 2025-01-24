@@ -7,7 +7,7 @@
       style="height: 500px"
       :horizontal-offset="[0, 10]"
     >
-      <div class="column flex-center q-gutter-y-sm">
+      <div class="column flex flex-center q-gutter-y-sm">
         <div
           v-for="(url, index) in urlImages"
           :key="url"
@@ -73,7 +73,7 @@
     class="q-mt-md"
     style="width: 100%; height: 50px"
   >
-    <div class="no-wrap flex-center">
+    <div class="no-wrap flex flex-center">
       <q-radio
         v-model="slide"
         checked-icon="fiber_manual_record"

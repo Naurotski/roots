@@ -30,7 +30,7 @@ export default {
   name: 'SalePage',
   components: { TitleTabs, SmallPageContainer, WorksList },
   setup() {
-    const { locale } = useI18n({ useScope: 'global' })
+    const { locale, t } = useI18n({ useScope: 'global' })
     const $q = useQuasar()
     const sharedStore = useSharedStore()
     const { saleLinks } = storeToRefs(sharedStore)
@@ -62,16 +62,15 @@ export default {
     })
     useMeta(() => {
       return {
-        title: 'Aorta Social Art Gallery | For sale',
+        title: `${t('meta.homeTitle')} | ${t('links.sale')}`,
         meta: {
           description: {
             name: 'description',
-            content:
-              'Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+            content: t('meta.forSale')
           },
           keywords: {
             name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy'
+            content: t('meta.forSaleKeywords')
           },
           robots: {
             name: 'robots',

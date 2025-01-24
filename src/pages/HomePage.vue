@@ -150,7 +150,7 @@ export default defineComponent({
           },
           keywords: {
             name: 'keywords',
-            content: t('meta.homeDescription')
+            content: t('meta.homeKeywords')
           },
           robots: {
             name: 'robots',

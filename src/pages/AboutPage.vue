@@ -78,6 +78,7 @@
 
 <script>
 import { useMeta } from 'quasar'
+import { useI18n } from 'vue-i18n'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import MailFeedback from 'components/MailFeedback.vue'
@@ -90,19 +91,19 @@ export default {
     MailFeedback
   },
   setup() {
+    const { t } = useI18n()
     useMeta(() => {
       return {
-        title: 'Aorta Social Art Gallery',
-        titleTemplate: (title) => `${title} | About`,
+        title: t('meta.homeTitle'),
+        titleTemplate: (title) => `${title} | ${t('links.about')}`,
         meta: {
           description: {
             name: 'description',
-            content:
-              'Aorta Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.'
+            content: t('meta.aboutDescription')
           },
           keywords: {
             name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy '
+            content: t('meta.homeKeywords')
           },
           robots: {
             name: 'robots',

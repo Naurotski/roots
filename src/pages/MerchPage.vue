@@ -9,7 +9,10 @@
         </div>
         <div class="col-12 col-sm-5">
           <q-card-section>
-            <div class="text-h5 text-bold q-pt-none" v-text="merch.name" />
+            <div
+              class="text-h5 text-bold q-pt-none"
+              v-text="$i18n.locale === 'en' ? merch.name : merch.nameIt"
+            />
             <div style="white-space: pre-line" class="text-justify text-body1">
               <description-for-card
                 :item-description="$i18n.locale === 'en' ? merch.description : merch.descriptionIt"
@@ -121,7 +124,7 @@ export default {
   setup(props) {
     const { rubric, id } = toRefs(props)
     const $q = useQuasar()
-    const { t } = useI18n()
+    const { locale, t } = useI18n({ useScope: 'global' })
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
     const stripeStore = useStripeStore()
@@ -218,28 +221,32 @@ export default {
     }
     useMeta(() => {
       return {
-        title: 'Aorta Social Art Gallery',
-        titleTemplate: (title) => `${title} | ${merch.value?.name}`,
+        title: t('meta.homeTitle'),
+        titleTemplate: (title) =>
+          `${title} | ${locale.value === 'it' ? merch.value?.nameIt : merch.value?.name}`,
+        meta: {
+          description: {
+            name: 'description',
+            content:
+              locale.value === 'it'
+                ? merch.value?.descriptionIt?.split('.')[0]
+                : merch.value?.description?.split('.')[0]
+          },
+          keywords: {
+            name: 'keywords',
+            content: t('meta.shopKeywords')
+          },
+          robots: {
+            name: 'robots',
+            content: 'index, follow'
+          }
+        },
         link: {
           canonical: {
             rel: 'canonical',
             href: `https://aortagallery.com/${rubric.value}/${id.value}`
           }
         },
-        meta: {
-          description: {
-            name: 'description',
-            content: merch.value?.description?.split('.')[0]
-          },
-          keywords: {
-            name: 'keywords',
-            content: 'Buy paintings, sculptures, contemporary art, souvenirs in Pisa Italy'
-          },
-          robots: {
-            name: 'robots',
-            content: 'index, follow'
-          }
-        }
       }
     })
     return {
