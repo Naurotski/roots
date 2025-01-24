@@ -246,7 +246,7 @@ export default {
             rel: 'canonical',
             href: `https://aortagallery.com/${rubric.value}/${id.value}`
           }
-        },
+        }
       }
     })
     return {

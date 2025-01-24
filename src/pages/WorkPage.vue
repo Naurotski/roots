@@ -53,7 +53,6 @@
       </small-page-container>
     </q-page>
   </transition>
-  <pre>work - {{work}}</pre>
 </template>
 
 <script>
@@ -150,7 +149,7 @@ export default {
             rel: 'canonical',
             href: `https://aortagallery.com/work/${workId.value}`
           }
-        },
+        }
       }
     })
     return {
