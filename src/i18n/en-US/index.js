@@ -177,5 +177,15 @@ export default {
       'Souvenirs from Pisa: contemporary art for everyone as a memory of unique exhibitions in Pisa.',
     shopKeywords:
       'Art merchandise discounts, Art-themed gadgets shipping, Shop unique gifts online, Artistic merchandise online, Buy art-inspired gadgets, Art-themed T-shirts for sale, Contemporary art posters, Accessories inspired by modern art, Art souvenirs Pisa, Gifts for art lovers, Art gallery merchandise, Modern art shopping online, Tote bags with artistic prints, Exclusive art products, Contemporary design for your style, Art-themed mugs and accessories, Personalized artistic merchandise, Fashion collection inspired by art'
+  },
+  jsonLd: {
+    monday: 'Monday',
+    tuesday: 'Tuesday',
+    wednesday: 'Wednesday',
+    thursday: 'Thursday',
+    friday: 'Friday',
+    saturday: 'Saturday',
+    sunday: 'Sunday',
+    customerService: 'Customer Service'
   }
 }

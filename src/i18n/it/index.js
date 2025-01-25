@@ -177,5 +177,15 @@ export default {
       'Souvenir da Pisa: arte contemporanea per tutti come ricordo di esposizioni uniche a Pisa.',
     shopKeywords:
       "Offerte su merchandising artistico, Spedizione gadget artistici, Compra online regali unici, Merchandising artistico online, Compra gadget ispirati all’arte, T-shirt artistiche in vendita, Poster d'arte contemporanea, Accessori ispirati all'arte moderna, Souvenir d'arte Pisa, Regali per amanti dell’arte, Merchandising galleria d’arte, Shopping online di arte moderna, Borse con stampe artistiche, Prodotti esclusivi d’arte, Design contemporaneo per il tuo stile, Tazze e accessori d’arte, Merchandising artistico personalizzato, Collezione moda ispirata all'arte"
+  },
+  jsonLd: {
+    monday: 'Lunedì',
+    tuesday: 'Martedì',
+    wednesday: 'Mercoledì',
+    thursday: 'Giovedì',
+    friday: 'Venerdì',
+    saturday: 'Sabato',
+    sunday: 'Domenica',
+    customerService: 'Assistenza clienti'
   }
 }

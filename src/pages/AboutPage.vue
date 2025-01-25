@@ -115,6 +115,53 @@ export default {
             rel: 'canonical',
             href: 'https://aortagallery.com/about'
           }
+        },
+        script: {
+          jsonLd: {
+            type: 'application/ld+json',
+            // prettier-ignore
+            innerHTML: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ArtGallery",
+              "name": t('meta.homeTitle'),
+              "url": "https://aortagallery.com/about",
+              "logo": "https://aortagallery.com/logo.png",
+              "image": "https://aortagallery.com/image.png",
+              "description": t('meta.aboutDescription'),
+              "address": {
+                "@type": "PostalAddress",
+                "postalCode": "56125",
+                "addressLocality": "Pisa",
+                "addressCountry": "IT",
+                "streetAddress": "Corso Italia 146"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 43.7117760654017,
+                "longitude": 10.399556980989269
+              },
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": [
+                    t('jsonLd.monday'),
+                    t('jsonLd.tuesday'),
+                    t('jsonLd.wednesday'),
+                    t('jsonLd.thursday'),
+                    t('jsonLd.friday'),
+                    t('jsonLd.saturday'),
+                    t('jsonLd.sunday')
+                  ],
+                  "opens": "12:00",
+                  "closes": "20:00"
+                }
+              ],
+              "sameAs": [
+                "https://www.facebook.com/profile.php?id=100088816940231",
+                "https://www.instagram.com/aorta.socialartgallery/"
+              ]
+            })
+          }
         }
       }
     })

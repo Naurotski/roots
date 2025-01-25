@@ -71,6 +71,8 @@
       </transition>
     </q-page>
   </transition>
+  <pre>selectedExhibitionsData - {{selectedExhibitionsData}}</pre>
+  <pre>carouselHomePage - {{carouselHomePage}}</pre>
 </template>
 
 <script>
@@ -166,16 +168,18 @@ export default defineComponent({
         script: {
           jsonLd: {
             type: 'application/ld+json',
+            // prettier-ignore
             innerHTML: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "ArtGallery",
-              "name": "Aorta Social Art Gallery",
-              "url": "https://aortagallery.com",
-              "logo": "/icon1.png",
-              "image": "/aorta-logo.png",
-              "description": "Aorta Social Art Gallery is a young and aspiring online gallery of contemporary art. Aorta Gallery sees its mission in promoting art that can help the viewer to learn about, examine, live and comprehend sensory experience.",
+              "name": t('meta.homeTitle'),
+              "url": "https://aortagallery.com/home",
+              "logo": "https://aortagallery.com/logo.png",
+              "image": "https://aortagallery.com/image.png",
+              "description": t('meta.homeDescription'),
+              "telephone": "+39-392-5568834",
               "address": {
-              "@type": "PostalAddress",
+                "@type": "PostalAddress",
                 "postalCode": "56125",
                 "addressLocality": "Pisa",
                 "addressCountry": "IT",
@@ -190,13 +194,13 @@ export default defineComponent({
                 {
                   "@type": "OpeningHoursSpecification",
                   "dayOfWeek": [
-                    "Monday",
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday",
-                    "Saturday",
-                    "Sunday"
+                    t('jsonLd.monday'),
+                    t('jsonLd.tuesday'),
+                    t('jsonLd.wednesday'),
+                    t('jsonLd.thursday'),
+                    t('jsonLd.friday'),
+                    t('jsonLd.saturday'),
+                    t('jsonLd.sunday')
                   ],
                   "opens": "12:00",
                   "closes": "20:00"
@@ -205,7 +209,50 @@ export default defineComponent({
               "sameAs": [
                 "https://www.facebook.com/profile.php?id=100088816940231",
                 "https://www.instagram.com/aorta.socialartgallery/"
-              ]
+              ],
+              "event": {
+                "@type": "Event",
+                "name": selectedExhibitionsData.value.name?.match(/^([\w\s]+)\s"(.+)"$/)[2],
+                "description": "The “Transition” project invites the viewer into a space where the visible and invisible worlds converge, where the past intertwines with the present, and memory comes alive through the sounds of birds and the glow of amber.",
+                "startDate": selectedExhibitionsData.value.openingDate?.replace(/\//g, "-"),
+                "endDate": selectedExhibitionsData.value.closingDate?.replace(/\//g, "-"),
+                "location": {
+                  "@type": "Place",
+                  "name": t('meta.homeTitle'),
+                  "address": {
+                    "@type": "PostalAddress",
+                    "postalCode": "56125",
+                    "addressLocality": "Pisa",
+                    "addressCountry": "Italy",
+                    "streetAddress": "Corso Italia 146"
+                  }
+                },
+                "image": carouselHomePage.value[0]?.imageUrl,
+                "organizer": {
+                  "@type": "Organization",
+                  "name": t('meta.homeTitle'),
+                  "url": "https://aortagallery.com",
+                  "logo": "https://aortagallery.com/logo.png",
+                  "contactPoint": {
+                    "@type": "ContactPoint",
+                    "telephone": "+39-392-5568834",
+                    "contactType": t('jsonLd.customerService'),
+                    "email": "support@aortagallery.com"
+                  }
+                },
+                "offers": {
+                  "@type": "Offer",
+                  "price": "5.00",
+                  "priceCurrency": "EUR"
+                },
+                "performer": {
+                  "@type": "Person",
+                  "name": selectedExhibitionsData.value.name?.match(/^([\w\s]+)\s"(.+)"$/)[1],
+                  "url": "https://aortagallery.com/artists/OlgaZaverzhenets",
+                  "image": "https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fportrait?alt=media&token=2f7a3b7f-5d61-487e-840d-eed3a091ca9c",
+                  "description": "Olga Zaverzhenets is an artist working with the medium of photography. She was born in Belarus in 1982. Olga has been involved in Photography since 2006. She has a particular preference for medium format photography. She works with classic and alternative techniques of hand printing."
+                }
+              }
             })
           }
         }
