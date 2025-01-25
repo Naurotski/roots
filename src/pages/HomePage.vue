@@ -71,8 +71,6 @@
       </transition>
     </q-page>
   </transition>
-  <pre>selectedExhibitionsData - {{selectedExhibitionsData}}</pre>
-  <pre>carouselHomePage - {{carouselHomePage}}</pre>
 </template>
 
 <script>
