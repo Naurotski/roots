@@ -166,7 +166,7 @@ export default defineComponent({
         script: {
           jsonLd: {
             type: 'application/ld+json',
-            json: {
+            innerHTML: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "ArtGallery",
               "name": "Aorta Social Art Gallery",
@@ -206,7 +206,7 @@ export default defineComponent({
                 "https://www.facebook.com/profile.php?id=100088816940231",
                 "https://www.instagram.com/aorta.socialartgallery/"
               ]
-            }
+            })
           }
         }
       }
