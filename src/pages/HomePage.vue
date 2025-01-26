@@ -210,7 +210,7 @@ export default defineComponent({
               ],
               "event": {
                 "@type": "Event",
-                "name": selectedExhibitionsData.value.name?.match(/^([\w\s]+)\s"(.+)"$/)[2],
+                "name": locale.value === 'it' ? selectedExhibitionsData.value.nameIt?.match(/^([\w\s]+)\s"(.+)"$/)[2] : selectedExhibitionsData.value.name?.match(/^([\w\s]+)\s"(.+)"$/)[2],
                 "description": "The “Transition” project invites the viewer into a space where the visible and invisible worlds converge, where the past intertwines with the present, and memory comes alive through the sounds of birds and the glow of amber.",
                 "startDate": selectedExhibitionsData.value.openingDate?.replace(/\//g, "-"),
                 "endDate": selectedExhibitionsData.value.closingDate?.replace(/\//g, "-"),

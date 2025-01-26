@@ -80,13 +80,14 @@
 </template>
 
 <script>
-import { useSharedStore } from 'stores/shared-store.js'
-import { useActionStore } from 'stores/actions-store.js'
 import { storeToRefs } from 'pinia'
 import { useMeta, useQuasar } from 'quasar'
 import { toRefs, ref, watchEffect, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
+import { useSharedStore } from 'stores/shared-store.js'
+import { useActionStore } from 'stores/actions-store.js'
+import { useArtistsStore } from 'stores/artists-store'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
@@ -113,15 +114,56 @@ export default {
     const $q = useQuasar()
     const { locale, t } = useI18n({ useScope: 'global' })
     const { typeAction } = toRefs(props)
-    const itemRefs = ref([])
-    const filteredActions = ref([])
-    const tab = ref(route.query.lifeTime || $q.localStorage.getItem('tab-actions') || 'archive')
-    const elem = computed(() => itemRefs.value.find((item) => item.id === `d${route.query.id}`))
     const shredStore = useSharedStore()
     const { actionsLinks } = storeToRefs(shredStore)
     const actionsStore = useActionStore()
     const { filterExhibitionsDraft, filterEventsDraft } = storeToRefs(actionsStore)
     const { getExhibitions, getEvents } = actionsStore
+    const artistsStore = useArtistsStore()
+    const { artistsList } = storeToRefs(artistsStore)
+    const { getArtists } = artistsStore
+    if (!artistsList.value.length) getArtists()
+    const itemRefs = ref([])
+    const filteredActions = ref([])
+    const tab = ref(route.query.lifeTime || $q.localStorage.getItem('tab-actions') || 'archive')
+    const elem = computed(() => itemRefs.value.find((item) => item.id === `d${route.query.id}`))
+    const filteredActionsI18n = computed(() => {
+      if (locale.value === 'it') {
+        return filteredActions.value.map((action) => ({
+          ...action,
+          city: action.cityIt,
+          description: action.descriptionIt,
+          name: action.nameIt,
+          works: action.works.map((item) => ({
+            ...item,
+            description: item.descriptionIt,
+            name: item.nameIt
+          }))
+        }))
+      } else {
+        return filteredActions.value
+      }
+    })
+    const actionJsonLd = computed(() => {
+      const current = filterExhibitionsDraft.value.find((item) => item.lifeTime === 'current')
+      if (current) {
+        return current
+      }
+      const upcoming = filterExhibitionsDraft.value.find((item) => item.lifeTime === 'upcoming')
+      if (upcoming) {
+        return upcoming
+      }
+      const archive = filterExhibitionsDraft.value.find((item) => item.lifeTime === 'archive')
+      if (archive) {
+        return archive
+      }
+      return null
+    })
+    const artistJsonLd = computed(() =>
+      artistsList.value.find(
+        (item) => item.name === actionJsonLd.value?.name?.match(/^([\w\s]+)\s"(.+)"$/)[1]
+      )
+    )
     const unwatch = watchEffect(() => {
       if (elem.value) {
         setTimeout(() => {
@@ -152,23 +194,6 @@ export default {
         )
       }
     })
-    const filteredActionsI18n = computed(() => {
-      if (locale.value === 'it') {
-        return filteredActions.value.map((action) => ({
-          ...action,
-          city: action.cityIt,
-          description: action.descriptionIt,
-          name: action.nameIt,
-          works: action.works.map((item) => ({
-            ...item,
-            description: item.descriptionIt,
-            name: item.nameIt
-          }))
-        }))
-      } else {
-        return filteredActions.value
-      }
-    })
     const ucFirst = (str) => {
       if (!str) return str
       return str[0].toUpperCase() + str.slice(1)
@@ -194,6 +219,56 @@ export default {
           canonical: {
             rel: 'canonical',
             href: `https://aortagallery.com/actions/${typeAction.value}`
+          }
+        },
+        script: {
+          jsonLd: {
+            type: 'application/ld+json',
+            // prettier-ignore
+            innerHTML: JSON.stringify({
+              "@context": "https://schema.org",
+                "@type": "Event",
+                "name": locale.value === 'it' ? actionJsonLd.value?.nameIt?.match(/^([\w\s]+)\s"(.+)"$/)[2] : actionJsonLd.value?.name?.match(/^([\w\s]+)\s"(.+)"$/)[2],
+                "description": locale.value === 'it' ? actionJsonLd.value?.descriptionIt : actionJsonLd.value?.description,
+                "startDate": actionJsonLd.value?.openingDate?.replace(/\//g, "-"),
+                "endDate": actionJsonLd.value?.closingDate?.replace(/\//g, "-"),
+                "location": {
+                  "@type": "Place",
+                  "name": t('meta.homeTitle'),
+                  "address": {
+                    "@type": "PostalAddress",
+                    "postalCode": "56125",
+                    "addressLocality": "Pisa",
+                    "addressCountry": "Italy",
+                    "streetAddress": "Corso Italia 146"
+                  }
+                },
+                "image": actionJsonLd.value?.urlImage,
+                "organizer": {
+                  "@type": "Organization",
+                  "name": t('meta.homeTitle'),
+                  "url": "https://aortagallery.com",
+                  "logo": "https://aortagallery.com/logo.png",
+                  "contactPoint": {
+                    "@type": "ContactPoint",
+                    "telephone": "+39-392-5568834",
+                    "contactType": t('jsonLd.customerService'),
+                    "email": "support@aortagallery.com"
+                  }
+                },
+                "offers": {
+                  "@type": "Offer",
+                  "price": "5.00",
+                  "priceCurrency": "EUR"
+                },
+                "performer": {
+                  "@type": "Person",
+                  "name": actionJsonLd.value?.name?.match(/^([\w\s]+)\s"(.+)"$/)[1],
+                  "url": `https://aortagallery.com/artists/${artistJsonLd.value?.artistId}`,
+                  "image": artistJsonLd.value?.urlPortrait,
+                  "description": locale.value === 'it' ? artistJsonLd.value?.descriptionIt : artistJsonLd.value?.description
+                }
+            })
           }
         }
       }

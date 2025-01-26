@@ -130,7 +130,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
   const handleAuthStateChange = () => {
     onAuthStateChanged(auth, async (user) => {
-      console.log('onAuthStateChanged ---user-', user)
+      // console.log('onAuthStateChanged ---user-', user)
       Loading.hide()
       if (user) {
         loggedIn.value = true
