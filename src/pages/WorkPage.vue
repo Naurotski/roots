@@ -158,7 +158,7 @@ export default {
               "@context": "https://schema.org",
               "@type": "Product",
               "name": work.value?.name,
-              "artMedium": work.value?.materials,
+              "material": work.value?.materials,
               "image": work.value?.urlImageWork,
               "description": work.value?.description,
               "category": "VisualArtwork",
@@ -166,7 +166,7 @@ export default {
               "creator": {
                 "@type": "Person",
                 "name": work.value?.artistName,
-                "url": `http://localhost:9000/artists/${work.value?.artistId}`,
+                "url": `http://aortagallery.com/artists/${work.value?.artistId}`,
               },
               "offers": {
                 "@type": "Offer",
