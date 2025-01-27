@@ -95,7 +95,6 @@
     </q-page>
   </transition>
 </template>
-
 <script>
 import { computed, toRefs, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
@@ -245,6 +244,42 @@ export default {
           canonical: {
             rel: 'canonical',
             href: `https://aortagallery.com/${rubric.value}/${id.value}`
+          }
+        },
+        script: {
+          jsonLd: {
+            type: 'application/ld+json',
+            // prettier-ignore
+            innerHTML: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Product",
+              "name": locale.value === 'en' ? merch.value?.name : merch.value?.nameIt,
+              "image": allUrlImages.value,
+              "description": locale.value === 'en' ? merch.value?.description : merch.value?.descriptionIt,
+              "category": merch.value?.rubric,
+              "url": `https://aortagallery.com/work/${merch.value?.id}`,
+              "offers": {
+                "@type": "Offer",
+                "price": merch.value?.price,
+                "priceCurrency": "EUR",
+                "availability": "https://schema.org/InStock",
+                "seller": {
+                  "@type": "ArtGallery",
+                  "name": t('meta.homeTitle'),
+                  "url": "https://aortagallery.com",
+                  "logo": "https://aortagallery.com/logo.png",
+                  "image": "https://aortagallery.com/image.png",
+                  "telephone": "+39-392-5568834",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "postalCode": "56125",
+                    "addressLocality": "Pisa",
+                    "addressCountry": "IT",
+                    "streetAddress": "Corso Italia 146"
+                  },
+                }
+              }
+            })
           }
         }
       }
