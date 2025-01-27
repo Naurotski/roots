@@ -200,9 +200,9 @@ export default {
               "image": artistData.value.urlPortrait,
               "description": artistData.value.description,
               "url": `http://aortagallery.com/artists/${artistData.value.artistId}`,
-              "works": artistData.value.works?.map(work => {
+              "workExample": artistData.value.works?.map(work => {
                 return  {
-                  "@type": "CreativeWork",
+                  "@type": "VisualArtwork",
                   "name": work.name,
                   "url": `https://aortagallery.com/work/${work.id}`,
                   "image": work.urlImageWork
