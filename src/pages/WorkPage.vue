@@ -149,6 +149,48 @@ export default {
             rel: 'canonical',
             href: `https://aortagallery.com/work/${workId.value}`
           }
+        },
+        script: {
+          jsonLd: {
+            type: 'application/ld+json',
+            // prettier-ignore
+            innerHTML: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Product",
+              "name": work.value?.name,
+              "artMedium": work.value?.materials,
+              "image": work.value?.urlImageWork,
+              "description": work.value?.description,
+              "category": "VisualArtwork",
+              "url": `https://aortagallery.com/work/${work.value?.id}`,
+              "creator": {
+                "@type": "Person",
+                "name": work.value?.artistName,
+                "url": `http://localhost:9000/artists/${work.value?.artistId}`,
+              },
+              "offers": {
+                "@type": "Offer",
+                "price": work.value?.price || t('jsonLd.notForSale'),
+                "priceCurrency": "EUR",
+                "availability": work.value?.price ? "https://schema.org/InStock" : "https://schema.org/Discontinued",
+                "seller": {
+                  "@type": "ArtGallery",
+                  "name": t('meta.homeTitle'),
+                  "url": "https://aortagallery.com",
+                  "logo": "https://aortagallery.com/logo.png",
+                  "image": "https://aortagallery.com/image.png",
+                  "telephone": "+39-392-5568834",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "postalCode": "56125",
+                    "addressLocality": "Pisa",
+                    "addressCountry": "IT",
+                    "streetAddress": "Corso Italia 146"
+                  },
+                }
+              }
+            })
+          }
         }
       }
     })

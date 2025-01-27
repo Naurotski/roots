@@ -186,6 +186,7 @@ export default {
     friday: 'Friday',
     saturday: 'Saturday',
     sunday: 'Sunday',
-    customerService: 'Customer Service'
+    customerService: 'Customer Service',
+    notForSale: 'Not for sale'
   }
 }

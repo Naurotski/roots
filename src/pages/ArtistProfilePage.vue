@@ -188,6 +188,29 @@ export default {
             rel: 'canonical',
             href: `https://aortagallery.com/artists/${artistId.value}`
           }
+        },
+        script: {
+          jsonLd: {
+            type: 'application/ld+json',
+            // prettier-ignore
+            innerHTML: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": artistData.value.name,
+              "image": artistData.value.urlPortrait,
+              "description": artistData.value.description,
+              "url": `http://aortagallery.com/artists/${artistData.value.artistId}`,
+              "works": artistData.value.works?.map(work => {
+                return  {
+                  "@type": "CreativeWork",
+                  "name": work.name,
+                  "url": `https://aortagallery.com/work/${work.id}`,
+                  "image": work.urlImageWork
+                }
+              })
+
+            })
+          }
         }
       }
     })
