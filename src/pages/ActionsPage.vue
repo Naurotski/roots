@@ -232,6 +232,7 @@ export default {
                 "description": locale.value === 'it' ? actionJsonLd.value?.descriptionIt : actionJsonLd.value?.description,
                 "startDate": actionJsonLd.value?.openingDate?.replace(/\//g, "-"),
                 "endDate": actionJsonLd.value?.closingDate?.replace(/\//g, "-"),
+                "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
                 "location": {
                   "@type": "Place",
                   "name": t('meta.homeTitle'),
@@ -259,7 +260,8 @@ export default {
                 "offers": {
                   "@type": "Offer",
                   "price": "5.00",
-                  "priceCurrency": "EUR"
+                  "priceCurrency": "EUR",
+                  "availability": "https://schema.org/InStock"
                 },
                 "performer": {
                   "@type": "Person",
