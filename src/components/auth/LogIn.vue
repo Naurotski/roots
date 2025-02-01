@@ -45,7 +45,7 @@
           outlined
           stack-label
           autocomplete="current-password"
-          :rules="[(val) => val.length >= 6 || 'Please enter at least 6 characters.']"
+          :rules="[(val) => !!val || 'Password is required']"
         />
         <div class="text-body1" :class="{ 'text-body2': $q.screen.xs }">
           <u class="cursor-pointer" @click="passwordReset">{{ $t('auth.forgot') }}</u>

@@ -62,7 +62,7 @@
           outlined
           stack-label
           autocomplete="new-password"
-          :rules="[(val) => val.length >= 6 || 'Please enter at least 6 characters.']"
+          :rules="passwordRules"
         />
         <q-btn
           no-caps
@@ -97,6 +97,7 @@ import { useStripeStore } from 'stores/stripe-store.js'
 import AuthProvidersButtons from 'components/auth/AuthProvidersButtons.vue'
 import TitleLineCenter from 'components/TitleLineCenter.vue'
 import { isValidEmailAddress } from 'src/composables/isValidEmailAddress.js'
+import { passwordRules } from 'src/composables/passwordRules'
 
 export default {
   name: 'RegistrationUser',
@@ -143,6 +144,7 @@ export default {
       password,
       formData,
       isValidEmailAddress,
+      passwordRules,
       closeDialog,
       submitForm
     }
