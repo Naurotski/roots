@@ -2,33 +2,33 @@
 <rss>
   <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
     <channel>
-      <title>Aorta Social Art Gallery</title>
+      <title>Aorta Galleria d'Arte Sociale</title>
       <link>https://aortagallery.com</link>
-      <description>For sale</description>
+      <description>In vendita</description>
       <item>
         <g:id>1711576006137</g:id>
         <g:title>Svelato</g:title>
-        <g:description>Engraving on panel with chalk ground, 70x50cm, 2023</g:description>
+        <g:description>Incisione su tavola con fondo gesso, 70x50cm, 2023</g:description>
         <g:link>https://aortagallery.com/work/1711576006137</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FAndreaRizzo%2Fworks%2F1711576006137?alt=media&amp;token=da6f7ddf-394e-4709-a5e9-7636961d64f2</g:image_link>
         <g:price>2000 EUR</g:price>
         <g:brand>Andrea Rizzo</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Sculpture</g:google_product_category>
+        <g:google_product_category>Scultura</g:google_product_category>
         <g:product_type>6881</g:product_type>
         <g:size>70x50cm</g:size>
       </item>
       <item>
         <g:id>1711575974777</g:id>
-        <g:title>Secret laboratory</g:title>
-        <g:description>Oil on cotton canvas, 170x160cm, 2024</g:description>
+        <g:title>Laboratorio segreto</g:title>
+        <g:description>Olio su tela di cotone,170x160cm, 2024</g:description>
         <g:link>https://aortagallery.com/work/1711575974777</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FAndreaRizzo%2Fworks%2F1711575974777?alt=media&amp;token=72f41131-b1b6-4eda-88c9-c434825b54f1</g:image_link>
         <g:price>4500 EUR</g:price>
         <g:brand>Andrea Rizzo</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -38,12 +38,12 @@
       <item>
         <g:id>1711437686322</g:id>
         <g:title>Giudecca cinema hall</g:title>
-        <g:description>Digital painting printed on plexiglass, 110x100, 2023</g:description>
+        <g:description>Digital painting stampato su plexiglass, 110x100, 2023</g:description>
         <g:link>https://aortagallery.com/work/1711437686322</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FAndreaRizzo%2Fworks%2F1711437686322?alt=media&amp;token=dfce15bc-e3b6-492b-ba3a-b94a1fbcbcd2</g:image_link>
         <g:price>700 EUR</g:price>
         <g:brand>Andrea Rizzo</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Digital</g:google_product_category>
@@ -53,12 +53,12 @@
       <item>
         <g:id>1711437617983</g:id>
         <g:title>Atelier on the street</g:title>
-        <g:description>Oil, acrylic and papier collé on cotton canvas, 150x140, 2024</g:description>
+        <g:description>Olio, acrilico e papier collé su tela di cotone, 150x140, 2024</g:description>
         <g:link>https://aortagallery.com/work/1711437617983</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FAndreaRizzo%2Fworks%2F1711437617983?alt=media&amp;token=b81a99a9-37c9-46c0-93d3-8373d87d104b</g:image_link>
         <g:price>6000 EUR</g:price>
         <g:brand>Andrea Rizzo</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -68,12 +68,12 @@
       <item>
         <g:id>1711437570495</g:id>
         <g:title>Atelier</g:title>
-        <g:description>Oil on cotton canvas, 170x160, 2023</g:description>
+        <g:description>Olio su tela di cotone, 170x160, 2023</g:description>
         <g:link>https://aortagallery.com/work/1711437570495</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FAndreaRizzo%2Fworks%2F1711437570495?alt=media&amp;token=d8f5fff4-5c5c-47f0-a950-d2a0c1326464</g:image_link>
         <g:price>6000 EUR</g:price>
         <g:brand>Andrea Rizzo</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -83,12 +83,12 @@
       <item>
         <g:id>1711437513426</g:id>
         <g:title>Healthcare room</g:title>
-        <g:description>Digital painting printed on plexiglass, 110x100, 2024</g:description>
+        <g:description>Digital painting stampato su plexiglass, 110x100, 2024</g:description>
         <g:link>https://aortagallery.com/work/1711437513426</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FAndreaRizzo%2Fworks%2F1711437513426?alt=media&amp;token=0f4ae8fd-bdc5-4996-add7-615f45ff12c5</g:image_link>
         <g:price>700 EUR</g:price>
         <g:brand>Andrea Rizzo</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Digital</g:google_product_category>
@@ -97,13 +97,13 @@
       </item>
       <item>
         <g:id>1711437444461</g:id>
-        <g:title>My home your home</g:title>
-        <g:description>Oil on cotton canvas, 130x120, 2023</g:description>
+        <g:title>Casa mia casa tua</g:title>
+        <g:description>Olio su tela di cotone, 130x120, 2023</g:description>
         <g:link>https://aortagallery.com/work/1711437444461</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FAndreaRizzo%2Fworks%2F1711437444461?alt=media&amp;token=5daf811b-ef4e-4db4-a1f7-c9c8f8fff834</g:image_link>
         <g:price>700 EUR</g:price>
         <g:brand>Andrea Rizzo</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -112,13 +112,13 @@
       </item>
       <item>
         <g:id>1711437067466</g:id>
-        <g:title>Untitled</g:title>
-        <g:description>Oil on cotton canvas, 150x140cm, 2024</g:description>
+        <g:title>Senza titolo</g:title>
+        <g:description>Olio e collage su tela di cotone, 150x140cm, 2024</g:description>
         <g:link>https://aortagallery.com/work/1711437067466</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FAndreaRizzo%2Fworks%2F1711437067466?alt=media&amp;token=487a5a1b-61d4-4b07-b7eb-44770bac3ca9</g:image_link>
         <g:price>6000 EUR</g:price>
         <g:brand>Andrea Rizzo</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -127,13 +127,13 @@
       </item>
       <item>
         <g:id>1711436869836</g:id>
-        <g:title>Fragments</g:title>
-        <g:description>Digital painting printed on plexiglass, 90x100cm, 2024</g:description>
+        <g:title>Frammenti</g:title>
+        <g:description>Digital painting stampato su plexiglass, 90x100cm, 2024</g:description>
         <g:link>https://aortagallery.com/work/1711436869836</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FAndreaRizzo%2Fworks%2F1711436869836?alt=media&amp;token=e446e84e-38ab-4ce0-9c09-83f7c5487dd0</g:image_link>
         <g:price>1200 EUR</g:price>
         <g:brand>Andrea Rizzo</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -143,12 +143,12 @@
       <item>
         <g:id>1711436806407</g:id>
         <g:title>Atelier 1</g:title>
-        <g:description>Oil on cotton canvas, 170x160, 2023</g:description>
+        <g:description>Olio su tela di cotone, 170x160, 2023</g:description>
         <g:link>https://aortagallery.com/work/1711436806407</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FAndreaRizzo%2Fworks%2F1711436806407?alt=media&amp;token=138833c8-e689-45c8-80f8-cf32eaf6fe21</g:image_link>
         <g:price>5000 EUR</g:price>
         <g:brand>Andrea Rizzo</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -157,13 +157,13 @@
       </item>
       <item>
         <g:id>1713560854529</g:id>
-        <g:title>Series Fragments. Fragment 1/4</g:title>
-        <g:description>100x100 cm, canvas, acrylic, author's technique, 2019</g:description>
+        <g:title>Serie Frammenti. Frammento 1/4</g:title>
+        <g:description>100x100 cm, tela, acrilico, tecnica dell'autore, 2019</g:description>
         <g:link>https://aortagallery.com/work/1713560854529</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FElenaBerezina%2Fworks%2F1713560854529?alt=media&amp;token=5bc3db5c-5f28-4b61-a944-dd2beec2b3c3</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Elena Berezina</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -172,13 +172,13 @@
       </item>
       <item>
         <g:id>1713560803855</g:id>
-        <g:title>Series Fragments. Fragment 2/4</g:title>
-        <g:description>100x100 cm, canvas, acrylic, author's technique, 2019</g:description>
+        <g:title>Serie Frammenti. Frammento 2/4</g:title>
+        <g:description>100x100 cm, tela, acrilico, tecnica dell'autore, 2019</g:description>
         <g:link>https://aortagallery.com/work/1713560803855</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FElenaBerezina%2Fworks%2F1713560803855?alt=media&amp;token=3d231ad5-7640-4a7c-bcea-f0d6aaf4e366</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Elena Berezina</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -187,13 +187,13 @@
       </item>
       <item>
         <g:id>1713560734735</g:id>
-        <g:title>Series Fragments. Fragment 3/4</g:title>
-        <g:description>100x100 cm, canvas, acrylic, author's technique, 2019</g:description>
+        <g:title>Serie Frammenti. Frammento 3/4</g:title>
+        <g:description>100x100 cm, tela, acrilico, tecnica dell'autore, 2019</g:description>
         <g:link>https://aortagallery.com/work/1713560734735</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FElenaBerezina%2Fworks%2F1713560734735?alt=media&amp;token=ecfe11ab-97bc-48f6-bed3-7d875604f4fe</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Elena Berezina</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -202,13 +202,13 @@
       </item>
       <item>
         <g:id>1713560660496</g:id>
-        <g:title>Series Fragments. Fragment 4/4</g:title>
-        <g:description>100x100 cm, canvas, acrylic, author's technique, 2019</g:description>
+        <g:title>Serie Frammenti. Frammento 4/4</g:title>
+        <g:description>100x100 cm, tela, acrilico, tecnica dell'autore, 2019</g:description>
         <g:link>https://aortagallery.com/work/1713560660496</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FElenaBerezina%2Fworks%2F1713560660496?alt=media&amp;token=980b9a11-368c-4078-a90c-b57603a4c011</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Elena Berezina</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -217,13 +217,13 @@
       </item>
       <item>
         <g:id>1713560477435</g:id>
-        <g:title>Series game with colors. Yellow blu</g:title>
-        <g:description>175x110 cm, canvas, acrylic, author's technique, 2019</g:description>
+        <g:title>Serie gioco con i colori. Giallo blu</g:title>
+        <g:description>175x110 cm, tela, acrilico, tecnica dell'autore, 2019</g:description>
         <g:link>https://aortagallery.com/work/1713560477435</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FElenaBerezina%2Fworks%2F1713560477435?alt=media&amp;token=d6bf1485-92a6-4576-b045-40c32b28d697</g:image_link>
         <g:price>1200 EUR</g:price>
         <g:brand>Elena Berezina</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -232,13 +232,13 @@
       </item>
       <item>
         <g:id>1713560378122</g:id>
-        <g:title>Series game with colors. Red-green</g:title>
-        <g:description>175x110 cm, canvas, acrylic, author's technique, 2019</g:description>
+        <g:title>Serie gioco con i colori. Rosso verde</g:title>
+        <g:description>175x110 cm, tela, acrilico, tecnica dell'autore, 2019</g:description>
         <g:link>https://aortagallery.com/work/1713560378122</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FElenaBerezina%2Fworks%2F1713560378122?alt=media&amp;token=0920e944-1823-4e09-acaf-573319adcb9a</g:image_link>
         <g:price>1200 EUR</g:price>
         <g:brand>Elena Berezina</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -247,13 +247,13 @@
       </item>
       <item>
         <g:id>1713560186864</g:id>
-        <g:title>Black and white series. White on black 1/4</g:title>
-        <g:description>175x110 cm, canvas, acrylic, author's technique, 2019</g:description>
+        <g:title>Serie in bianco e nero. Bianco su nero1/4</g:title>
+        <g:description>175x110 cm, tela, acrilico, tecnica dell'autore, 2019</g:description>
         <g:link>https://aortagallery.com/work/1713560186864</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FElenaBerezina%2Fworks%2F1713560186864?alt=media&amp;token=4181f399-f947-4b4c-a1cc-e25261f0c5ec</g:image_link>
         <g:price>1200 EUR</g:price>
         <g:brand>Elena Berezina</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -262,13 +262,13 @@
       </item>
       <item>
         <g:id>1713560039855</g:id>
-        <g:title>Black and white series. Black on white 1/4</g:title>
-        <g:description>175x110 cm, canvas, acrylic, author's technique, 2019</g:description>
+        <g:title>Serie in bianco e nero. Nero su bianco 1/4</g:title>
+        <g:description>175x110 cm, tela, acrilico, tecnica dell'autore, 2019</g:description>
         <g:link>https://aortagallery.com/work/1713560039855</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FElenaBerezina%2Fworks%2F1713560039855?alt=media&amp;token=43363c9b-a5e2-4f4c-81bc-987cd6fa8d7b</g:image_link>
         <g:price>1200 EUR</g:price>
         <g:brand>Elena Berezina</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -277,13 +277,13 @@
       </item>
       <item>
         <g:id>1713559852279</g:id>
-        <g:title>Series Modules (red accent). Module 1/3</g:title>
-        <g:description>175x200 cm, canvas, acrylic, author's technique, 2019</g:description>
+        <g:title>Moduli di serie (accento rosso). Modulo 1/3</g:title>
+        <g:description>175x200 cm, tela, acrilico, tecnica dell'autore, 2019</g:description>
         <g:link>https://aortagallery.com/work/1713559852279</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FElenaBerezina%2Fworks%2F1713559852279?alt=media&amp;token=dfbdbbdd-9cea-46f8-af1e-6847977b688f</g:image_link>
         <g:price>3000 EUR</g:price>
         <g:brand>Elena Berezina</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -292,13 +292,13 @@
       </item>
       <item>
         <g:id>1713559765324</g:id>
-        <g:title>Series Modules (red accent). Module 2/3</g:title>
-        <g:description>175x210 cm, canvas, acrylic, author's technique, 2019</g:description>
+        <g:title>Moduli di serie (accento rosso). Modulo 2/3</g:title>
+        <g:description>175x210 cm, tela, acrilico, tecnica dell'autore, 2019</g:description>
         <g:link>https://aortagallery.com/work/1713559765324</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FElenaBerezina%2Fworks%2F1713559765324?alt=media&amp;token=b0fdab6d-2bf8-4107-acb3-5293f9531683</g:image_link>
         <g:price>3000 EUR</g:price>
         <g:brand>Elena Berezina</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -307,13 +307,13 @@
       </item>
       <item>
         <g:id>1713559679615</g:id>
-        <g:title>Series Modules (blue accent). Module 2/3</g:title>
-        <g:description>175x210 cm, canvas, acrylic, author's technique, 2019</g:description>
+        <g:title>Moduli di serie (accento blu). Modulo 2/3</g:title>
+        <g:description>175x210 cm, tela, acrilico, tecnica dell'autore, 2019</g:description>
         <g:link>https://aortagallery.com/work/1713559679615</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FElenaBerezina%2Fworks%2F1713559679615?alt=media&amp;token=e9372c85-2b8d-4f12-80c9-8327edd6589e</g:image_link>
         <g:price>3000 EUR</g:price>
         <g:brand>Elena Berezina</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -322,13 +322,13 @@
       </item>
       <item>
         <g:id>1713559541767</g:id>
-        <g:title>Series Modules (blue accent). Module 1/3</g:title>
-        <g:description>175x210 cm, canvas, acrylic, author's technique, 2019</g:description>
+        <g:title>Moduli di serie (accento blu). Modulo 1/3</g:title>
+        <g:description>175x210 cm, tela, acrilico, tecnica dell'autore, 2019</g:description>
         <g:link>https://aortagallery.com/work/1713559541767</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FElenaBerezina%2Fworks%2F1713559541767?alt=media&amp;token=c7cd0333-ec71-4cfe-b67d-c5394ea1ad64</g:image_link>
         <g:price>3000 EUR</g:price>
         <g:brand>Elena Berezina</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -337,13 +337,13 @@
       </item>
       <item>
         <g:id>1696714302869</g:id>
-        <g:title>No Title</g:title>
-        <g:description>Oil and glass on canvas, 60x80 cm, 2023. Framed.</g:description>
+        <g:title>Senza Titolo</g:title>
+        <g:description>Olio e vetro su tela, 60x80 cm, 2023. Incotniciata.</g:description>
         <g:link>https://aortagallery.com/work/1696714302869</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FNadzeyaNaurotskaya%2Fworks%2F1696714302869?alt=media&amp;token=8419c80a-5f9d-4e31-8c0a-db22d02498f0</g:image_link>
         <g:price>1000 EUR</g:price>
         <g:brand>Nadzeya Naurotskaya</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -353,13 +353,13 @@
       </item>
       <item>
         <g:id>1681996952999</g:id>
-        <g:title> A Walk</g:title>
-        <g:description>Oil and glass on canvas, 60x80 cm, 2022. Framed.</g:description>
+        <g:title>Una passeggiata</g:title>
+        <g:description>Olio e vetro su tela, 60x80 cm, 2022. Incotniciato.</g:description>
         <g:link>https://aortagallery.com/work/1681996952999</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FNadzeyaNaurotskaya%2Fworks%2F1681996952999?alt=media&amp;token=745b2bb9-4fb2-4fd5-8a36-da007c33e345</g:image_link>
         <g:price>1000 EUR</g:price>
         <g:brand>Nadzeya Naurotskaya</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -373,13 +373,13 @@
       </item>
       <item>
         <g:id>1677597744210</g:id>
-        <g:title>We left</g:title>
-        <g:description>Oil and glass on canvas, 70х70cm, 2022. Framed.</g:description>
+        <g:title>Siamo partiti</g:title>
+        <g:description>Olio e vetro su tela, 70х70cm, 2022. Incorniciato.</g:description>
         <g:link>https://aortagallery.com/work/1677597744210</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FNadzeyaNaurotskaya%2Fworks%2F1677597744210?alt=media&amp;token=4edd3a63-4f53-4acc-ac25-365c18e2b414</g:image_link>
         <g:price>1000 EUR</g:price>
         <g:brand>Nadzeya Naurotskaya</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -389,13 +389,13 @@
       </item>
       <item>
         <g:id>1677596500020</g:id>
-        <g:title>Best-Maintained Building</g:title>
-        <g:description>Oil and glass on canvas, 60х80cm, 2022. Framed.</g:description>
+        <g:title>L’edificio di manutenzione migliore</g:title>
+        <g:description>Olio e vetro su tela, 60х80cm, 2022. Incorniciato.</g:description>
         <g:link>https://aortagallery.com/work/1677596500020</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FNadzeyaNaurotskaya%2Fworks%2F1677596500020?alt=media&amp;token=e509b106-f0e9-495c-a1cd-bbb0a484526e</g:image_link>
         <g:price>1000 EUR</g:price>
         <g:brand>Nadzeya Naurotskaya</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -405,16 +405,16 @@
       </item>
       <item>
         <g:id>1677140631001</g:id>
-        <g:title>Amphitheater of War</g:title>
-        <g:description>Polystyrene, cement, colored glass, smalt. 50х50 cm, 2022.</g:description>
+        <g:title> Anfiteatro di guerra</g:title>
+        <g:description>Polistirolo, cemento, vetro colorato, smalto. 50x50 cm, 2022.</g:description>
         <g:link>https://aortagallery.com/work/1677140631001</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FNadzeyaNaurotskaya%2Fworks%2F1677140631001?alt=media&amp;token=1ee2c21f-9b8e-46b5-b84e-218ca3d62b17</g:image_link>
         <g:price>1600 EUR</g:price>
         <g:brand>Nadzeya Naurotskaya</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Sculpture</g:google_product_category>
+        <g:google_product_category>Scultura</g:google_product_category>
         <g:product_type>6881</g:product_type>
         <g:additional_image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FNadzeyaNaurotskaya%2Fworks%2F1677140631001%2FIMG_3363.JPG?alt=media&amp;token=c5b4a0e3-0847-4c18-b78e-48b8dc7e542d</g:additional_image_link>
         <g:additional_image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FNadzeyaNaurotskaya%2Fworks%2F1677140631001%2FIMG_3377.JPG?alt=media&amp;token=faa3b373-090e-466e-9428-2e206e3cb0ab</g:additional_image_link>
@@ -422,279 +422,279 @@
       </item>
       <item>
         <g:id>1677140516863</g:id>
-        <g:title>Infinite Mother</g:title>
-        <g:description>Sculpture (mosaics, clay, marble base). Height 32 cm, 2021.</g:description>
+        <g:title> Madre Infinita</g:title>
+        <g:description>Scultura (mosaici, argilla, base in marmo). Altezza 32 cm, 2021.</g:description>
         <g:link>https://aortagallery.com/work/1677140516863</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FNadzeyaNaurotskaya%2Fworks%2F1677140516863?alt=media&amp;token=7081a345-703e-42d4-be58-6bd9ae2174be</g:image_link>
         <g:price>6000 EUR</g:price>
         <g:brand>Nadzeya Naurotskaya</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Sculpture</g:google_product_category>
+        <g:google_product_category>Scultura</g:google_product_category>
         <g:product_type>6881</g:product_type>
         <g:additional_image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FNadzeyaNaurotskaya%2Fworks%2F1677140516863%2F%D0%BC%D0%B0%D1%82%D1%8C3.jpg?alt=media&amp;token=5e91932b-4feb-4af7-a2f3-59bbc5bafb6f</g:additional_image_link>
       </item>
       <item>
         <g:id>1713562836123</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Silver gelatin print, 50х50 см, 2020, 1/10, exhibition print</g:description>
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa ai sali d'argento, 50х50 см, 2020, 1/10, stampa da esposizione</g:description>
         <g:link>https://aortagallery.com/work/1713562836123</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713562836123?alt=media&amp;token=0c0741bf-71be-4f60-ad57-8ab2739f80a9</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>50х50cm</g:size>
       </item>
       <item>
         <g:id>1713562782195</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Silver gelatin print, 50х50 см, 2020, 1/10, exhibition print</g:description>
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa ai sali d'argento, 50х50 см, 2020, 1/10, stampa da esposizione</g:description>
         <g:link>https://aortagallery.com/work/1713562782195</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713562782195?alt=media&amp;token=5585f6b6-160d-43b7-86f5-4e2e789f4711</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>50х50cm</g:size>
       </item>
       <item>
         <g:id>1713562714794</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Colour print RA-4
-Image size 47,5х47,5сm, exhibition print
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm, stampa da esposizione
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1713562714794</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713562714794?alt=media&amp;token=2a0e9220-5ebd-41cd-8ff2-251cfc475a47</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1713562631890</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Colour print RA-4
-Image size 47,5х47,5сm, exhibition print
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm, stampa da esposizione
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1713562631890</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713562631890?alt=media&amp;token=062114ca-9595-44ea-bde6-7f3ab2106526</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1713562584960</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Colour print RA-4
-Image size 47,5х47,5сm, exhibition print
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm, stampa da esposizione
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1713562584960</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713562584960?alt=media&amp;token=aa96364d-9d02-40b9-885e-caac9167cac2</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1713562516763</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Colour print RA-4
-Image size 47,5х47,5сm, exhibition print
+        <g:title> Dalla serie “Segreto”</g:title>
+        <g:description>Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm, stampa da esposizione
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1713562516763</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713562516763?alt=media&amp;token=e88e88ba-30dd-4061-b2a4-225c7311a314</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1713562462100</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Colour print RA-4
-Image size 47,5х47,5сm, exhibition print
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm, stampa da esposizione
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1713562462100</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713562462100?alt=media&amp;token=35922cf1-18e4-493a-a10b-d2a9be116918</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1713562418288</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Colour print RA-4
-Image size 47,5х47,5сm, exhibition print
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm, stampa da esposizione
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1713562418288</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713562418288?alt=media&amp;token=dd4b9164-8796-4e65-ae93-2d71127e11ed</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1713562341927</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Colour print RA-4
-Image size 47,5х47,5сm, exhibition print
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm, stampa da esposizione
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1713562341927</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713562341927?alt=media&amp;token=474d3b4d-680b-4bc5-aa52-f10e23bf64fe</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1713562018173</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Colour print RA-4
-Image size 47,5х47,5сm, exhibition print
+        <g:title> Dalla serie “Segreto”</g:title>
+        <g:description>Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm, stampa da esposizione
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1713562018173</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713562018173?alt=media&amp;token=aa23d68c-498d-4a8b-8e8d-ecdd2015b06f</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1713561970949</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Colour print RA-4
-Image size 47,5х47,5сm, exhibition print
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm, stampa da esposizione
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1713561970949</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713561970949?alt=media&amp;token=0e157182-cbd1-4a1a-80ca-e64f3c70dc3e</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1713561928565</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Colour print RA-4
-Image size 47,5х47,5сm, exhibition print
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm, stampa da esposizione
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1713561928565</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713561928565?alt=media&amp;token=07b7505f-f12b-403b-88e7-332821a2b065</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1713561877314</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Colour print RA-4
-Image size 47,5х47,5сm, exhibition print
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm, stampa da esposizione
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1713561877314</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713561877314?alt=media&amp;token=b8ab560a-cad6-4eba-9f0d-33e5269d9ad2</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1713561751780</g:id>
-        <g:title> From the series "Secret"</g:title>
-        <g:description>Colour print RA-4
-Image size 47,5х47,5сm, exhibition print
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm, stampa da esposizione
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1713561751780</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713561751780?alt=media&amp;token=815ca47e-4222-4cff-b629-f9d968687a47</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1713561598442</g:id>
-        <g:title>From the series "Secret" </g:title>
-        <g:description>Colour print RA-4
-Image size 47,5х47,5сm, exhibition print
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm, stampa da esposizione
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1713561598442</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1713561598442?alt=media&amp;token=29b0280f-36d4-401b-b916-1a8a1fdde373</g:image_link>
         <g:price>250 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689501619938</g:id>
-        <g:title>Book “Aurora Borealis”</g:title>
-        <g:description>Hand-binded, self-published, edition of 28, size 20cm*20cm, hard velvet cover, 90 pages</g:description>
+        <g:title>Libro “Aurora Borealis”</g:title>
+        <g:description>Rilegato a mano, autopubblicato, edizione di 28, formato 20cm*20cm, copertina rigida in velluto, 90 pagine</g:description>
         <g:link>https://aortagallery.com/work/1689501619938</g:link>
         <g:image_link>https://player.vimeo.com/video/1000024134?badge=0&amp;amp;autopause=0&amp;amp;player_id=0&amp;amp;app_id=58479</g:image_link>
         <g:price>150 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -708,572 +708,572 @@ Image size 47,5х47,5сm, exhibition print
       </item>
       <item>
         <g:id>1689495864646</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495864646</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495864646?alt=media&amp;token=e64618da-e80b-467c-9f47-cb9440b90af1</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495845083</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495845083</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495845083?alt=media&amp;token=fd47266c-6839-4d84-b406-c850c7da9c1b</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495826350</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495826350</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495826350?alt=media&amp;token=b70dcbe9-7e6f-46ee-9d46-c9e5d4370274</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495804837</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495804837</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495804837?alt=media&amp;token=638b32df-4853-496e-add2-26aabd98fd98</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495787629</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495787629</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495787629?alt=media&amp;token=bac82a45-2f4f-45ed-98c6-9356c14588a1</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495768922</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title> Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495768922</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495768922?alt=media&amp;token=0077f8d6-59a3-4f17-bf1c-a3612da7f1d4</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495750858</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495750858</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495750858?alt=media&amp;token=043ed50d-7ac9-418c-96b7-d1a87f6a4ac9</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495734335</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495734335</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495734335?alt=media&amp;token=f57fcce4-d34b-4317-8562-29b6fee08f41</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495714180</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495714180</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495714180?alt=media&amp;token=e210c22b-1bce-4932-9be8-f39435a9fb37</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495694606</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495694606</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495694606?alt=media&amp;token=05ddea0f-d576-4f7c-9494-68ee06fb517e</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495673314</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495673314</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495673314?alt=media&amp;token=ff721560-4d5b-47ca-8184-1398bbd227d8</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495645646</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495645646</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495645646?alt=media&amp;token=43fe2448-d594-47d7-85f3-76fecaafed3f</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495629030</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
 2/10</g:description>
         <g:link>https://aortagallery.com/work/1689495629030</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495629030?alt=media&amp;token=9033d265-8b79-4999-b5a7-d0ce2475fb96</g:image_link>
         <g:price>550 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495611222</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title> Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495611222</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495611222?alt=media&amp;token=190a8eae-f941-489b-920e-368c5e2ebfec</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495592975</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495592975</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495592975?alt=media&amp;token=ef4a1069-c8a7-4de7-a08b-f50afdc68ac9</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495548295</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title> Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495548295</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495548295?alt=media&amp;token=502a4f18-c06e-4f13-ad85-e8c8930b58fc</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495512812</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495512812</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495512812?alt=media&amp;token=b40b6230-c62b-40ed-8572-26151d63d75c</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495490666</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
-Metallic frame, anti-reflective glass
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
+Cornice metallica, vetro antiriflesso
 1/10</g:description>
         <g:link>https://aortagallery.com/work/1689495490666</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495490666?alt=media&amp;token=1de3a3ae-d608-448d-a52d-b43d42addd8c</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495475382</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
+        <g:title>Dal progetto Aurora Borealis</g:title>
         <g:description>2022
-Colour print RA-4
-Image size 47,5х47,5сm
+Stampa a colori RA-4
+Dimensione immagini 47,5х47,5cm
 3/10</g:description>
         <g:link>https://aortagallery.com/work/1689495475382</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495475382?alt=media&amp;token=c02a613f-ed39-4c52-9559-596116c8093a</g:image_link>
         <g:price>650 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1689495458126</g:id>
-        <g:title>From the project Aurora Borealis</g:title>
-        <g:description>2022  
-Colour print RA-4 
-Image size 47,5х47,5сm 
+        <g:title>Dal progetto Aurora Borealis</g:title>
+        <g:description>2022 
+Stampa a colori RA-4 
+Dimensione immagini 47,5х47,5cm 
 2/10</g:description>
         <g:link>https://aortagallery.com/work/1689495458126</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1689495458126?alt=media&amp;token=1fafc944-1167-4f99-8daf-76b9ddb24450</g:image_link>
         <g:price>550 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>5х47cm</g:size>
       </item>
       <item>
         <g:id>1676977664117</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Silver gelatin print, 50х50 см, 2020, 2/10.</g:description>
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa ai sali d'argento, 50х50 см, 2020, 2/10.</g:description>
         <g:link>https://aortagallery.com/work/1676977664117</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1676977664117?alt=media&amp;token=fc94fb9f-162b-4565-9f67-2e301b901b42</g:image_link>
         <g:price>800 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>50х50cm</g:size>
       </item>
       <item>
         <g:id>1676977329176</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Silver gelatin print, 50х50 см, 2020, 2/10.</g:description>
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa ai sali d'argento, 50х50 см, 2020, 2/10.</g:description>
         <g:link>https://aortagallery.com/work/1676977329176</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1676977329176?alt=media&amp;token=e3517a28-7da0-4438-8880-54c305dcc9a4</g:image_link>
         <g:price>800 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>50х50cm</g:size>
       </item>
       <item>
         <g:id>1676977288250</g:id>
-        <g:title>From the series "Secret"</g:title>
-        <g:description>Silver gelatin print, 50х50 см, 2020, 2/10.</g:description>
+        <g:title>Dalla serie “Segreto”</g:title>
+        <g:description>Stampa ai sali d'argento, 50х50 см, 2020, 2/10.</g:description>
         <g:link>https://aortagallery.com/work/1676977288250</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2F1676977288250?alt=media&amp;token=c6543b0d-3457-40d5-a6fc-8df8bb702e3c</g:image_link>
         <g:price>800 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>50х50cm</g:size>
       </item>
       <item>
         <g:id>OlgaZaverzhenets-Untitled</g:id>
-        <g:title>Untitled</g:title>
-        <g:description>Silver gelatin, image size 45*45, medium film format, edition of 10, 2/10. 2021.</g:description>
+        <g:title>Senza titolo</g:title>
+        <g:description>Stampa alla gelatina d'argento, dimensione dell'immagine 45*45, pellicola medio formato, tiratura di 10, 2/10. 2021.</g:description>
         <g:link>https://aortagallery.com/work/OlgaZaverzhenets-Untitled</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2FOlgaZaverzhenets-Untitled?alt=media&amp;token=b66c8c3b-0fd3-4e55-bb4d-566955f179d4</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
       </item>
       <item>
         <g:id>OlgaZaverzhenets-Gazes</g:id>
-        <g:title>Gazes</g:title>
-        <g:description>Gum bichromate, image size 53*36, edition of 10, 2/10. 2021</g:description>
+        <g:title>Sguardi</g:title>
+        <g:description>Gomma bicromatata, dimensione dell'immagine 53*36, tiratura di 10, 2/10. 2021</g:description>
         <g:link>https://aortagallery.com/work/OlgaZaverzhenets-Gazes</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2FOlgaZaverzhenets-Gazes?alt=media&amp;token=c394fdb2-b46c-4aa6-910e-77796acae009</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
       </item>
       <item>
         <g:id>OlgaZaverzhenets-Hunt</g:id>
-        <g:title>Hunt</g:title>
-        <g:description>Gum bichromate, image size 53*36, edition of 10, 2/10. 2021.</g:description>
+        <g:title>Caccia</g:title>
+        <g:description>Gomma bicromatata, dimensione dell'immagine 53*36, tiratura di 10, 2/10. 2021.</g:description>
         <g:link>https://aortagallery.com/work/OlgaZaverzhenets-Hunt</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fworks%2FOlgaZaverzhenets-Hunt?alt=media&amp;token=381e5841-3f55-458e-9dd2-8635fc3803c7</g:image_link>
         <g:price>500 EUR</g:price>
         <g:brand>Olga Zaverzhenets</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
       </item>
       <item>
         <g:id>1681898080507</g:id>
-        <g:title>Belarusian landscape #1</g:title>
+        <g:title>Paesaggio bielorusso #1</g:title>
         <g:description>1/10
-Photo 50x30 cm
+Foto 50x30 cm
 Passepartout 70x50 cm
-Printing: Giclee print, archival inks (pigment-based)
-Paper: Hahnemuhle Photo Rag</g:description>
+Stampa: stampa giclée, inchiostri d'archivio (a base di pigmenti)
+Carta: Hahnemuhle Photo Rag</g:description>
         <g:link>https://aortagallery.com/work/1681898080507</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FSergejusMichalenko%2Fworks%2F1681898080507?alt=media&amp;token=d423fe7c-776e-43aa-bc5d-641629486dd4</g:image_link>
         <g:price>700 EUR</g:price>
         <g:brand>Sergejus Michalenko</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>50x30cm</g:size>
       </item>
       <item>
         <g:id>1681898009150</g:id>
-        <g:title>Belarusian landscape #11</g:title>
+        <g:title>Paesaggio bielorusso #11</g:title>
         <g:description>5/10
-Photo 50x30 cm
+Foto 50x30 cm
 Passepartout 70x50 cm
-Printing: Giclee print, archival inks (pigment-based)
-Paper: Hahnemuhle Photo Rag</g:description>
+Stampa: stampa giclée, inchiostri d'archivio (a base di pigmenti)
+Carta: Hahnemuhle Photo Rag</g:description>
         <g:link>https://aortagallery.com/work/1681898009150</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FSergejusMichalenko%2Fworks%2F1681898009150?alt=media&amp;token=a117bf61-e9cd-4e3a-aae2-45d5463dbdda</g:image_link>
         <g:price>1000 EUR</g:price>
         <g:brand>Sergejus Michalenko</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>50x30cm</g:size>
       </item>
       <item>
         <g:id>1681897943288</g:id>
-        <g:title>Belarusian landscape #15</g:title>
+        <g:title>Paesaggio bielorusso #15</g:title>
         <g:description>3/10
-Photo 50x30 cm
+Foto 50x30 cm
 Passepartout 70x50 cm
-Printing: Giclee print, archival inks (pigment-based)
-Paper: Hahnemuhle Photo Rag</g:description>
+Stampa: stampa giclée, inchiostri d'archivio (a base di pigmenti)
+Carta: Hahnemuhle Photo Rag</g:description>
         <g:link>https://aortagallery.com/work/1681897943288</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FSergejusMichalenko%2Fworks%2F1681897943288?alt=media&amp;token=853de445-2188-4544-9f94-3a0c5335858a</g:image_link>
         <g:price>850 EUR</g:price>
         <g:brand>Sergejus Michalenko</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>50x30cm</g:size>
       </item>
       <item>
         <g:id>1681897871364</g:id>
-        <g:title>Belarusian landscape #23</g:title>
+        <g:title>Paesaggio bielorusso #23</g:title>
         <g:description>1/10
-Photo 50x30 cm
+Foto 50x30 cm
 Passepartout 70x50 cm
-Printing: Giclee print, archival inks (pigment-based)
-Paper: Hahnemuhle Photo Rag</g:description>
+Stampa: stampa giclée, inchiostri d'archivio (a base di pigmenti)
+Carta: Hahnemuhle Photo Rag</g:description>
         <g:link>https://aortagallery.com/work/1681897871364</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FSergejusMichalenko%2Fworks%2F1681897871364?alt=media&amp;token=3e797fca-b144-46c7-b8c3-1698767954c1</g:image_link>
         <g:price>700 EUR</g:price>
         <g:brand>Sergejus Michalenko</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>50x30cm</g:size>
       </item>
       <item>
         <g:id>1681897440163</g:id>
-        <g:title>Belarusian landscape #22</g:title>
+        <g:title>Paesaggio bielorusso #22</g:title>
         <g:description>2/10
-Photo 50x30 cm
+Foto 50x30 cm
 Passepartout 70x50 cm
-Printing: Giclee print, archival inks (pigment-based)
-Paper: Hahnemuhle Photo Rag</g:description>
+Stampa: stampa giclée, inchiostri d'archivio (a base di pigmenti)
+Carta: Hahnemuhle Photo Rag</g:description>
         <g:link>https://aortagallery.com/work/1681897440163</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FSergejusMichalenko%2Fworks%2F1681897440163?alt=media&amp;token=7601f54c-a75c-4775-8be8-0684ea06545a</g:image_link>
         <g:price>850 EUR</g:price>
         <g:brand>Sergejus Michalenko</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
-        <g:google_product_category>Photography</g:google_product_category>
+        <g:google_product_category>Fotografia</g:google_product_category>
         <g:product_type>1793</g:product_type>
         <g:size>50x30cm</g:size>
       </item>
       <item>
         <g:id>1696712074625</g:id>
-        <g:title>Sky of the Slavs</g:title>
-        <g:description>Oil on canvas, 40x60 cm</g:description>
+        <g:title>Il cielo degli slavi</g:title>
+        <g:description>Olio su tela, 40x60 cm</g:description>
         <g:link>https://aortagallery.com/work/1696712074625</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696712074625?alt=media&amp;token=e09d5c8d-8411-403c-b504-717b758af7af</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1283,12 +1283,12 @@ Paper: Hahnemuhle Photo Rag</g:description>
       <item>
         <g:id>1696711547328</g:id>
         <g:title>Goyda</g:title>
-        <g:description>Oil on canvas, 50x70 cm</g:description>
+        <g:description>Olio su tela, 50x70cm</g:description>
         <g:link>https://aortagallery.com/work/1696711547328</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696711547328?alt=media&amp;token=6ea74c30-38e6-4ced-b4ad-228d8b091cd9</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1298,13 +1298,13 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696696841618</g:id>
-        <g:title>Coronation of the stomach</g:title>
-        <g:description>Oil on canvas, 50x70 cm</g:description>
+        <g:title>Incoronazione dello stomaco</g:title>
+        <g:description>Olio su tela,  50x70 cm</g:description>
         <g:link>https://aortagallery.com/work/1696696841618</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696696841618?alt=media&amp;token=fc5f2a23-3ce4-4d30-ad86-bab48cc50ef8</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1314,14 +1314,14 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696691245884</g:id>
-        <g:title>AWAITING UNAVOIDABLE GUESTS</g:title>
-        <g:description>Oil on canvas, 50 x 50 cm
+        <g:title>IN ATTESA DI OSPITI IMMEDIABILI</g:title>
+        <g:description>Olio su tela, 50 x 50 cm
 </g:description>
         <g:link>https://aortagallery.com/work/1696691245884</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696691245884?alt=media&amp;token=854d39d4-a24a-4497-b9d8-e41a7925ef23</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1332,13 +1332,13 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696690359242</g:id>
-        <g:title>Conversation between me and us</g:title>
-        <g:description>Oil on canvas, 50x50 cm</g:description>
+        <g:title>Conversazione tra me e noi</g:title>
+        <g:description>Olio su tela, 50x50cm</g:description>
         <g:link>https://aortagallery.com/work/1696690359242</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696690359242?alt=media&amp;token=37f0fc58-7f2d-4b1a-a038-0219b63f4502</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1349,13 +1349,13 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696689506795</g:id>
-        <g:title>Collective portrait of Dorian Gray</g:title>
-        <g:description>Oil on canvas, 50x50 cm</g:description>
+        <g:title>Ritratto collettivo di Dorian Gray</g:title>
+        <g:description>Olio su tela, 50x50 cm</g:description>
         <g:link>https://aortagallery.com/work/1696689506795</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696689506795?alt=media&amp;token=683eb98a-d2ed-4f4d-97ec-cbb7f77244f9</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1365,13 +1365,13 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696687457970</g:id>
-        <g:title>The hunter and the catch</g:title>
-        <g:description>Oil on canvas, 50x60 cm</g:description>
+        <g:title>Il cacciatore e la cattura</g:title>
+        <g:description>Olio su tela, 50x60cm</g:description>
         <g:link>https://aortagallery.com/work/1696687457970</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696687457970?alt=media&amp;token=dc72cdd1-2e10-4ce7-8fc9-8e87b7a3df6b</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1381,13 +1381,13 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696687242297</g:id>
-        <g:title>Last call</g:title>
-        <g:description>Oil on canvas, 50x60 cm</g:description>
+        <g:title>Ultima chiamata</g:title>
+        <g:description>Olio su tela, 50x60cm</g:description>
         <g:link>https://aortagallery.com/work/1696687242297</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696687242297?alt=media&amp;token=9597d7b4-d493-46f1-93bc-e44d17117476</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1398,15 +1398,13 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696256618314</g:id>
-        <g:title>Creation of light and the seven circles of Belarus</g:title>
-        <g:description>Mixed technique, 50x50 cm
-
-</g:description>
+        <g:title>Creazione della luce e sette cerchi della Belarus</g:title>
+        <g:description>Tecnica mista, 50x50 cm</g:description>
         <g:link>https://aortagallery.com/work/1696256618314</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696256618314?alt=media&amp;token=e350bc40-467c-4fc0-b348-d6742b007a9f</g:image_link>
         <g:price>6000 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1420,15 +1418,14 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696256438975</g:id>
-        <g:title>PROPAGANDA WAITING FOR GODOT</g:title>
-        <g:description>Oil on canvas, 50x50 cm
-
+        <g:title>PROPAGANDA ASPETTANDO GODOT</g:title>
+        <g:description>Olio su tela, 50x50cm
 </g:description>
         <g:link>https://aortagallery.com/work/1696256438975</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696256438975?alt=media&amp;token=2c8bb9cc-41de-4100-8f36-a3808df6a55b</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1439,14 +1436,14 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696256246759</g:id>
-        <g:title>RUSSIAN FEAST</g:title>
-        <g:description>Oil on canvas, 50x70 cm
+        <g:title>BANCHETTO RUSSO</g:title>
+        <g:description>Olio su tela, 50x70 cm
 </g:description>
         <g:link>https://aortagallery.com/work/1696256246759</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696256246759?alt=media&amp;token=acd46f98-af33-47ba-b943-f5db2e3202dd</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1458,14 +1455,15 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696256084754</g:id>
-        <g:title>PATRIOTIC CRAZE</g:title>
-        <g:description>Oil on canvas, 50x70 cm
+        <g:title>FOLLIA PATRIOTICA</g:title>
+        <g:description>Olio su tela, 50x70 cm
+
 </g:description>
         <g:link>https://aortagallery.com/work/1696256084754</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696256084754?alt=media&amp;token=89748ada-4566-48cd-b49c-e46b4bdf49af</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1476,13 +1474,14 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696255927518</g:id>
-        <g:title>A WAY TO FREEDOM</g:title>
-        <g:description>Oil on canvas, 50x60 cm</g:description>
+        <g:title>UNA VIA VERSO LA LIBERTA'</g:title>
+        <g:description>Olio su tela, 50x60cm
+</g:description>
         <g:link>https://aortagallery.com/work/1696255927518</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696255927518?alt=media&amp;token=e3661cb2-4875-4d38-9e6f-0a7d751ddfe3</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1493,14 +1492,14 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696255765422</g:id>
-        <g:title>COMFORT ZONE</g:title>
-        <g:description>Oil on canvas, 50x40 cm
+        <g:title>ZONA DI COMFORT</g:title>
+        <g:description>Olio su tela, 50x40 cm
 </g:description>
         <g:link>https://aortagallery.com/work/1696255765422</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696255765422?alt=media&amp;token=ca5895db-745f-492d-bf5f-f15f90a484b9</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1511,14 +1510,14 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696255255095</g:id>
-        <g:title>CONCENTRATION FEST</g:title>
-        <g:description>Oil on canvas, 50x60 cm
+        <g:title>FESTA DELLA CONCENTRAZIONE</g:title>
+        <g:description>Olio su tela, 50x60 cm
 </g:description>
         <g:link>https://aortagallery.com/work/1696255255095</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696255255095?alt=media&amp;token=4e9bcea7-0ef9-403b-a191-5b2e3091bdce</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1528,14 +1527,14 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696255098731</g:id>
-        <g:title>THE CULT OF SUFFERING</g:title>
+        <g:title>IL CULTO DELLA SOFFERENZA</g:title>
         <g:description>Oil on canvas, 50x60 cm
 </g:description>
         <g:link>https://aortagallery.com/work/1696255098731</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696255098731?alt=media&amp;token=73a33cf2-7074-4642-a88a-384dcb7880a2</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1546,13 +1545,15 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696254835856</g:id>
-        <g:title>THE STATE OF POMPOUS OPENINGS</g:title>
-        <g:description>Oil on canvas, 50x60 cm</g:description>
+        <g:title>LO STATO DELLE APERTURE POMPOSE</g:title>
+        <g:description>Olio su tela, 50x60cm
+
+</g:description>
         <g:link>https://aortagallery.com/work/1696254835856</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696254835856?alt=media&amp;token=5c7cd1cb-fe9d-4b84-bd66-1ba9fea2b90d</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1561,15 +1562,13 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696254645736</g:id>
-        <g:title>ANOTHER MORNING</g:title>
-        <g:description>Oil on canvas, 50x70 cm
-
-</g:description>
+        <g:title>UN'ALTRA MATTINA</g:title>
+        <g:description>Olio su tela, 50x70 cm</g:description>
         <g:link>https://aortagallery.com/work/1696254645736</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696254645736?alt=media&amp;token=a6c404e5-71f3-4070-8882-1c8c8c5d4d17</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1578,15 +1577,15 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1696254465074</g:id>
-        <g:title>THE BASE OF THE PYRAMID</g:title>
-        <g:description>Oil on canvas, 50 x 50cm
+        <g:title>LA BASE DELLA PIRAMIDE</g:title>
+        <g:description>Olio su tela, 50 x 50 cm
 
 </g:description>
         <g:link>https://aortagallery.com/work/1696254465074</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1696254465074?alt=media&amp;token=00689524-d489-4d11-9980-b45afe3f46ac</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1597,13 +1596,13 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1684487356999</g:id>
-        <g:title>THE SYSTEM LOVES SILENCE</g:title>
-        <g:description>50 x 70cm, oil on canvas, 2022.</g:description>
+        <g:title>IL SISTEMA AMA IL SILENZIO</g:title>
+        <g:description>50 x 70cm, olio su tela, 2022.</g:description>
         <g:link>https://aortagallery.com/work/1684487356999</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1684487356999?alt=media&amp;token=656f7929-340f-47c4-8951-62a4e123f740</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1615,14 +1614,14 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1684486741485</g:id>
-        <g:title>THE NEW HERO</g:title>
-        <g:description>50 x 60cm, oil on canvas, 2022.
+        <g:title>IL NUOVO EROE</g:title>
+        <g:description>50 x 60cm, olio su tela, 2022.
 </g:description>
         <g:link>https://aortagallery.com/work/1684486741485</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1684486741485?alt=media&amp;token=2aeb7214-73f9-4609-8f4e-41897059f5ea</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1632,14 +1631,14 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1684486577829</g:id>
-        <g:title>NESTED PEOPLE</g:title>
-        <g:description>50 x 60cm, oil on canvas, 2022.
+        <g:title>PERSONE ANNIDATE</g:title>
+        <g:description>50 x 60cm, olio su tela, 2022.
 </g:description>
         <g:link>https://aortagallery.com/work/1684486577829</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1684486577829?alt=media&amp;token=9715f8fb-ee50-4cf8-ab8c-9f4502e15af0</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1648,14 +1647,14 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1684486350043</g:id>
-        <g:title>STERILE CONTEMPORARY ART</g:title>
-        <g:description>50 x 60cm, oil on canvas, 2022.
+        <g:title>ARTE CONTEMPORANEO STERILE</g:title>
+        <g:description>50 x 60cm, olio su tela, 2022.
 </g:description>
         <g:link>https://aortagallery.com/work/1684486350043</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1684486350043?alt=media&amp;token=d4b07ae7-1648-4196-b591-bdfa3168c922</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1665,14 +1664,14 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1684486153001</g:id>
-        <g:title>"THE MOTHERLAND IS CALLING UP FOR A GOBBLE"</g:title>
-        <g:description>50cm x 50cm, oil on canvas, 2022.
+        <g:title>"LA PATRIA CHIAMA PER UN’ABBUFFATA"</g:title>
+        <g:description>50cm x 50cm, olio su tela, 2022.
 </g:description>
         <g:link>https://aortagallery.com/work/1684486153001</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1684486153001?alt=media&amp;token=4c2d4767-1338-4fa6-872c-acdf7b4e1ed7</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1682,14 +1681,14 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1684485817262</g:id>
-        <g:title>AUTHOCRACY</g:title>
-        <g:description>50cm x 70cm, oil on canvas, 2020.
+        <g:title>AUTOCRAZIA</g:title>
+        <g:description>50cm x 70cm, olio su tela, 2020.
 </g:description>
         <g:link>https://aortagallery.com/work/1684485817262</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1684485817262?alt=media&amp;token=f9cf3090-0474-47c0-ba36-26999867a73a</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
@@ -1699,13 +1698,14 @@ Paper: Hahnemuhle Photo Rag</g:description>
       </item>
       <item>
         <g:id>1684485623161</g:id>
-        <g:title>STATISTICS</g:title>
-        <g:description>50cm x 70cm, oil on canvas, 2022.</g:description>
+        <g:title>STATISTICA</g:title>
+        <g:description>50cm x 70cm, olio su tela, 2022.
+</g:description>
         <g:link>https://aortagallery.com/work/1684485623161</g:link>
         <g:image_link>https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FUladzikBokhan%2Fworks%2F1684485623161?alt=media&amp;token=2bf66030-e131-4dc9-9a8e-ee92952c0ee4</g:image_link>
         <g:price>600 EUR</g:price>
         <g:brand>Uladzik Bokhan</g:brand>
-        <g:feed_label>AORTA_ART</g:feed_label>
+        <g:feed_label>AORTA_ART_IT</g:feed_label>
         <g:availability>in_stock</g:availability>
         <g:condition>new</g:condition>
         <g:google_product_category>Pittura</g:google_product_category>
