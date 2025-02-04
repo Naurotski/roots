@@ -172,7 +172,7 @@ export default {
       'Innovative art gallery in Pisa: contemporary art, virtual reality, and exhibitions in Pisa.',
     homeKeywords:
       'Contemporary art gallery Pisa, Modern art Pisa,  Art exhibitions Pisa, Contemporary art shows, Cultural events Pisa, Contemporary painting, Modern sculpture Pisa, Art installations, Emerging artists Italy, Art galleries in Tuscany, Cultural tourism Pisa, Contemporary visual art, Art collections Pisa, Art events Tuscany, Exhibition space Pisa',
-    homeTitle: 'Aorta Social Art Gallery, ',
+    homeTitle: 'Aorta Social Art Gallery',
     shopDescription:
       'Souvenirs from Pisa: contemporary art for everyone as a memory of unique exhibitions in Pisa.',
     shopKeywords:
