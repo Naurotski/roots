@@ -161,7 +161,7 @@ export default {
     })
     const artistJsonLd = computed(() =>
       artistsList.value.find(
-        (item) => item.name === actionJsonLd.value?.name?.match(/^([\w\s]+)\s"(.+)"$/)[1]
+        (item) => item.name === actionJsonLd.value?.name?.match(/^([\w\s]+)\s"(.+)"$/)?.[1]
       )
     )
     const unwatch = watchEffect(() => {
@@ -228,7 +228,7 @@ export default {
             innerHTML: JSON.stringify({
               "@context": "https://schema.org",
                 "@type": "Event",
-                "name": locale.value === 'it' ? actionJsonLd.value?.nameIt?.match(/^([\w\s]+)\s"(.+)"$/)[2] : actionJsonLd.value?.name?.match(/^([\w\s]+)\s"(.+)"$/)[2],
+                "name": locale.value === 'it' ? actionJsonLd.value?.nameIt?.match(/^([\w\s]+)\s"(.+)"$/)?.[2] : actionJsonLd.value?.name?.match(/^([\w\s]+)\s"(.+)"$/)?.[2],
                 "description": locale.value === 'it' ? actionJsonLd.value?.descriptionIt : actionJsonLd.value?.description,
                 "startDate": actionJsonLd.value?.openingDate?.replace(/\//g, "-"),
                 "endDate": actionJsonLd.value?.closingDate?.replace(/\//g, "-"),
@@ -265,7 +265,7 @@ export default {
                 },
                 "performer": {
                   "@type": "Person",
-                  "name": actionJsonLd.value?.name?.match(/^([\w\s]+)\s"(.+)"$/)[1],
+                  "name": actionJsonLd.value?.name?.match(/^([\w\s]+)\s"(.+)"$/)?.[1],
                   "url": `https://aortagallery.com/artists/${artistJsonLd.value?.artistId}`,
                   "image": artistJsonLd.value?.urlPortrait,
                   "description": locale.value === 'it' ? artistJsonLd.value?.descriptionIt : artistJsonLd.value?.description
