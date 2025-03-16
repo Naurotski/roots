@@ -24,7 +24,7 @@
 <script>
 import { ref, computed, toRefs, watch, watchEffect } from 'vue'
 export default {
-  name: 'ImageSelector',
+  name: 'AvatarSelector',
   props: {
     portraitData: {
       type: Object,

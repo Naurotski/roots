@@ -130,7 +130,7 @@
         ]"
       />
     </div>
-    <div v-if="user.country?.countryName === 'Italy'" class="col-12 col-sm-4">
+    <div v-if="user.country?.countryName === 'Italy'" class="col-12 col-sm-4 q-px-md">
       <q-input
         v-model="user.taxId"
         dense

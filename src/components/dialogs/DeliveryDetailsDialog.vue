@@ -35,7 +35,6 @@
 </template>
 <script>
 import { computed, ref, toRefs } from 'vue'
-
 import FormUserData from 'components/shared/FormUserData.vue'
 
 export default {

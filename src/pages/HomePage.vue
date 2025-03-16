@@ -210,7 +210,7 @@ export default defineComponent({
               ],
               "event": {
                 "@type": "Event",
-                "name": locale.value === 'it' ? selectedExhibitionsData.value.nameIt?.match(/^([\w\s]+)\s"(.+)"$/)[2] : selectedExhibitionsData.value.name?.match(/^([\w\s]+)\s"(.+)"$/)[2],
+                "name": locale.value === 'it' ? selectedExhibitionsData.value.nameIt?.match(/^([\w\s]+)\s"(.+)"$/)?.[2] : selectedExhibitionsData.value.name?.match(/^([\w\s]+)\s"(.+)"$/)?.[2],
                 "description": "The “Transition” project invites the viewer into a space where the visible and invisible worlds converge, where the past intertwines with the present, and memory comes alive through the sounds of birds and the glow of amber.",
                 "startDate": selectedExhibitionsData.value.openingDate?.replace(/\//g, "-"),
                 "endDate": selectedExhibitionsData.value.closingDate?.replace(/\//g, "-"),
@@ -245,7 +245,7 @@ export default defineComponent({
                 },
                 "performer": {
                   "@type": "Person",
-                  "name": selectedExhibitionsData.value.name?.match(/^([\w\s]+)\s"(.+)"$/)[1],
+                  "name": selectedExhibitionsData.value.name?.match(/^([\w\s]+)\s"(.+)"$/)?.[1],
                   "url": "https://aortagallery.com/artists/OlgaZaverzhenets",
                   "image": "https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/artists%2FOlgaZaverzhenets%2Fportrait?alt=media&token=2f7a3b7f-5d61-487e-840d-eed3a091ca9c",
                   "description": "Olga Zaverzhenets is an artist working with the medium of photography. She was born in Belarus in 1982. Olga has been involved in Photography since 2006. She has a particular preference for medium format photography. She works with classic and alternative techniques of hand printing."
