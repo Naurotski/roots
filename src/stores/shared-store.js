@@ -41,6 +41,7 @@ export const useSharedStore = defineStore('shared', () => {
   const selectedExhibitionsData = ref({})
   const worksForSale = ref([])
   const listCountry = ref([])
+  const deliveryDetailsDialogActivator = ref(false)
 
   const sortedCountries = computed(() =>
     listCountry.value.sort((a, b) => {
@@ -51,6 +52,8 @@ export const useSharedStore = defineStore('shared', () => {
   )
 
   const toggleRightDrawer = () => (rightDrawerOpen.value = !rightDrawerOpen.value)
+  const toggleDeliveryDetailsDialogActivator = () =>
+    (deliveryDetailsDialogActivator.value = !deliveryDetailsDialogActivator.value)
 
   const getHomePageData = () => {
     onValue(dbRef(db, 'HomePageAorta/'), async (snapshot) => {
@@ -112,7 +115,9 @@ export const useSharedStore = defineStore('shared', () => {
     selectedExhibitionsData,
     worksForSale,
     sortedCountries,
+    deliveryDetailsDialogActivator,
     toggleRightDrawer,
+    toggleDeliveryDetailsDialogActivator,
     getHomePageData,
     getCountries,
     sendMailFeedback

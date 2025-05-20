@@ -34,8 +34,10 @@
   </q-dialog>
 </template>
 <script>
-import { computed, ref, toRefs } from 'vue'
+import { computed, toRefs } from 'vue'
+import { useSharedStore } from 'stores/shared-store'
 import FormUserData from 'components/shared/FormUserData.vue'
+import { storeToRefs } from 'pinia'
 
 export default {
   name: 'DeliveryDetailsDialog',
@@ -49,13 +51,23 @@ export default {
   emits: ['update:modelValue', 'savaDelivery'],
   setup(props, { emit }) {
     const { modelValue } = toRefs(props)
-    const activator = ref(false)
+    const sharedStore = useSharedStore()
+    const { deliveryDetailsDialogActivator } = storeToRefs(sharedStore)
+    const { toggleDeliveryDetailsDialogActivator } = sharedStore
     const localData = computed({
       get() {
         return modelValue.value
       },
       set(value) {
         emit('update:modelValue', value)
+      }
+    })
+    const activator = computed({
+      get() {
+        return deliveryDetailsDialogActivator.value
+      },
+      set() {
+        toggleDeliveryDetailsDialogActivator()
       }
     })
     const onSubmit = async () => {

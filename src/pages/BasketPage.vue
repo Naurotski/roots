@@ -11,7 +11,12 @@
               outline
               rounded
               :label="`${$t('cart.proceedCheckout')} (${cartCounter} ${$t('cart.items')})`"
-              @click="() => orderSummary.createOrder()"
+              @click="
+                () =>
+                  selectedShippingRate
+                    ? orderSummary.createOrder()
+                    : toggleDeliveryDetailsDialogActivator()
+              "
             />
           </div>
         </template>
@@ -78,6 +83,7 @@ import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
 import { useUserStore } from 'stores/user-store'
+import { useSharedStore } from 'stores/shared-store'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import ProductCard from 'components/cart/ProductCard.vue'
 import OrderSummary from 'components/cart/OrderSummary.vue'
@@ -101,6 +107,8 @@ export default {
     const { payStripe } = stripeStore
     const userStore = useUserStore()
     const { userData } = storeToRefs(userStore)
+    const sharedStore = useSharedStore()
+    const { toggleDeliveryDetailsDialogActivator } = sharedStore
     const orderSummary = ref()
     const selectedShippingRate = ref(null)
     const filteredActionsI18n = computed(() => {
@@ -199,6 +207,7 @@ export default {
       orderSummary,
       singIn,
       payOrder,
+      toggleDeliveryDetailsDialogActivator,
       line_items,
       shippingDetails
     }

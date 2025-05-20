@@ -32,7 +32,9 @@ export const useMerchStore = defineStore('merch', () => {
     { label: 'links.mugs', name: 'mugs' },
     { label: 'links.bags', name: 'bags' },
     { label: 'links.notebooks', name: 'notebooks' },
-    { label: 'links.casesForIPhone', name: 'casesForIPhone' }
+    { label: 'links.tShirts', name: 'tShirts' },
+    { label: 'links.hats', name: 'hats' },
+    { label: 'links.pins', name: 'pins' }
   ])
   const listStatusOrderPrintFul = {
     archived: 'ordersPrintFul.archived',

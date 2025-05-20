@@ -54,8 +54,9 @@
           outline
           rounded
           :label="`${$t('cart.proceedCheckout')} (${cartCounter} ${$t('cart.items')})`"
-          :disable="!selectedShippingRate"
-          @click="createOrder"
+          @click="
+            () => (selectedShippingRate ? createOrder() : toggleDeliveryDetailsDialogActivator())
+          "
         />
       </div>
     </div>
@@ -76,6 +77,7 @@ import { useAuthStore } from 'stores/auth-store'
 import { useUserStore } from 'stores/user-store'
 import { useStripeStore } from 'stores/stripe-store'
 import { useMerchStore } from 'stores/merch-store'
+import { useSharedStore } from 'stores/shared-store'
 import DeliveryDetailsDialog from 'components/dialogs/DeliveryDetailsDialog.vue'
 import LoginRequiredDialog from 'components/auth/LoginRequiredDialog.vue'
 
@@ -111,6 +113,8 @@ export default {
     const { changeShippingDetails } = stripeStore
     const merchStore = useMerchStore()
     const { shippingRates } = storeToRefs(merchStore)
+    const sharedStore = useSharedStore()
+    const { toggleDeliveryDetailsDialogActivator } = sharedStore
     const { updateShippingRates, printFul } = merchStore
     const deliveryDetails = ref({})
     const selectedShippingRate = computed({
@@ -239,6 +243,7 @@ export default {
       authProvider,
       saveSippingDetails,
       createOrder,
+      toggleDeliveryDetailsDialogActivator,
       shippingDetails
     }
   }
