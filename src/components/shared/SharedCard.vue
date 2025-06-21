@@ -10,7 +10,7 @@
       <slot name="underPicture" />
     </q-card>
   </div>
-  <div class="col-12 col-sm-8 relative-position" v-bind="$attrs">
+  <div class="col-12 col-sm-8 relative-position q-pb-xl" v-bind="$attrs">
     <p class="text-justify text-body1" style="white-space: pre-line">
       {{ description }}
       <span
@@ -27,6 +27,7 @@
       >
     </p>
     <slot name="press" />
+    <slot name="tickets" />
     <slot name="button" />
   </div>
 </template>

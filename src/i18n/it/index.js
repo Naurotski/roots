@@ -181,6 +181,14 @@ export default {
     shopKeywords:
       "Offerte su merchandising artistico, Spedizione gadget artistici, Compra online regali unici, Merchandising artistico online, Compra gadget ispirati all’arte, T-shirt artistiche in vendita, Poster d'arte contemporanea, Accessori ispirati all'arte moderna, Souvenir d'arte Pisa, Regali per amanti dell’arte, Merchandising galleria d’arte, Shopping online di arte moderna, Borse con stampe artistiche, Prodotti esclusivi d’arte, Design contemporaneo per il tuo stile, Tazze e accessori d’arte, Merchandising artistico personalizzato, Collezione moda ispirata all'arte"
   },
+  tickets: {
+    adults: 'Adulti',
+    ages: 'Dai 10 ai 18 anni',
+    available: 'Disponibile',
+    buyTickets: 'Acquistare i Biglietti',
+    children: 'Bambini sotto i 10 anni',
+    tickets: 'biglietti'
+  },
   jsonLd: {
     monday: 'Lunedì',
     tuesday: 'Martedì',

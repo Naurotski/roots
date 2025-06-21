@@ -182,6 +182,14 @@ export default {
     shopKeywords:
       'Art merchandise discounts, Art-themed gadgets shipping, Shop unique gifts online, Artistic merchandise online, Buy art-inspired gadgets, Art-themed T-shirts for sale, Contemporary art posters, Accessories inspired by modern art, Art souvenirs Pisa, Gifts for art lovers, Art gallery merchandise, Modern art shopping online, Tote bags with artistic prints, Exclusive art products, Contemporary design for your style, Art-themed mugs and accessories, Personalized artistic merchandise, Fashion collection inspired by art'
   },
+  tickets: {
+    adults: 'Adults',
+    ages: 'Ages',
+    available: 'Available',
+    buyTickets: 'Buy Tickets',
+    children: 'Children',
+    tickets: 'tickets'
+  },
   jsonLd: {
     monday: 'Monday',
     tuesday: 'Tuesday',

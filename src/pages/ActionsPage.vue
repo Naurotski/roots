@@ -58,9 +58,20 @@
                         </li>
                       </ul>
                     </template>
+                    <template #tickets>
+                      <list-working-days-dialog
+                        v-if="action.tickets && Object.keys(action.tickets).length"
+                        :tickets-list="action.tickets"
+                        :action-id="action.id"
+                        :name="action.name"
+                        :url="action.urlImage"
+                        :city="action.city"
+                      />
+                    </template>
+
                     <template v-if="action.lifeTime !== 'upcoming'" #button>
                       <action-dialog
-                        class="absolute-bottom-right"
+                        class="absolute-bottom"
                         :title="action.name"
                         :typeAction="typeAction"
                         :dialogData="action.works"
@@ -93,6 +104,7 @@ import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
 import ActionDialog from 'components/dialogs/ActionDialog.vue'
 import NoResults from 'components/shared/NoResults.vue'
+import ListWorkingDaysDialog from 'components/tickets/ListWorkingDaysDialog.vue'
 
 export default {
   name: 'ActionsPage',
@@ -101,7 +113,8 @@ export default {
     SmallPageContainer,
     SharedCard,
     ActionDialog,
-    NoResults
+    NoResults,
+    ListWorkingDaysDialog
   },
   props: {
     typeAction: {
@@ -117,8 +130,8 @@ export default {
     const shredStore = useSharedStore()
     const { actionsLinks } = storeToRefs(shredStore)
     const actionsStore = useActionStore()
-    const { filterExhibitionsDraft, filterEventsDraft } = storeToRefs(actionsStore)
-    const { getExhibitions, getEvents } = actionsStore
+    const { filterExhibitionsDraft, filterEventsDraft, ticketsList } = storeToRefs(actionsStore)
+    const { getExhibitions, getEvents, listenForChildTicket } = actionsStore
     const artistsStore = useArtistsStore()
     const { artistsList } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
@@ -126,6 +139,7 @@ export default {
     const itemRefs = ref([])
     const filteredActions = ref([])
     const tab = ref(route.query.lifeTime || $q.localStorage.getItem('tab-actions') || 'archive')
+    if (Object.keys(ticketsList.value)) listenForChildTicket()
     const elem = computed(() => itemRefs.value.find((item) => item.id === `d${route.query.id}`))
     const filteredActionsI18n = computed(() => {
       if (locale.value === 'it') {
@@ -138,10 +152,14 @@ export default {
             ...item,
             description: item.descriptionIt,
             name: item.nameIt
-          }))
+          })),
+          tickets: ticketsList.value[action.id]
         }))
       } else {
-        return filteredActions.value
+        return filteredActions.value.map((action) => ({
+          ...action,
+          tickets: ticketsList.value[action.id]
+        }))
       }
     })
     const actionJsonLd = computed(() => {

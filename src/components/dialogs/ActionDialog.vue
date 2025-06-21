@@ -6,12 +6,19 @@
           no-caps
           outline
           rounded
+          class="full-width"
           :label="$t('common.enter')"
           @click="useActivator"
           v-bind="$attrs"
         />
       </slot>
-      <q-dialog v-model="activator" full-width>
+      <q-dialog
+        v-model="activator"
+        full-width
+        :maximized="$q.screen.xs"
+        :transition-show="$q.screen.xs ? 'slide-up' : 'fade'"
+        :transition-hide="$q.screen.xs ? 'slide-down' : 'fade'"
+      >
         <q-card>
           <q-toolbar class="q-pl-xl q-pt-md">
             <q-toolbar-title class="text-h5" style="white-space: pre-line">

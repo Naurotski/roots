@@ -1,12 +1,19 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { onValue, ref as dbRef } from 'firebase/database'
+import {
+  onChildAdded,
+  onChildChanged,
+  onChildRemoved,
+  onValue,
+  ref as dbRef
+} from 'firebase/database'
 import { db } from 'boot/firebase.js'
 import { date, Loading } from 'quasar'
 
 export const useActionStore = defineStore('Action', () => {
   const exhibitionsList = ref([])
   const eventList = ref([])
+  const ticketsList = ref({})
   const filterExhibitionsDraft = computed(() => exhibitionsList.value.filter((item) => !item.draft))
   const filterEventsDraft = computed(() => eventList.value.filter((item) => !item.draft))
   const setActionsList = ({ actionsData, typeAction }) => {
@@ -43,6 +50,13 @@ export const useActionStore = defineStore('Action', () => {
       eventList.value = localList
     }
   }
+  const updateTicketsList = (key, data) => {
+    if (!key) {
+      ticketsList.value = {}
+    } else {
+      ticketsList.value[key] = data
+    }
+  }
   const getExhibitions = () => {
     Loading.show({
       backgroundColor: 'black'
@@ -67,10 +81,28 @@ export const useActionStore = defineStore('Action', () => {
       }
     })
   }
+  const listenForChildTicket = () => {
+    console.log('listenForChildTicket - ')
+    let path = `tickets`
+    onChildAdded(dbRef(db, path), (data) => {
+      console.log('onChildAdded-Ticket -', data.key, ':', data.val())
+      updateTicketsList(data.key, data.val())
+    })
+    onChildChanged(dbRef(db, path), (data) => {
+      console.log('onChildChanged-Ticket -', data.key, ':', data.val())
+      updateTicketsList(data.key, data.val())
+    })
+    onChildRemoved(dbRef(db, path), (data) => {
+      console.log('onChildRemoved-Ticket -', data.key, ':', data.val())
+      updateTicketsList(data.key, data.val())
+    })
+  }
   return {
+    ticketsList,
     filterExhibitionsDraft,
     filterEventsDraft,
     getExhibitions,
-    getEvents
+    getEvents,
+    listenForChildTicket
   }
 })
