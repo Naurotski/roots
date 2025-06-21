@@ -17,15 +17,15 @@ export const timeTicketFilter = (originalRef) => {
   onUnmounted(() => {
     clearInterval(intervalId)
   })
-  const filteredListTickets = computed(() => {
+  const currentListTickets = computed(() => {
     const result = {}
     for (const [dateKey, times] of Object.entries(originalRef.value)) {
       if (dateKey < today.value) continue
       const filteredTimes = Object.fromEntries(
-        Object.entries(times).filter(([timeKey]) => {
-          if (dateKey > today.value) return true
-          const startTime = timeKey.split('-')[0]
-          return startTime >= nowHM.value
+        Object.entries(times).filter(([timeKey, data]) => {
+          if (data.quantity === 0) return false // 🔥 Убираем с quantity === 0
+          if (dateKey > today.value) return true // Оставляем всё на будущее
+          return timeKey.split('-')[0] >= nowHM.value
         })
       )
       if (Object.keys(filteredTimes).length > 0) {
@@ -36,6 +36,6 @@ export const timeTicketFilter = (originalRef) => {
   })
 
   return {
-    filteredListTickets
+    currentListTickets
   }
 }

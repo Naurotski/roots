@@ -23,7 +23,7 @@
         <q-btn flat round icon="close" dense v-close-popup />
       </q-toolbar>
       <q-card-section class="q-pa-xm example-row-equal-width">
-        <div v-for="(date, dateKey) in filteredListTickets" :key="dateKey" class="row">
+        <div v-for="(date, dateKey) in currentListTickets" :key="dateKey" class="row">
           <div class="" :class="['flex flex-center', $q.screen.xs ? 'col-5' : 'col-3 ']">
             {{
               new Date(dateKey).toLocaleDateString($i18n.locale === 'it' ? 'it-IT' : 'en-US', {
@@ -57,7 +57,7 @@
   </q-dialog>
 </template>
 <script>
-import { ref, toRefs } from 'vue'
+import {  ref, toRefs } from 'vue'
 import TimedTicketsDialog from 'components/tickets/TimedTicketsDialog.vue'
 import { timeTicketFilter } from 'src/composables/timeTicketFilter'
 export default {
@@ -69,11 +69,10 @@ export default {
   setup(props) {
     const { ticketsList } = toRefs(props)
     const dialogList = ref(false)
-    // const currentTicketsList
-    const { filteredListTickets } = timeTicketFilter(ticketsList)
+    const { currentListTickets } = timeTicketFilter(ticketsList)
     return {
       dialogList,
-      filteredListTickets
+      currentListTickets
     }
   }
 }
