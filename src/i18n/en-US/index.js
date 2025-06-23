@@ -188,6 +188,8 @@ export default {
     available: 'Available',
     buyTickets: 'Buy Tickets',
     children: 'Children',
+    emailForTicket: 'Email address for ticket delivery',
+    selectDate: 'Select date and time to purchase tickets',
     tickets: 'tickets'
   },
   jsonLd: {

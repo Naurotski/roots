@@ -61,11 +61,7 @@
                     <template #tickets>
                       <list-working-days-dialog
                         v-if="action.tickets && Object.keys(action.tickets).length"
-                        :tickets-list="action.tickets"
-                        :action-id="action.id"
-                        :name="action.name"
-                        :url="action.urlImage"
-                        :city="action.city"
+                        :action="action"
                       />
                     </template>
 

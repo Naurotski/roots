@@ -19,7 +19,7 @@ export const timeTicketFilter = (originalRef) => {
   })
   const currentListTickets = computed(() => {
     const result = {}
-    for (const [dateKey, times] of Object.entries(originalRef.value)) {
+    for (const [dateKey, times] of Object.entries(originalRef)) {
       if (dateKey < today.value) continue
       const filteredTimes = Object.fromEntries(
         Object.entries(times).filter(([timeKey, data]) => {

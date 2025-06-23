@@ -94,6 +94,17 @@ export const useStripeStore = defineStore('stripe', () => {
       throw error
     }
   }
+  const payStripeTickets = async (paymentDetails) => {
+    Loading.show()
+    try {
+      console.log(paymentDetails)
+      Loading.hide()
+    } catch (error) {
+      Loading.hide()
+      showErrorMessage(error.message)
+      throw error
+    }
+  }
   return {
     shippingDetails,
     cart,
@@ -102,6 +113,7 @@ export const useStripeStore = defineStore('stripe', () => {
     updateCart,
     addProductToCart,
     mergeCarts,
-    payStripe
+    payStripe,
+    payStripeTickets
   }
 })

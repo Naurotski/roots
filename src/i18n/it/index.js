@@ -187,6 +187,8 @@ export default {
     available: 'Disponibile',
     buyTickets: 'Acquistare i Biglietti',
     children: 'Bambini sotto i 10 anni',
+    emailForTicket: 'Indirizzo email per la consegna dei biglietti',
+    selectDate: 'Seleziona data e ora per acquistare i biglietti',
     tickets: 'biglietti'
   },
   jsonLd: {
