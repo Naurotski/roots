@@ -92,7 +92,13 @@ const routes = isMaintenanceMode
             path: 'termsSale',
             name: 'Terms of Sale',
             component: () => import('pages/TermsOfSale.vue')
-          }
+          },
+          {
+            path: 'success',
+            name: 'ThankYouTickets',
+            props: true,
+            component: () => import('pages/ThankYouTickets.vue')
+          },
         ]
       },
       {

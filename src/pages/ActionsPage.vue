@@ -46,7 +46,7 @@
                     </template>
                     <template #press>
                       <div v-if="action.press?.length" class="text-h5">Press</div>
-                      <ul>
+                      <ul class="q-mb-xl">
                         <li v-for="{ id, name } in action.press" :key="id">
                           <router-link
                             :to="`/press/${action.id}-${id}`"
@@ -58,20 +58,21 @@
                         </li>
                       </ul>
                     </template>
-                    <template #tickets>
-                      <list-working-days-dialog
-                        v-if="action.tickets && Object.keys(action.tickets).length"
-                        :action="action"
-                      />
-                    </template>
-
+                    <template #tickets> </template>
                     <template v-if="action.lifeTime !== 'upcoming'" #button>
-                      <action-dialog
-                        class="absolute-bottom"
-                        :title="action.name"
-                        :typeAction="typeAction"
-                        :dialogData="action.works"
-                      />
+                      <div class="absolute-bottom">
+                        <div class="q-mb-sm">
+                          <list-working-days-dialog
+                            v-if="action.tickets && Object.keys(action.tickets).length"
+                            :action="action"
+                          />
+                        </div>
+                        <action-dialog
+                          :title="action.name"
+                          :typeAction="typeAction"
+                          :dialogData="action.works"
+                        />
+                      </div>
                     </template>
                   </shared-card>
                 </small-page-container>

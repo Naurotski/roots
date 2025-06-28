@@ -184,10 +184,10 @@ export default {
   },
   tickets: {
     adults: 'Adults',
-    ages: 'Ages',
+    ages: 'From 12 to 18 years old',
     available: 'Available',
     buyTickets: 'Buy Tickets',
-    children: 'Children',
+    children: 'Children under 12 years old',
     emailForTicket: 'Email address for ticket delivery',
     selectDate: 'Select date and time to purchase tickets',
     tickets: 'tickets'
@@ -202,5 +202,13 @@ export default {
     sunday: 'Sunday',
     customerService: 'Customer Service',
     notForSale: 'Not for sale'
+  },
+  success: {
+    heading: 'Thank you for your reservation!',
+    subheading: 'Your visit is confirmed.',
+    confirmationSent: 'We have sent you an email with your QR code and booking details.',
+    checkSpam: 'If you do not receive it within a few minutes, please check your spam folder.',
+    contact: 'If you have any issues, contact us',
+    backToSite: 'Back to site'
   }
 }

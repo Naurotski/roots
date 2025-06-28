@@ -183,10 +183,10 @@ export default {
   },
   tickets: {
     adults: 'Adulti',
-    ages: 'Dai 10 ai 18 anni',
+    ages: 'Dai 12 ai 18 anni',
     available: 'Disponibile',
     buyTickets: 'Acquistare i Biglietti',
-    children: 'Bambini sotto i 10 anni',
+    children: 'Bambini sotto i 12 anni',
     emailForTicket: 'Indirizzo email per la consegna dei biglietti',
     selectDate: 'Seleziona data e ora per acquistare i biglietti',
     tickets: 'biglietti'
@@ -201,5 +201,14 @@ export default {
     sunday: 'Domenica',
     customerService: 'Assistenza clienti',
     notForSale: 'Non in vendita'
+  },
+  success: {
+    heading: 'Grazie per la prenotazione!',
+    subheading: 'La tua visita è confermata.',
+    confirmationSent:
+      'Ti abbiamo inviato un’email con il tuo QR code e i dettagli della prenotazione.',
+    checkSpam: 'Se non ricevi nulla entro pochi minuti, controlla la cartella spam.',
+    contact: 'In caso di problemi, contattaci',
+    backToSite: 'Torna al sito'
   }
 }

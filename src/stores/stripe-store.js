@@ -98,6 +98,10 @@ export const useStripeStore = defineStore('stripe', () => {
     Loading.show()
     try {
       console.log(paymentDetails)
+      const response = await apiAxios.post('/tickets/checkoutSessionsStripe', { ...paymentDetails })
+      await stripe.redirectToCheckout({
+        sessionId: response.data
+      })
       Loading.hide()
     } catch (error) {
       Loading.hide()

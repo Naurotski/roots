@@ -123,7 +123,7 @@
             :date-key="selectedTime.dateKey"
             :time-tickets="selectedTime.timeTickets"
             :time-key="selectedTime.timeKey"
-            :action-id="action.id"
+            :action="action"
             @delete-selected-time="() => (selectedTime = null)"
           />
         </div>

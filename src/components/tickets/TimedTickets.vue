@@ -48,19 +48,38 @@
         </q-item>
       </q-list>
       <div class="q-mt-md q-ml-md">{{ $t('tickets.emailForTicket') }}</div>
-      <q-input
-        ref="email"
-        v-model="userEmail"
-        type="email"
-        lazy-rules
-        label="Email"
-        dense
-        outlined
-        rounded
-        stack-label
-        autocomplete="email"
-        :rules="[(val) => isValidEmailAddress(val) || 'Please enter a valid email address.']"
-      />
+      <div :class="{ row: !$q.screen.xs }">
+        <q-input
+          v-model="userEmail"
+          class="col"
+          type="email"
+          lazy-rules
+          label="Email"
+          dense
+          clearable
+          outlined
+          rounded
+          stack-label
+          autocomplete="email"
+          :rules="[(val) => isValidEmailAddress(val) || 'Please enter a valid email address.']"
+        />
+        <q-input
+          v-model="userName"
+          class="col"
+          lazy-rules
+          :label="$t('dialoguePayment.firstName')"
+          dense
+          clearable
+          outlined
+          rounded
+          stack-label
+          autocomplete="given-name"
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please type something',
+            (v) => v.length <= 30 || 'Not more than 30 characters'
+          ]"
+        />
+      </div>
       <q-btn
         no-caps
         outline
@@ -69,13 +88,14 @@
         type="submit"
         :label="$t('common.buy')"
         :disable="!subtotal"
-        @click="buyTickets"
       />
     </q-form>
   </q-card-section>
 </template>
 <script>
 import { computed, onMounted, ref, toRefs, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useStripeStore } from 'stores/stripe-store'
 import { isValidEmailAddress } from 'src/composables/isValidEmailAddress'
 
@@ -85,17 +105,20 @@ export default {
     dateKey: String,
     timeTickets: Object,
     timeKey: String,
-    actionId: String
+    action: Object
   },
   emits: ['deleteSelectedTime'],
   setup(props) {
-    const { timeTickets, dateKey, timeKey, actionId } = toRefs(props)
+    const { timeTickets, dateKey, timeKey, action } = toRefs(props)
+    const route = useRoute()
+    const { t, locale } = useI18n({ useScope: 'global' })
     const stripeStore = useStripeStore()
     const { payStripeTickets } = stripeStore
     const selectedTickets = ref({})
     const activeTicketType = ref(null)
     const ticketForm = ref(null)
     const userEmail = ref('')
+    const userName = ref('')
     onMounted(() => {
       timeTickets.value.prices.forEach((ticket) => {
         selectedTickets.value[ticket.type] = 0
@@ -147,15 +170,47 @@ export default {
       if (!valid) {
         return
       }
+      const line_items = []
       Object.keys(selectedTickets.value).forEach((key) => {
-        if (selectedTickets.value[key] === 0) delete selectedTickets.value[key]
+        if (selectedTickets.value[key] !== 0) {
+          line_items.push({
+            quantity: selectedTickets.value[key],
+            price_data: {
+              currency: 'eur',
+              unit_amount: timeTickets.value.prices.find((item) => item.type === key).amount * 100,
+              product_data: {
+                name: t(`tickets.${key}`),
+                description: `${action.value.name}, ${action.value.city}, ${dateKey.value
+                  .split('-')
+                  .reverse()
+                  .join('/')}, ${
+                  timeKey.value.split('-')[0] === timeKey.value.split('-')[1]
+                    ? timeKey.value.split('-')[0]
+                    : timeKey
+                }`,
+                images: [action.value.urlImage]
+              }
+            }
+          })
+        }
       })
       const paymentDetails = {
-        actionId: actionId.value,
-        date: dateKey.value,
-        time: timeKey.value,
-        selectedTickets: selectedTickets.value,
-        userEmail: userEmail.value
+        cancel_url: route.path,
+        line_items,
+        userEmail: userEmail.value,
+        userName: userName.value,
+        metadata: {
+          tickets: true,
+          actionId: action.value.id,
+          date: dateKey.value,
+          time: timeKey.value,
+          image: action.value.urlImage,
+          description: `${action.value.name}, ${action.value.city}, ${dateKey.value
+            .split('-')
+            .reverse()
+            .join('/')}, ${timeKey.value}`,
+          local: locale.value
+        }
       }
       console.log('buyTickets', paymentDetails)
       await payStripeTickets(paymentDetails)
@@ -165,6 +220,7 @@ export default {
       selectedTickets,
       activeTicketType,
       userEmail,
+      userName,
       ticketCounter,
       subtotal,
       options,
