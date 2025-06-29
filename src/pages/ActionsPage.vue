@@ -63,7 +63,7 @@
                       <div class="absolute-bottom">
                         <div class="q-mb-sm">
                           <list-working-days-dialog
-                            v-if="action.tickets && Object.keys(action.tickets).length"
+                            v-if="ticketsList[action.id]"
                             :action="action"
                           />
                         </div>
@@ -136,7 +136,6 @@ export default {
     const itemRefs = ref([])
     const filteredActions = ref([])
     const tab = ref(route.query.lifeTime || $q.localStorage.getItem('tab-actions') || 'archive')
-    if (Object.keys(ticketsList.value)) listenForChildTicket()
     const elem = computed(() => itemRefs.value.find((item) => item.id === `d${route.query.id}`))
     const filteredActionsI18n = computed(() => {
       if (locale.value === 'it') {
@@ -149,14 +148,10 @@ export default {
             ...item,
             description: item.descriptionIt,
             name: item.nameIt
-          })),
-          tickets: ticketsList.value[action.id]
+          }))
         }))
       } else {
-        return filteredActions.value.map((action) => ({
-          ...action,
-          tickets: ticketsList.value[action.id]
-        }))
+        return filteredActions.value
       }
     })
     const actionJsonLd = computed(() => {
@@ -201,6 +196,9 @@ export default {
         )
         if (tab.value === 'upcoming' || tab.value === 'current') {
           filteredActions.value.reverse()
+          filteredActions.value.forEach((item) => {
+            if (!ticketsList.value[item.id]) listenForChildTicket(item.id)
+          })
         }
       } else {
         if (!filterEventsDraft.value.length) getEvents()
@@ -291,6 +289,7 @@ export default {
       }
     })
     return {
+      ticketsList,
       tab,
       actionsLinks,
       filteredActions,

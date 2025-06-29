@@ -108,7 +108,7 @@ export default {
     action: Object
   },
   emits: ['deleteSelectedTime'],
-  setup(props) {
+  setup(props, { emit }) {
     const { timeTickets, dateKey, timeKey, action } = toRefs(props)
     const route = useRoute()
     const { t, locale } = useI18n({ useScope: 'global' })
@@ -149,11 +149,15 @@ export default {
       ]
     })
     watch(
-      () => timeTickets.value.quantity,
+      () => timeTickets.value?.quantity,
       (newVal) => {
+        if (!newVal) {
+          emit('deleteSelectedTime')
+          return
+        }
         if (newVal < ticketCounter.value) {
           let overflow = ticketCounter.value - newVal
-          for (const key of Object.keys(selectedTickets.value)) {
+          for (const key of Object.keys(selectedTickets.value).reverse()) {
             if (selectedTickets.value[key] >= overflow) {
               selectedTickets.value[key] -= overflow
               break

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import {
   onChildAdded,
   onChildChanged,
@@ -50,11 +50,14 @@ export const useActionStore = defineStore('Action', () => {
       eventList.value = localList
     }
   }
-  const updateTicketsList = (key, data) => {
-    if (!key) {
-      ticketsList.value = {}
+  const updateTicketsList = (key, data, actionId) => {
+    if (!data) {
+      delete ticketsList.value[actionId][key]
     } else {
-      ticketsList.value[key] = data
+      if (!ticketsList.value[actionId]) {
+        ticketsList.value[actionId] = reactive({})
+      }
+      ticketsList.value[actionId][key] = reactive(data)
     }
   }
   const getExhibitions = () => {
@@ -81,20 +84,19 @@ export const useActionStore = defineStore('Action', () => {
       }
     })
   }
-  const listenForChildTicket = () => {
-    console.log('listenForChildTicket - ')
-    let path = `tickets`
+  const listenForChildTicket = (actionId) => {
+    let path = `tickets/${actionId}`
     onChildAdded(dbRef(db, path), (data) => {
       console.log('onChildAdded-Ticket -', data.key, ':', data.val())
-      updateTicketsList(data.key, data.val())
+      updateTicketsList(data.key, data.val(), actionId)
     })
     onChildChanged(dbRef(db, path), (data) => {
       console.log('onChildChanged-Ticket -', data.key, ':', data.val())
-      updateTicketsList(data.key, data.val())
+      updateTicketsList(data.key, data.val(), actionId)
     })
     onChildRemoved(dbRef(db, path), (data) => {
       console.log('onChildRemoved-Ticket -', data.key, ':', data.val())
-      updateTicketsList(data.key, data.val())
+      updateTicketsList(data.key, null, actionId)
     })
   }
   return {

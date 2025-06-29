@@ -1,13 +1,9 @@
 <template>
-  <q-btn
-    no-caps
-    outline
-    rounded
-    class="full-width"
-    :label="$t('tickets.buyTickets')"
-    style="width: 150px"
-    @click="dialog = true"
-  />
+  <div @click="dialog = true">
+    <slot>
+      <q-btn no-caps outline rounded class="full-width" :label="$t('tickets.buyTickets')" />
+    </slot>
+  </div>
   <q-dialog
     v-model="dialog"
     backdrop-filter="blur(4px)"
@@ -121,7 +117,7 @@
             class="full-width"
             key="detail"
             :date-key="selectedTime.dateKey"
-            :time-tickets="selectedTime.timeTickets"
+            :time-tickets="currentListTickets[selectedTime.dateKey][selectedTime.timeKey]"
             :time-key="selectedTime.timeKey"
             :action="action"
             @delete-selected-time="() => (selectedTime = null)"
@@ -151,7 +147,7 @@ export default {
     const dialog = ref(false)
     const hover = ref(false)
     const selectedTime = ref(null)
-    const { currentListTickets } = timeTicketFilter(action.value.tickets)
+    const { currentListTickets } = timeTicketFilter(action.value.id)
     return {
       dialog,
       hover,

@@ -1,6 +1,9 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-
-export const timeTicketFilter = (originalRef) => {
+import { storeToRefs } from 'pinia'
+import { useActionStore } from 'stores/actions-store'
+const actionStore = useActionStore()
+const { ticketsList } = storeToRefs(actionStore)
+export const timeTicketFilter = (id) => {
   const today = ref(new Date().toISOString().split('T')[0])
   const nowHM = ref(getCurrentTimeHM())
   function getCurrentTimeHM() {
@@ -19,7 +22,7 @@ export const timeTicketFilter = (originalRef) => {
   })
   const currentListTickets = computed(() => {
     const result = {}
-    for (const [dateKey, times] of Object.entries(originalRef)) {
+    for (const [dateKey, times] of Object.entries(ticketsList.value[id])) {
       if (dateKey < today.value) continue
       const filteredTimes = Object.fromEntries(
         Object.entries(times).filter(([timeKey, data]) => {
@@ -34,7 +37,6 @@ export const timeTicketFilter = (originalRef) => {
     }
     return result
   })
-
   return {
     currentListTickets
   }

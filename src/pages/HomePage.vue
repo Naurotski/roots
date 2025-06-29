@@ -37,19 +37,34 @@
         <template v-slot:control>
           <q-carousel-control
             :position="$q.screen.xs ? 'top' : 'bottom-right'"
-            :offset="[30, $q.screen.xs ? 30 : 30]"
-            class="text-white rounded-borders text-center"
-            style="background: rgba(0, 0, 0, 0.3); padding: 4px 8px"
+            :offset="[30, $q.screen.xs ? 15 : 30]"
+            class="column"
           >
             <q-btn
+              class="q-mb-sm"
               size="xl"
               text-color="white text-weight-bolder"
-              unelevated
+              outline
+              rounded
               :to="`actions/exhibitions?lifeTime=${lifeTimeExhibition}&id=${selectedExhibitionsData.id}`"
               :label="$t('common.exhibition')"
               no-caps
               icon-right="mdi-arrow-right-bold"
             />
+            <list-working-days-dialog
+              v-if="ticketsList[selectedExhibitionsData.id]"
+              :action="filteredActionI18n"
+            >
+              <q-btn
+                class="full-width"
+                size="xl"
+                text-color="white text-weight-bolder"
+                outline
+                rounded
+                :label="$t('tickets.buyTickets')"
+                no-caps
+              />
+            </list-working-days-dialog>
           </q-carousel-control>
         </template>
       </q-carousel>
@@ -74,21 +89,24 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { date, useMeta } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useSharedStore } from 'stores/shared-store.js'
 import { useMerchStore } from 'stores/merch-store'
+import { useActionStore } from 'stores/actions-store'
 
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import WorksList from 'components/WorksList.vue'
 import TitleLine from 'components/TitleLine.vue'
 import MerchList from 'components/merch/MerchList.vue'
+import ListWorkingDaysDialog from 'components/tickets/ListWorkingDaysDialog.vue'
 
 export default defineComponent({
   name: 'HomePage',
   components: {
+    ListWorkingDaysDialog,
     MerchList,
     SmallPageContainer,
     WorksList,
@@ -101,6 +119,9 @@ export default defineComponent({
     const { carouselHomePage, selectedExhibitionsData, worksForSale } = storeToRefs(sharedStore)
     const { getHomePageData } = sharedStore
     if (!carouselHomePage.value.length) getHomePageData()
+    const actionStore = useActionStore()
+    const { ticketsList } = storeToRefs(actionStore)
+    const { listenForChildTicket } = actionStore
     const merchStore = useMerchStore()
     const { merchHomePageList } = storeToRefs(merchStore)
     const lifeTimeExhibition = computed(() =>
@@ -140,6 +161,26 @@ export default defineComponent({
         }
       })
     )
+    const filteredActionI18n = computed(() => {
+      if (locale.value === 'it') {
+        return {
+          ...selectedExhibitionsData.value,
+          city: selectedExhibitionsData.value.cityIt,
+          name: selectedExhibitionsData.value.nameIt
+        }
+      } else {
+        return selectedExhibitionsData.value
+      }
+    })
+    watch(
+      () => selectedExhibitionsData.value.id,
+      (newValue) => {
+        console.log('newValue - ', newValue)
+        if (newValue && !ticketsList.value[newValue]) listenForChildTicket(newValue)
+      },
+      { immediate: true, deep: true }
+    )
+
     useMeta(() => {
       return {
         title: t('meta.homeTitle'),
@@ -263,7 +304,9 @@ export default defineComponent({
       lifeTimeExhibition,
       selectedExhibitionsData,
       worksList,
-      filterMerchList
+      filterMerchList,
+      ticketsList,
+      filteredActionI18n
     }
   }
 })
