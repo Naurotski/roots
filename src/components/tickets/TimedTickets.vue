@@ -28,14 +28,15 @@
               lazy-rules
               dense
               virtual
+              :rules="ticket.type === 'children' ? [childRule] : []"
               @popup-show="activeTicketType = ticket.type"
               @blur="activeTicketType = null"
             >
               <template v-slot:prepend>
                 <span class="text-body2 text-bold">{{ $t('cart.qty') }}</span>
               </template>
-            </q-select></q-item-section
-          >
+            </q-select>
+          </q-item-section>
           <q-item-section class="col text-right"
             >€{{ selectedTickets[ticket.type] * ticket.amount }}
           </q-item-section>
@@ -169,6 +170,12 @@ export default {
         }
       }
     )
+    const childRule = (val) => {
+      if (val && (!selectedTickets.value.adults || selectedTickets.value.adults === 0)) {
+        return t('tickets.childrenNeedAdult')
+      }
+      return true
+    }
     const buyTickets = async () => {
       const valid = await ticketForm.value.validate()
       if (!valid) {
@@ -230,6 +237,7 @@ export default {
       options,
       ticketForm,
       isValidEmailAddress,
+      childRule,
       buyTickets
     }
   }

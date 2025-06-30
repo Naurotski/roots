@@ -16,7 +16,7 @@
         class="q-pa-none"
         style="position: sticky; top: 0; z-index: 1; background: white"
       >
-        <q-toolbar>
+        <q-toolbar class="q-mb-sm">
           <div class="text-h5 text-bold" :class="{ 'text-subtitle1': $q.screen.xs }">
             {{ $t('tickets.selectDate') }}
           </div>
@@ -31,7 +31,7 @@
             class="col q-mb-xs z-max"
             style="max-height: 100px"
           />
-          <div class="col" :class="{ 'text-center': $q.screen.xs }">
+          <div class="col-8" :class="{ 'text-center': $q.screen.xs }">
             <div>
               <div :class="{ 'text-subtitle1': $q.screen.xs }" class="text-h6 text-bold">
                 {{ action.name }}
@@ -68,8 +68,11 @@
                 </div>
               </div>
             </transition>
+
           </div>
+
         </div>
+        <q-separator class="" color="negative q-mt-sm q-mx-md"/>
       </q-card-section>
       <transition name="slide-left-right" mode="out-in">
         <q-card-section

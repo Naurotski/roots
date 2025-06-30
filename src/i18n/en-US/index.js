@@ -188,6 +188,7 @@ export default {
     available: 'Available',
     buyTickets: 'Buy Tickets',
     children: 'Children under 12 years old',
+    childrenNeedAdult: 'A child ticket cannot be selected without an adult',
     emailForTicket: 'Email address for ticket delivery',
     selectDate: 'Select date and time to purchase tickets',
     tickets: 'tickets'

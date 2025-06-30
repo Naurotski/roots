@@ -187,6 +187,7 @@ export default {
     available: 'Disponibile',
     buyTickets: 'Acquistare i Biglietti',
     children: 'Bambini sotto i 12 anni',
+    childrenNeedAdult: 'Il biglietto per bambini non può essere selezionato senza un adulto',
     emailForTicket: 'Indirizzo email per la consegna dei biglietti',
     selectDate: 'Seleziona data e ora per acquistare i biglietti',
     tickets: 'biglietti'
