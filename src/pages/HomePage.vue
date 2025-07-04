@@ -187,7 +187,6 @@ export default defineComponent({
     watch(
       () => selectedExhibitionsData.value.id,
       (newValue) => {
-        console.log('newValue - ', newValue)
         if (newValue && !ticketsList.value[newValue]) listenForChildTicket(newValue)
       },
       { immediate: true, deep: true }

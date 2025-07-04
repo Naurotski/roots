@@ -87,15 +87,15 @@ export const useActionStore = defineStore('Action', () => {
   const listenForChildTicket = (actionId) => {
     let path = `tickets/${actionId}`
     onChildAdded(dbRef(db, path), (data) => {
-      console.log('onChildAdded-Ticket -', data.key, ':', data.val())
+      // console.log('onChildAdded-Ticket -', data.key, ':', data.val())
       updateTicketsList(data.key, data.val(), actionId)
     })
     onChildChanged(dbRef(db, path), (data) => {
-      console.log('onChildChanged-Ticket -', data.key, ':', data.val())
+      // console.log('onChildChanged-Ticket -', data.key, ':', data.val())
       updateTicketsList(data.key, data.val(), actionId)
     })
     onChildRemoved(dbRef(db, path), (data) => {
-      console.log('onChildRemoved-Ticket -', data.key, ':', data.val())
+      // console.log('onChildRemoved-Ticket -', data.key, ':', data.val())
       updateTicketsList(data.key, null, actionId)
     })
   }
