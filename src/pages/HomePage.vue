@@ -28,7 +28,13 @@
             <div
               class="text-h6"
               v-text="
-                `${selectedExhibitionsData.openingDate} - ${selectedExhibitionsData.closingDate}`
+                `${selectedExhibitionsData.openingDate
+                  .split('/')
+                  .reverse()
+                  .join('/')} - ${selectedExhibitionsData.closingDate
+                  .split('/')
+                  .reverse()
+                  .join('/')}`
               "
               :class="{ 'text-body1': $q.screen.xs }"
             />
@@ -166,10 +172,16 @@ export default defineComponent({
         return {
           ...selectedExhibitionsData.value,
           city: selectedExhibitionsData.value.cityIt,
-          name: selectedExhibitionsData.value.nameIt
+          name: selectedExhibitionsData.value.nameIt,
+          openingDate: selectedExhibitionsData.value.openingDate.split('/').reverse().join('/'),
+          closingDate: selectedExhibitionsData.value.closingDate.split('/').reverse().join('/')
         }
       } else {
-        return selectedExhibitionsData.value
+        return {
+          ...selectedExhibitionsData.value,
+          openingDate: selectedExhibitionsData.value.openingDate.split('/').reverse().join('/'),
+          closingDate: selectedExhibitionsData.value.closingDate.split('/').reverse().join('/')
+        }
       }
     })
     watch(

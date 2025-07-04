@@ -68,11 +68,9 @@
                 </div>
               </div>
             </transition>
-
           </div>
-
         </div>
-        <q-separator class="" color="negative q-mt-sm q-mx-md"/>
+        <q-separator class="" color="negative q-mt-sm q-mx-md" />
       </q-card-section>
       <transition name="slide-left-right" mode="out-in">
         <q-card-section

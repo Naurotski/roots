@@ -59,15 +59,16 @@
                       </ul>
                     </template>
                     <template #tickets> </template>
-                    <template v-if="action.lifeTime !== 'upcoming'" #button>
+                    <template #button>
                       <div class="absolute-bottom">
-                        <div class="q-mb-sm">
+                        <div v-if="action.lifeTime !== 'archive'" class="q-mb-sm">
                           <list-working-days-dialog
                             v-if="ticketsList[action.id]"
                             :action="action"
                           />
                         </div>
                         <action-dialog
+                          v-else
                           :title="action.name"
                           :typeAction="typeAction"
                           :dialogData="action.works"
@@ -177,10 +178,14 @@ export default {
     const unwatch = watchEffect(() => {
       if (elem.value) {
         setTimeout(() => {
-          elem.value.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-          })
+          if (elem.value) {
+            const offset = 180 // пикселей отступ сверху
+            const top = elem.value.getBoundingClientRect().top + window.pageYOffset - offset
+            window.scrollTo({
+              top,
+              behavior: 'smooth'
+            })
+          }
         }, 500)
       }
     })
