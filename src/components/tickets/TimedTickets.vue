@@ -238,7 +238,6 @@ export default {
           local: locale.value
         }
       }
-      console.log('buyTickets', paymentDetails)
       await payStripeTickets(paymentDetails)
     }
 

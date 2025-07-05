@@ -172,6 +172,7 @@ export default {
     forSale: 'Acquista opere di giovani artisti contemporanei in una galleria a Pisa.',
     forSaleKeywords:
       "Prezzi opere d'arte, Acquisto sicuro online, Spedizione opere d'arte, Fotografia artistica contemporanea, Arte digitale da acquistare, Stampe artistiche in vendita, Acquista opere d'arte contemporanea, Opere d'arte in vendita, Compra dipinti moderni, Sculture in vendita, Arte contemporanea da collezione, Compra opere uniche di, Vendita quadri Pisa, Arte moderna in vendita, Collezione d'arte contemporanea, Galleria d'arte contemporanea online, Vendita dipinti Pisa, Opere uniche di artisti toscani, Compra arte contemporanea originale, Investimenti in arte moderna, Pittura astratta in vendita",
+    generalAdmission: 'Ingresso generale',
     homeDescription:
       "Galleria d'arte innovativa a Pisa: arte contemporanea, realtà virtuale ed esposizioni a Pisa.",
     homeKeywords:

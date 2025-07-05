@@ -65,8 +65,6 @@ export default {
     const action = computed(() =>
       filterExhibitionsDraft.value.find((item) => item.id === +actionId.value)
     )
-    console.log(action.value)
-    console.log(actionId.value)
     return {
       action,
       filterExhibitionsDraft,

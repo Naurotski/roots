@@ -277,9 +277,12 @@ export default {
                 },
                 "offers": {
                   "@type": "Offer",
-                  "price": "5.00",
+                  "name": t('meta.generalAdmission'),
+                  "url": "https://aortagallery.com/actions/exhibitions",
+                  "price": "7.00",
                   "priceCurrency": "EUR",
-                  "availability": "https://schema.org/InStock"
+                  "availability": "https://schema.org/InStock",
+                  "validFrom": actionJsonLd.value?.openingDate
                 },
                 "performer": {
                   "@type": "Person",
@@ -299,7 +302,8 @@ export default {
       actionsLinks,
       filteredActions,
       filteredActionsI18n,
-      itemRefs
+      itemRefs,
+      actionJsonLd
     }
   }
 }

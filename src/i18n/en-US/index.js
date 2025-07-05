@@ -173,6 +173,7 @@ export default {
     forSale: 'Buy works by young contemporary artists at a gallery in Pisa.',
     forSaleKeywords:
       'Art shipping, Secure online purchase, Artworks pricing, Art prints for sale, Digital art to buy, Contemporary artistic photography, Buy contemporary art, Artworks for sale, Purchase modern paintings, Sculptures for sale, Collectible contemporary art, Buy unique works by, Paintings for sale in Pisa, Modern art for sale, Contemporary art collection, Online contemporary art gallery, Paintings for sale, Pisa Unique artworks by, Tuscan artists, Buy original contemporary art, Investing in modern art, Abstract paintings for sale',
+    generalAdmission: 'General admission',
     homeDescription:
       'Innovative art gallery in Pisa: contemporary art, virtual reality, and exhibitions in Pisa.',
     homeKeywords:
