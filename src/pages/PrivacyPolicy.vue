@@ -259,7 +259,14 @@
           dati personali in conformità con il GDPR e la normativa italiana applicabile.
         </div>
       </div>
-      <q-btn class="q-mt-md" outline size="md" icon="mdi-arrow-left-bold" @click="$router.go(-1)" />
+      <q-btn
+        class="q-mt-md"
+        outline
+        rounded
+        size="md"
+        icon="mdi-arrow-left-bold"
+        @click="$router.go(-1)"
+      />
     </small-page-container>
   </q-page>
 </template>

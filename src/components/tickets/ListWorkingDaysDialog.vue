@@ -11,7 +11,7 @@
     :transition-show="$q.screen.xs ? 'slide-up' : 'fade'"
     :transition-hide="$q.screen.xs ? 'slide-down' : 'fade'"
   >
-    <q-card style="width: 900px; max-width: 100vw" :class="{ 'card-default': !$q.screen.xs }">
+    <q-card style="width: 1200px; max-width: 100vw" :class="{ 'card-default': !$q.screen.xs }">
       <q-card-section
         class="q-pa-none"
         style="position: sticky; top: 0; z-index: 1; background: white"

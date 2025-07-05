@@ -19,6 +19,7 @@ export default {
     more: 'more',
     oops: 'Oops. Nothing here...',
     or: 'OR',
+    rulesGallery: 'Gallery Rules',
     save: 'Save',
     saved: 'Saved',
     shop: 'shop',

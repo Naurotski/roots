@@ -94,11 +94,16 @@ const routes = isMaintenanceMode
             component: () => import('pages/TermsOfSale.vue')
           },
           {
+            path: 'rules',
+            name: 'Gallery Rules',
+            component: () => import('pages/GalleryRulesPage.vue')
+          },
+          {
             path: 'success',
             name: 'ThankYouTickets',
             props: true,
             component: () => import('pages/ThankYouTickets.vue')
-          },
+          }
         ]
       },
       {

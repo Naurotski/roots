@@ -19,6 +19,7 @@ export default {
     more: 'più',
     oops: "Ops. Qui non c'è niente...",
     or: 'OPPURE',
+    rulesGallery: 'Regolamento della Galleria',
     save: 'Salva',
     saved: 'Salvato',
     shop: 'shop',

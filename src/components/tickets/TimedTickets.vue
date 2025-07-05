@@ -81,6 +81,21 @@
           ]"
         />
       </div>
+      <div class="q-ml-md">
+        <template v-if="$i18n.locale === 'en'">
+          By purchasing a ticket online, you agree to the
+          <router-link to="/rules" class="text-primary">gallery rules</router-link>
+          and the
+          <router-link to="/privacy" class="text-primary">privacy policy</router-link>.
+        </template>
+
+        <template v-else-if="$i18n.locale === 'it'">
+          Acquistando un biglietto online, accetti il
+          <router-link to="/rules" class="text-primary">regolamento della galleria</router-link>
+          e la
+          <router-link to="/privacy" class="text-primary">privacy policy</router-link>.
+        </template>
+      </div>
       <q-btn
         no-caps
         outline

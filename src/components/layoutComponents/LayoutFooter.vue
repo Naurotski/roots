@@ -27,6 +27,13 @@
         to="/privacy"
         >{{ $t('auth.privacyPolicy') }}</router-link
       >
+      <router-link
+        v-if="!$q.screen.xs"
+        class="text-body1"
+        style="text-decoration: none; color: white"
+        to="/rules"
+        >{{ $t('common.rulesGallery') }}</router-link
+      >
     </div>
     <div v-if="$q.screen.xs" class="row justify-around q-gutter-xs q-mt-xs">
       <router-link class="text-body1" style="text-decoration: none; color: white" to="/termsSale">{{
@@ -34,6 +41,9 @@
       }}</router-link>
       <router-link class="text-body1" style="text-decoration: none; color: white" to="/privacy">{{
         $t('auth.privacyPolicy')
+      }}</router-link>
+      <router-link class="text-body1" style="text-decoration: none; color: white" to="/rules">{{
+        $t('common.rulesGallery')
       }}</router-link>
     </div>
   </q-footer>
