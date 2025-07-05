@@ -250,7 +250,8 @@ export default {
               "name":
                 locale.value === 'it'
                   ? actionJsonLd.value?.nameIt?.match(/^([\w\s]+)\s"(.+)"$/)?.[2] || actionJsonLd.value?.nameIt || "Evento"
-                  : actionJsonLd.value?.name?.match(/^([\w\s]+)\s"(.+)"$/)?.[2] || actionJsonLd.value?.name || "Event",                "description": locale.value === 'it' ? actionJsonLd.value?.descriptionIt : actionJsonLd.value?.description,
+                  : actionJsonLd.value?.name?.match(/^([\w\s]+)\s"(.+)"$/)?.[2] || actionJsonLd.value?.name || "Event",
+                "description": locale.value === 'it' ? actionJsonLd.value?.descriptionIt : actionJsonLd.value?.description,
                 "startDate": actionJsonLd.value?.openingDate?.replace(/\//g, "-"),
                 "endDate": actionJsonLd.value?.closingDate?.replace(/\//g, "-"),
                 "eventAttendanceMode": "https://schema.org/MixedEventAttendanceMode",
