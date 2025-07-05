@@ -246,11 +246,14 @@ export default {
             innerHTML: JSON.stringify({
               "@context": "https://schema.org",
                 "@type": "Event",
-                "name": locale.value === 'it' ? actionJsonLd.value?.nameIt?.match(/^([\w\s]+)\s"(.+)"$/)?.[2] : actionJsonLd.value?.name?.match(/^([\w\s]+)\s"(.+)"$/)?.[2],
-                "description": locale.value === 'it' ? actionJsonLd.value?.descriptionIt : actionJsonLd.value?.description,
+                "eventStatus": "https://schema.org/EventScheduled",
+              "name":
+                locale.value === 'it'
+                  ? actionJsonLd.value?.nameIt?.match(/^([\w\s]+)\s"(.+)"$/)?.[2] || actionJsonLd.value?.nameIt || "Evento"
+                  : actionJsonLd.value?.name?.match(/^([\w\s]+)\s"(.+)"$/)?.[2] || actionJsonLd.value?.name || "Event",                "description": locale.value === 'it' ? actionJsonLd.value?.descriptionIt : actionJsonLd.value?.description,
                 "startDate": actionJsonLd.value?.openingDate?.replace(/\//g, "-"),
                 "endDate": actionJsonLd.value?.closingDate?.replace(/\//g, "-"),
-                "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+                "eventAttendanceMode": "https://schema.org/MixedEventAttendanceMode",
                 "location": {
                   "@type": "Place",
                   "name": t('meta.homeTitle'),
