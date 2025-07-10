@@ -88,7 +88,7 @@ export const useSharedStore = defineStore('shared', () => {
         .filter((item) => item.idd?.root)
         .map((country) => ({
           countryName: country.name.common,
-          callingCode: `${country.idd.root}${country.idd.suffixes?.[0]}`,
+          callingCode: `${country.idd.root}${country.idd.suffixes?.[0] || ''}`,
           cca2: country.cca2,
           flag: country.flag
         }))
