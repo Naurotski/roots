@@ -79,9 +79,13 @@ export const useSharedStore = defineStore('shared', () => {
 
   const getCountries = async () => {
     try {
-      const response = await axios.get('https://restcountries.com/v3.1/all')
+      const response = await axios.get('https://restcountries.com/v3.1/all', {
+        params: {
+          fields: 'name,idd,cca2,flag'
+        }
+      })
       listCountry.value = response.data
-        .filter((item) => item.idd.root)
+        .filter((item) => item.idd?.root)
         .map((country) => ({
           countryName: country.name.common,
           callingCode: `${country.idd.root}${country.idd.suffixes?.[0]}`,

@@ -1,9 +1,12 @@
-import { Dialog, Loading } from 'quasar'
+import { Notify, Loading } from 'quasar'
 
 export function showErrorMessage(errorMessage) {
   Loading.hide()
-  Dialog.create({
-    title: 'Error',
-    message: errorMessage
+  Notify.create({
+    type: 'negative',
+    message: errorMessage || 'An error occurred',
+    timeout: 5000, // исчезает через 5 сек
+    position: 'bottom', // можно изменить на bottom, top-right и т.д.
+    icon: 'error'
   })
 }
