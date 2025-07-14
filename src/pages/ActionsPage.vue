@@ -58,9 +58,20 @@
                         </li>
                       </ul>
                     </template>
-                    <template #tickets> </template>
                     <template #button>
                       <div class="absolute-bottom">
+                        <q-btn
+                          v-if="
+                            action.lifeTime !== 'upcoming' &&
+                            Object.keys(listGalleries).includes(action.id.toString())
+                          "
+                          no-caps
+                          outline
+                          rounded
+                          class="full-width q-mb-sm"
+                          label="3D"
+                          :to="`/3d/${action.id}`"
+                        />
                         <div v-if="action.lifeTime !== 'archive'" class="q-mb-sm">
                           <list-working-days-dialog
                             v-if="ticketsList[action.id]"
@@ -97,6 +108,7 @@ import { useRoute } from 'vue-router'
 import { useSharedStore } from 'stores/shared-store.js'
 import { useActionStore } from 'stores/actions-store.js'
 import { useArtistsStore } from 'stores/artists-store'
+import { useGraphics3DStore } from 'stores/graphics3D-store'
 import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import SharedCard from 'components/shared/SharedCard.vue'
@@ -134,6 +146,10 @@ export default {
     const { artistsList } = storeToRefs(artistsStore)
     const { getArtists } = artistsStore
     if (!artistsList.value.length) getArtists()
+    const graphics3DStore = useGraphics3DStore()
+    const { listGalleries } = storeToRefs(graphics3DStore)
+    const { listenForChildEvents } = graphics3DStore
+    if (!Object.keys(listGalleries.value).length) listenForChildEvents('listGalleries')
     const itemRefs = ref([])
     const filteredActions = ref([])
     const tab = ref(route.query.lifeTime || $q.localStorage.getItem('tab-actions') || 'archive')
@@ -307,7 +323,8 @@ export default {
       filteredActions,
       filteredActionsI18n,
       itemRefs,
-      actionJsonLd
+      actionJsonLd,
+      listGalleries
     }
   }
 }

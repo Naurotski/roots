@@ -9,7 +9,7 @@ printFullToken.js
 .quasar
 /dist
 .ts
-public/models
+/public/3Dmodels
 # Cordova related directories and files
 /src-cordova/node_modules
 /src-cordova/platforms

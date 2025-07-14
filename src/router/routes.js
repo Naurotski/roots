@@ -94,6 +94,12 @@ const routes = isMaintenanceMode
             component: () => import('pages/TermsOfSale.vue')
           },
           {
+            path: '3d/:galleryId',
+            name: '3D Gallery',
+            props: true,
+            component: () => import('pages/3DPage.vue')
+          },
+          {
             path: 'rules',
             name: 'Gallery Rules',
             component: () => import('pages/GalleryRulesPage.vue')
