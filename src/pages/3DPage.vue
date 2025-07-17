@@ -1,15 +1,18 @@
 <template>
-  <h1>{{ galleryId }}</h1>
-  <pre>selectedGallery - {{ selectedGallery }}</pre>
+  <gallery3-d />
 </template>
 
 <script>
 import { toRefs } from 'vue'
-import { useGraphics3DStore } from 'stores/graphics3D-store'
 import { storeToRefs } from 'pinia'
+import { useGraphics3DStore } from 'stores/graphics3D-store'
+import Gallery3D from 'components/graphics3d/Gallery3D.vue'
 
 export default {
   name: '3DPage',
+  components: {
+    Gallery3D
+  },
   props: {
     galleryId: {
       type: String,
@@ -21,8 +24,6 @@ export default {
     const graphics3DStore = useGraphics3DStore()
     const { selectedGallery } = storeToRefs(graphics3DStore)
     const { listenForChildEvents, clearSelectedGallery } = graphics3DStore
-    console.log('selectedGallery.value.galleryId ----', selectedGallery.value.galleryId)
-    console.log('galleryId.value ----', galleryId.value)
     if (selectedGallery.value.galleryId !== +galleryId.value) {
       clearSelectedGallery()
       listenForChildEvents(`galleries/${galleryId.value}`)

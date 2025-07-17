@@ -72,6 +72,28 @@ export const useSceneSetup = (container) => {
       observer.unobserve(container.value)
       observer.disconnect()
     }
+    scene.traverse((obj) => {
+      if (obj.isMesh) {
+        if (obj.geometry) obj.geometry.dispose()
+        if (obj.material) {
+          if (Array.isArray(obj.material)) {
+            obj.material.forEach((m) => m.dispose())
+          } else {
+            obj.material.dispose()
+          }
+        }
+      }
+    })
+    while (scene.children.length > 0) {
+      scene.remove(scene.children[0])
+    }
+    if (renderer) {
+      renderer.setAnimationLoop(null)
+      renderer.dispose()
+      if (container.value?.contains(renderer.domElement)) {
+        container.value.removeChild(renderer.domElement)
+      }
+    }
     if (renderer) {
       renderer.setAnimationLoop(null)
       renderer.dispose()

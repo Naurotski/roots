@@ -6,6 +6,7 @@ import { db } from 'boot/firebase.js'
 export const useGraphics3DStore = defineStore('graphics3D', () => {
   const listGalleries = ref({})
   const selectedGallery = ref({})
+  const models3d = ref({})
 
   const updateListGalleries = (data, check) => {
     if (check === 'delete') {
@@ -20,6 +21,14 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     } else {
       selectedGallery.value[key] = value
     }
+  }
+  const updateModels3d = ({ id, modelData }) => {
+    if (!modelData) {
+      delete models3d.value[id]
+    } else {
+      models3d.value[id] = modelData
+    }
+    console.log('models3d.value ---- ', models3d.value)
   }
   const clearListGalleries = () => (listGalleries.value = {})
   const clearSelectedGallery = async () => {
@@ -61,6 +70,8 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
   return {
     listGalleries,
     selectedGallery,
+    models3d,
+    updateModels3d,
     listenForChildEvents,
     clearListGalleries,
     clearSelectedGallery
