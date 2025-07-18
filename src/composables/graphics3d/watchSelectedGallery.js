@@ -12,38 +12,34 @@ const graphics3DStore = useGraphics3DStore()
 const { selectedGallery } = storeToRefs(graphics3DStore)
 export const watchSelectedGallery = (scene, renderer, collidableMeshes) => {
   watch(
-    () => selectedGallery.value.galleryId,
-    (newVal, oldVal) => {
-      if (oldVal) {
+    () => selectedGallery.value,
+    async (newVal, oldVal) => {
+      if (oldVal?.galleryId) {
         collidableMeshes
           .filter((item) => item.userData.isPainting)
-          .forEach(async (painting) => {
-            await removeElement(scene, collidableMeshes, painting)
+          .forEach((painting) => {
+            removeElement(scene, collidableMeshes, painting)
           })
         scene.children
           .filter((item) => item.userData.isPlaceableObject)
-          .forEach(async (elem) => {
-            await removeElement(scene, collidableMeshes, elem)
+          .forEach((elem) => {
+            removeElement(scene, collidableMeshes, elem)
           })
-        removeVideoFromScene(scene, 'Smart_TV_1')
+        if (oldVal.videoStore) {
+          Object.keys(oldVal.videoStore).forEach((key) => {
+            removeVideoFromScene(scene, key)
+          })
+        }
       }
-      if (newVal) {
-        if (selectedGallery.value.storeroom) {
-          Object.values(selectedGallery.value.storeroom)
+      if (newVal?.galleryId) {
+        if (newVal.storeroom) {
+          Object.values(newVal.storeroom)
             .filter((elem) => elem.position)
             .forEach((item) =>
               createPainting({
                 renderer,
-                point: new Vector3(
-                  item.position.point.x,
-                  item.position.point.y,
-                  item.position.point.z
-                ),
-                normal: new Vector3(
-                  item.position.normal.x,
-                  item.position.normal.y,
-                  item.position.normal.z
-                ),
+                point: new Vector3(item.position.point.x, item.position.point.y, item.position.point.z),
+                normal: new Vector3(item.position.normal.x, item.position.normal.y, item.position.normal.z),
                 scene,
                 collidableMeshes,
                 url: item.url,
@@ -53,47 +49,26 @@ export const watchSelectedGallery = (scene, renderer, collidableMeshes) => {
               })
             )
         }
-        if (selectedGallery.value.store) {
-          Object.values(selectedGallery.value.store)
-            .filter((elem) => elem.position)
-            .forEach(async (item) => {
-              let modelData = await loadModel({ url: item.url, targetHeight: item.targetHeight })
-              await modelPositioning({
-                scene,
-                modelData,
-                point: new Vector3(
-                  item.position.point.x,
-                  item.position.point.y,
-                  item.position.point.z
-                ),
-                normal: new Vector3(
-                  item.position.normal.x,
-                  item.position.normal.y,
-                  item.position.normal.z
-                ),
-                objectId: item.objectId,
-                collidableMeshes,
-                rotation: item.position.rotation
-              })
+        if (newVal.store) {
+          for (const item of Object.values(newVal.store).filter((elem) => elem.position)) {
+            const modelData = await loadModel({ url: item.url, targetHeight: item.targetHeight })
+            await modelPositioning({
+              scene,
+              modelData,
+              point: new Vector3(item.position.point.x, item.position.point.y, item.position.point.z),
+              normal: new Vector3(item.position.normal.x, item.position.normal.y, item.position.normal.z),
+              objectId: item.objectId,
+              collidableMeshes,
+              rotation: item.position.rotation
             })
+          }
+        }
+        if (newVal.videoStore) {
+          for (const key of Object.keys(newVal.videoStore)) {
+            await useVideo(scene, newVal.videoStore[key])
+          }
         }
       }
-    },
-    { immediate: true }
-  )
-  watch(
-    () => selectedGallery.value.videoStore,
-    (newVal, oldVal) => {
-      console.log('watch -------', newVal, oldVal)
-      const newKeys = newVal ? Object.keys(newVal) : []
-      const oldKeys = oldVal ? Object.keys(oldVal) : []
-      newKeys.forEach(async (key) => {
-        await useVideo(scene, newVal[key])
-      })
-      const removedKeys = oldKeys.filter((key) => !newKeys.includes(key))
-      removedKeys.forEach((key) => {
-        removeVideoFromScene(scene, key)
-      })
     },
     { immediate: true }
   )

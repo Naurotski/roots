@@ -24,7 +24,7 @@ export const usePlayerControls = (camera, renderer) => {
     prevMouseY = e.clientY
   }
   const onMousemove = (e) => {
-    if (!isMouseDown ) return
+    if (!isMouseDown) return
     const dx = e.clientX - prevMouseX
     const dy = e.clientY - prevMouseY
     // Вращение тела (влево-вправо)

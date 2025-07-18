@@ -23,7 +23,8 @@ export const setAnimationLoop = ({
   controlsObject,
   controlsObjectHeight,
   collidableMeshes,
-  keysPressed
+  keysPressed,
+  updateMoveToPainting
 }) => {
   const clock = new Clock()
   renderer.setAnimationLoop(() => {
@@ -36,10 +37,10 @@ export const setAnimationLoop = ({
 
     // Управление клавишами
     moveVector.set(0, 0, 0)
-    if (keysPressed['KeyW']) moveVector.z -= 1
-    if (keysPressed['KeyS']) moveVector.z += 1
-    if (keysPressed['KeyA']) moveVector.x -= 1
-    if (keysPressed['KeyD']) moveVector.x += 1
+    if (keysPressed['KeyW'] || keysPressed['ArrowUp']) moveVector.z -= 1
+    if (keysPressed['KeyS'] || keysPressed['ArrowDown']) moveVector.z += 1
+    if (keysPressed['KeyA'] || keysPressed['ArrowLeft']) moveVector.x -= 1
+    if (keysPressed['KeyD'] || keysPressed['ArrowRight']) moveVector.x += 1
 
     if (moveVector.lengthSq() > 0) {
       moveVector.normalize()
@@ -83,6 +84,8 @@ export const setAnimationLoop = ({
         }
       }
     }
+    //Перемещение к картине
+    updateMoveToPainting(delta)
     // === Обновляем видео-текстуры ===
     scene.traverse((child) => {
       if (child.userData.update) {

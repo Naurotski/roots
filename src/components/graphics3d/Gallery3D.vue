@@ -9,7 +9,7 @@ import { useGraphics3DStore } from 'stores/graphics3D-store'
 import { useSceneSetup } from 'src/composables/graphics3d/useSceneSetup'
 import { usePlayerControls } from 'src/composables/graphics3d/usePlayerControls'
 import { useCollidableMeshes } from 'src/composables/graphics3d/useCollidableMeshes'
-// import { useRaycastInteraction } from 'src/composables/graphics3d/useRaycastInteraction'
+import { useRaycastInteraction } from 'src/composables/graphics3d/useRaycastInteraction'
 import { setAnimationLoop } from 'src/composables/graphics3d/setAnimationLoop'
 import { watchSelectedGallery } from 'src/composables/graphics3d/watchSelectedGallery'
 import { removeVideoFromScene } from 'src/composables/graphics3d/removeVideoFromScene'
@@ -32,13 +32,20 @@ export default {
       renderer = rest.renderer
       unmountedArray.value.push(sceneSetupUnmounted)
 
-      const { controlsObject, controlsObjectHeight, keysPressed, playerControlsUnmounted } =
+      const { controlsObject, controlsObjectHeight, keysPressed, consumeYawDelta, playerControlsUnmounted } =
         usePlayerControls(camera, renderer)
       scene.add(controlsObject)
       unmountedArray.value.push(playerControlsUnmounted)
 
       const { loadModelGallery } = useCollidableMeshes(scene, collidableMeshes)
       await loadModelGallery('/3Dmodels/gallery.glb')
+      const { updateMoveToPainting, raycastInteractionUnmounted } = useRaycastInteraction({
+        camera,
+        scene,
+        renderer,
+        controlsObject
+      })
+      unmountedArray.value.push(raycastInteractionUnmounted)
 
       setAnimationLoop({
         scene,
@@ -47,31 +54,23 @@ export default {
         controlsObject,
         controlsObjectHeight,
         collidableMeshes,
-        keysPressed
+        keysPressed,
+        updateMoveToPainting,
+        consumeYawDelta
       })
 
       watchSelectedGallery(scene, renderer, collidableMeshes)
-
-      // const { raycastInteractionUnmounted } = useRaycastInteraction({
-      //   camera,
-      //   scene,
-      //   renderer,
-      //   collidableMeshes,
-      //   newElement,
-      //   emit
-      // })
-      // unmountedArray.value.push(raycastInteractionUnmounted)
     })
     onUnmounted(() => {
-      unmountedArray.value.forEach((func) => func())
-      Object.values(models3d.value).forEach((value) => {
-        if (value.mixer) toRaw(value.mixer).stopAllAction()
-      })
       if (selectedGallery.value.videoStore) {
         Object.keys(selectedGallery.value.videoStore).forEach((key) => {
           removeVideoFromScene(scene, key)
         })
       }
+      Object.values(models3d.value).forEach((value) => {
+        if (value.mixer) toRaw(value.mixer).stopAllAction()
+      })
+      unmountedArray.value.forEach((func) => func())
       clearSelectedGallery()
     })
     return {

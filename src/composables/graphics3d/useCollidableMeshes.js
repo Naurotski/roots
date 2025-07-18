@@ -4,7 +4,6 @@ import { Loading } from 'quasar'
 
 export const useCollidableMeshes = (scene, collidableMeshes) => {
   const loadModelGallery = async (url) => {
-    console.log('loadModelGallery -url---', url)
     Loading.show({ message: 'Loading model...' })
     try {
       const loader = new GLTFLoader()
