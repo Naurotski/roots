@@ -1,5 +1,6 @@
 import { Box3, Matrix3, Raycaster, Vector2, Vector3 } from 'three'
 import { findTaggedParent } from 'src/composables/graphics3d/findIntersectionElement'
+import { rotateToTarget, rotateHeadToTarget } from 'src/composables/graphics3d/rotateToTarget'
 
 export const useRaycastInteraction = ({ camera, scene, renderer, controlsObject }) => {
   const raycaster = new Raycaster()
@@ -45,46 +46,13 @@ export const useRaycastInteraction = ({ camera, scene, renderer, controlsObject 
     }
   }
 
-  const rotateToTarget = (targetPos, delta) => {
-    const dir = targetPos.clone().sub(controlsObject.position)
-    const targetAngle = Math.atan2(dir.x, dir.z) - Math.PI
-    const currentAngle = controlsObject.rotation.y
-
-    let angleDiff = targetAngle - currentAngle
-    angleDiff = Math.atan2(Math.sin(angleDiff), Math.cos(angleDiff))
-
-    const turnSpeed = Math.PI * delta
-    const turnStep = Math.abs(angleDiff) < turnSpeed ? angleDiff : Math.sign(angleDiff) * turnSpeed
-
-    controlsObject.rotation.y += turnStep
-  }
-  const rotateHeadToTarget = (head, targetPos, delta) => {
-    const dir = targetPos.clone().sub(controlsObject.position)
-    const flatDir = dir.clone()
-    flatDir.y = 0
-
-    const horizontalDistance = flatDir.length()
-    const verticalDifference = dir.y
-
-    const targetPitch = Math.atan2(-verticalDifference, horizontalDistance)  // Наклон головы вверх/вниз
-    const currentPitch = head.rotation.x
-
-    let pitchDiff = targetPitch - currentPitch
-    pitchDiff = Math.atan2(Math.sin(pitchDiff), Math.cos(pitchDiff))
-
-    const turnSpeed = Math.PI * delta
-    const pitchStep = Math.abs(pitchDiff) < turnSpeed ? pitchDiff : Math.sign(pitchDiff) * turnSpeed
-
-    head.rotation.x += pitchStep
-  }
-
   const updateMoveToPainting = (delta) => {
     if (!moveTarget || !lookAtTargetPos) return
 
-    rotateToTarget(lookAtTargetPos, delta)
+    rotateToTarget(controlsObject, lookAtTargetPos, delta)
     const head = controlsObject.getObjectByName('head')
     if (head) {
-      rotateHeadToTarget(head, lookAtTargetPos, delta)
+      rotateHeadToTarget(controlsObject, head, lookAtTargetPos, delta)
     }
 
     const dir = moveTarget.clone().sub(controlsObject.position)
