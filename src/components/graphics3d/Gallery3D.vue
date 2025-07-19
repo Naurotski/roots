@@ -32,7 +32,7 @@ export default {
       renderer = rest.renderer
       unmountedArray.value.push(sceneSetupUnmounted)
 
-      const { controlsObject, controlsObjectHeight, keysPressed, consumeYawDelta, playerControlsUnmounted } =
+      const { controlsObject, controlsObjectHeight, keysPressed, playerControlsUnmounted } =
         usePlayerControls(camera, renderer)
       scene.add(controlsObject)
       unmountedArray.value.push(playerControlsUnmounted)
@@ -55,8 +55,7 @@ export default {
         controlsObjectHeight,
         collidableMeshes,
         keysPressed,
-        updateMoveToPainting,
-        consumeYawDelta
+        updateMoveToPainting
       })
 
       watchSelectedGallery(scene, renderer, collidableMeshes)

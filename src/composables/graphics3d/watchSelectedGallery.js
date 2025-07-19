@@ -38,8 +38,16 @@ export const watchSelectedGallery = (scene, renderer, collidableMeshes) => {
             .forEach((item) =>
               createPainting({
                 renderer,
-                point: new Vector3(item.position.point.x, item.position.point.y, item.position.point.z),
-                normal: new Vector3(item.position.normal.x, item.position.normal.y, item.position.normal.z),
+                point: new Vector3(
+                  item.position.point.x,
+                  item.position.point.y,
+                  item.position.point.z
+                ),
+                normal: new Vector3(
+                  item.position.normal.x,
+                  item.position.normal.y,
+                  item.position.normal.z
+                ),
                 scene,
                 collidableMeshes,
                 url: item.url,
@@ -55,8 +63,16 @@ export const watchSelectedGallery = (scene, renderer, collidableMeshes) => {
             await modelPositioning({
               scene,
               modelData,
-              point: new Vector3(item.position.point.x, item.position.point.y, item.position.point.z),
-              normal: new Vector3(item.position.normal.x, item.position.normal.y, item.position.normal.z),
+              point: new Vector3(
+                item.position.point.x,
+                item.position.point.y,
+                item.position.point.z
+              ),
+              normal: new Vector3(
+                item.position.normal.x,
+                item.position.normal.y,
+                item.position.normal.z
+              ),
               objectId: item.objectId,
               collidableMeshes,
               rotation: item.position.rotation
