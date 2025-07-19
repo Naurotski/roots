@@ -58,11 +58,34 @@ export const useRaycastInteraction = ({ camera, scene, renderer, controlsObject 
 
     controlsObject.rotation.y += turnStep
   }
+  const rotateHeadToTarget = (head, targetPos, delta) => {
+    const dir = targetPos.clone().sub(controlsObject.position)
+    const flatDir = dir.clone()
+    flatDir.y = 0
+
+    const horizontalDistance = flatDir.length()
+    const verticalDifference = dir.y
+
+    const targetPitch = Math.atan2(-verticalDifference, horizontalDistance)  // Наклон головы вверх/вниз
+    const currentPitch = head.rotation.x
+
+    let pitchDiff = targetPitch - currentPitch
+    pitchDiff = Math.atan2(Math.sin(pitchDiff), Math.cos(pitchDiff))
+
+    const turnSpeed = Math.PI * delta
+    const pitchStep = Math.abs(pitchDiff) < turnSpeed ? pitchDiff : Math.sign(pitchDiff) * turnSpeed
+
+    head.rotation.x += pitchStep
+  }
 
   const updateMoveToPainting = (delta) => {
     if (!moveTarget || !lookAtTargetPos) return
 
     rotateToTarget(lookAtTargetPos, delta)
+    const head = controlsObject.getObjectByName('head')
+    if (head) {
+      rotateHeadToTarget(head, lookAtTargetPos, delta)
+    }
 
     const dir = moveTarget.clone().sub(controlsObject.position)
     const distance = dir.length()

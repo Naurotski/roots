@@ -8,6 +8,7 @@ export const usePlayerControls = (camera, renderer) => {
 
   // Добавляем камеру в "голову", голову — в "тело"
   head.add(camera)
+  head.name = 'head'
   controlsObject.add(head)
   controlsObject.position.set(5, controlsObjectHeight, 2)
 
