@@ -41,9 +41,9 @@ export default {
       await loadModelGallery('/3Dmodels/gallery.glb')
       const { updateMoveToPainting, raycastInteractionUnmounted } = useRaycastInteraction({
         camera,
-        scene,
         renderer,
-        controlsObject
+        controlsObject,
+        collidableMeshes
       })
       unmountedArray.value.push(raycastInteractionUnmounted)
 

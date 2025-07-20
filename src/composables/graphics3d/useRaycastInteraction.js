@@ -2,7 +2,7 @@ import { Box3, Matrix3, Raycaster, Vector2, Vector3 } from 'three'
 import { findTaggedParent } from 'src/composables/graphics3d/findIntersectionElement'
 import { rotateToTarget, rotateHeadToTarget } from 'src/composables/graphics3d/rotateToTarget'
 
-export const useRaycastInteraction = ({ camera, scene, renderer, controlsObject }) => {
+export const useRaycastInteraction = ({ camera, renderer, controlsObject, collidableMeshes }) => {
   const raycaster = new Raycaster()
   const mouse = new Vector2()
   const targetPos = new Vector3()
@@ -23,13 +23,13 @@ export const useRaycastInteraction = ({ camera, scene, renderer, controlsObject 
     normalizeMouseEvent(e)
     raycaster.setFromCamera(mouse, camera)
 
-    const intersects = raycaster.intersectObjects(scene.children, true)
-    console.log('intersects --', intersects)
+    const intersects = raycaster.intersectObjects(collidableMeshes, true)
     if (intersects.length > 0) {
       const intersect = intersects[0]
-      const taggedParent = findTaggedParent(intersect.object)
+      console.log('intersects  =====', intersects)
       console.log('taggedParent  =====', taggedParent)
-      if (!taggedParent?.userData.isPainting) return
+      const taggedParent = findTaggedParent(intersect.object)
+      if (!taggedParent) return
 
       // Получаем центр картины
       const boundingBox = new Box3().setFromObject(taggedParent)
