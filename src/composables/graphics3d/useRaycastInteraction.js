@@ -1,6 +1,11 @@
 import { Box3, Matrix3, Raycaster, Vector2, Vector3 } from 'three'
 import { findTaggedParent } from 'src/composables/graphics3d/findIntersectionElement'
 import { rotateToTarget, rotateHeadToTarget } from 'src/composables/graphics3d/rotateToTarget'
+import { useGraphics3DStore } from 'stores/graphics3D-store'
+import { storeToRefs } from 'pinia'
+const graphics3DStore = useGraphics3DStore()
+const { isAutoMoving } = storeToRefs(graphics3DStore)
+const { updateCheckAutoMoving } = graphics3DStore
 
 export const useRaycastInteraction = ({ camera, renderer, controlsObject, collidableMeshes }) => {
   const raycaster = new Raycaster()
@@ -19,7 +24,7 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
   }
 
   const onMousedown = async (e) => {
-    if (e.button !== 0 || e.target !== renderer.domElement) return // Только левая кнопка
+    if (e.button !== 0 || e.target !== renderer.domElement || isAutoMoving.value) return // Только левая кнопка
     normalizeMouseEvent(e)
     raycaster.setFromCamera(mouse, camera)
 
@@ -44,7 +49,7 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
 
       lookAtTargetPos = targetPos.clone() // Смотрим на центр картины
       moveTarget = targetPos.clone().add(paintingNormal.clone().multiplyScalar(1)) // Двигаемся на метр перед картиной
-
+      updateCheckAutoMoving(true)
       console.log('lookAtTargetPos  ---', lookAtTargetPos)
     }
   }
@@ -65,6 +70,7 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
       controlsObject.position.copy(moveTarget)
       moveTarget = null
       lookAtTargetPos = null
+      updateCheckAutoMoving(false)
     } else {
       dir.normalize()
       controlsObject.position.add(dir.multiplyScalar(moveSpeed * delta))

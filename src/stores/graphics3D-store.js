@@ -7,6 +7,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
   const listGalleries = ref({})
   const selectedGallery = ref({})
   const models3d = ref({})
+  const isAutoMoving = ref(false)
 
   const updateListGalleries = (data, check) => {
     if (check === 'delete') {
@@ -35,7 +36,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     await deleteListen(`galleries/${selectedGallery.value.galleryId}`)
     selectedGallery.value = {}
   }
-
+  const updateCheckAutoMoving = (val) => (isAutoMoving.value = val)
   const listenForChildEvents = (parent) => {
     console.log('listenForChildEvents - ', parent)
     let path = `graphics3D/${parent}`
@@ -71,7 +72,9 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     listGalleries,
     selectedGallery,
     models3d,
+    isAutoMoving,
     updateModels3d,
+    updateCheckAutoMoving,
     listenForChildEvents,
     clearListGalleries,
     clearSelectedGallery

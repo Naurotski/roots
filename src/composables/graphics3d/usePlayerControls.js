@@ -1,4 +1,8 @@
 import { Object3D } from 'three'
+import { storeToRefs } from 'pinia'
+import { useGraphics3DStore } from 'stores/graphics3D-store'
+const graphics3DStore = useGraphics3DStore()
+const { isAutoMoving } = storeToRefs(graphics3DStore)
 export const usePlayerControls = (camera, renderer) => {
   // === Игрок: тело и голова (камера) ===
   const controlsObject = new Object3D() // тело
@@ -19,13 +23,13 @@ export const usePlayerControls = (camera, renderer) => {
   const rotationSpeed = 0.002
 
   const onMousedown = (e) => {
-    if (e.button !== 0 || e.target !== renderer.domElement) return
+    if (e.button !== 0 || e.target !== renderer.domElement || isAutoMoving.value) return
     isMouseDown = true
     prevMouseX = e.clientX
     prevMouseY = e.clientY
   }
   const onMousemove = (e) => {
-    if (!isMouseDown) return
+    if (!isMouseDown || isAutoMoving.value) return
     const dx = e.clientX - prevMouseX
     const dy = e.clientY - prevMouseY
     // Вращение тела (влево-вправо)
@@ -45,8 +49,14 @@ export const usePlayerControls = (camera, renderer) => {
   }
 
   // === Управление клавишами ===
-  const onKeydown = (e) => (keysPressed[e.code] = true)
-  const onKeyup = (e) => (keysPressed[e.code] = false)
+  const onKeydown = (e) => {
+    if (isAutoMoving.value) return
+    keysPressed[e.code] = true
+  }
+  const onKeyup = (e) => {
+    if (isAutoMoving.value) return
+    keysPressed[e.code] = false
+  }
 
   const el = renderer.domElement
   el.addEventListener('mousedown', onMousedown)
