@@ -27,8 +27,9 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
     if (intersects.length > 0) {
       const intersect = intersects[0]
       console.log('intersects  =====', intersects)
-      console.log('taggedParent  =====', taggedParent)
+
       const taggedParent = findTaggedParent(intersect.object)
+      console.log('taggedParent  =====', taggedParent)
       if (!taggedParent) return
 
       // Получаем центр картины
@@ -41,18 +42,20 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
         .applyMatrix3(new Matrix3().getNormalMatrix(intersect.object.matrixWorld))
         .normalize()
 
-      moveTarget = targetPos.clone().add(paintingNormal.multiplyScalar(1))
-      lookAtTargetPos = targetPos.clone() // сохраняем для поворота
+      lookAtTargetPos = targetPos.clone() // Смотрим на центр картины
+      moveTarget = targetPos.clone().add(paintingNormal.clone().multiplyScalar(1)) // Двигаемся на метр перед картиной
+
+      console.log('lookAtTargetPos  ---', lookAtTargetPos)
     }
   }
 
   const updateMoveToPainting = (delta) => {
     if (!moveTarget || !lookAtTargetPos) return
 
-    rotateToTarget(controlsObject, lookAtTargetPos, delta)
+    rotateToTarget(controlsObject, lookAtTargetPos, delta, moveTarget, moveSpeed)
     const head = controlsObject.getObjectByName('head')
     if (head) {
-      rotateHeadToTarget(controlsObject, head, lookAtTargetPos, delta)
+      rotateHeadToTarget(controlsObject, head, lookAtTargetPos, delta, moveTarget, moveSpeed)
     }
 
     const dir = moveTarget.clone().sub(controlsObject.position)

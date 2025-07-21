@@ -1,33 +1,46 @@
-const rotateToTarget = (controlsObject, targetPos, delta) => {
-  const dir = targetPos.clone().sub(controlsObject.position)
+const rotateToTarget = (controlsObject, targetPos, delta, moveTarget, moveSpeed) => {
+  const dir = targetPos.clone().sub(moveTarget)
   const targetAngle = Math.atan2(dir.x, dir.z) - Math.PI
   const currentAngle = controlsObject.rotation.y
-
   let angleDiff = targetAngle - currentAngle
   angleDiff = Math.atan2(Math.sin(angleDiff), Math.cos(angleDiff))
 
-  const turnSpeed = Math.PI * delta
-  const turnStep = Math.abs(angleDiff) < turnSpeed ? angleDiff : Math.sign(angleDiff) * turnSpeed
+  // Считаем время до конца движения
+  const distanceToTarget = moveTarget.clone().sub(controlsObject.position).length()
+  const timeToReach = distanceToTarget / moveSpeed
 
-  controlsObject.rotation.y += turnStep
+  // Считаем поворот за этот же интервал времени (если время > 0)
+  if (timeToReach > 0) {
+    const turnStep = (angleDiff / timeToReach) * delta
+    controlsObject.rotation.y += turnStep
+  } else {
+    // Если уже пришёл, просто ставим угол как есть
+    controlsObject.rotation.y = targetAngle
+  }
 }
-const rotateHeadToTarget = (controlsObject, head, targetPos, delta) => {
-  const dir = targetPos.clone().sub(controlsObject.position)
+const rotateHeadToTarget = (controlsObject, head, targetPos, delta, moveTarget, moveSpeed) => {
+  const dir = targetPos.clone().sub(moveTarget) // Считаем от "виртуальной позиции" перед картиной
   const flatDir = dir.clone()
   flatDir.y = 0
 
   const horizontalDistance = flatDir.length()
   const verticalDifference = dir.y
 
-  const targetPitch = Math.atan2(-verticalDifference, horizontalDistance) // Наклон головы вверх/вниз
+  const targetPitch = Math.atan2(-verticalDifference, horizontalDistance)
   const currentPitch = head.rotation.x
 
   let pitchDiff = targetPitch - currentPitch
   pitchDiff = Math.atan2(Math.sin(pitchDiff), Math.cos(pitchDiff))
 
-  const turnSpeed = Math.PI * delta
-  const pitchStep = Math.abs(pitchDiff) < turnSpeed ? pitchDiff : Math.sign(pitchDiff) * turnSpeed
+  // Считаем время до конца движения
+  const distanceToTarget = moveTarget.clone().sub(controlsObject.position).length()
+  const timeToReach = distanceToTarget / moveSpeed
 
-  head.rotation.x += pitchStep
+  if (timeToReach > 0) {
+    const pitchStep = (pitchDiff / timeToReach) * delta
+    head.rotation.x += pitchStep
+  } else {
+    head.rotation.x = targetPitch
+  }
 }
 export { rotateToTarget, rotateHeadToTarget }
