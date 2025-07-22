@@ -3,16 +3,21 @@
 </template>
 
 <script>
-import { onMounted, onUnmounted, ref, toRaw } from 'vue'
+import { onMounted, onUnmounted, ref, toRaw, watch } from 'vue'
 import { storeToRefs } from 'pinia'
+import { Vector3 } from 'three'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 import { useSceneSetup } from 'src/composables/graphics3d/useSceneSetup'
 import { usePlayerControls } from 'src/composables/graphics3d/usePlayerControls'
 import { useCollidableMeshes } from 'src/composables/graphics3d/useCollidableMeshes'
 import { useRaycastInteraction } from 'src/composables/graphics3d/useRaycastInteraction'
 import { setAnimationLoop } from 'src/composables/graphics3d/setAnimationLoop'
-import { watchSelectedGallery } from 'src/composables/graphics3d/watchSelectedGallery'
 import { removeVideoFromScene } from 'src/composables/graphics3d/removeVideoFromScene'
+import { removeElement } from 'src/composables/graphics3d/removeElement'
+import { createPainting } from 'src/composables/graphics3d/createPainting'
+import { loadModel } from 'src/composables/graphics3d/loadModel'
+import { modelPositioning } from 'src/composables/graphics3d/modelPositioning'
+import { useVideo } from 'src/composables/graphics3d/useVideo'
 
 export default {
   name: 'Gallery3D',
@@ -57,9 +62,85 @@ export default {
         keysPressed,
         updateMoveToPainting
       })
-
-      watchSelectedGallery(scene, renderer, collidableMeshes)
     })
+    watch(
+      () => selectedGallery.value,
+      async (newVal, oldVal) => {
+        console.log(newVal, oldVal)
+        if (oldVal?.galleryId) {
+          collidableMeshes
+            .filter((item) => item.userData.isPainting)
+            .forEach((painting) => {
+              removeElement(scene, collidableMeshes, painting)
+            })
+          scene.children
+            .filter((item) => item.userData.isPlaceableObject)
+            .forEach((elem) => {
+              removeElement(scene, collidableMeshes, elem)
+            })
+          if (oldVal.videoStore) {
+            Object.keys(oldVal.videoStore).forEach((key) => {
+              removeVideoFromScene(scene, key)
+            })
+          }
+        }
+        if (newVal?.galleryId) {
+          if (newVal.storeroom) {
+            Object.values(newVal.storeroom)
+              .filter((elem) => elem.position)
+              .forEach((item) =>
+                createPainting({
+                  renderer,
+                  point: new Vector3(
+                    item.position.point.x,
+                    item.position.point.y,
+                    item.position.point.z
+                  ),
+                  normal: new Vector3(
+                    item.position.normal.x,
+                    item.position.normal.y,
+                    item.position.normal.z
+                  ),
+                  scene,
+                  collidableMeshes,
+                  url: item.url,
+                  width: item.width,
+                  height: item.height,
+                  paintingId: item.paintingId
+                })
+              )
+          }
+          if (newVal.store) {
+            for (const item of Object.values(newVal.store).filter((elem) => elem.position)) {
+              const modelData = await loadModel({ url: item.url, targetHeight: item.targetHeight })
+              await modelPositioning({
+                scene,
+                modelData,
+                point: new Vector3(
+                  item.position.point.x,
+                  item.position.point.y,
+                  item.position.point.z
+                ),
+                normal: new Vector3(
+                  item.position.normal.x,
+                  item.position.normal.y,
+                  item.position.normal.z
+                ),
+                objectId: item.objectId,
+                collidableMeshes,
+                rotation: item.position.rotation
+              })
+            }
+          }
+          if (newVal.videoStore) {
+            for (const key of Object.keys(newVal.videoStore)) {
+              await useVideo(scene, newVal.videoStore[key])
+            }
+          }
+        }
+      },
+      { immediate: true, deep: true }
+    )
     onUnmounted(() => {
       if (selectedGallery.value.videoStore) {
         Object.keys(selectedGallery.value.videoStore).forEach((key) => {

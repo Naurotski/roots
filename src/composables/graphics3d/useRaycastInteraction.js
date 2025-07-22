@@ -1,4 +1,4 @@
-import { Box3, Matrix3, Raycaster, Vector2, Vector3 } from 'three'
+import { Box3, MathUtils, Matrix3, Matrix4, Raycaster, Vector2, Vector3 } from 'three'
 import { findTaggedParent } from 'src/composables/graphics3d/findIntersectionElement'
 import { rotateToTarget, rotateHeadToTarget } from 'src/composables/graphics3d/rotateToTarget'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
@@ -16,6 +16,9 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
   let moveTarget = null
   let lookAtTargetPos = null
 
+  let mainTarget = null // Цель перед картиной
+  let isBypassing = false
+
   const normalizeMouseEvent = (e) => {
     //Переводим координаты мыши в нормализованную систему
     const rect = renderer.domElement.getBoundingClientRect()
@@ -31,8 +34,7 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
     const intersects = raycaster.intersectObjects(collidableMeshes, true)
     if (intersects.length > 0) {
       const intersect = intersects[0]
-      console.log('intersects  =====', intersects)
-
+      console.log('intersect  ---- ', intersect)
       const taggedParent = findTaggedParent(intersect.object)
       console.log('taggedParent  =====', taggedParent)
       if (!taggedParent) return
@@ -48,14 +50,82 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
         .normalize()
 
       lookAtTargetPos = targetPos.clone() // Смотрим на центр картины
-      moveTarget = targetPos.clone().add(paintingNormal.clone().multiplyScalar(1)) // Двигаемся на метр перед картиной
+      mainTarget = targetPos.clone().add(paintingNormal.clone().multiplyScalar(1)) // Двигаемся на метр перед картиной
+      moveTarget = mainTarget.clone()
+
+      const result = findClearPathDirection()
+      if (!result) {
+        console.log('Движение не начато: путь закрыт во всех направлениях')
+        moveTarget = null
+        lookAtTargetPos = null
+        return
+      }
+
+      if (!result.isOriginal) {
+        const origin = controlsObject.position.clone()
+        origin.y += 0.3
+        moveTarget = origin
+          .clone()
+          .add(result.direction.clone().multiplyScalar(origin.distanceTo(moveTarget)))
+        isBypassing = true
+      } else {
+        isBypassing = false
+      }
       updateCheckAutoMoving(true)
-      console.log('lookAtTargetPos  ---', lookAtTargetPos)
     }
+  }
+
+  const findClearPathDirection = (maxAngleDeg = 60, stepDeg = 10) => {
+    if (!moveTarget) return null
+    const origin = controlsObject.position.clone()
+    const baseDirection = moveTarget.clone().sub(origin).normalize()
+    if (isDirectionClear(origin, baseDirection)) {
+      return { direction: baseDirection, isOriginal: true }
+    }
+    const angles = []
+    for (let angle = stepDeg; angle <= maxAngleDeg; angle += stepDeg) {
+      angles.push(angle)
+      angles.push(-angle)
+    }
+    const rotateDirection = (dir, angleDeg) => {
+      const angleRad = MathUtils.degToRad(angleDeg)
+      return dir.clone().applyMatrix4(new Matrix4().makeRotationY(angleRad)).normalize()
+    }
+    for (const angle of angles) {
+      const testDir = rotateDirection(baseDirection, angle)
+      if (isDirectionClear(origin, testDir)) {
+        console.log('Путь найден под углом', angle, 'градусов')
+        return { direction: testDir, isOriginal: false }
+      }
+    }
+    console.log('Обход не найден — путь закрыт со всех сторон')
+    return null
+  }
+  const isDirectionClear = (origin, direction) => {
+    raycaster.set(origin, direction)
+    const intersects = raycaster.intersectObjects(collidableMeshes, true)
+    if (intersects.length > 0) {
+      const distanceToObstacle = intersects[0].distance
+      const distanceToTarget = origin.distanceTo(moveTarget)
+      return distanceToObstacle >= distanceToTarget
+    }
+    return true // Ничего не пересек — путь свободен
   }
 
   const updateMoveToPainting = (delta) => {
     if (!moveTarget || !lookAtTargetPos) return
+
+    if (
+      isBypassing &&
+      isDirectionClear(
+        controlsObject.position.clone().setY(controlsObject.position.y),
+        mainTarget.clone().sub(controlsObject.position).normalize()
+      )
+    ) {
+      console.log('Путь к цели открыт — возвращаемся к ней')
+      moveTarget = mainTarget.clone()
+      isBypassing = false
+    }
 
     rotateToTarget(controlsObject, lookAtTargetPos, delta, moveTarget, moveSpeed)
     const head = controlsObject.getObjectByName('head')

@@ -39,7 +39,7 @@ export const createPainting = ({
     sideMaterial
   ])
   // Немного отодвигаем от стены по нормали
-  painting.position.copy(point).add(normal.clone().multiplyScalar(0.05))
+  painting.position.copy(point).add(normal.clone().multiplyScalar(0.01))
   // Ориентируем картину по нормали (поверхности)
   painting.lookAt(point.clone().add(normal))
   painting.userData.isPainting = true // Флаг, чтобы понимать, что это картина
