@@ -1,6 +1,9 @@
 import { Box3, MathUtils, Matrix3, Matrix4, Raycaster, Vector2, Vector3 } from 'three'
 import { findTaggedParent } from 'src/composables/graphics3d/findIntersectionElement'
-import { rotateToTarget, rotateHeadToTarget } from 'src/composables/graphics3d/rotateToTarget'
+import {
+  rotateToTarget,
+  rotateHeadToTarget
+} from 'src/composables/graphics3d/automaticMovement/rotateToTarget'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 import { storeToRefs } from 'pinia'
 const graphics3DStore = useGraphics3DStore()
@@ -43,14 +46,22 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
       const boundingBox = new Box3().setFromObject(taggedParent)
       boundingBox.getCenter(targetPos)
 
+      let normalForApproach = null
+
       // Получаем нормаль поверхности
-      const paintingNormal = intersect.face.normal
-        .clone()
-        .applyMatrix3(new Matrix3().getNormalMatrix(intersect.object.matrixWorld))
-        .normalize()
+      if (taggedParent.userData.isPainting) {
+        normalForApproach = intersect.face.normal
+          .clone()
+          .applyMatrix3(new Matrix3().getNormalMatrix(intersect.object.matrixWorld))
+          .normalize()
+      } else if (taggedParent.userData.isPlaceableObject && taggedParent.userData.normal) {
+        normalForApproach = taggedParent.userData.normal.clone().normalize()
+      }
+
+      if (!normalForApproach) return
 
       lookAtTargetPos = targetPos.clone() // Смотрим на центр картины
-      mainTarget = targetPos.clone().add(paintingNormal.clone().multiplyScalar(1)) // Двигаемся на метр перед картиной
+      mainTarget = targetPos.clone().add(normalForApproach.clone().multiplyScalar(1)) // Двигаемся на метр перед картиной
       moveTarget = mainTarget.clone()
 
       const result = findClearPathDirection()
