@@ -14,6 +14,7 @@ export default {
     delivery: 'For delivery, we will contact you by email within 24 hours.',
     enter: 'Enter',
     exhibition: 'Exhibition',
+    joinProject: 'Join the project',
     maintenance:
       'Our website is temporarily unavailable due to technical work. Please check back later',
     more: 'more',

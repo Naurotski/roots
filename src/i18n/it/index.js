@@ -14,6 +14,7 @@ export default {
     delivery: 'Per la consegna, ti contatteremo via e-mail entro 24 ore',
     enter: 'Entrare',
     exhibition: 'Mostra',
+    joinProject: 'Unisciti al progetto',
     maintenance:
       'Il nostro sito web è temporaneamente non disponibile a causa di lavori tecnici. Ricontrolla più tardi',
     more: 'più',
