@@ -2,6 +2,13 @@
   <q-page>
     <gallery3-d />
     <how-to class="absolute-top-right q-mt-xl q-mr-xl" />
+    <div class="absolute-bottom-right q-mb-xl q-mr-xl">
+      <q-btn size="xl" flat round color="white" icon="fa-solid fa-play" />
+      <q-btn size="xl" flat round color="white" icon="fa-solid fa-pause" />
+      <q-btn size="xl" flat round color="white" icon="fa-solid fa-stop" />
+      <q-btn size="xl" flat round color="white" icon="fa-solid fa-volume-low" />
+      <q-btn size="xl" flat round color="white" icon="fa-solid fa-volume-xmark" />
+    </div>
   </q-page>
 </template>
 

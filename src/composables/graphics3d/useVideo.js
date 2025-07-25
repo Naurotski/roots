@@ -12,6 +12,11 @@ import {
   SRGBColorSpace
 } from 'three'
 import { Loading } from 'quasar'
+import { watch } from 'vue'
+import { useGraphics3DStore } from 'stores/graphics3D-store'
+import { storeToRefs } from 'pinia'
+const graphics3DStore = useGraphics3DStore()
+const { selectedGallery } = storeToRefs(graphics3DStore)
 
 export const useVideo = async (scene, dataVideo) => {
   const object = scene.getObjectByName(dataVideo.videoId)
@@ -25,15 +30,13 @@ export const useVideo = async (scene, dataVideo) => {
     const video = document.createElement('video')
     video.src = dataVideo.url
     video.loop = true
-    video.muted = false
-    video.autoplay = false
     video.playsInline = true
     video.crossOrigin = 'anonymous'
     video.preload = 'auto'
     // Ждём пока загрузятся данные видео
     await new Promise((resolve) => {
       video.addEventListener('loadeddata', () => {
-        video.play().catch((e) => console.warn('Видео play() error', e))
+        video.pause()
         resolve()
       })
     })
@@ -47,7 +50,6 @@ export const useVideo = async (scene, dataVideo) => {
     videoTexture.format = RGBFormat
     videoTexture.generateMipmaps = false
     videoTexture.colorSpace = SRGBColorSpace
-
     const material = new MeshBasicMaterial({ map: videoTexture, side: DoubleSide })
 
     // 3. рассчитываем bounding box
@@ -110,4 +112,9 @@ export const useVideo = async (scene, dataVideo) => {
   } finally {
     Loading.hide() // Скрыть лоадер
   }
+  watch(() => selectedGallery.value.videoStore?.[dataVideo.videoId], (newValue) => {
+    if (!object || !object.geometry){
+
+    }
+  })
 }

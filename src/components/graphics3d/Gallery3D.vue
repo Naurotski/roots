@@ -85,6 +85,7 @@ export default {
           modelGalleryReady.value = false
         }
         if (newVal) {
+          console.log(selectedGallery.value)
           if (selectedGallery.value.storeroom) {
             Object.values(selectedGallery.value.storeroom)
               .filter((elem) => elem.position)
