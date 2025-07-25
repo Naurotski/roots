@@ -8,6 +8,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
   const selectedGallery = ref({})
   const models3d = ref({})
   const isAutoMoving = ref(false)
+  const hoveredElementId = ref(null)
 
   const updateListGalleries = (data, check) => {
     if (check === 'delete') {
@@ -37,6 +38,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     selectedGallery.value = {}
   }
   const updateCheckAutoMoving = (val) => (isAutoMoving.value = val)
+  const updateHoveredElementId = (val) => (hoveredElementId.value = val)
   const listenForChildEvents = (parent) => {
     console.log('listenForChildEvents - ', parent)
     let path = `graphics3D/${parent}`
@@ -73,8 +75,10 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     selectedGallery,
     models3d,
     isAutoMoving,
+    hoveredElementId,
     updateModels3d,
     updateCheckAutoMoving,
+    updateHoveredElementId,
     listenForChildEvents,
     clearListGalleries,
     clearSelectedGallery

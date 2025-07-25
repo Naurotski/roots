@@ -213,5 +213,11 @@ export default {
     checkSpam: 'If you do not receive it within a few minutes, please check your spam folder.',
     contact: 'If you have any issues, contact us',
     backToSite: 'Back to site'
+  },
+  graphics3D: {
+    clickAndDrag: 'Click and drag to rotate the camera',
+    clickOnArtworks: 'Click on artworks or 3D objects to move closer and view information',
+    howTo: 'How to?',
+    upAndDown: 'Use your up and down keys to move forward and back'
   }
 }

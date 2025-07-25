@@ -213,5 +213,12 @@ export default {
     checkSpam: 'Se non ricevi nulla entro pochi minuti, controlla la cartella spam.',
     contact: 'In caso di problemi, contattaci',
     backToSite: 'Torna al sito'
+  },
+  graphics3D: {
+    clickAndDrag: 'Clicca e trascina per ruotare la telecamera',
+    clickOnArtworks:
+      "Clicca sulle opere d'arte o sugli oggetti 3D per avvicinarti e visualizzare le informazioni",
+    howTo: 'Come fare?',
+    upAndDown: 'Usa i tasti su e giù per andare avanti e indietro'
   }
 }

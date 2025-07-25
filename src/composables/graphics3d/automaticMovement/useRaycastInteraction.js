@@ -7,8 +7,8 @@ import {
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 import { storeToRefs } from 'pinia'
 const graphics3DStore = useGraphics3DStore()
-const { isAutoMoving } = storeToRefs(graphics3DStore)
-const { updateCheckAutoMoving } = graphics3DStore
+const { isAutoMoving, hoveredElementId } = storeToRefs(graphics3DStore)
+const { updateCheckAutoMoving, updateHoveredElementId } = graphics3DStore
 
 export const useRaycastInteraction = ({ camera, renderer, controlsObject, collidableMeshes }) => {
   const raycaster = new Raycaster()
@@ -29,7 +29,8 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
     mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
   }
 
-  const onMousedown = async (e) => {
+  const onMousedownRaycaster = async (e) => {
+    console.log('onMousedown - - - - -')
     if (e.button !== 0 || e.target !== renderer.domElement || isAutoMoving.value) return // Только левая кнопка
     normalizeMouseEvent(e)
     raycaster.setFromCamera(mouse, camera)
@@ -157,11 +158,31 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
       controlsObject.position.add(dir.multiplyScalar(moveSpeed * delta))
     }
   }
+
+  const onMousemoveRaycaster = (e) => {
+    if (isAutoMoving.value) return // Только левая кнопка
+    normalizeMouseEvent(e)
+    raycaster.setFromCamera(mouse, camera)
+    const hoverIntersects = raycaster.intersectObjects(collidableMeshes, true)
+    let hovered = hoverIntersects.map((i) => findTaggedParent(i.object)).find((obj) => obj !== null)
+    // console.log('hovered --', hovered)
+    if (hovered) {
+      if (!hoveredElementId || hoveredElementId.id !== hovered.userData.id) {
+        updateHoveredElementId({ id: hovered.userData.id, isPainting: hovered.userData.isPainting })
+      }
+      document.body.style.cursor = 'pointer'
+    } else {
+      updateHoveredElementId(null)
+      document.body.style.cursor = 'default'
+    }
+  }
   const el = renderer.domElement
-  el.addEventListener('mousedown', onMousedown)
+  el.addEventListener('mousedown', onMousedownRaycaster)
+  el.addEventListener('mousemove', onMousemoveRaycaster)
 
   const raycastInteractionUnmounted = () => {
-    el.removeEventListener('mousedown', onMousedown)
+    el.removeEventListener('mousedown', onMousedownRaycaster)
+    el.removeEventListener('mousemove', onMousemoveRaycaster)
   }
   return { raycastInteractionUnmounted, updateMoveToPainting }
 }
