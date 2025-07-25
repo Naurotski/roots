@@ -209,7 +209,8 @@ export default {
             metadata: {
               ...shippingDetails.value,
               country: shippingDetails.value.country.countryName,
-              shippingEmail: shippingDetails.value.email
+              shippingEmail: shippingDetails.value.email,
+              works: true
             },
             userData: {
               userId: userData.value.userId,
