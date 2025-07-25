@@ -84,6 +84,18 @@
                           :typeAction="typeAction"
                           :dialogData="action.works"
                         />
+                        <div>
+                          <q-btn
+                            v-if="joinProjects[action.id]"
+                            no-caps
+                            outline
+                            rounded
+                            class="full-width"
+                            :label="$t('common.joinProject')"
+                            :href="joinProjects[action.id]"
+                            target="_blank"
+                          />
+                        </div>
                       </div>
                     </template>
                   </shared-card>
@@ -152,6 +164,10 @@ export default {
     if (!Object.keys(listGalleries.value).length) listenForChildEvents('listGalleries')
     const itemRefs = ref([])
     const filteredActions = ref([])
+    const joinProjects = {
+      1747135580593: 'https://buy.stripe.com/aFaaEWdrxasDgCndEe0co05',
+      1747135787981: 'https://buy.stripe.com/eVqdR83QXdEP1HtgQq0co06'
+    }
     const tab = ref(route.query.lifeTime || $q.localStorage.getItem('tab-actions') || 'archive')
     const elem = computed(() => itemRefs.value.find((item) => item.id === `d${route.query.id}`))
     const filteredActionsI18n = computed(() => {
@@ -324,6 +340,7 @@ export default {
       filteredActionsI18n,
       itemRefs,
       actionJsonLd,
+      joinProjects,
       listGalleries
     }
   }
