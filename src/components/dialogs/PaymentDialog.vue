@@ -59,7 +59,7 @@
   <login-required-dialog
     v-model="requiredDialog"
     :auth-provider="authProvider"
-    :email="user.email"
+    :email="user.email || ''"
     @allowPayment="onSubmit"
   />
 </template>
