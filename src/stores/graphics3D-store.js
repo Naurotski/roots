@@ -24,6 +24,11 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
       selectedGallery.value[key] = value
     }
   }
+  const updateSelectedGalleryVideo = (id, key, value) => {
+    console.log(selectedGallery.value.videoStore[id])
+    console.log(id, key, value)
+    selectedGallery.value.videoStore[id][key] = value
+  }
   const updateModels3d = ({ id, modelData }) => {
     if (!modelData) {
       delete models3d.value[id]
@@ -76,6 +81,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     models3d,
     isAutoMoving,
     hoveredElementId,
+    updateSelectedGalleryVideo,
     updateModels3d,
     updateCheckAutoMoving,
     updateHoveredElementId,

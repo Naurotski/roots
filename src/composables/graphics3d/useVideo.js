@@ -25,17 +25,20 @@ export const useVideo = async (scene, dataVideo) => {
     return
   }
   Loading.show({ message: 'Loading...' })
+  const video = document.createElement('video')
   try {
     // 1. создаём и запускаем видео
-    const video = document.createElement('video')
     video.src = dataVideo.url
     video.loop = true
     video.playsInline = true
     video.crossOrigin = 'anonymous'
     video.preload = 'auto'
+    video.muted = true // Важно для автоплея
+    video.load()
     // Ждём пока загрузятся данные видео
     await new Promise((resolve) => {
       video.addEventListener('loadeddata', () => {
+        console.log('✅ Видео загружено')
         video.pause()
         resolve()
       })
@@ -112,9 +115,15 @@ export const useVideo = async (scene, dataVideo) => {
   } finally {
     Loading.hide() // Скрыть лоадер
   }
-  watch(() => selectedGallery.value.videoStore?.[dataVideo.videoId], (newValue) => {
-    if (!object || !object.geometry){
+  watch(
+    () => selectedGallery.value.videoStore?.[dataVideo.videoId],
+    (newValue) => {
+      if (newValue && object && object.geometry) {
+        if (newValue.play) video.play()
+        else video.pause()
 
+        video.muted = !newValue.muted
+      }
     }
-  })
+  )
 }
