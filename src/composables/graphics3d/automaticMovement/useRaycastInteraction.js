@@ -7,8 +7,8 @@ import {
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 import { storeToRefs } from 'pinia'
 const graphics3DStore = useGraphics3DStore()
-const { isAutoMoving, hoveredElementId } = storeToRefs(graphics3DStore)
-const { updateCheckAutoMoving, updateHoveredElementId } = graphics3DStore
+const { isAutoMoving, selectedElementId } = storeToRefs(graphics3DStore)
+const { updateCheckAutoMoving, updateSelectedElementId } = graphics3DStore
 
 export const useRaycastInteraction = ({ camera, renderer, controlsObject, collidableMeshes }) => {
   const raycaster = new Raycaster()
@@ -18,7 +18,7 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
   const moveSpeed = 2 // м/с
   let moveTarget = null
   let lookAtTargetPos = null
-
+  let taggedParent = null
   let mainTarget = null // Цель перед картиной
   let isBypassing = false
 
@@ -30,19 +30,18 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
   }
 
   const onMousedownRaycaster = async (e) => {
-    console.log('onMousedown - - - - -')
+    console.log('onMousedownRaycaster - - - - -')
     if (e.button !== 0 || e.target !== renderer.domElement || isAutoMoving.value) return // Только левая кнопка
     normalizeMouseEvent(e)
     raycaster.setFromCamera(mouse, camera)
-
+    if (selectedElementId.value) updateSelectedElementId(null)
     const intersects = raycaster.intersectObjects(collidableMeshes, true)
     if (intersects.length > 0) {
       const intersect = intersects[0]
       console.log('intersect  ---- ', intersect)
-      const taggedParent = findTaggedParent(intersect.object)
+      taggedParent = findTaggedParent(intersect.object)
       console.log('taggedParent  =====', taggedParent)
       if (!taggedParent) return
-
       // Получаем центр картины
       const boundingBox = new Box3().setFromObject(taggedParent)
       boundingBox.getCenter(targetPos)
@@ -153,6 +152,13 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
       moveTarget = null
       lookAtTargetPos = null
       updateCheckAutoMoving(false)
+      if (!selectedElementId || selectedElementId.id !== taggedParent.userData.id) {
+        updateSelectedElementId({
+          id: taggedParent.userData.id,
+          isPainting: taggedParent.userData.isPainting
+        })
+      }
+      taggedParent = null
     } else {
       dir.normalize()
       controlsObject.position.add(dir.multiplyScalar(moveSpeed * delta))
@@ -167,12 +173,8 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
     let hovered = hoverIntersects.map((i) => findTaggedParent(i.object)).find((obj) => obj !== null)
     // console.log('hovered --', hovered)
     if (hovered) {
-      if (!hoveredElementId || hoveredElementId.id !== hovered.userData.id) {
-        updateHoveredElementId({ id: hovered.userData.id, isPainting: hovered.userData.isPainting })
-      }
       document.body.style.cursor = 'pointer'
     } else {
-      updateHoveredElementId(null)
       document.body.style.cursor = 'default'
     }
   }

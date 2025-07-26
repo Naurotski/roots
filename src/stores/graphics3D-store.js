@@ -8,7 +8,8 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
   const selectedGallery = ref({})
   const models3d = ref({})
   const isAutoMoving = ref(false)
-  const hoveredElementId = ref(null)
+  const selectedElementId = ref(null)
+  const videoList = ref({})
 
   const updateListGalleries = (data, check) => {
     if (check === 'delete') {
@@ -24,10 +25,10 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
       selectedGallery.value[key] = value
     }
   }
-  const updateSelectedGalleryVideo = (id, key, value) => {
-    console.log(selectedGallery.value.videoStore[id])
-    console.log(id, key, value)
-    selectedGallery.value.videoStore[id][key] = value
+  const updateVideoList = (id, key, value) => {
+    console.log('updateVideoList', id, key, value)
+    if (!videoList.value[id]) videoList.value[id] = {}
+    videoList.value[id][key] = value
   }
   const updateModels3d = ({ id, modelData }) => {
     if (!modelData) {
@@ -43,7 +44,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     selectedGallery.value = {}
   }
   const updateCheckAutoMoving = (val) => (isAutoMoving.value = val)
-  const updateHoveredElementId = (val) => (hoveredElementId.value = val)
+  const updateSelectedElementId = (val) => (selectedElementId.value = val)
   const listenForChildEvents = (parent) => {
     console.log('listenForChildEvents - ', parent)
     let path = `graphics3D/${parent}`
@@ -80,11 +81,12 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     selectedGallery,
     models3d,
     isAutoMoving,
-    hoveredElementId,
-    updateSelectedGalleryVideo,
+    selectedElementId,
+    videoList,
+    updateVideoList,
     updateModels3d,
     updateCheckAutoMoving,
-    updateHoveredElementId,
+    updateSelectedElementId,
     listenForChildEvents,
     clearListGalleries,
     clearSelectedGallery

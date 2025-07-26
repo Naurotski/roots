@@ -16,7 +16,7 @@ import { watch } from 'vue'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 import { storeToRefs } from 'pinia'
 const graphics3DStore = useGraphics3DStore()
-const { selectedGallery } = storeToRefs(graphics3DStore)
+const { videoList } = storeToRefs(graphics3DStore)
 
 export const useVideo = async (scene, dataVideo) => {
   const object = scene.getObjectByName(dataVideo.videoId)
@@ -34,11 +34,9 @@ export const useVideo = async (scene, dataVideo) => {
     video.crossOrigin = 'anonymous'
     video.preload = 'auto'
     video.muted = true // Важно для автоплея
-    video.load()
     // Ждём пока загрузятся данные видео
     await new Promise((resolve) => {
       video.addEventListener('loadeddata', () => {
-        console.log('✅ Видео загружено')
         video.pause()
         resolve()
       })
@@ -116,14 +114,15 @@ export const useVideo = async (scene, dataVideo) => {
     Loading.hide() // Скрыть лоадер
   }
   watch(
-    () => selectedGallery.value.videoStore?.[dataVideo.videoId],
+    videoList,
     (newValue) => {
-      if (newValue && object && object.geometry) {
-        if (newValue.play) video.play()
+      console.log(newValue)
+      if (newValue[dataVideo.videoId] && object && object.geometry) {
+        if (newValue[dataVideo.videoId].play) video.play()
         else video.pause()
-
-        video.muted = !newValue.muted
+        video.muted = newValue[dataVideo.videoId].muted
       }
-    }
+    },
+    { deep: true }
   )
 }

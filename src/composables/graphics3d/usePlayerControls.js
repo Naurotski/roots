@@ -2,7 +2,8 @@ import { Object3D } from 'three'
 import { storeToRefs } from 'pinia'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 const graphics3DStore = useGraphics3DStore()
-const { isAutoMoving } = storeToRefs(graphics3DStore)
+const { isAutoMoving, selectedElementId } = storeToRefs(graphics3DStore)
+const { updateSelectedElementId } = graphics3DStore
 export const usePlayerControls = (camera, renderer) => {
   // === Игрок: тело и голова (камера) ===
   const controlsObject = new Object3D() // тело
@@ -39,6 +40,7 @@ export const usePlayerControls = (camera, renderer) => {
     head.rotation.x = Math.max(-Math.PI / 2 + 0.1, Math.min(Math.PI / 2 - 0.1, head.rotation.x))
     prevMouseX = e.clientX
     prevMouseY = e.clientY
+    if (selectedElementId.value) updateSelectedElementId(null)
   }
 
   const onMouseup = () => {
@@ -52,6 +54,7 @@ export const usePlayerControls = (camera, renderer) => {
   const onKeydown = (e) => {
     if (isAutoMoving.value) return
     keysPressed[e.code] = true
+    if (selectedElementId.value) updateSelectedElementId(null)
   }
   const onKeyup = (e) => {
     if (isAutoMoving.value) return
