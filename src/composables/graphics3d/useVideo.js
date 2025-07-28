@@ -111,15 +111,38 @@ export const useVideo = async (scene, dataVideo) => {
   } finally {
     Loading.hide() // Скрыть лоадер
   }
+  let checkPlay
   watch(
     videoList,
     (newValue) => {
       if (newValue[dataVideo.videoId] && object && object.geometry) {
-        if (newValue[dataVideo.videoId].play) video.play()
-        else video.pause()
+        if (newValue[dataVideo.videoId].play) {
+          video.play()
+          checkPlay = true
+        }
+        else {
+          video.pause()
+          checkPlay = false
+        }
         video.muted = newValue[dataVideo.videoId].muted
       }
     },
     { deep: true }
   )
+  const handleVisibilityChange = () => {
+    if (document.hidden) {
+      if (!video.paused && !video.ended && video.readyState >= 3) {
+        video.pause()
+      }
+    } else {
+      if (checkPlay) {
+        video.play()
+      }
+    }
+  }
+  document.addEventListener('visibilitychange', handleVisibilityChange)
+  return () => {
+    console.log('cleanupVideo----------------')
+    document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }
 }

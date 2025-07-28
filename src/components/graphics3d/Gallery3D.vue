@@ -31,7 +31,7 @@ export default {
     const unmountedArray = ref([])
     const modelGalleryReady = ref(false)
     const collidableMeshes = []
-    let scene, renderer, camera, cleanupAudio
+    let scene, renderer, camera, cleanupAudio, cleanupVideo
 
     onMounted(async () => {
       const { sceneSetupUnmounted, ...rest } = useSceneSetup(container)
@@ -72,7 +72,6 @@ export default {
       () => selectedGallery.value.galleryId,
       async (newVal, oldVal) => {
         if (oldVal) {
-          //ОБЯЗАТЕЛЬНО ДОБАВИТЬ ПРЕДМЕТЫ ИНТЕРЬЕРА
           scene.children
             .filter(
               (item) =>
@@ -85,6 +84,7 @@ export default {
             })
           removeVideoFromScene(scene, 'Smart_TV_1')
           cleanupAudio?.()
+          cleanupVideo?.()
           clearSelectedGallery()
           modelGalleryReady.value = false
         }
@@ -149,10 +149,11 @@ export default {
         if (oldVideoStore) {
           Object.keys(oldVideoStore).forEach((key) => {
             removeVideoFromScene(scene, key)
+            cleanupVideo?.()
           })
         }
         for (const key of Object.keys(newVideoStore)) {
-          await useVideo(scene, newVideoStore[key])
+          cleanupVideo = await useVideo(scene, newVideoStore[key])
         }
       },
       { deep: true }
@@ -176,6 +177,7 @@ export default {
         if (value.mixer) toRaw(value.mixer).stopAllAction()
       })
       cleanupAudio?.()
+      cleanupVideo?.()
       unmountedArray.value.forEach((func) => func())
       clearSelectedGallery()
       scene = null

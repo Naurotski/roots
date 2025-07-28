@@ -21,6 +21,7 @@ export const useAudio = async (camera, dataAudio) => {
     sound.play()
     updateVideoAudio(dataAudio.audioId, 'play', true, 'audioStore')
   })
+  let checkPlay
   const stopWatcher = watch(
     audioList,
     (newValue) => {
@@ -28,14 +29,30 @@ export const useAudio = async (camera, dataAudio) => {
       if (newValue?.[dataAudio.audioId]) {
         if (newValue?.[dataAudio.audioId]?.play) {
           sound.play()
+          checkPlay = true
         } else {
           console.log('watch -----sound-', sound)
           sound.pause()
+          checkPlay = false
         }
       }
     },
     { deep: true }
   )
+
+  const handleVisibilityChange = () => {
+    if (document.hidden) {
+      if (sound.isPlaying) {
+        sound.pause()
+      }
+    } else {
+      if (checkPlay) {
+        sound.play()
+      }
+    }
+  }
+
+  document.addEventListener('visibilitychange', handleVisibilityChange)
   return () => {
     console.log('cleanupAudio----------------')
     sound.stop?.()
@@ -45,5 +62,6 @@ export const useAudio = async (camera, dataAudio) => {
     sound.buffer = null
     sound.source = null
     stopWatcher()
+    document.removeEventListener('visibilitychange', handleVisibilityChange)
   }
 }
