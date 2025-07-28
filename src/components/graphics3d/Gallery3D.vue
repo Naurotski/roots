@@ -74,7 +74,12 @@ export default {
         if (oldVal) {
           //ОБЯЗАТЕЛЬНО ДОБАВИТЬ ПРЕДМЕТЫ ИНТЕРЬЕРА
           scene.children
-            .filter((item) => item.userData.isPlaceableObject || item.userData.isPainting)
+            .filter(
+              (item) =>
+                item.userData.isPlaceableObject ||
+                item.userData.isPainting ||
+                item.userData.isFurnitureObject
+            )
             .forEach((elem) => {
               removeElement(scene, collidableMeshes, elem)
             })

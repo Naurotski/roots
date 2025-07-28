@@ -17,7 +17,17 @@ export const modelPositioning = async ({
   model.position.copy(point)
   model.position.y += 0.01 // немного поднять над поверхностью
   if (rotation) model.rotation.y = rotation.y
-  model.userData.isPlaceableObject = true
+  let hasFurniture = false
+  model.traverse((child) => {
+    if (child.userData?.isFurniture) {
+      hasFurniture = true
+    }
+  })
+  if (hasFurniture) {
+    model.userData.isFurnitureObject = true
+  } else {
+    model.userData.isPlaceableObject = true
+  }
   model.userData.id = objectId
   model.userData.normal = normal.clone()
   model.userData.rotation = rotation

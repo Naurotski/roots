@@ -8,9 +8,8 @@ const { selectedGallery } = storeToRefs(graphics3DStore)
 
 export const useSpotLight = (scene, element) => {
   let lightPos, modelCenter
-
+  if (element.userData.isFurnitureObject) return
   const spotLight = new SpotLight(0xffffff, 5)
-
   if (element.userData.isPainting) {
     // Для картин: свет "от стены вперёд и вверх"
     const normal = element.userData.normal.clone()

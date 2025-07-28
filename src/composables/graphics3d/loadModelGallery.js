@@ -14,15 +14,14 @@ export const loadModelGallery = async (url, scene, collidableMeshes) => {
     model.position.set(0, -box.min.y, 0)
     model.scale.set(1, 1, 1)
 
-    scene.add(model)
-
-    // Собираем все меши модели
     model.traverse((child) => {
       if (child.isMesh) {
+        child.castShadow = true
         child.receiveShadow = true
         collidableMeshes.push(child)
       }
     })
+    scene.add(model)
     return true
   } catch (err) {
     console.error('Ошибка загрузки модели:', err)

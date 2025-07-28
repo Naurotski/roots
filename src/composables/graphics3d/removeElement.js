@@ -32,8 +32,13 @@ const disposeMaterial = (material) => {
 
 const removeElement = async (scene, collidableMeshes, element) => {
   console.log('removeElement ----')
-  //ОБЯЗАТЕЛЬНО ДОБАВИТЬ ПРЕДМЕТЫ ИНТЕРЬЕРА
-  if (!element || (!element.userData.isPainting && !element.userData.isPlaceableObject)) return
+  if (
+    !element ||
+    (!element.userData.isPainting &&
+      !element.userData.isPlaceableObject &&
+      !element.userData.isFurnitureObject)
+  )
+    return
   // Удаляем SpotLight и его цель
   const { spotLight, spotLightTarget, id } = element.userData
   if (spotLight) scene.remove(spotLight)
