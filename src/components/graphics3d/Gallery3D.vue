@@ -18,6 +18,7 @@ import { createPainting } from 'src/composables/graphics3d/createPainting'
 import { loadModel } from 'src/composables/graphics3d/loadModel'
 import { modelPositioning } from 'src/composables/graphics3d/modelPositioning'
 import { useVideo } from 'src/composables/graphics3d/useVideo'
+import { useAudio } from 'src/composables/graphics3d/useAudio'
 
 export default {
   name: 'Gallery3D',
@@ -30,12 +31,13 @@ export default {
     const unmountedArray = ref([])
     const modelGalleryReady = ref(false)
     const collidableMeshes = []
-    let scene, renderer
+    let scene, renderer, camera, cleanupAudio
 
     onMounted(async () => {
-      const { camera, sceneSetupUnmounted, ...rest } = useSceneSetup(container)
+      const { sceneSetupUnmounted, ...rest } = useSceneSetup(container)
       scene = rest.scene
       renderer = rest.renderer
+      camera = rest.camera
       unmountedArray.value.push(sceneSetupUnmounted)
 
       const { controlsObject, controlsObjectHeight, keysPressed, playerControlsUnmounted } =
@@ -69,23 +71,19 @@ export default {
     watch(
       () => selectedGallery.value.galleryId,
       async (newVal, oldVal) => {
-        console.log(newVal, oldVal)
         if (oldVal) {
-          collidableMeshes
-            .filter((item) => item.userData.isPainting)
-            .forEach((painting) => {
-              removeElement(scene, collidableMeshes, painting)
-            })
+          //ОБЯЗАТЕЛЬНО ДОБАВИТЬ ПРЕДМЕТЫ ИНТЕРЬЕРА
           scene.children
-            .filter((item) => item.userData.isPlaceableObject)
+            .filter((item) => item.userData.isPlaceableObject || item.userData.isPainting)
             .forEach((elem) => {
               removeElement(scene, collidableMeshes, elem)
             })
-
+          removeVideoFromScene(scene, 'Smart_TV_1')
+          cleanupAudio?.()
+          clearSelectedGallery()
           modelGalleryReady.value = false
         }
         if (newVal) {
-          console.log(selectedGallery.value)
           if (selectedGallery.value.storeroom) {
             Object.values(selectedGallery.value.storeroom)
               .filter((elem) => elem.position)
@@ -154,7 +152,15 @@ export default {
       },
       { deep: true }
     )
-
+    watch(
+      () => selectedGallery.value.audioStore,
+      async (newVal, oldVal) => {
+        if (oldVal) cleanupAudio?.()
+        if (newVal) {
+          cleanupAudio = await useAudio(camera, newVal['backgroundMusic'])
+        }
+      }
+    )
     onUnmounted(() => {
       if (selectedGallery.value.videoStore) {
         Object.keys(selectedGallery.value.videoStore).forEach((key) => {
@@ -164,8 +170,13 @@ export default {
       Object.values(models3d.value).forEach((value) => {
         if (value.mixer) toRaw(value.mixer).stopAllAction()
       })
+      cleanupAudio?.()
       unmountedArray.value.forEach((func) => func())
       clearSelectedGallery()
+      scene = null
+      camera = null
+      renderer = null
+      cleanupAudio = null
     })
     return {
       container

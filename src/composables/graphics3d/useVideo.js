@@ -27,14 +27,12 @@ export const useVideo = async (scene, dataVideo) => {
   Loading.show({ message: 'Loading...' })
   const video = document.createElement('video')
   try {
-    // 1. создаём и запускаем видео
     video.src = dataVideo.url
     video.loop = true
     video.playsInline = true
     video.crossOrigin = 'anonymous'
     video.preload = 'auto'
-    video.muted = true // Важно для автоплея
-    // Ждём пока загрузятся данные видео
+    video.muted = true
     await new Promise((resolve) => {
       video.addEventListener('loadeddata', () => {
         video.pause()
@@ -109,14 +107,13 @@ export const useVideo = async (scene, dataVideo) => {
       videoTexture.needsUpdate = true
     }
   } catch (err) {
-    console.error('Ошибка загрузки модели:', err)
+    console.error('Error loading model:', err)
   } finally {
     Loading.hide() // Скрыть лоадер
   }
   watch(
     videoList,
     (newValue) => {
-      console.log(newValue)
       if (newValue[dataVideo.videoId] && object && object.geometry) {
         if (newValue[dataVideo.videoId].play) video.play()
         else video.pause()

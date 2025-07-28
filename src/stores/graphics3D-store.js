@@ -10,6 +10,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
   const isAutoMoving = ref(false)
   const selectedElementId = ref(null)
   const videoList = ref({})
+  const audioList = ref({})
 
   const updateListGalleries = (data, check) => {
     if (check === 'delete') {
@@ -25,10 +26,18 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
       selectedGallery.value[key] = value
     }
   }
-  const updateVideoList = (id, key, value) => {
-    console.log('updateVideoList', id, key, value)
-    if (!videoList.value[id]) videoList.value[id] = {}
-    videoList.value[id][key] = value
+  const updateVideoAudio = (id, key, value, typeStore) => {
+    const targetList = typeStore === 'videoStore' ? videoList : audioList
+    const otherList = typeStore === 'videoStore' ? audioList : videoList
+    if (!targetList.value[id]) targetList.value[id] = {}
+    targetList.value[id][key] = value
+    if (key === 'play' && value === true) {
+      for (const otherId in otherList.value) {
+        if (otherList.value[otherId]?.play) {
+          otherList.value[otherId].play = false
+        }
+      }
+    }
   }
   const updateModels3d = ({ id, modelData }) => {
     if (!modelData) {
@@ -42,6 +51,9 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
   const clearSelectedGallery = async () => {
     await deleteListen(`galleries/${selectedGallery.value.galleryId}`)
     selectedGallery.value = {}
+    models3d.value = {}
+    videoList.value = {}
+    audioList.value = {}
   }
   const updateCheckAutoMoving = (val) => (isAutoMoving.value = val)
   const updateSelectedElementId = (val) => (selectedElementId.value = val)
@@ -83,7 +95,8 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     isAutoMoving,
     selectedElementId,
     videoList,
-    updateVideoList,
+    audioList,
+    updateVideoAudio,
     updateModels3d,
     updateCheckAutoMoving,
     updateSelectedElementId,

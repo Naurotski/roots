@@ -23,13 +23,13 @@ export const usePlayerControls = (camera, renderer) => {
   let prevMouseY = 0
   const rotationSpeed = 0.002
 
-  const onMousedown = (e) => {
+  const onMousedownRaycaster = (e) => {
     if (e.button !== 0 || e.target !== renderer.domElement || isAutoMoving.value) return
     isMouseDown = true
     prevMouseX = e.clientX
     prevMouseY = e.clientY
   }
-  const onMousemove = (e) => {
+  const onMousemoveRaycaster = (e) => {
     if (!isMouseDown || isAutoMoving.value) return
     const dx = e.clientX - prevMouseX
     const dy = e.clientY - prevMouseY
@@ -62,16 +62,17 @@ export const usePlayerControls = (camera, renderer) => {
   }
 
   const el = renderer.domElement
-  el.addEventListener('mousedown', onMousedown)
-  el.addEventListener('mousemove', onMousemove)
+  el.addEventListener('mousedown', onMousedownRaycaster)
+  el.addEventListener('mousemove', onMousemoveRaycaster)
   el.addEventListener('mouseleave', onMouseleave)
   window.addEventListener('mouseup', onMouseup)
   document.addEventListener('keydown', onKeydown)
   document.addEventListener('keyup', onKeyup)
 
   const playerControlsUnmounted = () => {
-    el.removeEventListener('mousedown', onMousedown)
-    el.removeEventListener('mousemove', onMousemove)
+    console.log('playerControlsUnmounted --------------')
+    el.removeEventListener('mousedown', onMousedownRaycaster)
+    el.removeEventListener('mousemove', onMousemoveRaycaster)
     el.removeEventListener('mouseleave', onMouseleave)
     window.removeEventListener('mouseup', onMouseup)
     document.removeEventListener('keydown', onKeydown)

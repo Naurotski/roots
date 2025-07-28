@@ -68,31 +68,27 @@ export const useSceneSetup = (container) => {
   observer.observe(container.value)
 
   const sceneSetupUnmounted = () => {
+    console.log('sceneSetupUnmounted ---------------------')
     if (observer && container.value) {
       observer.unobserve(container.value)
       observer.disconnect()
+      observer = null
     }
     scene.traverse((obj) => {
       if (obj.isMesh) {
-        if (obj.geometry) obj.geometry.dispose()
-        if (obj.material) {
-          if (Array.isArray(obj.material)) {
-            obj.material.forEach((m) => m.dispose())
-          } else {
-            obj.material.dispose()
-          }
-        }
+        obj.geometry?.dispose()
+        const materials = Array.isArray(obj.material) ? obj.material : [obj.material]
+        materials.forEach((m) => {
+          if (m.map) m.map.dispose()
+          m.dispose()
+        })
+      }
+      if (obj.userData?.update) {
+        obj.userData.update = null
       }
     })
     while (scene.children.length > 0) {
       scene.remove(scene.children[0])
-    }
-    if (renderer) {
-      renderer.setAnimationLoop(null)
-      renderer.dispose()
-      if (container.value?.contains(renderer.domElement)) {
-        container.value.removeChild(renderer.domElement)
-      }
     }
     if (renderer) {
       renderer.setAnimationLoop(null)
