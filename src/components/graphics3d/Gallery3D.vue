@@ -110,7 +110,7 @@ export default {
                   url: item.url,
                   width: item.width,
                   height: item.height,
-                  paintingId: item.paintingId
+                  paintingId: item.id
                 })
               )
           }
@@ -132,7 +132,7 @@ export default {
                   item.position.normal.y,
                   item.position.normal.z
                 ),
-                objectId: item.objectId,
+                objectId: item.id,
                 collidableMeshes,
                 rotation: item.position.rotation
               })

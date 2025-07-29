@@ -1,24 +1,62 @@
 <template>
-  <q-card
-    v-if="selectedElementId"
-    style="max-width: 300px; bottom: 10%; left: 8%; position: absolute"
-  >
-    <q-card-section class="text-center">
-      <div class="text-h6 text-bold">{{ selectedElement.name }}</div>
-      <div v-if="selectedElement.artistName" class="text-body2">
-        {{ selectedElement.artistName }}
-      </div>
-    </q-card-section>
-    <template v-if="selectedElement.description">
-      <q-separator class="q-mx-md" color="negative" />
-
-      <q-card-section>
+  <transition name="fade">
+    <q-card
+      v-if="selectedElementId"
+      style="max-width: 300px; bottom: 15%; left: 8%; position: absolute"
+    >
+      <q-card-section class="text-center">
+        <div class="text-h6 text-bold">{{ selectedElement.name }}</div>
+        <div v-if="selectedElement.material" class="text-body2">
+          {{ selectedElement.material }}
+        </div>
+        <div v-if="selectedElement.artistName" class="text-subtitle1">
+          {{ selectedElement.artistName }}
+        </div>
+      </q-card-section>
+      <q-separator v-if="selectedElement.description" class="q-mx-md" color="negative" />
+      <q-card-section v-if="selectedElement.description" class="scroll" style="max-height: 600px">
         <div class="text-justify text-body2" style="white-space: pre-line">
           {{ selectedElement.description }}
         </div>
       </q-card-section>
-    </template>
-  </q-card>
+    </q-card>
+  </transition>
+  <transition name="fade">
+    <q-card
+      v-if="selectedElementId"
+      style="max-width: 300px; bottom: 15%; right: 10%; position: absolute"
+    >
+      <q-card-section class="text-center">
+        <div v-if="selectedElement.price" class="text-h6 text-bold">
+          {{ selectedElement.price }} €
+        </div>
+        <q-btn
+          v-if="selectedElement.price"
+          no-caps
+          outline
+          rounded
+          :label="$t('common.buyArt')"
+          style="width: 150px"
+          @click="() => console.log('bay')"
+        />
+      </q-card-section>
+      <q-separator v-if="selectedElement.nftLink" class="q-mx-md" color="negative" />
+      <q-card-section v-if="selectedElement.nftLink" class="text-center">
+        <div class="text-h6 text-bold q-mb-xs">{{ selectedElement.nftPrice }} ETH</div>
+        <q-btn
+          :label="$t('common.buyNft')"
+          icon="fab fa-ethereum"
+          no-caps
+          outline
+          rounded
+          style="width: 150px"
+          type="a"
+          :href="selectedElement.nftLink"
+          target="_blank"
+        />
+      </q-card-section>
+    </q-card>
+  </transition>
 </template>
 <script>
 import { computed, onUnmounted } from 'vue'
@@ -35,26 +73,13 @@ export default {
     const { updateSelectedElementId } = graphics3DStore
     const selectedElement = computed(() => {
       if (!selectedElementId) return
-      if (selectedElementId.value.isPainting) {
-        let localElement = selectedGallery.value.storeroom[selectedElementId.value.id]
-        return {
-          name: locale.value === 'en' ? localElement.namePainting : localElement.nameItPainting,
-          description:
-            locale.value === 'en'
-              ? localElement.descriptionPainting
-              : localElement.descriptionItPainting,
-          artistName: localElement.artistName
-        }
-      } else {
-        let localElement = selectedGallery.value.store[selectedElementId.value.id]
-        return {
-          name: locale.value === 'en' ? localElement.nameObject : localElement.nameItObject,
-          description:
-            locale.value === 'en'
-              ? localElement.descriptionObject
-              : localElement.descriptionItObject,
-          artistName: localElement.artistName
-        }
+      const typeStore = selectedElementId.value.isPainting ? 'storeroom' : 'store'
+      let localElement = selectedGallery.value[typeStore][selectedElementId.value.id]
+      return {
+        ...localElement,
+        name: locale.value === 'en' ? localElement.name : localElement.nameIt,
+        material: locale.value === 'en' ? localElement.material : localElement.materialIt,
+        description: locale.value === 'en' ? localElement.description : localElement.descriptionIt
       }
     })
     onUnmounted(() => {
@@ -68,4 +93,25 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.4s ease;
+}
+.slide-fade-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.slide-fade-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+</style>
