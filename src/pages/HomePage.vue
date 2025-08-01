@@ -143,7 +143,7 @@ export default defineComponent({
     )
     const worksList = computed(() => {
       if (worksForSale.value.length) {
-        let localArray = worksForSale.value.filter((work) => work.price)
+        let localArray = worksForSale.value.filter((work) => work.price || work.nftPrice)
         if (locale.value === 'it') {
           return localArray.map((item) => ({
             ...item,

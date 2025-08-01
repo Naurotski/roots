@@ -61,7 +61,7 @@
                     <template #tickets> </template>
                     <template #button>
                       <div class="absolute-bottom">
-                        <div v-if="action.lifeTime !== 'archive'" class="q-mb-sm">
+                        <div v-if="action.lifeTime !== 'archive'" class="q-mt-xs">
                           <list-working-days-dialog
                             v-if="ticketsList[action.id]"
                             :action="action"
@@ -69,6 +69,7 @@
                         </div>
                         <action-dialog
                           v-else
+                          class="q-my-xs"
                           :title="action.name"
                           :typeAction="typeAction"
                           :dialogData="action.works"

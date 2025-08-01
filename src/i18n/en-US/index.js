@@ -5,6 +5,8 @@ export default {
     and: 'and',
     attention: 'Attention!',
     buy: 'Buy',
+    buyArt: 'Buy an Artwork',
+    buyNft: 'Buy an NFT',
     cancel: 'Cancel',
     change: 'change',
     changes: 'Changes',

@@ -5,7 +5,7 @@
       outline
       rounded
       :class="{ 'full-width': $q.screen.xs }"
-      :label="$t('common.buy')"
+      :label="$t('common.buyArt')"
       style="width: 150px"
       @click="showDialog"
     />
