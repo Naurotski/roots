@@ -26,21 +26,33 @@
       v-if="selectedElementId"
       style="max-width: 300px; bottom: 15%; right: 10%; position: absolute"
     >
-      <q-card-section class="text-center">
-        <div v-if="selectedElement.price" class="text-h6 text-bold">
-          {{ selectedElement.price }} €
-        </div>
-        <q-btn
-          v-if="selectedElement.price"
-          no-caps
-          outline
-          rounded
-          :label="$t('common.buyArt')"
-          style="width: 150px"
-          @click="() => console.log('bay')"
-        />
+      <q-card-section v-if="selectedElement.price" class="text-center">
+        <div class="text-h6 text-bold">{{ selectedElement.price }} €</div>
+
+        <payment-dialog :works="[{ ...selectedElement, galleryId: selectedGaller.galleryId }]">
+          <template #default="{ showDialog }">
+            <q-btn
+              v-if="selectedElement.price"
+              no-caps
+              outline
+              rounded
+              :label="$t('common.buyArt')"
+              style="width: 150px"
+              @click="
+                () => {
+                  console.log(selectedElement)
+                  showDialog()
+                }
+              "
+            />
+          </template>
+        </payment-dialog>
       </q-card-section>
-      <q-separator v-if="selectedElement.nftLink" class="q-mx-md" color="negative" />
+      <q-separator
+        v-if="selectedElement.nftLink && selectedElement.price"
+        class="q-mx-md"
+        color="negative"
+      />
       <q-card-section v-if="selectedElement.nftLink" class="text-center">
         <div class="text-h6 text-bold q-mb-xs">{{ selectedElement.nftPrice }} ETH</div>
         <q-btn
@@ -63,9 +75,13 @@ import { computed, onUnmounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
+import PaymentDialog from 'components/dialogs/PaymentDialog.vue'
 
 export default {
   name: 'GalleryLabels',
+  components: {
+    PaymentDialog
+  },
   setup() {
     const { locale } = useI18n({ useScope: 'global' })
     const graphics3DStore = useGraphics3DStore()

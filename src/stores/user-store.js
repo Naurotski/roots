@@ -41,6 +41,7 @@ export const useUserStore = defineStore('user', () => {
     }
   }
   const updateUser = async ({ path, payload }) => {
+    console.log('updateUser -------', path, payload)
     try {
       Loading.show()
       await update(dbRef(db, path), payload)

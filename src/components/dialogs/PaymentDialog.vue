@@ -77,7 +77,7 @@ import LoginRequiredDialog from 'components/auth/LoginRequiredDialog.vue'
 import FormUserData from 'components/shared/FormUserData.vue'
 
 export default {
-  name: 'PayDialog',
+  name: 'PaymentDialog',
   components: {
     LoginRequiredDialog,
     FormUserData
@@ -138,7 +138,7 @@ export default {
           ...(work.urlSecondImages || work.urlSecondImagesWork || []).map((item) => item.url)
         ].splice(0, 5)
       } else {
-        return [work.urlImageWork, ...(work.urlSecondImagesWork || [])].splice(0, 5)
+        return [work.urlImageWork || work.url, ...(work.urlSecondImagesWork || [])].splice(0, 5)
       }
     }
     const line_items = computed(() =>
@@ -156,8 +156,9 @@ export default {
                 workIndex: work.index ?? null,
                 id: work.id,
                 artistId: work.artistId || null,
-                rubric: work.rubric,
-                artistName: work.artistName || null
+                rubric: work.rubric || null, // ???????????????????
+                artistName: work.artistName || null,
+                galleryId: work.galleryId || null
               }
             }
           }
@@ -185,6 +186,7 @@ export default {
     )
     const showDialog = () => (activator.value = true)
     const onSubmit = async () => {
+      console.log('onSubmit ----user.value---', user.value)
       changeShippingDetails({ ...user.value })
       if (!loggedIn.value) {
         authProvider.value = await checkUserExistence(user.value.email)
@@ -197,12 +199,14 @@ export default {
             if (!(key in userData.value)) result[key] = user.value[key]
             return result
           }, {})
+          console.log('diffObj ----', diffObj)
           if (Object.keys(diffObj).length) {
             await updateUser({
               path: `users/${userData.value.userId}/userData`,
               payload: diffObj
             })
           }
+          console.log('shippingDetails-----', shippingDetails.value)
           await payStripe({
             cancel_url: route.path,
             line_items: line_items.value,
