@@ -61,7 +61,7 @@
                     <template #tickets> </template>
                     <template #button>
                       <div class="absolute-bottom">
-                        <div v-if="action.lifeTime !== 'archive'" class="q-mt-xs">
+                        <div v-if="action.lifeTime !== 'archive'" class="q-my-sm">
                           <list-working-days-dialog
                             v-if="ticketsList[action.id]"
                             :action="action"
@@ -215,6 +215,13 @@ export default {
     watchEffect(() => {
       if (typeAction.value === 'exhibitions') {
         if (!filterExhibitionsDraft.value.length) getExhibitions()
+        if (route.query.id) {
+          tab.value = filterExhibitionsDraft.value.find(
+            (elem) => elem.id.toString() === route.query.id
+          )?.lifeTime
+          console.log('tab.value ---', tab.value)
+          if (tab.value) route.query.id = null
+        }
         filteredActions.value = filterExhibitionsDraft.value.filter(
           (exhibition) => exhibition.lifeTime === tab.value
         )
