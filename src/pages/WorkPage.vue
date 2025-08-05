@@ -33,13 +33,30 @@
                 :number="$q.screen.xs ? 250 : 700"
               />
             </div>
-            <p
+            <div
               v-if="work.price"
-              style="white-space: pre-line"
-              class="text-justify text-body1"
-              v-text="`€ ${work.price}`"
-            />
-            <payment-dialog v-if="work.price" :works="[work]" />
+              class="row justify-around q-mt-lg-md"
+              :class="{ 'q-mb-lg-md': work.nftPrice }"
+            >
+              <div class="text-subtitle1">{{ `€ ${work.price}` }}</div>
+              <payment-dialog :works="[work]" />
+            </div>
+            <div v-if="work.nftPrice" class="row justify-around q">
+              <div class="text-subtitle1" style="margin-left: -5px">
+                <q-icon name="fab fa-ethereum" /> {{ work.nftPrice }}
+              </div>
+              <q-btn
+                :class="{ 'full-width': $q.screen.xs }"
+                :label="$t('common.buyNft')"
+                no-caps
+                outline
+                rounded
+                style="width: 150px"
+                type="a"
+                :href="work.nftLink"
+                target="_blank"
+              />
+            </div>
           </q-card-section>
         </div>
         <q-btn

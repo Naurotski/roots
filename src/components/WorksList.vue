@@ -35,9 +35,29 @@
         <p>{{ work.materials }}</p>
       </div>
     </router-link>
-    <div class="row justify-between">
+    <div
+      v-if="work.price"
+      class="row justify-between q-mt-lg-md"
+      :class="{ 'q-mb-lg-sm': work.nftPrice }"
+    >
       <div class="text-subtitle1">{{ `€ ${work.price}` }}</div>
       <payment-dialog :works="[work]" />
+    </div>
+    <div v-if="work.nftPrice" class="row justify-between q">
+      <div class="text-subtitle1" style="margin-left: -5px">
+        <q-icon name="fab fa-ethereum" /> {{ work.nftPrice }}
+      </div>
+      <q-btn
+        :class="{ 'full-width': $q.screen.xs }"
+        :label="$t('common.buyNft')"
+        no-caps
+        outline
+        rounded
+        style="width: 150px"
+        type="a"
+        :href="work.nftLink"
+        target="_blank"
+      />
     </div>
   </div>
 </template>

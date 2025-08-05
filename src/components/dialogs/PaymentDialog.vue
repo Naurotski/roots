@@ -5,7 +5,7 @@
       outline
       rounded
       :class="{ 'full-width': $q.screen.xs }"
-      :label="$t('common.buy')"
+      :label="$t('common.buyArt')"
       style="width: 150px"
       @click="updatePaymentDialogActivator(true)"
     />
@@ -75,7 +75,7 @@
   <login-required-dialog
     v-model="requiredDialog"
     :auth-provider="authProvider"
-    :email="user.email"
+    :email="user.email || ''"
     @allowPayment="onSubmit"
   />
 </template>

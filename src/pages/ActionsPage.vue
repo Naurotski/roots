@@ -80,6 +80,7 @@
                         </div>
                         <action-dialog
                           v-else
+                          class="q-my-xs"
                           :title="action.name"
                           :typeAction="typeAction"
                           :dialogData="action.works"

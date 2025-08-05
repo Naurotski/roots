@@ -45,7 +45,9 @@ export default {
     if (!artistsList.value.length) getArtists()
     const filterWorksRubrics = computed(() => {
       if (allWorks.value.length) {
-        let localArray = allWorks.value.filter((work) => work.rubric === tab.value && work.price)
+        let localArray = allWorks.value.filter(
+          (work) => work.rubric === tab.value && (work.price || work.nftPrice)
+        )
         if (locale.value === 'it') {
           return localArray.map((item) => ({
             ...item,

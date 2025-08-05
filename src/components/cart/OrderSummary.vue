@@ -64,7 +64,7 @@
       v-if="deliveryDetails.email"
       v-model="requiredDialog"
       :auth-provider="authProvider"
-      :email="deliveryDetails.email"
+      :email="deliveryDetails.email || ''"
     />
   </div>
 </template>
