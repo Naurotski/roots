@@ -1,5 +1,5 @@
 <template>
-  <slot :show-dialog="showDialog">
+  <slot>
     <q-btn
       no-caps
       outline
@@ -7,11 +7,11 @@
       :class="{ 'full-width': $q.screen.xs }"
       :label="$t('common.buy')"
       style="width: 150px"
-      @click="showDialog"
+      @click="updatePaymentDialogActivator(true)"
     />
   </slot>
   <q-dialog
-    v-model="activator"
+    v-model="paymentDialogActivator"
     persistent
     :maximized="$q.screen.xs"
     :transition-show="$q.screen.xs ? 'slide-up' : 'fade'"
@@ -29,19 +29,35 @@
           {{ `€ ${works.reduce((result, item) => result + +item.price, 0)}` }}
         </div>
       </q-card-section>
+      <q-separator color="negative" class="q-mx-lg" />
       <q-card-section class="text-body1">
         <div style="white-space: pre-line" class="text-body1">
           {{ $t('dialoguePayment.delivery') }}
-          <router-link style="color: black" to="/termsSale">{{ $t('auth.termsSale') }}</router-link
-          >.
+          <!--          <router-link style="color: black" to="/termsSale">{{ $t('auth.termsSale') }}</router-link-->
+          <!--          >.-->
         </div>
       </q-card-section>
 
       <form-user-data v-model="user" @submitForm="onSubmit">
         <template #default>
-          <q-card-section class="text-body1">
-            {{ $t('dialoguePayment.redirect') }}
-          </q-card-section>
+          <!--          <q-card-section class="text-body1">-->
+          <!--            {{ $t('dialoguePayment.redirect') }}-->
+          <!--          </q-card-section>-->
+          <div class="q-ml-md">
+            <template v-if="$i18n.locale === 'en'">
+              By purchasing a artwork online, you agree to the
+              <router-link to="/termsSale" class="text-primary">terms of sale</router-link>
+              and the
+              <router-link to="/privacy" class="text-primary">privacy policy</router-link>.
+            </template>
+
+            <template v-else-if="$i18n.locale === 'it'">
+              Acquistando un biglietto online, accetti il
+              <router-link to="/rules" class="text-primary">condizioni di vendita</router-link>
+              e la
+              <router-link to="/privacy" class="text-primary">privacy policy</router-link>.
+            </template>
+          </div>
         </template>
         <template #btn>
           <q-btn
@@ -100,10 +116,9 @@ export default {
     const { userData } = storeToRefs(userStore)
     const { updateUser } = userStore
     const stripeStore = useStripeStore()
-    const { shippingDetails } = toRefs(stripeStore)
-    const { changeShippingDetails } = stripeStore
+    const { paymentDialogActivator, shippingDetails } = toRefs(stripeStore)
+    const { updatePaymentDialogActivator, changeShippingDetails } = stripeStore
     const { payStripe } = stripeStore
-    const activator = ref(false)
     const requiredDialog = ref(false)
     const authProvider = ref([])
     const user = ref({
@@ -118,15 +133,19 @@ export default {
       taxId: null
     })
     const closeDialog = () => {
-      activator.value = !activator.value
+      updatePaymentDialogActivator(false)
     }
     const description = (work) => {
       if (locale.value === 'it') {
-        return work.descriptionIt.length < 200
+        return !work.descriptionIt
+          ? 'Nessuna descrizione'
+          : work.descriptionIt.length < 200
           ? work.descriptionIt
           : `${work.descriptionIt?.substring(0, 200)}...`
       } else {
-        return work.description.length < 200
+        return !work.description
+          ? 'No description'
+          : work.description.length < 200
           ? work.description
           : `${work.description?.substring(0, 200)}...`
       }
@@ -153,12 +172,13 @@ export default {
               description: description(work),
               images: images(work),
               metadata: {
-                workIndex: work.index ?? null,
-                id: work.id,
+                id: work.id || work.galleryElementId,
                 artistId: work.artistId || null,
-                rubric: work.rubric || null, // ???????????????????
+                rubric: work.rubric || null,
                 artistName: work.artistName || null,
-                galleryId: work.galleryId || null
+                galleryId: work.galleryId || null,
+                typeStore: work.typeStore || null,
+                galleryElementId: work.galleryElementId || null
               }
             }
           }
@@ -184,7 +204,6 @@ export default {
       },
       { immediate: true, deep: true }
     )
-    const showDialog = () => (activator.value = true)
     const onSubmit = async () => {
       console.log('onSubmit ----user.value---', user.value)
       changeShippingDetails({ ...user.value })
@@ -193,7 +212,7 @@ export default {
         requiredDialog.value = true
       } else {
         if ($q.localStorage.getItem('cart')) {
-          activator.value = false
+          updatePaymentDialogActivator(false)
         } else {
           const diffObj = Object.keys(user.value).reduce((result, key) => {
             if (!(key in userData.value)) result[key] = user.value[key]
@@ -207,6 +226,7 @@ export default {
             })
           }
           console.log('shippingDetails-----', shippingDetails.value)
+          console.log('line_items-----', line_items.value)
           await payStripe({
             cancel_url: route.path,
             line_items: line_items.value,
@@ -234,12 +254,12 @@ export default {
       }
     }
     return {
-      activator,
+      paymentDialogActivator,
       requiredDialog,
       authProvider,
       user,
       userData,
-      showDialog,
+      updatePaymentDialogActivator,
       closeDialog,
       onSubmit
     }

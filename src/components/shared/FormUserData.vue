@@ -148,7 +148,6 @@
     <q-card-section class="row justify-end" style="width: 100%">
       <slot name="btn" />
       <q-btn
-        class="bg-black"
         outline
         rounded
         :disable="deepEqual"
@@ -158,7 +157,6 @@
             : $t('common.buy')
         "
         type="submit"
-        color="white"
       />
     </q-card-section>
   </q-form>

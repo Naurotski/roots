@@ -1,9 +1,13 @@
 import { Object3D } from 'three'
 import { storeToRefs } from 'pinia'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
+import { useStripeStore } from 'stores/stripe-store'
+import { toRefs } from 'vue'
 const graphics3DStore = useGraphics3DStore()
 const { isAutoMoving, selectedElementId } = storeToRefs(graphics3DStore)
 const { updateSelectedElementId } = graphics3DStore
+const stripeStore = useStripeStore()
+const { paymentDialogActivator } = toRefs(stripeStore)
 export const usePlayerControls = (camera, renderer) => {
   // === Игрок: тело и голова (камера) ===
   const controlsObject = new Object3D() // тело
@@ -24,13 +28,19 @@ export const usePlayerControls = (camera, renderer) => {
   const rotationSpeed = 0.002
 
   const onMousedownRaycaster = (e) => {
-    if (e.button !== 0 || e.target !== renderer.domElement || isAutoMoving.value) return
+    if (
+      e.button !== 0 ||
+      e.target !== renderer.domElement ||
+      isAutoMoving.value ||
+      paymentDialogActivator.value
+    )
+      return
     isMouseDown = true
     prevMouseX = e.clientX
     prevMouseY = e.clientY
   }
   const onMousemoveRaycaster = (e) => {
-    if (!isMouseDown || isAutoMoving.value) return
+    if (!isMouseDown || isAutoMoving.value || paymentDialogActivator.value) return
     const dx = e.clientX - prevMouseX
     const dy = e.clientY - prevMouseY
     // Вращение тела (влево-вправо)
@@ -52,12 +62,12 @@ export const usePlayerControls = (camera, renderer) => {
 
   // === Управление клавишами ===
   const onKeydown = (e) => {
-    if (isAutoMoving.value) return
+    if (isAutoMoving.value || paymentDialogActivator.value) return
     keysPressed[e.code] = true
     if (selectedElementId.value) updateSelectedElementId(null)
   }
   const onKeyup = (e) => {
-    if (isAutoMoving.value) return
+    if (isAutoMoving.value || paymentDialogActivator.value) return
     keysPressed[e.code] = false
   }
 

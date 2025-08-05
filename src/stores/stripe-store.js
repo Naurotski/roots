@@ -11,14 +11,16 @@ import { useUserStore } from 'stores/user-store'
 export const useStripeStore = defineStore('stripe', () => {
   const userStore = useUserStore()
   const { userData } = storeToRefs(userStore)
-
+  const paymentDialogActivator = ref(false)
   const shippingDetails = ref({})
   const cart = ref({})
+
 
   const cartCounter = computed(() =>
     Object.values(cart.value).reduce((result, item) => result + +item.quantityCart, 0)
   )
 
+  const updatePaymentDialogActivator = (val) => (paymentDialogActivator.value = val)
   const changeShippingDetails = (data) => (shippingDetails.value = data)
   const updateCart = ({ key, value }) => {
     if (value === 'delete') {
@@ -109,9 +111,11 @@ export const useStripeStore = defineStore('stripe', () => {
     }
   }
   return {
+    paymentDialogActivator,
     shippingDetails,
     cart,
     cartCounter,
+    updatePaymentDialogActivator,
     changeShippingDetails,
     updateCart,
     addProductToCart,

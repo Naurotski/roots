@@ -113,7 +113,7 @@ const routes = isMaintenanceMode
         ]
       },
       {
-        path: '/thankYou/:id',
+        path: '/thankYou',
         name: 'ThankYou',
         props: true,
         component: () => import('pages/ThankYouPage.vue')

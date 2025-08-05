@@ -5,8 +5,8 @@
         <div class="text-h1" :class="{ 'text-h3': $q.screen.xs }" style="color: black">
           {{ $t('common.thank') }}
         </div>
-        <div v-if="work" class="text-h4" style="opacity: 0.4">
-          {{ $t('common.acquired') }}{{ work.artistName }} - "{{ work.name }}".
+        <div v-if="printFul === 'undefined'" class="text-h4" style="opacity: 0.4">
+          {{ $t('common.acquired') }} "{{ name }}".
         </div>
         <div v-if="$i18n.locale === 'en'">
           <div class="text-h3" :class="{ 'text-h5': $q.screen.xs }">
@@ -24,7 +24,7 @@
             Se non vedi l'e-mail, controlla lo spam.
           </div>
         </div>
-        <div v-if="work" class="text-h3" :class="{ 'text-h5': $q.screen.xs }">
+        <div v-if="printFul === 'undefined'" class="text-h3" :class="{ 'text-h5': $q.screen.xs }">
           {{ $t('common.delivery') }}
         </div>
         <div v-else class="text-h4" :class="{ 'text-h6': $q.screen.xs }">
@@ -51,28 +51,15 @@
 
 <script>
 import { useMeta } from 'quasar'
-import { computed, toRefs } from 'vue'
-import { useArtistsStore } from 'stores/artists-store.js'
-import { storeToRefs } from 'pinia'
-import { findWork } from 'src/composables/findWork.js'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'ThankYouPage',
-  props: {
-    id: {
-      type: String,
-      required: true
-    }
-  },
-  setup(props) {
-    const { id } = toRefs(props)
-    const artistsStore = useArtistsStore()
-    const { artistsList, allWorks } = storeToRefs(artistsStore)
-    const { getArtists } = artistsStore
-    if (!id.value.includes('-')) {
-      if (!artistsList.value.length) getArtists()
-    }
-    const work = computed(() => findWork(allWorks, id))
+  setup() {
+    const route = useRoute()
+    const name = route.query.name
+    const printFul = route.query.printFul
+    console.log('name-printFul----', name, printFul)
     useMeta(() => {
       return {
         title: 'Aorta Social Art Gallery',
@@ -86,7 +73,8 @@ export default {
       }
     })
     return {
-      work
+      name,
+      printFul
     }
   }
 }

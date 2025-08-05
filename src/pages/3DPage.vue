@@ -8,8 +8,10 @@
 </template>
 
 <script>
-import { toRefs } from 'vue'
+import { toRefs, watch } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from 'stores/auth-store'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 import Gallery3D from 'components/graphics3d/Gallery3D.vue'
 import HowTo from 'components/graphics3d/HowTo.vue'
@@ -32,6 +34,9 @@ export default {
   },
   setup(props) {
     const { galleryId } = toRefs(props)
+    const router = useRouter()
+    const authStore = useAuthStore()
+    const { loggedIn } = storeToRefs(authStore)
     const graphics3DStore = useGraphics3DStore()
     const { selectedGallery } = storeToRefs(graphics3DStore)
     const { listenForChildEvents, clearSelectedGallery } = graphics3DStore
@@ -39,6 +44,9 @@ export default {
       clearSelectedGallery()
       listenForChildEvents(`galleries/${galleryId.value}`)
     }
+    watch(loggedIn, (val) => {
+      if (!val) router.replace('/')
+    })
     return {
       selectedGallery
     }

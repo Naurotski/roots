@@ -1,6 +1,6 @@
 export default {
   common: {
-    acquired: "Hai acquisito un'opera di ",
+    acquired: 'Hai acquisito',
     address: 'Indirizzo',
     and: 'e',
     attention: 'Attenzione!',
@@ -98,7 +98,8 @@ export default {
     city: 'Città',
     country: 'Paese',
     delivery:
-      "Prima di completare l'acquisto, si prega di compilare i dati per la consegna. Questo ci permetterà di elaborare correttamente il vostro ordine e consegnare l'opera d'arte o il prodotto selezionato all'indirizzo specificato. Potete trovare i dettagli sulle condizioni di acquisto e consegna nella pagina",
+      // "Prima di completare l'acquisto, si prega di compilare i dati per la consegna. Questo ci permetterà di elaborare correttamente il vostro ordine e consegnare l'opera d'arte o il prodotto selezionato all'indirizzo specificato. Potete trovare i dettagli sulle condizioni di acquisto e consegna nella pagina",
+      "Prima di completare l'acquisto, si prega di compilare i dati per la consegna. Questo ci permetterà di elaborare correttamente il vostro ordine e consegnare l'opera d'arte o il prodotto selezionato all'indirizzo specificato.",
     redirect:
       'Verrai reindirizzato alla pagina della piattaforma Stripe per elaborare il pagamento.',
     firstName: 'Nome',

@@ -14,7 +14,7 @@
         </div>
       </q-card-section>
       <q-separator v-if="selectedElement.description" class="q-mx-md" color="negative" />
-      <q-card-section v-if="selectedElement.description" class="scroll" style="max-height: 600px">
+      <q-card-section v-if="selectedElement.description" class="scroll" style="max-height: 450px">
         <div class="text-justify text-body2" style="white-space: pre-line">
           {{ selectedElement.description }}
         </div>
@@ -28,24 +28,16 @@
     >
       <q-card-section v-if="selectedElement.price" class="text-center">
         <div class="text-h6 text-bold">{{ selectedElement.price }} €</div>
-
-        <payment-dialog :works="[{ ...selectedElement, galleryId: selectedGaller.galleryId }]">
-          <template #default="{ showDialog }">
-            <q-btn
-              v-if="selectedElement.price"
-              no-caps
-              outline
-              rounded
-              :label="$t('common.buyArt')"
-              style="width: 150px"
-              @click="
-                () => {
-                  console.log(selectedElement)
-                  showDialog()
-                }
-              "
-            />
-          </template>
+        <payment-dialog
+          :works="[
+            {
+              ...selectedElement,
+              galleryId: selectedGallery.galleryId,
+              id: selectedElement.workIdSite,
+              galleryElementId: selectedElement.id
+            }
+          ]"
+        >
         </payment-dialog>
       </q-card-section>
       <q-separator
@@ -95,13 +87,15 @@ export default {
         ...localElement,
         name: locale.value === 'en' ? localElement.name : localElement.nameIt,
         material: locale.value === 'en' ? localElement.material : localElement.materialIt,
-        description: locale.value === 'en' ? localElement.description : localElement.descriptionIt
+        description: locale.value === 'en' ? localElement.description : localElement.descriptionIt,
+        typeStore
       }
     })
     onUnmounted(() => {
       if (selectedElementId.value) updateSelectedElementId(null)
     })
     return {
+      selectedGallery,
       selectedElement,
       selectedElementId
     }
