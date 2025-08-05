@@ -153,7 +153,9 @@ export default {
       1747135580593: 'https://buy.stripe.com/aFaaEWdrxasDgCndEe0co05',
       1747135787981: 'https://buy.stripe.com/eVqdR83QXdEP1HtgQq0co06'
     }
-    const tab = ref(route.query.lifeTime || $q.localStorage.getItem('tab-actions') || 'archive')
+    const tab = ref(
+      route.query.lifeTime ? 'current' : $q.localStorage.getItem('tab-actions') || 'archive'
+    )
     const elem = computed(() => itemRefs.value.find((item) => item.id === `d${route.query.id}`))
     const filteredActionsI18n = computed(() => {
       if (locale.value === 'it') {
