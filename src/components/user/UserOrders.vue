@@ -15,7 +15,6 @@
     </div>
   </div>
   <order-card v-else v-for="order in orders" :key="order.id" :order="order" />
-  <!--  <pre>orders = {{ orders }}</pre>-->
 </template>
 
 <script>
@@ -24,8 +23,9 @@ import { date } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from 'stores/user-store'
-import OrderCard from 'components/user/OrderCard.vue'
 import { useMerchStore } from 'stores/merch-store'
+import OrderCard from 'components/user/OrderCard.vue'
+
 export default {
   name: 'UserOrders',
   components: { OrderCard },

@@ -7,7 +7,6 @@ const { audioList } = storeToRefs(graphics3DStore)
 const { updateVideoAudio } = graphics3DStore
 
 export const useAudio = async (camera, dataAudio) => {
-  console.log('useAudio ----dataAudio-', dataAudio)
   const listener = new AudioListener()
   camera.add(listener)
 
@@ -25,7 +24,6 @@ export const useAudio = async (camera, dataAudio) => {
   const stopWatcher = watch(
     audioList,
     (newValue) => {
-      console.log('watch---', newValue)
       if (newValue?.[dataAudio.audioId]) {
         if (newValue?.[dataAudio.audioId]?.play) {
           sound.play()

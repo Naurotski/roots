@@ -2,7 +2,7 @@
   <div class="row q-my-xs">
     <div class="col-3 relative-position flex flex-center">
       <q-img
-        :src="item.urlImageWork"
+        :src="imageUrl"
         :alt="item.name"
         fit="contain"
         :style="$q.screen.xs ? 'max-height: 150px' : 'height: 150px'"
@@ -49,9 +49,6 @@
     </div>
     <q-separator />
   </div>
-  <!--  <pre>presenceCheck - {{ presenceCheck }}</pre>-->
-  <!--  <pre>merchList - {{ item.id.split('_')[0] }}</pre>-->
-  <!--  <pre>merchList - {{ merchList[item.rubric] }}</pre>-->
 </template>
 <script>
 import DescriptionForCard from 'components/shared/DescriptionForCard.vue'
@@ -78,9 +75,16 @@ export default {
         !!merchList.value[item.value.rubric]?.[item.value.id.split('_')[0]] &&
         !merchList.value[item.value.rubric]?.[item.value.id.split('_')[0]].notForSale
     )
+    const imageUrl = computed(() => {
+      if (item.value.targetHeight && !item.value.rubric) {
+        return 'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/admin%2FARTStub.png?alt=media&token=5bba4148-3dba-46ce-8204-0ad7bfb317b3'
+      } else {
+        return item.value.urlImageWork
+      }
+    })
     return {
-      merchList,
-      presenceCheck
+      presenceCheck,
+      imageUrl
     }
   }
 }

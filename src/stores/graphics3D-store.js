@@ -45,7 +45,6 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     } else {
       models3d.value[id] = modelData
     }
-    console.log('models3d.value ---- ', models3d.value)
   }
   const clearListGalleries = () => (listGalleries.value = {})
   const clearSelectedGallery = async () => {

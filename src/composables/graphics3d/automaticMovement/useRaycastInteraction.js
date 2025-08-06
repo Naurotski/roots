@@ -30,7 +30,6 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
   }
 
   const onMousedownRaycaster = async (e) => {
-    console.log('onMousedownRaycaster - - - - -')
     if (e.button !== 0 || e.target !== renderer.domElement || isAutoMoving.value) return // Только левая кнопка
     normalizeMouseEvent(e)
     raycaster.setFromCamera(mouse, camera)
@@ -38,9 +37,7 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
     const intersects = raycaster.intersectObjects(collidableMeshes, true)
     if (intersects.length > 0) {
       const intersect = intersects[0]
-      console.log('intersect  ---- ', intersect)
       taggedParent = findTaggedParent(intersect.object)
-      console.log('taggedParent  =====', taggedParent)
       if (!taggedParent) return
       // Получаем центр картины
       const boundingBox = new Box3().setFromObject(taggedParent)

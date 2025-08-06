@@ -235,7 +235,6 @@ export default {
           tab.value = filterExhibitionsDraft.value.find(
             (elem) => elem.id.toString() === route.query.id
           )?.lifeTime
-          console.log('tab.value ---', tab.value)
           if (tab.value) route.query.id = null
         }
         filteredActions.value = filterExhibitionsDraft.value.filter(
