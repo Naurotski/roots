@@ -156,6 +156,10 @@ export default {
           work.urlImage || work.urlImageWork,
           ...(work.urlSecondImages || work.urlSecondImagesWork || []).map((item) => item.url)
         ].splice(0, 5)
+      } else if (work.targetHeight && !work.urlImageWork) {
+        return [
+          'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/admin%2FPhotoStub.png?alt=media&token=e34663ba-fea6-47ad-b1b1-3d2e530ad1cd'
+        ]
       } else {
         return [work.urlImageWork || work.url, ...(work.urlSecondImagesWork || [])].splice(0, 5)
       }

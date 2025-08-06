@@ -3,14 +3,14 @@
     <fixed-top-title :class="{ 'text-h5': $q.screen.xs }" :name="$t('auth.termsSale')" />
     <small-page-container class="q-pt-md" style="max-width: 1000px">
       <div v-if="$i18n.locale === 'en'">
-        <div class="text-body1">Last updated: 01/11/2024</div>
+        <div class="text-body1">Last updated: 08/08/2025</div>
         <br />
         <div class="text-body1 text-justify">
           <div class="text-h6 text-bold">1. General Provisions</div>
           <ul>
             <li>
-              These terms of sale apply to the purchase of artworks listed in the “For Sale” section
-              of the Aorta online gallery. By making a purchase, the client agrees to these terms.
+              These terms of sale apply to the purchase of artworks listed in the Aorta online
+              gallery. By making a purchase, the client agrees to these terms.
             </li>
             <li>
               These terms are governed by European Union and Italian law (including Directive
@@ -151,8 +151,8 @@
           <ul>
             <li>
               Le presenti condizioni di vendita si applicano all’acquisto delle opere d'arte
-              elencate nella sezione "In Vendita" della galleria online Aorta. Effettuando un
-              acquisto, il cliente accetta queste condizioni.
+              elencate nella galleria online Aorta. Effettuando un acquisto, il cliente accetta
+              queste condizioni.
             </li>
             <li>
               Queste condizioni sono regolamentate dalla normativa dell’Unione Europea e dalla legge
