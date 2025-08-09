@@ -57,6 +57,7 @@ export default {
     mugs: 'Mugs',
     myData: 'my Data',
     myOrders: 'my Orders',
+    mySubscriptions: 'my Subscriptions',
     notebooks: 'Notebooks',
     painting: 'Painting',
     photography: 'Photography',
@@ -219,13 +220,27 @@ export default {
     backToSite: 'Back to site'
   },
   subscription: {
+    annualAccess: 'Annual access',
+    automaticallyRenewed: 'Your subscription will be automatically renewed',
     bestValue: 'Best Value',
+    cancelSubscription: 'Cancel Subscription',
     month: 'month',
     monthly: 'Monthly subscription',
+    monthlyAccess: 'Monthly access',
+    noSubscriptions: "You don't have any subscriptions yet",
+    renewSubscription: 'Renew subscription',
+    selectSub: 'Select subscription',
+    selectSubscription: 'Select a subscription to a virtual gallery',
     subscribeGallery: 'Subscribe to the virtual gallery',
-    subscribeNow: 'Subscribe',
+    subscribeNow: 'Subscribe Now',
+    subscriptionWillBeCancelled:
+      'Your subscription will be cancelled but will remain active until the end of the billing period',
+    upgradePlan: 'Upgrade to annual access',
+    upgradeSubscription: 'Upgrade your subscription plan',
+    upgradeYourPlan: 'Upgrade your plan',
     year: 'year',
-    yearly: 'Annual subscription'
+    yearly: 'Annual subscription',
+    yourCurrentPlan: 'Your current plan'
   },
   graphics3D: {
     clickAndDrag: 'Click and drag to rotate the camera',

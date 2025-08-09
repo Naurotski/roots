@@ -30,7 +30,8 @@ export const useSharedStore = defineStore('shared', () => {
   ])
   const yourAccountLinks = ref([
     { label: 'links.myData', name: 'UserData' },
-    { label: 'links.myOrders', name: 'UserOrders' }
+    { label: 'links.myOrders', name: 'UserOrders' },
+    { label: 'links.mySubscriptions', name: 'UserSubscriptions' }
     // { label: 'links.settings', name: 'UserSettings' }
   ])
   //{ label: 'links.graphics', name: 'graphics' },   { label: 'links.installation', name: 'installation' }

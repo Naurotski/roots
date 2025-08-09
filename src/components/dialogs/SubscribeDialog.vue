@@ -1,5 +1,5 @@
 <template>
-  <slot>
+  <slot :openDialog="() => (dialogActivator = true)">
     <q-btn
       no-caps
       outline
@@ -19,7 +19,11 @@
     <q-card style="max-width: 900px; border-radius: 25px">
       <q-toolbar class="q-pt-md">
         <q-toolbar-title class="text-h5">
-          {{ $t('subscription.subscribeGallery') }}
+          {{
+            statusActive
+              ? $t('subscription.upgradeYourPlan')
+              : $t('subscription.selectSubscription')
+          }}
         </q-toolbar-title>
         <q-btn flat round icon="close" @click="dialogActivator = false" />
       </q-toolbar>
@@ -35,9 +39,14 @@
         <div class="row q-gutter-xl justify-center">
           <div
             class="col-5 q-pa-md text-center column justify-between"
-            style="border: 2px solid #000000; border-radius: 25px"
+            :class="{ 'text-grey': statusActive }"
+            :style="
+              statusActive
+                ? 'border: 2px solid #CCCCCC; border-radius: 25px'
+                : 'border: 2px solid #000000; border-radius: 25px'
+            "
           >
-            <div class="text-h6">{{ $t('subscription.monthly') }}</div>
+            <div class="text-h6">{{ $t('subscription.monthlyAccess') }}</div>
             <q-separator color="negative" class="q-mx-lg" />
             <div class="text-h5 q-mt-sm">€9.99</div>
             <div class="text-subtitle2 q-mb-md">/ {{ $t('subscription.month') }}</div>
@@ -49,8 +58,11 @@
               no-caps
               outline
               rounded
-              :label="$t('subscription.subscribeNow')"
+              :label="
+                statusActive ? $t('subscription.yourCurrentPlan') : $t('subscription.subscribeNow')
+              "
               class="q-mt-sm full-width"
+              :disable="statusActive"
               @click="subscribe('month')"
             />
           </div>
@@ -58,7 +70,7 @@
             class="col-5 q-pa-md text-center column justify-between"
             style="border: 2px solid #000000; border-radius: 25px"
           >
-            <div class="text-h6 text-primary">{{ $t('subscription.yearly') }}</div>
+            <div class="text-h6 text-primary">{{ $t('subscription.annualAccess') }}</div>
             <q-separator color="negative" class="q-mx-lg" />
             <div class="text-h5 text-primary q-mt-sm">€99.99</div>
             <div class="text-subtitle2 q-mb-md text-primary">/ {{ $t('subscription.year') }}</div>
@@ -75,7 +87,9 @@
               no-caps
               outline
               rounded
-              :label="$t('subscription.subscribeNow')"
+              :label="
+                statusActive ? $t('subscription.upgradePlan') : $t('subscription.subscribeNow')
+              "
               class="q-mt-sm full-width"
               @click="subscribe('year')"
             />
@@ -87,9 +101,9 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { computed, ref, toRefs } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
 import { useUserStore } from 'stores/user-store'
@@ -97,20 +111,30 @@ import { prices } from 'src/pk_live'
 
 export default {
   name: 'SubscribeDialog',
-  setup() {
+  props: ['actionId'],
+  setup(props) {
     const route = useRoute()
+    const router = useRouter()
+    const { actionId } = toRefs(props)
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
     const { showLoginDialog } = authStore
     const stripeStore = useStripeStore()
     const { payStripe } = stripeStore
     const userStore = useUserStore()
-    const { userData } = storeToRefs(userStore)
+    const { userData, listSubscriptions } = storeToRefs(userStore)
     const dialogActivator = ref(false)
+    const subscription = computed(() => listSubscriptions.value['Virtual Gallery'])
+    const statusActive = computed(
+      () => subscription.value.interval === 'month' && subscription.value.status === 'active'
+    )
     const handlerClick = () => {
       console.log('handlerClick')
       if (!loggedIn.value) {
         showLoginDialog(true)
+      }
+      if (subscription.value.status === 'active') {
+        router.push(`/3d/${actionId.value}`)
       } else {
         dialogActivator.value = true
       }
@@ -130,7 +154,9 @@ export default {
           productName: `Virtual Gallery`,
           interval: val,
           userId: userData.value.userId,
-          name: `${userData.value.firstName || userData.value.displayName} ${userData.value.lastName}`,
+          name: `${userData.value.firstName || userData.value.displayName} ${
+            userData.value.lastName
+          }`,
           email: userData.value.email
         },
         userData: {
@@ -148,6 +174,8 @@ export default {
       })
     }
     return {
+      subscription,
+      statusActive,
       dialogActivator,
       handlerClick,
       subscribe

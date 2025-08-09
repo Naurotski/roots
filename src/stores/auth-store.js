@@ -119,8 +119,8 @@ export const useAuthStore = defineStore('auth', () => {
       await off(dbRef(db, `users/${userData.value.userId}/userData`))
       await off(dbRef(db, `users/${userData.value.userId}/orders`))
       await off(dbRef(db, `users/${userData.value.userId}/cart`))
+      await off(dbRef(db, `users/${userData.value.userId}/subscriptions`))
       await signOut(auth)
-      updateCart({ key: 0, value: 'logoutUser' })
       changeShippingDetails({})
       Loading.hide()
     } catch (error) {
@@ -145,6 +145,7 @@ export const useAuthStore = defineStore('auth', () => {
         listenForChildUser(user.uid, 'userData')
         listenForChildUser(user.uid, 'orders')
         listenForChildUser(user.uid, 'cart')
+        listenForChildUser(user.uid, 'subscriptions')
         if (LocalStorage.getItem('cart')) {
           await mergeCarts(user.uid)
         }
@@ -158,6 +159,7 @@ export const useAuthStore = defineStore('auth', () => {
         LocalStorage.set('loggedIn', false)
         setUserData('logoutUser')
         updateListOrders({ key: 0, value: 'logoutUser' })
+        updateCart({ key: 0, value: 'logoutUser' })
       }
     })
   }

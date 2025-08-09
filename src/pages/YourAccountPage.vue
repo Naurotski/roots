@@ -77,6 +77,7 @@ import FixedTopTitle from 'components/shared/Titles/FixedTopTitle.vue'
 import UserData from 'components/user/UserData.vue'
 import UserOrders from 'components/user/UserOrders.vue'
 import UserSettings from 'components/user/UserSettings.vue'
+import UserSubscriptions from 'components/user/UserSubscriptions.vue'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
 import LanguageSwitcher from 'components/LanguageSwitcher.vue'
 
@@ -88,7 +89,8 @@ export default {
     FixedTopTitle,
     UserSettings,
     UserOrders,
-    UserData
+    UserData,
+    UserSubscriptions
   },
   setup() {
     const $q = useQuasar()

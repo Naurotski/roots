@@ -57,6 +57,7 @@ export default {
     mugs: 'Tazze',
     myData: 'i Miei Dati',
     myOrders: 'i Miei Ordini',
+    mySubscriptions: 'i Miei Abbonamenti',
     notebooks: 'Taccuini',
     painting: 'Pittura',
     photography: 'Fotografia',
@@ -219,13 +220,27 @@ export default {
     backToSite: 'Torna al sito'
   },
   subscription: {
+    annualAccess: 'Accesso annuale',
+    automaticallyRenewed: 'Il tuo abbonamento verrà rinnovato automaticamente',
     bestValue: 'Miglior valore',
+    cancelSubscription: 'Annulla abbonamento',
     month: 'mese',
     monthly: 'Abbonamento mensile',
+    monthlyAccess: 'Accesso mensile',
+    noSubscriptions: 'Non hai ancora alcun abbonamento',
+    renewSubscription: "Rinnova l'abbonamento",
+    selectSubscription: 'Seleziona un abbonamento a una galleria virtuale',
+    selectSub: 'Seleziona un abbonamento',
     subscribeGallery: 'Iscriviti alla galleria virtuale',
-    subscribeNow: 'Iscriviti',
+    subscribeNow: 'Iscriviti Ora',
+    subscriptionWillBeCancelled:
+      'Il tuo abbonamento verrà annullato ma rimarrà attivo fino alla fine del periodo di fatturazione',
+    upgradePlan: "Aggiornamento all'accesso annuale",
+    upgradeSubscription: 'Aggiorna il tuo piano di abbonamento',
+    upgradeYourPlan: 'Aggiorna il tuo piano',
     year: 'anno',
-    yearly: 'Abbonamento annuale'
+    yearly: 'Abbonamento annuale',
+    yourCurrentPlan: 'Il tuo piano attuale'
   },
   graphics3D: {
     clickAndDrag: 'Clicca e trascina per ruotare la telecamera',

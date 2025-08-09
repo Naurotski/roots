@@ -77,6 +77,7 @@
                             action.lifeTime !== 'upcoming' &&
                             Object.keys(listGalleries).includes(action.id.toString())
                           "
+                          :action-id="action.id"
                         />
                         <div v-if="action.lifeTime !== 'archive'" class="q-mb-sm">
                           <list-working-days-dialog
