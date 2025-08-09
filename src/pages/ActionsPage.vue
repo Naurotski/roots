@@ -59,18 +59,24 @@
                       </ul>
                     </template>
                     <template #button>
-                      <div class="absolute-bottom">
-                        <q-btn
+                      <div>
+                        <!--                        <q-btn-->
+                        <!--                          v-if="-->
+                        <!--                            action.lifeTime !== 'upcoming' &&-->
+                        <!--                            Object.keys(listGalleries).includes(action.id.toString())-->
+                        <!--                          "-->
+                        <!--                          no-caps-->
+                        <!--                          outline-->
+                        <!--                          rounded-->
+                        <!--                          class="full-width q-mb-sm"-->
+                        <!--                          label="3D"-->
+                        <!--                          :to="`/3d/${action.id}`"-->
+                        <!--                        />-->
+                        <subscribe-dialog
                           v-if="
                             action.lifeTime !== 'upcoming' &&
                             Object.keys(listGalleries).includes(action.id.toString())
                           "
-                          no-caps
-                          outline
-                          rounded
-                          class="full-width q-mb-sm"
-                          label="3D"
-                          :to="`/3d/${action.id}`"
                         />
                         <div v-if="action.lifeTime !== 'archive'" class="q-mb-sm">
                           <list-working-days-dialog
@@ -128,6 +134,7 @@ import SharedCard from 'components/shared/SharedCard.vue'
 import ActionDialog from 'components/dialogs/ActionDialog.vue'
 import NoResults from 'components/shared/NoResults.vue'
 import ListWorkingDaysDialog from 'components/tickets/ListWorkingDaysDialog.vue'
+import SubscribeDialog from 'components/dialogs/SubscribeDialog.vue'
 
 export default {
   name: 'ActionsPage',
@@ -137,7 +144,8 @@ export default {
     SharedCard,
     ActionDialog,
     NoResults,
-    ListWorkingDaysDialog
+    ListWorkingDaysDialog,
+    SubscribeDialog
   },
   props: {
     typeAction: {

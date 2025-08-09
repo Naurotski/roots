@@ -225,6 +225,7 @@ export default {
         line_items,
         userEmail: userEmail.value,
         userName: userName.value,
+        mode: 'payment',
         metadata: {
           tickets: true,
           actionId: action.value.id,

@@ -234,6 +234,7 @@ export default {
           await payStripe({
             cancel_url: route.path,
             line_items: line_items.value,
+            mode: 'payment',
             metadata: {
               ...shippingDetails.value,
               country: shippingDetails.value.country.countryName,

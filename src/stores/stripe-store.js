@@ -1,4 +1,4 @@
-import stripe from 'src/pk_live.js'
+import { stripe } from 'src/pk_live.js'
 import { computed, ref } from 'vue'
 import { defineStore, storeToRefs } from 'pinia'
 import { Loading, LocalStorage } from 'quasar'
@@ -78,6 +78,7 @@ export const useStripeStore = defineStore('stripe', () => {
     }
   }
   const payStripe = async (paymentDetails) => {
+    console.log('payStripe -----', paymentDetails)
     Loading.show()
     try {
       const accessToken = await auth.currentUser.getIdToken(true)

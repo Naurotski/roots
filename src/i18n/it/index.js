@@ -218,11 +218,21 @@ export default {
     contact: 'In caso di problemi, contattaci',
     backToSite: 'Torna al sito'
   },
+  subscription: {
+    bestValue: 'Miglior valore',
+    month: 'mese',
+    monthly: 'Abbonamento mensile',
+    subscribeGallery: 'Iscriviti alla galleria virtuale',
+    subscribeNow: 'Iscriviti',
+    year: 'anno',
+    yearly: 'Abbonamento annuale'
+  },
   graphics3D: {
     clickAndDrag: 'Clicca e trascina per ruotare la telecamera',
     clickOnArtworks:
       "Clicca sulle opere d'arte o sugli oggetti 3D per avvicinarti e visualizzare le informazioni",
     howTo: 'Come fare?',
-    upAndDown: 'Usa i tasti su e giù per andare avanti e indietro'
+    upAndDown: 'Usa i tasti su e giù per andare avanti e indietro',
+    virtualGallery: 'Galleria Virtuale'
   }
 }

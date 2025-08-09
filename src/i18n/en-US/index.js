@@ -218,10 +218,20 @@ export default {
     contact: 'If you have any issues, contact us',
     backToSite: 'Back to site'
   },
+  subscription: {
+    bestValue: 'Best Value',
+    month: 'month',
+    monthly: 'Monthly subscription',
+    subscribeGallery: 'Subscribe to the virtual gallery',
+    subscribeNow: 'Subscribe',
+    year: 'year',
+    yearly: 'Annual subscription'
+  },
   graphics3D: {
     clickAndDrag: 'Click and drag to rotate the camera',
     clickOnArtworks: 'Click on artworks or 3D objects to move closer and view information',
     howTo: 'How to?',
-    upAndDown: 'Use your up and down keys to move forward and back'
+    upAndDown: 'Use your up and down keys to move forward and back',
+    virtualGallery: 'Virtual Gallery'
   }
 }
