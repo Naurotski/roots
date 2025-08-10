@@ -97,6 +97,24 @@ export const useStripeStore = defineStore('stripe', () => {
       throw error
     }
   }
+  const subscriptionUpdate = async (data) => {
+    console.log('subscriptionUpdate -----', data)
+    Loading.show()
+    try {
+      const accessToken = await auth.currentUser.getIdToken(true)
+      const response = await apiAxios.post(
+        '/aorta/subscriptionUpdate',
+        { ...data },
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      )
+      Loading.hide()
+      return response.data
+    } catch (error) {
+      Loading.hide()
+      showErrorMessage(error.message)
+      throw error
+    }
+  }
   const payStripeTickets = async (paymentDetails) => {
     Loading.show()
     try {
@@ -122,6 +140,7 @@ export const useStripeStore = defineStore('stripe', () => {
     addProductToCart,
     mergeCarts,
     payStripe,
+    subscriptionUpdate,
     payStripeTickets
   }
 })

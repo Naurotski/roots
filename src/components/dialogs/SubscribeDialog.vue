@@ -120,13 +120,13 @@ export default {
     const { loggedIn } = storeToRefs(authStore)
     const { showLoginDialog } = authStore
     const stripeStore = useStripeStore()
-    const { payStripe } = stripeStore
+    const { payStripe, subscriptionUpdate } = stripeStore
     const userStore = useUserStore()
     const { userData, listSubscriptions } = storeToRefs(userStore)
     const dialogActivator = ref(false)
     const subscription = computed(() => listSubscriptions.value['Virtual Gallery'])
     const statusActive = computed(
-      () => subscription.value.interval === 'month' && subscription.value.status === 'active'
+      () => subscription.value?.interval === 'month' && subscription.value?.status === 'active'
     )
     const handlerClick = () => {
       console.log('handlerClick')
@@ -139,39 +139,51 @@ export default {
         dialogActivator.value = true
       }
     }
-    const subscribe = (val) => {
-      console.log(prices[val])
-      payStripe({
-        cancel_url: route.path,
-        mode: 'subscription',
-        line_items: [
-          {
-            price: prices[val],
-            quantity: 1
+    const subscribe = async (val) => {
+      if (val === 'year' && statusActive.value) {
+        const subscriptionUpdateData = await subscriptionUpdate({
+          customerId: subscription.value.customer,
+          subscriptionId: subscription.value.id,
+          itemId: subscription.value.itemId,
+          price: prices[val],
+          preliminaryCost: true
+        })
+        console.log(subscriptionUpdateData)
+        console.log('Итог к оплате - ', subscriptionUpdateData.amount_due)
+        console.log('Итог (после налогов/скидок) - ', subscriptionUpdateData.total)
+        console.log(prices[val])
+        await payStripe({
+          cancel_url: route.path,
+          mode: 'subscription',
+          line_items: [
+            {
+              price: prices[val],
+              quantity: 1
+            }
+          ],
+          metadata: {
+            productName: `Virtual Gallery`,
+            interval: val,
+            userId: userData.value.userId,
+            name: `${userData.value.firstName || userData.value.displayName} ${
+              userData.value.lastName || ''
+            }`,
+            email: userData.value.email
+          },
+          userData: {
+            userId: userData.value.userId,
+            email: userData.value.email,
+            firstName: userData.value.firstName || userData.value.displayName,
+            lastName: userData.value.lastName || '',
+            phone: userData.value.phone || '',
+            city: userData.value.city || '',
+            country: userData.value.country || '',
+            address: userData.value.address || '',
+            postalCode: userData.value.postalCode || '',
+            taxId: userData.value.taxId || ''
           }
-        ],
-        metadata: {
-          productName: `Virtual Gallery`,
-          interval: val,
-          userId: userData.value.userId,
-          name: `${userData.value.firstName || userData.value.displayName} ${
-            userData.value.lastName
-          }`,
-          email: userData.value.email
-        },
-        userData: {
-          userId: userData.value.userId,
-          email: userData.value.email,
-          firstName: userData.value.firstName || userData.value.displayName,
-          lastName: userData.value.lastName || '',
-          phone: userData.value.phone || '',
-          city: userData.value.city || '',
-          country: userData.value.country || '',
-          address: userData.value.address || '',
-          postalCode: userData.value.postalCode || '',
-          taxId: userData.value.taxId || ''
-        }
-      })
+        })
+      }
     }
     return {
       subscription,

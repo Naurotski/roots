@@ -18,9 +18,12 @@
   <div v-else>
     <div v-for="(subscription, name) in listSubscriptions" :key="subscription.id">
       <div class="text-h5">{{ name }}</div>
-      <div class="text-caption">
+      <div v-if="subscription.status === 'active'" class="text-caption">
         {{ $t('subscription.automaticallyRenewed') }}
         {{ date.formatDate(subscription.current_period_end * 1000, 'DD/MM/YYYY') }}
+      </div>
+      <div v-else class="text-caption">
+        Status - {{ subscription.status}}
       </div>
       <div class="q-gutter-xl">
         <subscribe-dialog
@@ -48,7 +51,6 @@
           @click="cancelSubscription(subscription.current_period_end)"
         />
       </div>
-
     </div>
   </div>
   <pre>listSubscriptions - {{ listSubscriptions }}</pre>
@@ -74,9 +76,10 @@ export default {
     const cancelSubscription = (current_period_end) => {
       $q.dialog({
         title: `<span style="color: red">${t('subscription.cancelSubscription')}</span>`,
-        message: `${t(
-          'subscription.subscriptionWillBeCancelled'
-        )} ${date.formatDate(current_period_end * 1000, 'DD/MM/YYYY')}`,
+        message: `${t('subscription.subscriptionWillBeCancelled')} ${date.formatDate(
+          current_period_end * 1000,
+          'DD/MM/YYYY'
+        )}`,
         cancel: true,
         persistent: true,
         html: true
