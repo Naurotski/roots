@@ -43,15 +43,16 @@
         <template v-slot:control>
           <q-carousel-control
             :position="$q.screen.xs ? 'top' : 'bottom-right'"
-            :offset="[30, $q.screen.xs ? 15 : 30]"
+            :offset="[30, $q.screen.xs ? 10 : 30]"
             class="column"
           >
             <q-btn
               class="q-mb-sm"
               size="xl"
-              text-color="white text-weight-bolder"
+              :text-color="$q.screen.xs ? 'black text-weight-bold' : 'white text-weight-bold'"
               outline
               rounded
+              :dense="$q.screen.xs"
               :to="`actions/exhibitions?lifeTime=${lifeTimeExhibition}&id=${selectedExhibitionsData.id}`"
               :label="$t('common.exhibition')"
               no-caps
@@ -64,9 +65,10 @@
               <q-btn
                 class="full-width"
                 size="xl"
-                text-color="white text-weight-bolder"
+                :text-color="$q.screen.xs ? 'black text-weight-bold' : 'white text-weight-bold'"
                 outline
                 rounded
+                :dense="$q.screen.xs"
                 :label="$t('tickets.buyTickets')"
                 no-caps
               />
