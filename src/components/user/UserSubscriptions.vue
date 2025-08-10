@@ -22,9 +22,7 @@
         {{ $t('subscription.automaticallyRenewed') }}
         {{ date.formatDate(subscription.current_period_end * 1000, 'DD/MM/YYYY') }}
       </div>
-      <div v-else class="text-caption">
-        Status - {{ subscription.status}}
-      </div>
+      <div v-else class="text-caption">Status - {{ subscription.status }}</div>
       <div class="q-gutter-xl">
         <subscribe-dialog
           v-if="!(subscription.interval === 'year' && ubscription.status === 'active')"

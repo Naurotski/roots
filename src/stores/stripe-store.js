@@ -15,7 +15,6 @@ export const useStripeStore = defineStore('stripe', () => {
   const shippingDetails = ref({})
   const cart = ref({})
 
-
   const cartCounter = computed(() =>
     Object.values(cart.value).reduce((result, item) => result + +item.quantityCart, 0)
   )
