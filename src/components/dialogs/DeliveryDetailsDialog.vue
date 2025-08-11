@@ -45,7 +45,7 @@ export default {
   props: {
     modelValue: {
       type: Object,
-      require: true
+      required: true
     }
   },
   emits: ['update:modelValue', 'savaDelivery'],

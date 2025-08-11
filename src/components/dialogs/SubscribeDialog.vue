@@ -63,7 +63,7 @@
               "
               class="q-mt-sm full-width"
               :disable="statusActive"
-              @click="subscribe('month')"
+              @click="subscribe({ interval: 'month' })"
             />
           </div>
           <div
@@ -91,13 +91,18 @@
                 statusActive ? $t('subscription.upgradePlan') : $t('subscription.subscribeNow')
               "
               class="q-mt-sm full-width"
-              @click="subscribe('year')"
+              @click="subscribe({ interval: 'year' })"
             />
           </div>
         </div>
       </q-card-section>
     </q-card>
   </q-dialog>
+  <confirm-subscription-change-dialog
+    v-model="activatorChangeDialog"
+    :subscription-change-data="subscriptionChangeData"
+    @subscription-change="subscribe({ interval: 'year', updateChek: true })"
+  />
 </template>
 
 <script>
@@ -108,9 +113,14 @@ import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
 import { useUserStore } from 'stores/user-store'
 import { prices } from 'src/pk_live'
+import { formatPaymentMethod } from 'src/composables/formatPaymentMethod'
+import ConfirmSubscriptionChangeDialog from 'components/dialogs/ConfirmSubscriptionChangeDialog.vue'
 
 export default {
   name: 'SubscribeDialog',
+  components: {
+    ConfirmSubscriptionChangeDialog
+  },
   props: ['actionId'],
   setup(props) {
     const route = useRoute()
@@ -124,6 +134,8 @@ export default {
     const userStore = useUserStore()
     const { userData, listSubscriptions } = storeToRefs(userStore)
     const dialogActivator = ref(false)
+    const activatorChangeDialog = ref(false)
+    const subscriptionChangeData = ref({})
     const subscription = computed(() => listSubscriptions.value['Virtual Gallery'])
     const statusActive = computed(
       () => subscription.value?.interval === 'month' && subscription.value?.status === 'active'
@@ -133,37 +145,56 @@ export default {
       if (!loggedIn.value) {
         showLoginDialog(true)
       }
-      if (subscription.value.status === 'active') {
+      if (subscription.value?.status === 'active') {
         router.push(`/3d/${actionId.value}`)
       } else {
         dialogActivator.value = true
       }
     }
-    const subscribe = async (val) => {
-      if (val === 'year' && statusActive.value) {
-        const subscriptionUpdateData = await subscriptionUpdate({
+    const subscribe = async ({ interval, updateChek = false }) => {
+      console.log('subscribe - ', interval)
+      if (interval === 'year' && statusActive.value) {
+        const subscriptionData = {
           customerId: subscription.value.customer,
           subscriptionId: subscription.value.id,
           itemId: subscription.value.itemId,
-          price: prices[val],
-          preliminaryCost: true
-        })
-        console.log(subscriptionUpdateData)
-        console.log('Итог к оплате - ', subscriptionUpdateData.amount_due)
-        console.log('Итог (после налогов/скидок) - ', subscriptionUpdateData.total)
-        console.log(prices[val])
+          price: prices[interval],
+          updateChek
+        }
+        if (!updateChek) {
+          const preview = await subscriptionUpdate(subscriptionData)
+          const lines = preview.lines.data || []
+          const paymentMethod =
+            preview.default_payment_method ||
+            preview.subscription?.default_payment_method ||
+            preview.customer?.invoice_settings?.default_payment_method ||
+            null
+          subscriptionChangeData.value = {
+            newPlan: lines.filter((l) => l.amount > 0)[0].amount || 0,
+            oldPlan: lines.filter((l) => l.amount < 0)[0].amount || 0,
+            total: preview.amount_due || 0,
+            paymentMethod: formatPaymentMethod(paymentMethod)
+          }
+          activatorChangeDialog.value = true
+          console.log(subscriptionChangeData.value)
+        } else {
+          await subscriptionUpdate(subscriptionData)
+          activatorChangeDialog.value = false
+          dialogActivator.value = false
+        }
+      } else {
         await payStripe({
           cancel_url: route.path,
           mode: 'subscription',
           line_items: [
             {
-              price: prices[val],
+              price: prices[interval],
               quantity: 1
             }
           ],
           metadata: {
-            productName: `Virtual Gallery`,
-            interval: val,
+            productName: 'Virtual Gallery',
+            interval,
             userId: userData.value.userId,
             name: `${userData.value.firstName || userData.value.displayName} ${
               userData.value.lastName || ''
@@ -189,6 +220,8 @@ export default {
       subscription,
       statusActive,
       dialogActivator,
+      activatorChangeDialog,
+      subscriptionChangeData,
       handlerClick,
       subscribe
     }

@@ -30,7 +30,7 @@ export default {
   props: {
     name: {
       style: String,
-      require: true
+      required: true
     }
   }
 }

@@ -39,7 +39,7 @@ export default {
   props: {
     dataCard: {
       type: Object,
-      require: true
+      required: true
     }
   },
   inheritAttrs: false,

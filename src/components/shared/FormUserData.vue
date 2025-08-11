@@ -174,7 +174,7 @@ export default {
   props: {
     modelValue: {
       type: Object,
-      require: true
+      required: true
     },
     deepEqual: {
       type: Boolean,

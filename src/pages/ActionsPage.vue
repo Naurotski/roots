@@ -151,7 +151,7 @@ export default {
   props: {
     typeAction: {
       type: String,
-      require: true
+      required: true
     }
   },
   setup(props) {

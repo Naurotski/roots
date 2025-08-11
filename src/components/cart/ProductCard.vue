@@ -83,7 +83,7 @@ export default {
   props: {
     dataCard: {
       type: Object,
-      require: true
+      required: true
     }
   },
   setup(props) {

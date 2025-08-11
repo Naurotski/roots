@@ -95,15 +95,15 @@ export default {
   props: {
     title: {
       type: String,
-      require: true
+      required: true
     },
     typeAction: {
       type: String,
-      require: true
+      required: true
     },
     dialogData: {
       type: Object,
-      require: true
+      required: true
     }
   },
   setup(props) {

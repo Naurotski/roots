@@ -46,7 +46,7 @@ export default {
   props: {
     modelValue: {
       type: String,
-      require: true
+      required: true
     },
     originalText: {
       type: String,

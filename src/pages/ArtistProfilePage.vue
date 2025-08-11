@@ -121,7 +121,7 @@ export default {
   props: {
     artistId: {
       type: String,
-      require: true
+      required: true
     }
   },
   setup(props) {

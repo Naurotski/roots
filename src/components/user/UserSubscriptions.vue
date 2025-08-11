@@ -25,7 +25,7 @@
       <div v-else class="text-caption">Status - {{ subscription.status }}</div>
       <div class="q-gutter-xl">
         <subscribe-dialog
-          v-if="!(subscription.interval === 'year' && ubscription.status === 'active')"
+          v-if="!(subscription.interval === 'year' && subscription.status === 'active')"
           v-slot="{ openDialog }"
         >
           <q-btn

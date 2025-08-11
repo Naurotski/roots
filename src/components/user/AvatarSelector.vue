@@ -28,7 +28,7 @@ export default {
   props: {
     portraitData: {
       type: Object,
-      require: true
+      required: true
     }
   },
   emits: ['updateTranslate'],

@@ -113,11 +113,11 @@ export default {
   props: {
     rubric: {
       type: String,
-      require: true
+      required: true
     },
     id: {
       type: String,
-      require: true
+      required: true
     }
   },
   setup(props) {

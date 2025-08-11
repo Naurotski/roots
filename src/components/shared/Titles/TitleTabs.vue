@@ -42,15 +42,15 @@ export default {
   props: {
     nameTitle: {
       type: String,
-      require: true
+      required: true
     },
     links: {
       type: Object,
-      require: true
+      required: true
     },
     modelValue: {
       type: String,
-      require: true
+      required: true
     }
   },
   emits: ['update:modelValue'],

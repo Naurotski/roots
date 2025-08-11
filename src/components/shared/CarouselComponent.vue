@@ -95,7 +95,7 @@ export default {
   props: {
     urlImages: {
       type: Array,
-      require: true
+      required: true
     }
   },
   emits: ['update:slide'],
