@@ -45,7 +45,7 @@
           <!--          </q-card-section>-->
           <div class="q-ml-md">
             <template v-if="$i18n.locale === 'en'">
-              By purchasing a artwork online, you agree to the
+              By purchasing an artwork online, you agree to the
               <router-link to="/termsSale" class="text-primary">terms of sale</router-link>
               and the
               <router-link to="/privacy" class="text-primary">privacy policy</router-link>.

@@ -101,7 +101,7 @@ export default {
     country: 'Country',
     delivery:
       // 'Before completing your purchase, please fill in the delivery information. This will allow us to process your order correctly and deliver the selected artwork or product to the specified address. You can find detailed purchase and delivery terms on the page ',
-      'Before completing your purchase, please fill in the delivery information. This will allow us to process your order correctly and deliver the selected artwork or product to the specified address.',
+      'Before completing your purchase, please fill in the shipping information. This will allow us to process your order correctly and deliver the selected artwork or product to the specified address.',
     redirect: 'To process the payment you will be redirected to the Stripe platform page',
     firstName: 'First Name',
     lastName: 'Last Name',
@@ -219,6 +219,13 @@ export default {
     contact: 'If you have any issues, contact us',
     backToSite: 'Back to site'
   },
+  graphics3D: {
+    clickAndDrag: 'Click and drag to rotate the camera',
+    clickOnArtworks: 'Click on artworks or 3D objects to move closer and view information',
+    howTo: 'How to?',
+    upAndDown: 'Use your up and down keys to move forward and back',
+    virtualGallery: 'Virtual Gallery'
+  },
   subscription: {
     annualAccess: 'Annual access',
     automaticallyRenewed: 'Your subscription will be automatically renewed',
@@ -246,13 +253,26 @@ export default {
     upgradeYourPlan: 'Upgrade your plan',
     year: 'year',
     yearly: 'Annual subscription',
-    yourCurrentPlan: 'Your current plan'
-  },
-  graphics3D: {
-    clickAndDrag: 'Click and drag to rotate the camera',
-    clickOnArtworks: 'Click on artworks or 3D objects to move closer and view information',
-    howTo: 'How to?',
-    upAndDown: 'Use your up and down keys to move forward and back',
-    virtualGallery: 'Virtual Gallery'
+    yourCurrentPlan: 'Your current plan',
+    monthList: {
+      oneMonth:
+        'One-month access to the 3 most recent active exhibitions (the current exhibition you joined + the 2 previous ones)',
+      immersive: 'Immersive experience of the exhibition, fully identical to the real-life version',
+      information: 'Information on all the artworks presented in the exhibition',
+      video: 'Exclusive project video by the artist',
+      purchaseArtworks:
+        'Possibility to purchase artworks from the exhibition directly through the gallery',
+      purchaseNFT: 'Possibility to purchase NFT of the exhibited artworks'
+    },
+    yearList: {
+      fullAccess: 'Full access to all the exhibitions, including the archived and closed projects',
+      immersive:
+        'Immersive experience of each exhibition, fully identical to the real-life version',
+      information: 'Information on all the artworks presented in the exhibition',
+      updates: 'Updates on the new exhibitions, events, and additions to existing shows',
+      possibility:
+        'Possibility to revisit your favorite exhibitions at any time and as many times as you would like to',
+      choose: 'If you choose this access of €99.99, you have 2 months free access during one year'
+    }
   }
 }

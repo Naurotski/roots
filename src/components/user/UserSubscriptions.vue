@@ -1,5 +1,10 @@
 <template>
-  <div v-if="!Object.keys(listSubscriptions).length">
+  <div
+    v-if="
+      !Object.keys(listSubscriptions).length ||
+      !Object.values(listSubscriptions).find((item) => item.status === 'active')
+    "
+  >
     <div class="text-center text-h5 q-mb-md">{{ $t('subscription.noSubscriptions') }}</div>
     <div class="text-center">
       <subscribe-dialog v-slot="{ openDialog }">

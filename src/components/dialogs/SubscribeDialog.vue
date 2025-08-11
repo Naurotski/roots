@@ -16,9 +16,9 @@
     :transition-show="$q.screen.xs ? 'slide-up' : 'fade'"
     :transition-hide="$q.screen.xs ? 'slide-down' : 'fade'"
   >
-    <q-card style="max-width: 900px; border-radius: 25px">
+    <q-card style="max-width: 1000px; border-radius: 25px">
       <q-toolbar class="q-pt-md">
-        <q-toolbar-title class="text-h5">
+        <q-toolbar-title class="text-body1">
           {{
             statusActive
               ? $t('subscription.upgradeYourPlan')
@@ -28,70 +28,64 @@
         <q-btn flat round icon="close" @click="dialogActivator = false" />
       </q-toolbar>
       <q-card-section>
-        <div class="text-body1">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda at culpa distinctio
-          ducimus quod rerum! Commodi error eveniet facilis fuga quibusdam unde. Ab architecto
-          assumenda impedit inventore molestiae sequi, sunt?
+        <div v-if="$i18n.locale === 'en'">
+          <div class="text-h5">Enter AORTA — the gallery that’s always with you.</div>
+          <div class="text-body2">
+            Immerse yourself in a world where art surrounds you from every side. Our projects are
+            not just exhibitions, but immersive stories that change the way you see the world and
+            these immersive stories stay with you forever. You’re inside the gallery, even if you’re
+            thousands of kilometers away. New exhibitions appear every month, so don’t miss what
+            will become absolutely legendary tomorrow.
+          </div>
+        </div>
+        <div v-else>
+          <div class="text-h5">Entra in AORTA — la galleria che è sempre con te.</div>
+          <div class="text-body2">
+            Immergiti in un mondo in cui l’arte ti circonda da ogni lato. I nostri progetti non sono
+            semplici mostre, ma storie immersive che cambiano il tuo modo di vedere il mondo — e
+            queste storie restano con te per sempre. Sei dentro la galleria, anche se ti trovi a
+            migliaia di chilometri di distanza. Ogni mese nuove mostre prendono vita: non perdere
+            ciò che domani diventerà leggendario.
+          </div>
         </div>
       </q-card-section>
       <q-separator color="negative" class="q-mx-lg" />
-      <q-card-section class="q-my-xl">
+      <q-card-section>
         <div class="row q-gutter-xl justify-center">
           <div
-            class="col-5 q-pa-md text-center column justify-between"
-            :class="{ 'text-grey': statusActive }"
+            v-for="(subscription, key) in subscriptions"
+            :key="subscription.price"
+            class="col-5 q-pa-md column"
+            :class="{ 'text-grey': statusActive && key === 'month' }"
             :style="
-              statusActive
+              key === 'month' && statusActive
                 ? 'border: 2px solid #CCCCCC; border-radius: 25px'
                 : 'border: 2px solid #000000; border-radius: 25px'
             "
           >
-            <div class="text-h6">{{ $t('subscription.monthlyAccess') }}</div>
-            <q-separator color="negative" class="q-mx-lg" />
-            <div class="text-h5 q-mt-sm">€9.99</div>
-            <div class="text-subtitle2 q-mb-md">/ {{ $t('subscription.month') }}</div>
-            <ul class="q-mt-sm q-mb-sm" style="list-style: none; padding: 0">
-              <li><q-icon name="check" color="primary" size="16px" class="q-mr-sm" />3D-галерея</li>
-              <li><q-icon name="check" color="primary" size="16px" class="q-mr-sm" />Обновления</li>
-            </ul>
+            <div class="text-center">
+              <div class="text-h6">{{ $t(subscription.name) }}</div>
+              <q-separator color="negative" class="q-mx-lg q-my-md" />
+              <div class="text-h5">{{ subscription.price }}</div>
+              <div class="text-subtitle2">/ {{ $t(subscription.interval) }}</div>
+            </div>
+
+            <div class="col-grow flex items-center q-my-md">
+              <div class="q-my-sm q-mr-md text-justify">
+                <div v-for="item in subscription.list" :key="item" class="row">
+                  <q-icon name="check" class="col-1 items-start" />
+                  <div class="col-11">{{ $t(item) }}</div>
+                </div>
+              </div>
+            </div>
             <q-btn
               no-caps
               outline
               rounded
-              :label="
-                statusActive ? $t('subscription.yourCurrentPlan') : $t('subscription.subscribeNow')
-              "
-              class="q-mt-sm full-width"
-              :disable="statusActive"
-              @click="subscribe({ interval: 'month' })"
-            />
-          </div>
-          <div
-            class="col-5 q-pa-md text-center column justify-between"
-            style="border: 2px solid #000000; border-radius: 25px"
-          >
-            <div class="text-h6 text-primary">{{ $t('subscription.annualAccess') }}</div>
-            <q-separator color="negative" class="q-mx-lg" />
-            <div class="text-h5 text-primary q-mt-sm">€99.99</div>
-            <div class="text-subtitle2 q-mb-md text-primary">/ {{ $t('subscription.year') }}</div>
-            <ul class="q-mt-sm q-mb-sm" style="list-style: none; padding: 0">
-              <li>
-                <q-icon name="check" color="primary" size="16px" class="q-mr-sm" />Всё из месячной
-              </li>
-              <li>
-                <q-icon name="check" color="primary" size="16px" class="q-mr-sm" />2 месяца
-                бесплатно
-              </li>
-            </ul>
-            <q-btn
-              no-caps
-              outline
-              rounded
-              :label="
-                statusActive ? $t('subscription.upgradePlan') : $t('subscription.subscribeNow')
-              "
-              class="q-mt-sm full-width"
-              @click="subscribe({ interval: 'year' })"
+              :label="statusActive ? $t(subscription.btnLabel[0]) : $t(subscription.btnLabel[1])"
+              class="full-width"
+              :disable="key === 'month' && statusActive"
+              @click="subscribe({ interval: key })"
             />
           </div>
         </div>
@@ -130,7 +124,7 @@ export default {
     const { loggedIn } = storeToRefs(authStore)
     const { showLoginDialog } = authStore
     const stripeStore = useStripeStore()
-    const { payStripe, subscriptionUpdate } = stripeStore
+    const { subscriptions, payStripe, subscriptionUpdate } = stripeStore
     const userStore = useUserStore()
     const { userData, listSubscriptions } = storeToRefs(userStore)
     const dialogActivator = ref(false)
@@ -138,7 +132,7 @@ export default {
     const subscriptionChangeData = ref({})
     const subscription = computed(() => listSubscriptions.value['Virtual Gallery'])
     const statusActive = computed(
-      () => subscription.value?.interval === 'month' && subscription.value?.status === 'active'
+      () => !!(subscription.value?.interval === 'month' && subscription.value?.status === 'active')
     )
     const handlerClick = () => {
       console.log('handlerClick')
@@ -217,6 +211,7 @@ export default {
       }
     }
     return {
+      subscriptions,
       subscription,
       statusActive,
       dialogActivator,

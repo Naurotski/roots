@@ -219,6 +219,14 @@ export default {
     contact: 'In caso di problemi, contattaci',
     backToSite: 'Torna al sito'
   },
+  graphics3D: {
+    clickAndDrag: 'Clicca e trascina per ruotare la telecamera',
+    clickOnArtworks:
+      "Clicca sulle opere d'arte o sugli oggetti 3D per avvicinarti e visualizzare le informazioni",
+    howTo: 'Come fare?',
+    upAndDown: 'Usa i tasti su e giù per andare avanti e indietro',
+    virtualGallery: 'Galleria Virtuale'
+  },
   subscription: {
     annualAccess: 'Accesso annuale',
     automaticallyRenewed: 'Il tuo abbonamento verrà rinnovato automaticamente',
@@ -246,14 +254,27 @@ export default {
     upgradeYourPlan: 'Aggiorna il tuo piano',
     year: 'anno',
     yearly: 'Abbonamento annuale',
-    yourCurrentPlan: 'Il tuo piano attuale'
-  },
-  graphics3D: {
-    clickAndDrag: 'Clicca e trascina per ruotare la telecamera',
-    clickOnArtworks:
-      "Clicca sulle opere d'arte o sugli oggetti 3D per avvicinarti e visualizzare le informazioni",
-    howTo: 'Come fare?',
-    upAndDown: 'Usa i tasti su e giù per andare avanti e indietro',
-    virtualGallery: 'Galleria Virtuale'
+    yourCurrentPlan: 'Il tuo piano attuale',
+    monthList: {
+      oneMonth:
+        'Accesso di un mese alle 3 mostre attive più recenti (la mostra attuale a cui ti sei iscritto + le 2 precedenti)',
+      immersive: 'Esperienza immersiva della mostra, perfettamente identica alla versione dal vivo',
+      information: 'Informazioni su tutte le opere esposte nella mostra',
+      video: 'Video esclusivo del progetto realizzato dall’artista',
+      purchaseArtworks:
+        'Possibilità di acquistare le opere della mostra direttamente tramite la galleria',
+      purchaseNFT: 'Possibilità di acquistare l’NFT delle opere esposte'
+    },
+    yearList: {
+      fullAccess: 'Accesso completo a tutte le mostre, inclusi i progetti archiviati e conclusi',
+      immersive:
+        'Esperienza immersiva di ogni mostra, perfettamente identica alla versione dal vivo',
+      information: 'Informazioni su tutte le opere esposte nella mostra',
+      updates:
+        'Aggiornamenti sulle nuove mostre, sugli eventi e sulle aggiunte alle esposizioni già esistenti',
+      possibility:
+        'Possibilità di rivedere le tue mostre preferite in qualsiasi momento e tutte le volte che desideri',
+      choose: 'Con questo abbonamento da €99,99 hai 2 mesi di accesso gratuito durante l’anno'
+    }
   }
 }
