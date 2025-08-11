@@ -19,7 +19,7 @@
   >
     <q-card style="max-width: 900px; border-radius: 25px">
       <q-toolbar class="q-pt-md">
-        <q-toolbar-title class="text-h5">
+        <q-toolbar-title class="text-h5" style="white-space: normal !important">
           {{ works.map((item) => item.name).join(', ') }}
         </q-toolbar-title>
         <q-btn flat round icon="close" @click="closeDialog" />

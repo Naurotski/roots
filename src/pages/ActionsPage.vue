@@ -3,7 +3,7 @@
     <q-page class="q-pa-md" style="padding-top: 100px">
       <fixed-top-title :name="$t(`links.${typeAction}`)"
         ><div class="row justify-md-start">
-          <q-tabs v-model="tab" dense narrow-indicator>
+          <q-tabs v-model="tab" dense narrow-indicator indicator-color="negative">
             <q-tab
               style="width: 100px"
               class="text-body1"
@@ -60,22 +60,11 @@
                     </template>
                     <template #button>
                       <div>
-                        <!--                        <q-btn-->
-                        <!--                          v-if="-->
-                        <!--                            action.lifeTime !== 'upcoming' &&-->
-                        <!--                            Object.keys(listGalleries).includes(action.id.toString())-->
-                        <!--                          "-->
-                        <!--                          no-caps-->
-                        <!--                          outline-->
-                        <!--                          rounded-->
-                        <!--                          class="full-width q-mb-sm"-->
-                        <!--                          label="3D"-->
-                        <!--                          :to="`/3d/${action.id}`"-->
-                        <!--                        />-->
                         <subscribe-dialog
                           v-if="
                             action.lifeTime !== 'upcoming' &&
-                            Object.keys(listGalleries).includes(action.id.toString())
+                            Object.keys(listGalleries).includes(action.id.toString()) &&
+                            $q.screen.gt.md
                           "
                           :action-id="action.id"
                         />

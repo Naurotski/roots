@@ -9,40 +9,6 @@ import { showErrorMessage } from 'src/composables/show-error-message.js'
 import { useUserStore } from 'stores/user-store'
 
 export const useStripeStore = defineStore('stripe', () => {
-  const subscriptions = {
-    month: {
-      name: 'subscription.monthlyAccess',
-      price: '€9.99',
-      interval: 'subscription.month',
-      list: [
-        'subscription.monthList.oneMonth',
-        'subscription.monthList.immersive',
-        'subscription.monthList.information',
-        'subscription.monthList.video',
-        'subscription.monthList.purchaseArtworks',
-        'subscription.monthList.purchaseNFT'
-      ],
-      btnLabel: ['subscription.yourCurrentPlan', 'subscription.subscribeNow']
-    },
-    year: {
-      name: 'subscription.annualAccess',
-      price: '€99.99',
-      interval: 'subscription.year',
-      list: [
-        'subscription.yearList.fullAccess',
-        'subscription.yearList.immersive',
-        'subscription.yearList.information',
-        'subscription.monthList.video',
-        'subscription.monthList.purchaseArtworks',
-        'subscription.monthList.purchaseNFT',
-        'subscription.yearList.updates',
-        'subscription.yearList.possibility',
-        'subscription.yearList.choose'
-      ],
-      btnLabel: ['subscription.upgradePlan', 'subscription.subscribeNow']
-    }
-  }
-
   const userStore = useUserStore()
   const { userData } = storeToRefs(userStore)
   const paymentDialogActivator = ref(false)
@@ -163,7 +129,6 @@ export const useStripeStore = defineStore('stripe', () => {
     }
   }
   return {
-    subscriptions,
     paymentDialogActivator,
     shippingDetails,
     cart,

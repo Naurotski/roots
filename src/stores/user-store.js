@@ -17,6 +17,39 @@ import { getDownloadURL, ref as storageRef, uploadString } from 'firebase/storag
 import { showErrorMessage } from 'src/composables/show-error-message.js'
 
 export const useUserStore = defineStore('user', () => {
+  const subscriptionsData = {
+    month: {
+      name: 'subscription.monthlyAccess',
+      price: '€9.99',
+      interval: 'subscription.month',
+      list: [
+        'subscription.monthList.oneMonth',
+        'subscription.monthList.immersive',
+        'subscription.monthList.information',
+        'subscription.monthList.video',
+        'subscription.monthList.purchaseArtworks',
+        'subscription.monthList.purchaseNFT'
+      ],
+      btnLabel: ['subscription.yourCurrentPlan', 'subscription.subscribeNow']
+    },
+    year: {
+      name: 'subscription.annualAccess',
+      price: '€99.99',
+      interval: 'subscription.year',
+      list: [
+        'subscription.yearList.fullAccess',
+        'subscription.yearList.immersive',
+        'subscription.yearList.information',
+        'subscription.monthList.video',
+        'subscription.monthList.purchaseArtworks',
+        'subscription.monthList.purchaseNFT',
+        'subscription.yearList.updates',
+        'subscription.yearList.possibility',
+        'subscription.yearList.choose'
+      ],
+      btnLabel: ['subscription.upgradePlan', 'subscription.subscribeNow']
+    }
+  }
   const userData = ref({})
   const listOrders = ref({})
   const listSubscriptions = ref({})
@@ -126,6 +159,7 @@ export const useUserStore = defineStore('user', () => {
     }
   }
   return {
+    subscriptionsData,
     userData,
     listOrders,
     listSubscriptions,

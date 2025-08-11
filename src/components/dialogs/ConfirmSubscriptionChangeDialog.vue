@@ -6,15 +6,16 @@
     :transition-show="$q.screen.xs ? 'slide-up' : 'fade'"
     :transition-hide="$q.screen.xs ? 'slide-down' : 'fade'"
   >
-    <q-card style="max-width: 900px; border-radius: 25px">
+    <q-card style="max-width: 900px; border-radius: 25px" class="column no-wrap">
       <q-toolbar class="q-pt-md">
-        <q-toolbar-title class="text-h5">
+        <q-toolbar-title class="text-h5" style="white-space: normal !important">
           {{ $t('subscription.confirmChange') }}
         </q-toolbar-title>
         <q-btn flat round icon="close" @click="activator = false" />
       </q-toolbar>
-      <q-separator color="negative" class="q-mx-lg" />
-      <q-card-section>
+      <q-separator color="negative" class="q-ma-lg" />
+
+      <q-card-section class="col column justify-center">
         <div class="row justify-between text-subtitle1">
           <div>{{ $t('subscription.costNewPlan') }}</div>
           <div>€ {{ subscriptionChangeData.newPlan / 100 }}</div>
@@ -56,8 +57,6 @@
   </q-dialog>
 </template>
 <script>
-// import { ref } from 'vue'
-
 import { computed, toRefs } from 'vue'
 
 export default {

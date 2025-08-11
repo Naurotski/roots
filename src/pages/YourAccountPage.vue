@@ -8,18 +8,16 @@
               {{ $t('auth.yourAccount') }}<language-switcher style="display: flex" />
             </div>
           </template>
-          <div class="row justify-md-start">
-            <q-tabs v-model="tab" dense narrow-indicator>
-              <q-tab
-                style="width: 120px"
-                class="text-body1"
-                v-for="{ label, name } in yourAccountLinks"
-                :key="name"
-                :name="name"
-                :label="$t(label)"
-              />
-            </q-tabs></div
-        ></fixed-top-title>
+          <q-tabs v-model="tab" dense narrow-indicator indicator-color="negative">
+            <q-tab
+              class="text-body1"
+              v-for="{ label, name } in yourAccountLinks"
+              :key="name"
+              :name="name"
+              :label="$t(label)"
+            />
+          </q-tabs>
+        </fixed-top-title>
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel v-for="{ name } in yourAccountLinks" :key="name" :name="name">
             <component :is="name" />
@@ -34,7 +32,7 @@
                 {{ $t('auth.yourAccount') }}
                 <q-separator inset />
               </div>
-              <q-tabs v-model="tab" vertical>
+              <q-tabs v-model="tab" vertical indicator-color="negative">
                 <q-tab
                   class="text-body1"
                   v-for="{ label, name } in yourAccountLinks"
@@ -102,7 +100,7 @@ export default {
     const { userData } = storeToRefs(userStore)
     const sharedStore = useSharedStore()
     const { yourAccountLinks } = storeToRefs(sharedStore)
-    const tab = ref($q.localStorage.getItem('tabYorAccount') || 'UserSettings')
+    const tab = ref($q.localStorage.getItem('tabYorAccount') || 'UserData')
     const splitterModel = ref(15)
     watch(tab, () => {
       $q.localStorage.set('tabYorAccount', tab.value)

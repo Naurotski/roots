@@ -23,12 +23,22 @@
   <div v-else>
     <div v-for="(subscription, name) in listSubscriptions" :key="subscription.id">
       <div class="text-h5">{{ name }}</div>
+      <div class="text-subtitle1">{{ $t(subscriptionsData[subscription.interval].name) }}</div>
       <div v-if="subscription.status === 'active'" class="text-caption">
         {{ $t('subscription.automaticallyRenewed') }}
-        {{ date.formatDate(subscription.current_period_end * 1000, 'DD/MM/YYYY') }}
+        <span class="text-weight-bold">{{
+          date.formatDate(subscription.current_period_end * 1000, 'DD/MM/YYYY')
+        }}</span>
       </div>
       <div v-else class="text-caption">Status - {{ subscription.status }}</div>
-      <div class="q-gutter-xl">
+
+      <div class="q-my-lg text-justify">
+        <div v-for="item in subscriptionsData[subscription.interval].list" :key="item" class="row">
+          <q-icon name="check" class="col-1 items-start" />
+          <div class="col-11">{{ $t(item) }}</div>
+        </div>
+      </div>
+      <div class="q-gutter-sm">
         <subscribe-dialog
           v-if="!(subscription.interval === 'year' && subscription.status === 'active')"
           v-slot="{ openDialog }"
@@ -56,15 +66,14 @@
       </div>
     </div>
   </div>
-  <pre>listSubscriptions - {{ listSubscriptions }}</pre>
 </template>
 
 <script>
-import { useUserStore } from 'stores/user-store'
 import { storeToRefs } from 'pinia'
 import { date, useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import SubscribeDialog from 'components/dialogs/SubscribeDialog.vue'
+import { useUserStore } from 'stores/user-store'
 
 export default {
   name: 'UserSubscriptions',
@@ -76,6 +85,7 @@ export default {
     const { t } = useI18n()
     const userStore = useUserStore()
     const { listSubscriptions } = storeToRefs(userStore)
+    const { subscriptionsData } = userStore
     const cancelSubscription = (current_period_end) => {
       $q.dialog({
         title: `<span style="color: red">${t('subscription.cancelSubscription')}</span>`,
@@ -93,6 +103,7 @@ export default {
     return {
       date,
       listSubscriptions,
+      subscriptionsData,
       cancelSubscription
     }
   }

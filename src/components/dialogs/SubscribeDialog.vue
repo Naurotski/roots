@@ -18,7 +18,7 @@
   >
     <q-card style="max-width: 1000px; border-radius: 25px">
       <q-toolbar class="q-pt-md">
-        <q-toolbar-title class="text-body1">
+        <q-toolbar-title class="text-body1" style="white-space: normal !important">
           {{
             statusActive
               ? $t('subscription.upgradeYourPlan')
@@ -53,9 +53,9 @@
       <q-card-section>
         <div class="row q-gutter-xl justify-center">
           <div
-            v-for="(subscription, key) in subscriptions"
+            v-for="(subscription, key) in subscriptionsData"
             :key="subscription.price"
-            class="col-5 q-pa-md column"
+            class="col-11 col-sm-5 q-pa-md column"
             :class="{ 'text-grey': statusActive && key === 'month' }"
             :style="
               key === 'month' && statusActive
@@ -124,9 +124,10 @@ export default {
     const { loggedIn } = storeToRefs(authStore)
     const { showLoginDialog } = authStore
     const stripeStore = useStripeStore()
-    const { subscriptions, payStripe, subscriptionUpdate } = stripeStore
+    const { payStripe, subscriptionUpdate } = stripeStore
     const userStore = useUserStore()
     const { userData, listSubscriptions } = storeToRefs(userStore)
+    const { subscriptionsData } = userStore
     const dialogActivator = ref(false)
     const activatorChangeDialog = ref(false)
     const subscriptionChangeData = ref({})
@@ -211,7 +212,7 @@ export default {
       }
     }
     return {
-      subscriptions,
+      subscriptionsData,
       subscription,
       statusActive,
       dialogActivator,

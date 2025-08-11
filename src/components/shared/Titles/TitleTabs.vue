@@ -19,7 +19,7 @@
     <q-separator class="lt-sm" />
     <span class="q-ml-lg lt-sm text-h5">{{ $t(`links.${tab}`) }}</span>
     <div class="row justify-md-start">
-      <q-tabs v-model="tab" dense narrow-indicator class="gt-xs">
+      <q-tabs v-model="tab" dense narrow-indicator class="gt-xs" indicator-color="negative">
         <q-tab
           class="text-body1"
           v-for="{ label, name } in links"

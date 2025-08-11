@@ -19,7 +19,6 @@
         <div>{{ work.artistName }}</div>
         <b>{{ work.name }}</b>
         <p>{{ work.materials }}</p>
-        <p>{{ `€ ${work.price}` }}</p>
       </div>
     </router-link>
     <router-link v-else :to="`/work/${work.id}`" style="text-decoration: none; color: #1d1d1d">
