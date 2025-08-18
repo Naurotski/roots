@@ -85,7 +85,7 @@
               :label="statusActive ? $t(subscription.btnLabel[0]) : $t(subscription.btnLabel[1])"
               class="full-width"
               :disable="key === 'month' && statusActive"
-              @click="subscribe({ interval: key })"
+              @click="subscribe({ interval: key, retrieveUpcomingChek: true })"
             />
           </div>
         </div>
@@ -109,6 +109,7 @@ import { useUserStore } from 'stores/user-store'
 import { prices } from 'src/pk_live'
 import { formatPaymentMethod } from 'src/composables/formatPaymentMethod'
 import ConfirmSubscriptionChangeDialog from 'components/dialogs/ConfirmSubscriptionChangeDialog.vue'
+import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'SubscribeDialog',
@@ -117,6 +118,7 @@ export default {
   },
   props: ['actionId'],
   setup(props) {
+    const { locale } = useI18n({ useScope: 'global' })
     const route = useRoute()
     const router = useRouter()
     const { actionId } = toRefs(props)
@@ -146,7 +148,8 @@ export default {
         dialogActivator.value = true
       }
     }
-    const subscribe = async ({ interval, updateChek = false }) => {
+
+    const subscribe = async ({ interval, updateChek = false, retrieveUpcomingChek = false }) => {
       console.log('subscribe - ', interval)
       if (interval === 'year' && statusActive.value) {
         const subscriptionData = {
@@ -154,9 +157,10 @@ export default {
           subscriptionId: subscription.value.id,
           itemId: subscription.value.itemId,
           price: prices[interval],
-          updateChek
+          updateChek,
+          retrieveUpcomingChek
         }
-        if (!updateChek) {
+        if (retrieveUpcomingChek) {
           const preview = await subscriptionUpdate(subscriptionData)
           const lines = preview.lines.data || []
           const paymentMethod =
@@ -179,6 +183,7 @@ export default {
         }
       } else {
         await payStripe({
+          success_url: actionId.value ? `/3d/${actionId.value}` : null,
           cancel_url: route.path,
           mode: 'subscription',
           line_items: [
@@ -194,7 +199,9 @@ export default {
             name: `${userData.value.firstName || userData.value.displayName} ${
               userData.value.lastName || ''
             }`,
-            email: userData.value.email
+            email: userData.value.email,
+            locale: locale.value,
+            imageUrl: subscriptionsData[interval].imageUrl
           },
           userData: {
             userId: userData.value.userId,
