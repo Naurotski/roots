@@ -61,7 +61,7 @@ export default {
         path: 'https://www.facebook.com/profile.php?id=100088816940231'
       },
       { icon: 'fa-brands fa-instagram', path: 'https://www.instagram.com/aorta.socialartgallery/' },
-      { icon: 'fa-regular fa-envelope', path: 'mailto:support@aortagallery.com' }
+      { icon: 'fa-regular fa-envelope', path: 'mailto:aorta.gallery@gmail.com' }
     ])
     return {
       date,
