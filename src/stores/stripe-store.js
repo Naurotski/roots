@@ -128,6 +128,24 @@ export const useStripeStore = defineStore('stripe', () => {
       throw error
     }
   }
+  const portalSessionStripe = async (data) => {
+    console.log('portalSessionStripe')
+    Loading.show()
+    try {
+      const accessToken = await auth.currentUser.getIdToken(true)
+      const response = await apiAxios.post(
+        '/aorta/portalSessionStripe',
+        { ...data },
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      )
+      Loading.hide()
+      window.location.href = response.data
+    } catch (error) {
+      Loading.hide()
+      showErrorMessage(error.message)
+      throw error
+    }
+  }
   return {
     paymentDialogActivator,
     shippingDetails,
@@ -140,6 +158,7 @@ export const useStripeStore = defineStore('stripe', () => {
     mergeCarts,
     payStripe,
     subscriptionUpdate,
-    payStripeTickets
+    payStripeTickets,
+    portalSessionStripe
   }
 })

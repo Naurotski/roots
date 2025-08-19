@@ -95,6 +95,15 @@
             })
           "
         />
+        <q-btn
+          no-caps
+          outline
+          rounded
+          style="width: 200px"
+          :class="{ 'full-width': $q.screen.xs }"
+          :label="$t('subscription.changePaymentMethod')"
+          @click="changePaymentMethod(subscription.customer)"
+        />
       </div>
     </div>
   </div>
@@ -104,6 +113,7 @@
 import { storeToRefs } from 'pinia'
 import { date, useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 import SubscribeDialog from 'components/dialogs/SubscribeDialog.vue'
 import { useUserStore } from 'stores/user-store'
 import { useStripeStore } from 'stores/stripe-store'
@@ -116,11 +126,12 @@ export default {
   setup() {
     const $q = useQuasar()
     const { t } = useI18n()
+    const route = useRoute()
     const userStore = useUserStore()
     const { listSubscriptions } = storeToRefs(userStore)
     const { subscriptionsData } = userStore
     const stripeStore = useStripeStore()
-    const { subscriptionUpdate } = stripeStore
+    const { subscriptionUpdate, portalSessionStripe } = stripeStore
     const cancelSubscription = ({ currentPeriod, subscriptionId, cancelChek, resumeChek }) => {
       $q.dialog({
         title: cancelChek
@@ -140,11 +151,15 @@ export default {
         await subscriptionUpdate({ subscriptionId, cancelChek, resumeChek })
       })
     }
+    const changePaymentMethod = (customerId) => {
+      portalSessionStripe({ customerId, return_url: route.path })
+    }
     return {
       date,
       listSubscriptions,
       subscriptionsData,
-      cancelSubscription
+      cancelSubscription,
+      changePaymentMethod
     }
   }
 }

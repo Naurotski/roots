@@ -232,6 +232,7 @@ export default {
     automaticallyRenewed: 'Il tuo abbonamento verrà rinnovato automaticamente',
     bestValue: 'Miglior valore',
     cancelSubscription: 'Annulla abbonamento',
+    changePaymentMethod: 'Cambiare metodo di pagamento',
     confirmChange: "Confermare la modifica dell'abbonamento",
     costNewPlan: 'Costo del nuovo piano',
     creditUnused: 'Credito per non utilizzato',

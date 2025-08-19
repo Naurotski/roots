@@ -231,6 +231,7 @@ export default {
     automaticallyRenewed: 'Your subscription will be automatically renewed',
     bestValue: 'Best Value',
     cancelSubscription: 'Cancel Subscription',
+    changePaymentMethod: 'Change payment method',
     confirmChange: 'Confirm subscription change',
     costNewPlan: 'Cost of the new plan',
     creditUnused: 'Credit for unused',
