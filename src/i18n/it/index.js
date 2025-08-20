@@ -252,6 +252,7 @@ export default {
     subscriptionWillBeCancelled:
       'Il tuo abbonamento verrà annullato ma rimarrà attivo fino alla fine del periodo di fatturazione ',
     subscriptionEnds: 'Il tuo abbonamento termina il ',
+    subscriptionTerms: 'Condizioni di abbonamento',
     upgradePlan: "Aggiornamento all'accesso annuale",
     upgradeSubscription: 'Aggiorna il tuo piano di abbonamento',
     upgradeYourPlan: 'Aggiorna il tuo piano',

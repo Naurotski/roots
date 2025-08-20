@@ -251,6 +251,7 @@ export default {
     subscriptionWillBeCancelled:
       'Your subscription will be cancelled but will remain active until the end of the billing period',
     subscriptionEnds: 'Your subscription ends on ',
+    subscriptionTerms: 'Subscription Terms',
     upgradePlan: 'Upgrade to annual access',
     upgradeSubscription: 'Upgrade your subscription plan',
     upgradeYourPlan: 'Upgrade your plan',

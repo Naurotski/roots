@@ -94,6 +94,11 @@ const routes = isMaintenanceMode
             component: () => import('pages/TermsOfSale.vue')
           },
           {
+            path: 'termsSubscription',
+            name: 'Subscription Terms',
+            component: () => import('pages/SubscriptionTerms.vue')
+          },
+          {
             path: '3d/:galleryId',
             name: '3D Gallery',
             props: true,
