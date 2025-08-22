@@ -242,6 +242,7 @@ export default {
     noSubscriptions: "You don't have any subscriptions yet",
     paymentMethod: 'Payment method',
     payNow: 'Pay Now',
+    pleaseConfirm: 'Please confirm both checkboxes to continue',
     renewSubscription: 'Renew subscription',
     resumeSubscription: 'Resume subscription',
     selectSub: 'Select subscription',

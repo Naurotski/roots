@@ -7,11 +7,11 @@
       :class="{ 'full-width': $q.screen.xs }"
       :label="$t('common.buyArt')"
       style="width: 150px"
-      @click="updatePaymentDialogActivator(true)"
+      @click="setPaymentDialog(true)"
     />
   </slot>
   <q-dialog
-    v-model="paymentDialogActivator"
+    v-model="paymentDialog"
     persistent
     :maximized="$q.screen.xs"
     :transition-show="$q.screen.xs ? 'slide-up' : 'fade'"
@@ -22,7 +22,7 @@
         <q-toolbar-title class="text-h5" style="white-space: normal !important">
           {{ works.map((item) => item.name).join(', ') }}
         </q-toolbar-title>
-        <q-btn flat round icon="close" @click="closeDialog" />
+        <q-btn flat round icon="close" @click="setPaymentDialog(false)" />
       </q-toolbar>
       <q-card-section>
         <div class="text-body1">
@@ -65,7 +65,7 @@
             outline
             rounded
             :label="$t('common.close')"
-            @click="closeDialog"
+            @click="setPaymentDialog(false)"
             color="white"
           />
         </template>
@@ -116,9 +116,9 @@ export default {
     const { userData } = storeToRefs(userStore)
     const { updateUser } = userStore
     const stripeStore = useStripeStore()
-    const { paymentDialogActivator, shippingDetails } = toRefs(stripeStore)
-    const { updatePaymentDialogActivator, changeShippingDetails } = stripeStore
-    const { payStripe } = stripeStore
+    const { shippingDetails } = storeToRefs(stripeStore)
+    const { updatePaymentDialogChek, changeShippingDetails, payStripe } = stripeStore
+    const paymentDialog = ref(false)
     const requiredDialog = ref(false)
     const authProvider = ref([])
     const user = ref({
@@ -132,9 +132,6 @@ export default {
       phone: '',
       taxId: null
     })
-    const closeDialog = () => {
-      updatePaymentDialogActivator(false)
-    }
     const description = (work) => {
       if (locale.value === 'it') {
         return !work.descriptionIt
@@ -216,7 +213,7 @@ export default {
         requiredDialog.value = true
       } else {
         if ($q.localStorage.getItem('cart')) {
-          updatePaymentDialogActivator(false)
+          setPaymentDialog(false)
         } else {
           const diffObj = Object.keys(user.value).reduce((result, key) => {
             if (!(key in userData.value)) result[key] = user.value[key]
@@ -258,14 +255,17 @@ export default {
         }
       }
     }
+    const setPaymentDialog = (value) => {
+      paymentDialog.value = value
+      updatePaymentDialogChek(value)
+    }
     return {
-      paymentDialogActivator,
+      paymentDialog,
       requiredDialog,
       authProvider,
       user,
       userData,
-      updatePaymentDialogActivator,
-      closeDialog,
+      setPaymentDialog,
       onSubmit
     }
   }

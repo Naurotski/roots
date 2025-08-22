@@ -11,7 +11,7 @@ import { useUserStore } from 'stores/user-store'
 export const useStripeStore = defineStore('stripe', () => {
   const userStore = useUserStore()
   const { userData } = storeToRefs(userStore)
-  const paymentDialogActivator = ref(false)
+  const paymentDialogChek = ref(false)
   const shippingDetails = ref({})
   const cart = ref({})
 
@@ -19,7 +19,8 @@ export const useStripeStore = defineStore('stripe', () => {
     Object.values(cart.value).reduce((result, item) => result + +item.quantityCart, 0)
   )
 
-  const updatePaymentDialogActivator = (val) => (paymentDialogActivator.value = val)
+  const updatePaymentDialogChek = (val) => (paymentDialogChek.value = val)
+
   const changeShippingDetails = (data) => (shippingDetails.value = data)
   const updateCart = ({ key, value }) => {
     if (value === 'delete') {
@@ -147,11 +148,11 @@ export const useStripeStore = defineStore('stripe', () => {
     }
   }
   return {
-    paymentDialogActivator,
+    paymentDialogChek,
     shippingDetails,
     cart,
     cartCounter,
-    updatePaymentDialogActivator,
+    updatePaymentDialogChek,
     changeShippingDetails,
     updateCart,
     addProductToCart,

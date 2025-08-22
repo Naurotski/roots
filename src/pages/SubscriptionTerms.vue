@@ -11,7 +11,7 @@
           </div>
         </div>
 
-        <q-separator spaced color="negative"/>
+        <q-separator spaced color="negative" />
 
         <div class="row">
           <aside class="col-12 col-md-4 q-pr-md q-mb-md">
@@ -50,6 +50,14 @@
             </section>
           </article>
         </div>
+        <q-btn
+          class="q-mt-md"
+          outline
+          rounded
+          size="md"
+          icon="mdi-arrow-left-bold"
+          @click="$router.go(-1)"
+        />
       </q-card>
     </div>
   </q-page>
@@ -97,12 +105,19 @@ const messages = {
         ]
       },
       s3: {
-        id: 'plans-payment', num: 3, title: 'Plans, taxes, payment and auto‑renewal', points: [
+        id: 'plans-payment',
+        num: 3,
+        title: 'Plans, taxes, payment and auto‑renewal',
+        points: [
           'The subscription price, its duration (e.g., monthly/annual) and included options are shown on the plan page before checkout. Prices for consumers in the EU are VAT‑inclusive. The final amount and currency are calculated based on the Client’s country in accordance with VAT rules and local law.',
           'Payment is processed online via Stripe. By subscribing, you authorize us and Stripe to charge the fee for the selected subscription period and for subsequent periods upon auto‑renewal, in accordance with your payment method’s terms.',
           'By default, the subscription automatically renews for the next equivalent period at the price in force at the time of renewal. You may disable auto‑renewal at any time from your account; in that case, access remains active until the end of the already paid period.',
-          { html: '<strong>Price changes.</strong> We may change the subscription price, giving you notice at least [30] days before the next charge. If you disagree, disable auto‑renewal before the charge date.' },
-          { html: '<strong>Trial period.</strong> If a free or discounted trial is offered, its conditions and duration are shown at checkout. At the end of the trial, the subscription becomes paid automatically unless you have disabled auto‑renewal in advance.' }
+          {
+            html: '<strong>Price changes.</strong> We may change the subscription price, giving you notice at least [30] days before the next charge. If you disagree, disable auto‑renewal before the charge date.'
+          },
+          {
+            html: '<strong>Trial period.</strong> If a free or discounted trial is offered, its conditions and duration are shown at checkout. At the end of the trial, the subscription becomes paid automatically unless you have disabled auto‑renewal in advance.'
+          }
         ]
       },
       s4: {
@@ -115,12 +130,21 @@ const messages = {
         ]
       },
       s5: {
-        id: 'withdrawal-refunds', num: 5, title: 'Right of withdrawal and refunds', points: [
+        id: 'withdrawal-refunds',
+        num: 5,
+        title: 'Right of withdrawal and refunds',
+        points: [
           'As a consumer, you have the right to withdraw from the paid subscription within 14 days of activation (the “withdrawal period”), unless otherwise provided in this Section.',
-          { html: '<strong>Exception for digital content/services.</strong> If, at checkout, you gave your explicit consent to the immediate start of the Service and confirmed that you understand that, after activation, you lose the right of withdrawal, no refund is due for a subscription that has already been activated.' },
+          {
+            html: '<strong>Exception for digital content/services.</strong> If, at checkout, you gave your explicit consent to the immediate start of the Service and confirmed that you understand that, after activation, you lose the right of withdrawal, no refund is due for a subscription that has already been activated.'
+          },
           'If you did not give the consent referred to in clause 5.2 and you submit a withdrawal within 14 days, we will refund the fee for the period following the termination of access; where the Service has been actually used, you owe a proportionate amount up to the moment of withdrawal. Refunds are issued via the original payment method, net of any applicable payment‑processor fees (where permitted by law).',
-          { html: '<strong>How to withdraw/disable auto‑renewal.</strong> To withdraw within the withdrawal period or to disable auto‑renewal, use your account (“Manage subscription”) or e‑mail support@aortagallery.com. We may request identity verification. Suggested e‑mail text: “I hereby notify you of my withdrawal from the subscription [plan], taken out on [date], for [full name, e‑mail].”' },
-          { html: '<strong>Refunds for technical outages.</strong> If the Service was materially unavailable due to our fault for an uninterrupted period of [48] hours or more, you may request an extension of access or a partial refund pro‑rata to the downtime.' }
+          {
+            html: '<strong>How to withdraw/disable auto‑renewal.</strong> To withdraw within the withdrawal period or to disable auto‑renewal, use your account (“Manage subscription”) or e‑mail support@aortagallery.com. We may request identity verification. Suggested e‑mail text: “I hereby notify you of my withdrawal from the subscription [plan], taken out on [date], for [full name, e‑mail].”'
+          },
+          {
+            html: '<strong>Refunds for technical outages.</strong> If the Service was materially unavailable due to our fault for an uninterrupted period of [48] hours or more, you may request an extension of access or a partial refund pro‑rata to the downtime.'
+          }
         ]
       },
       s6: {
@@ -135,9 +159,14 @@ const messages = {
         ]
       },
       s7: {
-        id: 'availability-support', num: 7, title: 'Availability of the Service and support', points: [
+        id: 'availability-support',
+        num: 7,
+        title: 'Availability of the Service and support',
+        points: [
           'We strive to ensure high availability of the Service; however, uninterrupted operation is not guaranteed. Short interruptions for maintenance and updates are possible. We aim to give advance notice of planned work.',
-          { html: '<strong>Support.</strong> For any questions related to the subscription and access, contact support@aortagallery.com. Response time: business days 10:00–18:00 CET.' }
+          {
+            html: '<strong>Support.</strong> For any questions related to the subscription and access, contact support@aortagallery.com. Response time: business days 10:00–18:00 CET.'
+          }
         ]
       },
       s8: {
@@ -223,19 +252,31 @@ const messages = {
         ]
       },
       s2: {
-        id: 'service-description', num: 2, title: 'Descrizione del Servizio', points: [
+        id: 'service-description',
+        num: 2,
+        title: 'Descrizione del Servizio',
+        points: [
           'L’abbonamento concede l’accesso alla galleria virtuale di Aorta Gallery tramite browser web/app mobili, includendo la visione online delle esposizioni, progetti speciali e materiali digitali aggiuntivi (nella misura e composizione indicate nella pagina del piano).',
-          { html: { html: '<strong>Requisiti tecnici.</strong> Per accedere alla Galleria Virtuale sono necessari:<ul><li>una connessione internet stabile;</li><li>una versione aggiornata di un browser supportato: Google Chrome, Mozilla Firefox, Microsoft Edge o Safari;</li><li>un dispositivo compatibile (desktop/portatile, tablet o smartphone).</li></ul>La Galleria Virtuale si basa sulla libreria three.js; la corretta visualizzazione dipende dal supporto nel browser di WebGL (e/o WebGL 2; ove disponibile — WebGPU). Non siamo responsabili per la mancata conformità del tuo hardware, software o impostazioni a tali requisiti.' } },
+          {
+            html: '<strong>Requisiti tecnici.</strong> Per accedere alla Galleria Virtuale sono necessari:<ul><li>una connessione internet stabile;</li><li>una versione aggiornata di un browser supportato: Google Chrome, Mozilla Firefox, Microsoft Edge o Safari;</li><li>un dispositivo compatibile (desktop/portatile, tablet o smartphone).</li></ul>La Galleria Virtuale si basa sulla libreria three.js; la corretta visualizzazione dipende dal supporto nel browser di WebGL (e/o WebGL 2; ove disponibile — WebGPU). Non siamo responsabili per la mancata conformità del tuo hardware, software o impostazioni a tali requisiti.'
+          },
           'Possiamo modificare, migliorare o integrare periodicamente le funzionalità del Servizio (ad es. aggiungere nuove sezioni, effettuare manutenzioni programmate) senza degradarne in modo sostanziale la natura e la finalità per il periodo già pagato.'
         ]
       },
       s3: {
-        id: 'plans-payment', num: 3, title: 'Piani, imposte, pagamento e rinnovo automatico', points: [
+        id: 'plans-payment',
+        num: 3,
+        title: 'Piani, imposte, pagamento e rinnovo automatico',
+        points: [
           'Il prezzo dell’abbonamento, la sua durata (es. mensile/annuale) e le opzioni incluse sono indicati nella pagina del piano prima dell’acquisto. Per i consumatori dell’UE i prezzi sono IVA inclusa. L’importo finale e la valuta sono calcolati in base al Paese del Cliente conformemente alle regole IVA e alla legislazione locale.',
           'Il pagamento avviene online tramite Stripe. Sottoscrivendo, autorizzi noi e Stripe ad addebitare il corrispettivo per il periodo scelto e per i periodi successivi in caso di rinnovo automatico, secondo i termini del tuo metodo di pagamento.',
           'Per impostazione predefinita l’abbonamento si rinnova automaticamente per il periodo equivalente successivo al prezzo in vigore al momento del rinnovo. Puoi disattivare il rinnovo automatico in qualsiasi momento dall’area personale; in tal caso, l’accesso resta attivo fino alla fine del periodo già pagato.',
-          { html: '<strong>Variazione di prezzo.</strong> Possiamo modificare il prezzo dell’abbonamento con un preavviso di almeno [30] giorni prima del successivo addebito. Se non concordi, disattiva il rinnovo automatico prima di tale data.' },
-          { html: '<strong>Periodo di prova.</strong> Se è previsto un periodo di prova gratuito o agevolato, le relative condizioni e la durata sono indicate al momento dell’acquisto. Al termine del periodo di prova, l’abbonamento diventa a pagamento automaticamente salvo disattivazione preventiva del rinnovo automatico.' }
+          {
+            html: '<strong>Variazione di prezzo.</strong> Possiamo modificare il prezzo dell’abbonamento con un preavviso di almeno [30] giorni prima del successivo addebito. Se non concordi, disattiva il rinnovo automatico prima di tale data.'
+          },
+          {
+            html: '<strong>Periodo di prova.</strong> Se è previsto un periodo di prova gratuito o agevolato, le relative condizioni e la durata sono indicate al momento dell’acquisto. Al termine del periodo di prova, l’abbonamento diventa a pagamento automaticamente salvo disattivazione preventiva del rinnovo automatico.'
+          }
         ]
       },
       s4: {
@@ -248,12 +289,21 @@ const messages = {
         ]
       },
       s5: {
-        id: 'withdrawal-refunds', num: 5, title: 'Diritto di recesso e rimborsi', points: [
+        id: 'withdrawal-refunds',
+        num: 5,
+        title: 'Diritto di recesso e rimborsi',
+        points: [
           'In qualità di consumatore, hai diritto di recedere dall’abbonamento a pagamento entro 14 giorni dall’attivazione (il “periodo di recesso”), salvo quanto diversamente previsto nel presente articolo.',
-          { html: '<strong>Eccezione per contenuti/servizi digitali.</strong> Se, al momento dell’acquisto, hai prestato consenso espresso all’avvio immediato del Servizio e confermato di comprendere che, dopo l’attivazione, perdi il diritto di recesso, non è dovuto alcun rimborso per l’abbonamento già attivato.' },
+          {
+            html: '<strong>Eccezione per contenuti/servizi digitali.</strong> Se, al momento dell’acquisto, hai prestato consenso espresso all’avvio immediato del Servizio e confermato di comprendere che, dopo l’attivazione, perdi il diritto di recesso, non è dovuto alcun rimborso per l’abbonamento già attivato.'
+          },
           'Se non hai prestato il consenso di cui al punto 5.2 e comunichi il recesso entro 14 giorni, rimborseremo la quota relativa al periodo successivo alla cessazione dell’accesso; in presenza di utilizzo del Servizio, è dovuto l’importo proporzionale fino al momento del recesso. I rimborsi sono effettuati con il medesimo metodo di pagamento, al netto delle eventuali commissioni del processore di pagamento (ove consentito dalla legge).',
-          { html: '<strong>Modalità di recesso/disattivazione del rinnovo automatico.</strong> Per recedere nel periodo di recesso o disattivare il rinnovo automatico, utilizza l’area personale (“Gestisci abbonamento”) oppure scrivi a support@aortagallery.com. Potremmo richiedere la verifica dell’identità. Testo suggerito dell’e‑mail: “Con la presente comunico il recesso dall’abbonamento [piano], sottoscritto in data [data], a nome di [nome e cognome, e‑mail]”.' },
-          { html: '<strong>Rimborsi per indisponibilità tecnica.</strong> Se il Servizio è stato sostanzialmente indisponibile per nostra responsabilità per un periodo continuativo di [48] ore o più, puoi richiedere una proroga dell’accesso o un rimborso parziale pro‑quota per il periodo di indisponibilità.' }
+          {
+            html: '<strong>Modalità di recesso/disattivazione del rinnovo automatico.</strong> Per recedere nel periodo di recesso o disattivare il rinnovo automatico, utilizza l’area personale (“Gestisci abbonamento”) oppure scrivi a support@aortagallery.com. Potremmo richiedere la verifica dell’identità. Testo suggerito dell’e‑mail: “Con la presente comunico il recesso dall’abbonamento [piano], sottoscritto in data [data], a nome di [nome e cognome, e‑mail]”.'
+          },
+          {
+            html: '<strong>Rimborsi per indisponibilità tecnica.</strong> Se il Servizio è stato sostanzialmente indisponibile per nostra responsabilità per un periodo continuativo di [48] ore o più, puoi richiedere una proroga dell’accesso o un rimborso parziale pro‑quota per il periodo di indisponibilità.'
+          }
         ]
       },
       s6: {
@@ -268,9 +318,14 @@ const messages = {
         ]
       },
       s7: {
-        id: 'availability-support', num: 7, title: 'Disponibilità del Servizio e assistenza', points: [
+        id: 'availability-support',
+        num: 7,
+        title: 'Disponibilità del Servizio e assistenza',
+        points: [
           'Miriamo ad assicurare un’elevata disponibilità del Servizio; tuttavia non garantiamo il funzionamento ininterrotto. Sono possibili brevi interruzioni per manutenzione e aggiornamenti. Forniremo, quando possibile, un preavviso per gli interventi programmati.',
-          { html: '<strong>Assistenza.</strong> Per domande relative all’abbonamento e all’accesso, contatta support@aortagallery.com. Tempi di risposta: giorni lavorativi 10:00–18:00 CET.' }
+          {
+            html: '<strong>Assistenza.</strong> Per domande relative all’abbonamento e all’accesso, contatta support@aortagallery.com. Tempi di risposta: giorni lavorativi 10:00–18:00 CET.'
+          }
         ]
       },
       s8: {

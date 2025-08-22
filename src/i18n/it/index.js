@@ -243,6 +243,7 @@ export default {
     noSubscriptions: 'Non hai ancora alcun abbonamento',
     paymentMethod: 'Metodo di pagamento',
     payNow: 'Paga Ora',
+    pleaseConfirm: 'Si prega di confermare entrambe le caselle di controllo per continuare',
     renewSubscription: "Rinnova l'abbonamento",
     resumeSubscription: 'Riprendi l’abbonamento',
     selectSubscription: 'Seleziona un abbonamento a una galleria virtuale',

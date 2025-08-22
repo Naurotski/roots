@@ -78,14 +78,44 @@
                 </div>
               </div>
             </div>
+            <div class="flex flex-center" style="font-size: 0.65rem">
+              <q-checkbox
+                size="2rem"
+                name="acceptTerms"
+                v-model="acceptMap[key]"
+                class="col-auto"
+                :rules="[(val) => val === true || 'Please check this box to continue']"
+              />
+              <div class="col">
+                I accept the
+                <router-link to="/termsSubscription" class="text-primary"
+                  >Subscription Terms</router-link
+                >
+                and the
+                <router-link to="/privacy" class="text-primary">Privacy policy</router-link>.
+              </div>
+            </div>
+            <div class="flex flex-center" style="font-size: 0.65rem">
+              <q-checkbox
+                size="2rem"
+                v-model="waiveMap[key]"
+                name="waiveWithdrawal"
+                class="col-auto"
+                :rules="[(val) => val === true || 'Please check this box to continue']"
+              />
+              <div class="col">
+                I wish to receive immediate access to the digital service and understand that after
+                activation I will no longer be able to exercise my 14-day right of withdrawal.
+              </div>
+            </div>
             <q-btn
               no-caps
               outline
               rounded
               :label="statusActive ? $t(subscription.btnLabel[0]) : $t(subscription.btnLabel[1])"
-              class="full-width"
+              class="full-width q-mt-md"
               :disable="key === 'month' && statusActive"
-              @click="subscribe({ interval: key, retrieveUpcomingChek: true })"
+              @click="submitForm({ interval: key, retrieveUpcomingChek: true })"
             />
           </div>
         </div>
@@ -95,21 +125,22 @@
   <confirm-subscription-change-dialog
     v-model="activatorChangeDialog"
     :subscription-change-data="subscriptionChangeData"
-    @subscription-change="subscribe({ interval: 'year', updateChek: true })"
+    @subscription-change="submitForm({ interval: 'year', updateChek: true })"
   />
 </template>
 
 <script>
-import { computed, ref, toRefs } from 'vue'
+import { computed, ref, toRefs, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import { useQuasar } from 'quasar'
 import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
 import { useUserStore } from 'stores/user-store'
 import { prices } from 'src/pk_live'
 import { formatPaymentMethod } from 'src/composables/formatPaymentMethod'
 import ConfirmSubscriptionChangeDialog from 'components/dialogs/ConfirmSubscriptionChangeDialog.vue'
-import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'SubscribeDialog',
@@ -118,7 +149,8 @@ export default {
   },
   props: ['actionId'],
   setup(props) {
-    const { locale } = useI18n({ useScope: 'global' })
+    const $q = useQuasar()
+    const { locale, t } = useI18n({ useScope: 'global' })
     const route = useRoute()
     const router = useRouter()
     const { actionId } = toRefs(props)
@@ -133,9 +165,22 @@ export default {
     const dialogActivator = ref(false)
     const activatorChangeDialog = ref(false)
     const subscriptionChangeData = ref({})
+    const acceptMap = ref({})
+    const waiveMap = ref({})
     const subscription = computed(() => listSubscriptions.value['Virtual Gallery'])
     const statusActive = computed(
       () => !!(subscription.value?.interval === 'month' && subscription.value?.status === 'active')
+    )
+
+    watch(
+      () => Object.keys(subscriptionsData ),
+      (keys) => {
+        keys.forEach((key) => {
+          if (!(key in acceptMap.value)) acceptMap.value[key] = false
+          if (!(key in waiveMap.value)) waiveMap.value[key] = false
+        })
+      },
+      { immediate: true }
     )
     const handlerClick = () => {
       console.log('handlerClick')
@@ -149,8 +194,16 @@ export default {
       }
     }
 
-    const subscribe = async ({ interval, updateChek = false, retrieveUpcomingChek = false }) => {
-      console.log('subscribe - ', interval)
+    const submitForm = async ({ interval, updateChek = false, retrieveUpcomingChek = false }) => {
+      console.log ('submitForm - ', interval, acceptMap.value, waiveMap.value)
+      if (!acceptMap.value[interval] && !waiveMap.value[interval]) {
+        $q.notify({
+          type: 'warning',
+          message: t('subscription.pleaseConfirm'),
+          timeout: 2500
+        })
+        return
+      }
       if (interval === 'year' && statusActive.value) {
         const subscriptionData = {
           customerId: subscription.value.customer,
@@ -225,8 +278,10 @@ export default {
       dialogActivator,
       activatorChangeDialog,
       subscriptionChangeData,
+      acceptMap,
+      waiveMap,
       handlerClick,
-      subscribe
+      submitForm
     }
   }
 }
