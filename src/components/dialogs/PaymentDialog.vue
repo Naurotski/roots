@@ -18,18 +18,20 @@
     :transition-hide="$q.screen.xs ? 'slide-down' : 'fade'"
   >
     <q-card style="max-width: 900px; border-radius: 25px">
-      <q-toolbar class="q-pt-md">
-        <q-toolbar-title class="text-h5" style="white-space: normal !important">
-          {{ works.map((item) => item.name).join(', ') }}
-        </q-toolbar-title>
-        <q-btn flat round icon="close" @click="setPaymentDialog(false)" />
-      </q-toolbar>
-      <q-card-section>
-        <div class="text-body1">
-          {{ `€ ${works.reduce((result, item) => result + +item.price, 0)}` }}
-        </div>
-      </q-card-section>
-      <q-separator color="negative" class="q-mx-lg" />
+      <div class="q-pt-md bg-white" style="position: sticky; top: 0; z-index: 10">
+        <q-toolbar>
+          <q-toolbar-title class="text-h5" style="white-space: normal !important">
+            {{ works.map((item) => item.name).join(', ') }}
+          </q-toolbar-title>
+          <q-btn flat round icon="close" @click="setPaymentDialog(false)" />
+        </q-toolbar>
+        <q-card-section>
+          <div class="text-body1" style="margin-top: -20px">
+            {{ `€ ${works.reduce((result, item) => result + +item.price, 0)}` }}
+          </div>
+        </q-card-section>
+        <q-separator color="negative" class="q-mx-lg" />
+      </div>
       <q-card-section class="text-body1">
         <div style="white-space: pre-line" class="text-body1">
           {{ $t('dialoguePayment.delivery') }}
@@ -37,37 +39,27 @@
           <!--          >.-->
         </div>
       </q-card-section>
-
       <form-user-data v-model="user" @submitForm="onSubmit">
         <template #default>
           <!--          <q-card-section class="text-body1">-->
           <!--            {{ $t('dialoguePayment.redirect') }}-->
           <!--          </q-card-section>-->
-          <div class="q-ml-md">
+          <div class="q-ml-md" style="font-size: 0.65rem">
             <template v-if="$i18n.locale === 'en'">
               By purchasing an artwork online, you agree to the
-              <router-link to="/termsSale" class="text-primary">terms of sale</router-link>
+              <router-link to="/termsSale" class="text-primary">Terms of sale</router-link>
               and the
-              <router-link to="/privacy" class="text-primary">privacy policy</router-link>.
+              <router-link to="/privacy" class="text-primary">Privacy policy</router-link>.
             </template>
-
             <template v-else-if="$i18n.locale === 'it'">
-              Acquistando un biglietto online, accetti il
-              <router-link to="/rules" class="text-primary">condizioni di vendita</router-link>
-              e la
-              <router-link to="/privacy" class="text-primary">privacy policy</router-link>.
+              Acquistando un'opera d'arte online, accetti il
+              <router-link to="/rules" class="text-primary">Condizioni di vendita</router-link>
+              e
+              <router-link to="/privacy" class="text-primary"
+                >l'Informativa sulla privacy</router-link
+              >.
             </template>
           </div>
-        </template>
-        <template #btn>
-          <q-btn
-            class="q-mx-md bg-grey"
-            outline
-            rounded
-            :label="$t('common.close')"
-            @click="setPaymentDialog(false)"
-            color="white"
-          />
         </template>
       </form-user-data>
     </q-card>

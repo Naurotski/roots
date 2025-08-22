@@ -148,8 +148,10 @@
     <q-card-section class="row justify-end" style="width: 100%">
       <slot name="btn" />
       <q-btn
+        no-caps
         outline
         rounded
+        class="full-width q-mt-sm"
         :disable="deepEqual"
         :label="
           $route.name === 'Your Account' || $route.name === 'Basket'

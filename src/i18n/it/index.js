@@ -1,8 +1,10 @@
 export default {
   common: {
+    acceptHhe: 'Accetto le',
     acquired: 'Hai acquisito',
     address: 'Indirizzo',
     and: 'e',
+    andThe: 'e',
     attention: 'Attenzione!',
     buy: 'Acquista',
     buyArt: "Acquista l'Opera",
@@ -244,6 +246,8 @@ export default {
     paymentMethod: 'Metodo di pagamento',
     payNow: 'Paga Ora',
     pleaseConfirm: 'Si prega di confermare entrambe le caselle di controllo per continuare',
+    refusalToRefundMoney:
+      'Desidero ricevere subito l’accesso al servizio digitale e comprendo che, dopo l’attivazione, non potrò più esercitare il diritto di recesso entro 14 giorni.',
     renewSubscription: "Rinnova l'abbonamento",
     resumeSubscription: 'Riprendi l’abbonamento',
     selectSubscription: 'Seleziona un abbonamento a una galleria virtuale',

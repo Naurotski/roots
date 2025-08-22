@@ -1,8 +1,10 @@
 export default {
   common: {
+    acceptHhe: 'I accept the',
     acquired: 'You have acquired',
     address: 'Address',
     and: 'and',
+    andThe: 'and the',
     attention: 'Attention!',
     buy: 'Buy',
     buyArt: 'Buy an Artwork',
@@ -243,6 +245,8 @@ export default {
     paymentMethod: 'Payment method',
     payNow: 'Pay Now',
     pleaseConfirm: 'Please confirm both checkboxes to continue',
+    refusalToRefundMoney:
+      'I wish to receive immediate access to the digital service and understand that after activation I will no longer be able to exercise my 14-day right of withdrawal.',
     renewSubscription: 'Renew subscription',
     resumeSubscription: 'Resume subscription',
     selectSub: 'Select subscription',

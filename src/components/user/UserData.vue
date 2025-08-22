@@ -24,7 +24,7 @@
     <template #btn>
       <q-btn
         :disable="deepEqual"
-        class="q-mx-md bg-grey"
+        class="full-width bg-grey"
         outline
         rounded
         color="white"

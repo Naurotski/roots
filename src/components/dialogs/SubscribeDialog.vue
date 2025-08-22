@@ -17,16 +17,20 @@
     :transition-hide="$q.screen.xs ? 'slide-down' : 'fade'"
   >
     <q-card style="max-width: 1000px; border-radius: 25px">
-      <q-toolbar class="q-pt-md">
-        <q-toolbar-title class="text-body1" style="white-space: normal !important">
-          {{
-            statusActive
-              ? $t('subscription.upgradeYourPlan')
-              : $t('subscription.selectSubscription')
-          }}
-        </q-toolbar-title>
-        <q-btn flat round icon="close" @click="dialogActivator = false" />
-      </q-toolbar>
+      <div class="q-pt-md bg-white" style="position: sticky; top: 0; z-index: 10">
+        <q-toolbar>
+          <q-toolbar-title class="text-body1" style="white-space: normal !important">
+            {{
+              statusActive
+                ? $t('subscription.upgradeYourPlan')
+                : $t('subscription.selectSubscription')
+            }}
+          </q-toolbar-title>
+          <q-btn flat round icon="close" @click="dialogActivator = false" />
+        </q-toolbar>
+        <q-separator color="negative" />
+      </div>
+
       <q-card-section>
         <div v-if="$i18n.locale === 'en'">
           <div class="text-h5">Enter AORTA — the gallery that’s always with you.</div>
@@ -49,7 +53,7 @@
           </div>
         </div>
       </q-card-section>
-      <q-separator color="negative" class="q-mx-lg" />
+      <q-separator class="q-mx-lg" color="negative" />
       <q-card-section>
         <div class="row q-gutter-xl justify-center">
           <div
@@ -84,15 +88,17 @@
                 name="acceptTerms"
                 v-model="acceptMap[key]"
                 class="col-auto"
-                :rules="[(val) => val === true || 'Please check this box to continue']"
               />
               <div class="col">
-                I accept the
-                <router-link to="/termsSubscription" class="text-primary"
-                  >Subscription Terms</router-link
-                >
-                and the
-                <router-link to="/privacy" class="text-primary">Privacy policy</router-link>.
+                {{ $t('common.acceptHhe') }}
+                <router-link to="/termsSubscription" class="text-primary">{{
+                  $t('subscription.subscriptionTerms')
+                }}</router-link>
+                {{ $t('common.andThe') }}
+                <router-link to="/privacy" class="text-primary">{{
+                  $t('auth.privacyPolicy')
+                }}</router-link
+                >.
               </div>
             </div>
             <div class="flex flex-center" style="font-size: 0.65rem">
@@ -101,11 +107,9 @@
                 v-model="waiveMap[key]"
                 name="waiveWithdrawal"
                 class="col-auto"
-                :rules="[(val) => val === true || 'Please check this box to continue']"
               />
               <div class="col">
-                I wish to receive immediate access to the digital service and understand that after
-                activation I will no longer be able to exercise my 14-day right of withdrawal.
+                {{ $t('subscription.refusalToRefundMoney') }}
               </div>
             </div>
             <q-btn
@@ -173,7 +177,7 @@ export default {
     )
 
     watch(
-      () => Object.keys(subscriptionsData ),
+      () => Object.keys(subscriptionsData),
       (keys) => {
         keys.forEach((key) => {
           if (!(key in acceptMap.value)) acceptMap.value[key] = false
@@ -195,7 +199,6 @@ export default {
     }
 
     const submitForm = async ({ interval, updateChek = false, retrieveUpcomingChek = false }) => {
-      console.log ('submitForm - ', interval, acceptMap.value, waiveMap.value)
       if (!acceptMap.value[interval] && !waiveMap.value[interval]) {
         $q.notify({
           type: 'warning',
