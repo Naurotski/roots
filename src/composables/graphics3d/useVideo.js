@@ -1,11 +1,11 @@
 import {
   VideoTexture,
   LinearFilter,
-  RGBFormat,
+  RGBAFormat,
   MeshBasicMaterial,
   PlaneGeometry,
   Mesh,
-  DoubleSide,
+  FrontSide,
   Vector3,
   Quaternion,
   MathUtils,
@@ -20,10 +20,7 @@ const { videoList } = storeToRefs(graphics3DStore)
 
 export const useVideo = async (scene, dataVideo) => {
   const object = scene.getObjectByName(dataVideo.videoId)
-  if (!object || !object.geometry) {
-    console.warn(`Объект ${dataVideo.videoId} не найден или не имеет геометрии`)
-    return
-  }
+  if (!object || !object.geometry) return
   Loading.show({ message: 'Loading...' })
   const video = document.createElement('video')
   try {
@@ -46,10 +43,16 @@ export const useVideo = async (scene, dataVideo) => {
     const videoTexture = new VideoTexture(video)
     videoTexture.minFilter = LinearFilter
     videoTexture.magFilter = LinearFilter
-    videoTexture.format = RGBFormat
+    videoTexture.format = RGBAFormat
     videoTexture.generateMipmaps = false
     videoTexture.colorSpace = SRGBColorSpace
-    const material = new MeshBasicMaterial({ map: videoTexture, side: DoubleSide })
+    videoTexture.premultiplyAlpha = false
+    const material = new MeshBasicMaterial({
+      map: videoTexture,
+      side: FrontSide,
+      toneMapped: false,
+      transparent: false
+    })
 
     // 3. рассчитываем bounding box
     object.geometry.computeBoundingBox()
@@ -116,11 +119,10 @@ export const useVideo = async (scene, dataVideo) => {
     videoList,
     (newValue) => {
       if (newValue[dataVideo.videoId] && object && object.geometry) {
-        if (newValue[dataVideo.videoId].play) {
+        if (newValue[dataVideo.videoId]?.play) {
           video.play()
           checkPlay = true
-        }
-        else {
+        } else {
           video.pause()
           checkPlay = false
         }

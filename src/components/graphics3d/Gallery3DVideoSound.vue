@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute-bottom-right q-mb-xl q-mr-xl row">
+  <div class="row" style="max-width: 300px; bottom: 3%; right: 5%; position: absolute">
     <div v-if="selectedGallery.audioStore && Object.keys(selectedGallery.audioStore).length">
       <div v-for="{ audioId } in Object.values(selectedGallery.audioStore)" :key="audioId">
         <q-btn

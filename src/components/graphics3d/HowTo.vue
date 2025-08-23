@@ -41,6 +41,17 @@
       </div>
     </div>
   </q-card>
+  <div v-else>
+    <q-btn
+      round
+      color="white"
+      text-color="black"
+      class="q-mt-md q-mr-md"
+      size="md"
+      icon="fa-solid fa-bars"
+      @click="showCard = true"
+    />
+  </div>
 </template>
 <script setup>
 import { ref } from 'vue'

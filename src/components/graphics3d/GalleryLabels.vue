@@ -2,7 +2,7 @@
   <transition name="fade">
     <q-card
       v-if="selectedElementId"
-      style="max-width: 300px; bottom: 15%; left: 8%; position: absolute"
+      style="width: 300px; bottom: 15%; left: 15%; position: absolute"
     >
       <q-card-section class="text-center">
         <div class="text-h6 text-bold">{{ selectedElement.name }}</div>
@@ -14,7 +14,11 @@
         </div>
       </q-card-section>
       <q-separator v-if="selectedElement.description" class="q-mx-md" color="negative" />
-      <q-card-section v-if="selectedElement.description" class="scroll" style="max-height: 450px">
+      <q-card-section
+        v-if="selectedElement.description"
+        class="scroll"
+        style="max-height: 50vh"
+      >
         <div class="text-justify text-body2" style="white-space: pre-line">
           {{ selectedElement.description }}
         </div>
@@ -24,7 +28,7 @@
   <transition name="fade">
     <q-card
       v-if="selectedElementId"
-      style="max-width: 300px; bottom: 15%; right: 10%; position: absolute"
+      style="width: 300px; bottom: 15%; right: 15%; position: absolute"
     >
       <q-card-section v-if="selectedElement.price" class="text-center">
         <div class="text-h6 text-bold">{{ selectedElement.price }} €</div>

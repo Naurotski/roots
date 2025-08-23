@@ -27,7 +27,12 @@ export const useSceneSetup = (container) => {
   camera.position.set(0, 0, 0)
 
   // Рендерер
-  const renderer = new WebGLRenderer({ antialias: true })
+  const renderer = new WebGLRenderer({
+    antialias: false,
+    powerPreference: 'high-performance',
+    alpha: false,
+    premultipliedAlpha: false
+  })
   renderer.setSize(width, height)
   renderer.setPixelRatio(window.devicePixelRatio)
   renderer.outputColorSpace = SRGBColorSpace
