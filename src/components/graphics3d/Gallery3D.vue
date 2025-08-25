@@ -26,7 +26,7 @@ export default {
   setup() {
     const graphics3DStore = useGraphics3DStore()
     const { selectedGallery, models3d } = storeToRefs(graphics3DStore)
-    const { clearSelectedGallery } = graphics3DStore
+    const { startLoading, endLoading, clearSelectedGallery } = graphics3DStore
     const container = ref(null)
     const unmountedArray = ref([])
     const modelGalleryReady = ref(false)
@@ -34,67 +34,111 @@ export default {
     let scene, renderer, camera, cleanupAudio, cleanupVideo
 
     onMounted(async () => {
-      const { sceneSetupUnmounted, ...rest } = useSceneSetup(container)
-      scene = rest.scene
-      renderer = rest.renderer
-      camera = rest.camera
-      unmountedArray.value.push(sceneSetupUnmounted)
+      startLoading('Инициализируем сцену…')
+      try {
+        const { sceneSetupUnmounted, ...rest } = useSceneSetup(container)
+        scene = rest.scene
+        renderer = rest.renderer
+        camera = rest.camera
+        unmountedArray.value.push(sceneSetupUnmounted)
 
-      const { controlsObject, controlsObjectHeight, keysPressed, playerControlsUnmounted } =
-        usePlayerControls(camera, renderer)
-      scene.add(controlsObject)
-      unmountedArray.value.push(playerControlsUnmounted)
-      modelGalleryReady.value = await loadModelGallery(
-        '/3Dmodels/gallery.glb',
-        scene,
-        collidableMeshes
-      )
-      const { updateMoveToPainting, raycastInteractionUnmounted } = useRaycastInteraction({
-        camera,
-        renderer,
-        controlsObject,
-        collidableMeshes
-      })
-      unmountedArray.value.push(raycastInteractionUnmounted)
+        const { controlsObject, controlsObjectHeight, keysPressed, playerControlsUnmounted } =
+          usePlayerControls(camera, renderer)
+        scene.add(controlsObject)
+        unmountedArray.value.push(playerControlsUnmounted)
 
-      setAnimationLoop({
-        scene,
-        camera,
-        renderer,
-        controlsObject,
-        controlsObjectHeight,
-        collidableMeshes,
-        keysPressed,
-        updateMoveToPainting
-      })
+        startLoading('Загружаем галерею…')
+        modelGalleryReady.value = await loadModelGallery(
+          '/3Dmodels/gallery.glb',
+          scene,
+          collidableMeshes
+        )
+        endLoading()
+        const { updateMoveToPainting, raycastInteractionUnmounted } = useRaycastInteraction({
+          camera,
+          renderer,
+          controlsObject,
+          collidableMeshes
+        })
+        unmountedArray.value.push(raycastInteractionUnmounted)
+
+        setAnimationLoop({
+          scene,
+          camera,
+          renderer,
+          controlsObject,
+          controlsObjectHeight,
+          collidableMeshes,
+          keysPressed,
+          updateMoveToPainting
+        })
+      } finally {
+        endLoading()
+      }
     })
+
     watch(
       () => selectedGallery.value.galleryId,
       async (newVal, oldVal) => {
-        if (oldVal) {
-          scene.children
-            .filter(
-              (item) =>
-                item.userData.isPlaceableObject ||
-                item.userData.isPainting ||
-                item.userData.isFurnitureObject
-            )
-            .forEach((elem) => {
-              removeElement(scene, collidableMeshes, elem)
-            })
-          removeVideoFromScene(scene, 'Smart_TV_1')
-          cleanupAudio?.()
-          cleanupVideo?.()
-          clearSelectedGallery()
-          modelGalleryReady.value = false
-        }
-        if (newVal) {
-          if (selectedGallery.value.storeroom) {
-            Object.values(selectedGallery.value.storeroom)
-              .filter((elem) => elem.position)
-              .forEach((item) =>
-                createPainting({
-                  renderer,
+        startLoading('Обновляем экспозицию…')
+        try {
+          if (oldVal) {
+            scene.children
+              .filter(
+                (item) =>
+                  item.userData.isPlaceableObject ||
+                  item.userData.isPainting ||
+                  item.userData.isFurnitureObject
+              )
+              .forEach((elem) => {
+                removeElement(scene, collidableMeshes, elem)
+              })
+            removeVideoFromScene(scene, 'Smart_TV_1')
+            cleanupAudio?.()
+            cleanupVideo?.()
+            clearSelectedGallery()
+            modelGalleryReady.value = false
+          }
+          if (newVal) {
+            if (selectedGallery.value.storeroom) {
+              startLoading('Размещаем картины…')
+              Object.values(selectedGallery.value.storeroom)
+                .filter((elem) => elem.position)
+                .forEach((item) =>
+                  createPainting({
+                    renderer,
+                    point: new Vector3(
+                      item.position.point.x,
+                      item.position.point.y,
+                      item.position.point.z
+                    ),
+                    normal: new Vector3(
+                      item.position.normal.x,
+                      item.position.normal.y,
+                      item.position.normal.z
+                    ),
+                    scene,
+                    collidableMeshes,
+                    url: item.url,
+                    width: item.width,
+                    height: item.height,
+                    paintingId: item.id
+                  })
+                )
+              endLoading()
+            }
+            if (selectedGallery.value.store) {
+              startLoading('Загружаем 3D-объекты…')
+              for (const item of Object.values(selectedGallery.value.store).filter(
+                (elem) => elem.position
+              )) {
+                const modelData = await loadModel({
+                  url: item.url,
+                  targetHeight: item.targetHeight
+                })
+                await modelPositioning({
+                  scene,
+                  modelData,
                   point: new Vector3(
                     item.position.point.x,
                     item.position.point.y,
@@ -105,39 +149,16 @@ export default {
                     item.position.normal.y,
                     item.position.normal.z
                   ),
-                  scene,
+                  objectId: item.id,
                   collidableMeshes,
-                  url: item.url,
-                  width: item.width,
-                  height: item.height,
-                  paintingId: item.id
+                  rotation: item.position.rotation
                 })
-              )
-          }
-          if (selectedGallery.value.store) {
-            for (const item of Object.values(selectedGallery.value.store).filter(
-              (elem) => elem.position
-            )) {
-              const modelData = await loadModel({ url: item.url, targetHeight: item.targetHeight })
-              await modelPositioning({
-                scene,
-                modelData,
-                point: new Vector3(
-                  item.position.point.x,
-                  item.position.point.y,
-                  item.position.point.z
-                ),
-                normal: new Vector3(
-                  item.position.normal.x,
-                  item.position.normal.y,
-                  item.position.normal.z
-                ),
-                objectId: item.id,
-                collidableMeshes,
-                rotation: item.position.rotation
-              })
+              }
+              endLoading()
             }
           }
+        } finally {
+          endLoading()
         }
       },
       { immediate: true, deep: true }
@@ -146,14 +167,22 @@ export default {
       [() => selectedGallery.value.videoStore, () => modelGalleryReady.value],
       async ([newVideoStore, isModelReady], [oldVideoStore]) => {
         if (!isModelReady || !newVideoStore) return
-        if (oldVideoStore) {
-          Object.keys(oldVideoStore).forEach((key) => {
-            removeVideoFromScene(scene, key)
-            cleanupVideo?.()
-          })
-        }
-        for (const key of Object.keys(newVideoStore)) {
-          cleanupVideo = await useVideo(scene, newVideoStore[key])
+        startLoading('Подготавливаем видео…')
+        try {
+          if (
+            oldVideoStore &&
+            JSON.stringify(toRaw(newVideoStore)) !== JSON.stringify(toRaw(oldVideoStore))
+          ) {
+            Object.keys(oldVideoStore).forEach((key) => {
+              removeVideoFromScene(scene, key)
+              cleanupVideo?.()
+            })
+          }
+          for (const key of Object.keys(newVideoStore)) {
+            cleanupVideo = await useVideo(scene, newVideoStore[key])
+          }
+        } finally {
+          endLoading()
         }
       },
       { deep: true }
@@ -161,9 +190,15 @@ export default {
     watch(
       () => selectedGallery.value.audioStore,
       async (newVal, oldVal) => {
-        if (oldVal) cleanupAudio?.()
-        if (newVal) {
-          cleanupAudio = await useAudio(camera, newVal['backgroundMusic'])
+        if (!newVal && !oldVal) return
+        startLoading('Загружаем аудио…')
+        try {
+          if (oldVal) cleanupAudio?.()
+          if (newVal) {
+            cleanupAudio = await useAudio(camera, newVal['backgroundMusic'])
+          }
+        } finally {
+          endLoading()
         }
       }
     )

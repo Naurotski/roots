@@ -108,7 +108,6 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
     for (const angle of angles) {
       const testDir = rotateDirection(baseDirection, angle)
       if (isDirectionClear(origin, testDir)) {
-        console.log('Путь найден под углом', angle, 'градусов')
         return { direction: testDir, isOriginal: false }
       }
     }
@@ -136,7 +135,6 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
         mainTarget.clone().sub(controlsObject.position).normalize()
       )
     ) {
-      console.log('Путь к цели открыт — возвращаемся к ней')
       moveTarget = mainTarget.clone()
       isBypassing = false
     }

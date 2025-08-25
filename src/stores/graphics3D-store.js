@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { ref as dbRef, onChildAdded, onChildChanged, onChildRemoved, off } from 'firebase/database'
 import { db } from 'boot/firebase.js'
+import { Loading } from 'quasar'
 
 export const useGraphics3DStore = defineStore('graphics3D', () => {
   const listGalleries = ref({})
@@ -11,7 +12,20 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
   const selectedElementId = ref(null)
   const videoList = ref({})
   const audioList = ref({})
+  const activeLoading = ref(0)
 
+  function startLoading(message = 'Загружаем экспозицию…') {
+    if (activeLoading.value === 0) {
+      Loading.show({ group: 'gallery', message })
+    }
+    activeLoading.value++
+  }
+  function endLoading() {
+    activeLoading.value = Math.max(0, activeLoading.value - 1)
+    if (activeLoading.value === 0) {
+      Loading.hide('gallery')
+    }
+  }
   const updateListGalleries = (data, check) => {
     if (check === 'delete') {
       delete listGalleries.value[data.galleryId]
@@ -95,6 +109,9 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     selectedElementId,
     videoList,
     audioList,
+    activeLoading,
+    startLoading,
+    endLoading,
     updateVideoAudio,
     updateModels3d,
     updateCheckAutoMoving,

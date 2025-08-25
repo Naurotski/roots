@@ -28,7 +28,7 @@ export const useSceneSetup = (container) => {
 
   // Рендерер
   const renderer = new WebGLRenderer({
-    antialias: false,
+    antialias: true,
     powerPreference: 'high-performance',
     alpha: false,
     premultipliedAlpha: false

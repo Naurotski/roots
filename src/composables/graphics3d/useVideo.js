@@ -11,7 +11,6 @@ import {
   MathUtils,
   SRGBColorSpace
 } from 'three'
-import { Loading } from 'quasar'
 import { watch } from 'vue'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 import { storeToRefs } from 'pinia'
@@ -21,7 +20,6 @@ const { videoList } = storeToRefs(graphics3DStore)
 export const useVideo = async (scene, dataVideo) => {
   const object = scene.getObjectByName(dataVideo.videoId)
   if (!object || !object.geometry) return
-  Loading.show({ message: 'Loading...' })
   const video = document.createElement('video')
   try {
     video.src = dataVideo.url
@@ -85,7 +83,6 @@ export const useVideo = async (scene, dataVideo) => {
       height = planeMaxHeight
       width = height * videoAspect
     }
-
     const geometry = new PlaneGeometry(width, height)
     const screen = new Mesh(geometry, material)
 
@@ -111,8 +108,6 @@ export const useVideo = async (scene, dataVideo) => {
     }
   } catch (err) {
     console.error('Error loading model:', err)
-  } finally {
-    Loading.hide() // Скрыть лоадер
   }
   let checkPlay
   watch(

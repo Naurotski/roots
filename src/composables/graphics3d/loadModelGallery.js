@@ -1,9 +1,7 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Box3 } from 'three'
-import { Loading } from 'quasar'
 
 export const loadModelGallery = async (url, scene, collidableMeshes) => {
-  Loading.show({ message: 'Loading model...' })
   try {
     const loader = new GLTFLoader()
     const gltf = await loader.loadAsync(url)
@@ -24,8 +22,6 @@ export const loadModelGallery = async (url, scene, collidableMeshes) => {
     scene.add(model)
     return true
   } catch (err) {
-    console.error('Ошибка загрузки модели:', err)
-  } finally {
-    Loading.hide()
+    console.error(err)
   }
 }

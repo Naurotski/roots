@@ -3,10 +3,12 @@ import { watch } from 'vue'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 import { storeToRefs } from 'pinia'
 const graphics3DStore = useGraphics3DStore()
-const { audioList } = storeToRefs(graphics3DStore)
+const { audioList, activeLoading } = storeToRefs(graphics3DStore)
 const { updateVideoAudio } = graphics3DStore
 
 export const useAudio = async (camera, dataAudio) => {
+  let checkPlay
+  let bufferReady = false
   const listener = new AudioListener()
   camera.add(listener)
 
@@ -17,27 +19,31 @@ export const useAudio = async (camera, dataAudio) => {
     sound.setBuffer(buffer)
     sound.setLoop(true)
     sound.setVolume(0.5)
-    sound.play()
-    updateVideoAudio(dataAudio.audioId, 'play', true, 'audioStore')
+    bufferReady = true
   })
-  let checkPlay
+
   const stopWatcher = watch(
     audioList,
     (newValue) => {
-      if (newValue?.[dataAudio.audioId]) {
-        if (newValue?.[dataAudio.audioId]?.play) {
-          sound.play()
-          checkPlay = true
-        } else {
-          console.log('watch -----sound-', sound)
-          sound.pause()
-          checkPlay = false
-        }
+      if (newValue?.[dataAudio.audioId]?.play && activeLoading.value === 0 && bufferReady) {
+        sound.play()
+        checkPlay = true
+      } else {
+        sound.pause()
+        checkPlay = false
       }
     },
-    { deep: true }
+    { deep: true, immediate: true }
   )
-
+  watch(
+    activeLoading,
+    (newValue) => {
+      if (newValue === 0 && bufferReady) {
+        setTimeout(() => updateVideoAudio(dataAudio.audioId, 'play', true, 'audioStore'), 1000)
+      }
+    },
+    { immediate: true }
+  )
   const handleVisibilityChange = () => {
     if (document.hidden) {
       if (sound.isPlaying) {
