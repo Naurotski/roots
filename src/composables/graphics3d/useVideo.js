@@ -22,16 +22,16 @@ export const useVideo = async (scene, dataVideo) => {
   if (!object || !object.geometry) return
   const video = document.createElement('video')
   try {
-    video.src = dataVideo.url
+    video.crossOrigin = 'anonymous'
     video.loop = true
     video.playsInline = true
-    video.crossOrigin = 'anonymous'
     video.preload = 'auto'
     video.muted = true
+    video.src = dataVideo.url
     await new Promise((resolve) => {
       video.addEventListener('loadeddata', () => {
         video.pause()
-        resolve()
+        resolve(true)
       })
     })
 
@@ -110,7 +110,7 @@ export const useVideo = async (scene, dataVideo) => {
     console.error('Error loading model:', err)
   }
   let checkPlay
-  watch(
+  const stopWatch = watch(
     videoList,
     (newValue) => {
       if (newValue[dataVideo.videoId] && object && object.geometry) {
@@ -141,5 +141,6 @@ export const useVideo = async (scene, dataVideo) => {
   return () => {
     console.log('cleanupVideo----------------')
     document.removeEventListener('visibilitychange', handleVisibilityChange)
+    stopWatch?.()
   }
 }

@@ -38,8 +38,6 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
     if (intersects.length > 0) {
       const intersect = intersects[0]
       if (intersect.object.name === 'Smart_TV_1') {
-        console.log(intersect)
-        console.log(!!videoList.value['Smart_TV_1']?.play)
         updateVideoAudio('Smart_TV_1', 'play', !videoList.value['Smart_TV_1']?.play, 'videoStore')
         return
       }

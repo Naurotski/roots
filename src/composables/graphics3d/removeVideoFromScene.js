@@ -11,9 +11,10 @@ export const removeVideoFromScene = (scene, videoId) => {
     if (video && video.pause) {
       video.pause()
       video.src = ''
-      video.load()
     }
-
+    // корректно удалить текстуру
+    const tex = videoMesh.userData.videoTexture || videoMesh.material?.map
+    if (tex?.dispose) tex.dispose()
     // Удалить из сцены и освободить ресурсы
     scene.remove(videoMesh)
     videoMesh.geometry?.dispose?.()

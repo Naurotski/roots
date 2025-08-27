@@ -68,7 +68,7 @@
                           "
                           :action-id="action.id"
                         />
-                        <div v-if="action.lifeTime !== 'archive'" class="q-mb-sm">
+                        <div v-if="action.lifeTime !== 'archive'" class="q-my-sm">
                           <list-working-days-dialog
                             v-if="ticketsList[action.id]"
                             :action="action"
@@ -104,6 +104,7 @@
           <no-results v-else />
         </q-tab-panel>
       </q-tab-panels>
+
     </q-page>
   </transition>
 </template>

@@ -97,7 +97,7 @@ export default {
             cleanupAudio?.()
             cleanupVideo?.()
             clearSelectedGallery()
-            modelGalleryReady.value = false
+            // modelGalleryReady.value = false
           }
           if (newVal) {
             if (selectedGallery.value.storeroom) {
@@ -166,7 +166,6 @@ export default {
     watch(
       [() => selectedGallery.value.videoStore, () => modelGalleryReady.value],
       async ([newVideoStore, isModelReady], [oldVideoStore]) => {
-        if (!isModelReady || !newVideoStore) return
         startLoading('Подготавливаем видео…')
         try {
           if (
@@ -178,8 +177,10 @@ export default {
               cleanupVideo?.()
             })
           }
-          for (const key of Object.keys(newVideoStore)) {
-            cleanupVideo = await useVideo(scene, newVideoStore[key])
+          if (isModelReady && newVideoStore) {
+            for (const key of Object.keys(newVideoStore)) {
+              cleanupVideo = await useVideo(scene, newVideoStore[key])
+            }
           }
         } finally {
           endLoading()

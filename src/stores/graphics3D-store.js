@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { Loading, date } from 'quasar'
 import { ref as dbRef, onChildAdded, onChildChanged, onChildRemoved, off } from 'firebase/database'
 import { db } from 'boot/firebase.js'
-import { Loading } from 'quasar'
 
 export const useGraphics3DStore = defineStore('graphics3D', () => {
   const listGalleries = ref({})
@@ -14,13 +14,19 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
   const audioList = ref({})
   const activeLoading = ref(0)
 
-  function startLoading(message = 'Загружаем экспозицию…') {
+  const filteredListGalleries = computed(() =>
+    Object.values(listGalleries.value)
+      .filter((item) => item.openingDate <= date.formatDate(new Date(), 'YYYY/MM/DD'))
+      .sort((a, b) => b.closingDate.localeCompare(a.closingDate))
+      .slice(0, 3)
+  )
+  const startLoading = (message = 'Загружаем экспозицию…') => {
     if (activeLoading.value === 0) {
       Loading.show({ group: 'gallery', message })
     }
     activeLoading.value++
   }
-  function endLoading() {
+  const endLoading = () => {
     activeLoading.value = Math.max(0, activeLoading.value - 1)
     if (activeLoading.value === 0) {
       Loading.hide('gallery')
@@ -76,7 +82,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     onChildAdded(dbRef(db, path), async (data) => {
       console.log('onChildAdded-- ', data.key, data.val())
       if (parent === 'listGalleries') {
-        updateListGalleries({ galleryId: data.key, galleryName: data.val() })
+        updateListGalleries({ galleryId: data.key, ...data.val() })
       } else {
         updateSelectedGallery(data.key, data.val())
       }
@@ -84,7 +90,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     onChildChanged(dbRef(db, path), async (data) => {
       console.log('onChildChanged-- ', data.key, data.val())
       if (parent === 'listGalleries') {
-        updateListGalleries({ galleryId: data.key, galleryName: data.val() })
+        updateListGalleries({ galleryId: data.key, ...data.val() })
       } else {
         updateSelectedGallery(data.key, data.val())
       }
@@ -92,7 +98,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     onChildRemoved(dbRef(db, path), async (data) => {
       console.log('onChildRemoved-- ', data.key, data.val())
       if (parent === 'listGalleries') {
-        updateListGalleries({ galleryId: data.key, galleryName: data.val() }, 'delete')
+        updateListGalleries({ galleryId: data.key, ...data.val() }, 'delete')
       } else {
         updateSelectedGallery(data.key, data.val(), 'delete')
       }
@@ -110,6 +116,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     videoList,
     audioList,
     activeLoading,
+    filteredListGalleries,
     startLoading,
     endLoading,
     updateVideoAudio,

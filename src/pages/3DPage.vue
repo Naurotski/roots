@@ -4,6 +4,7 @@
     <how-to class="absolute-top-right q-mt-xl q-mr-xl" />
     <gallery-labels />
     <gallery3-d-video-sound />
+    <select-gallery />
   </q-page>
 </template>
 
@@ -17,6 +18,7 @@ import Gallery3D from 'components/graphics3d/Gallery3D.vue'
 import HowTo from 'components/graphics3d/HowTo.vue'
 import GalleryLabels from 'components/graphics3d/GalleryLabels.vue'
 import Gallery3DVideoSound from 'components/graphics3d/Gallery3DVideoSound.vue'
+import SelectGallery from 'components/graphics3d/SelectGallery.vue'
 
 export default {
   name: '3DPage',
@@ -24,7 +26,8 @@ export default {
     HowTo,
     Gallery3D,
     GalleryLabels,
-    Gallery3DVideoSound
+    Gallery3DVideoSound,
+    SelectGallery
   },
   props: {
     galleryId: {
