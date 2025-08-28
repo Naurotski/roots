@@ -8,8 +8,6 @@ import {
   SRGBColorSpace,
   ACESFilmicToneMapping,
   PCFSoftShadowMap,
-  AxesHelper,
-  GridHelper,
   HemisphereLight
 } from 'three'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
@@ -104,8 +102,8 @@ export const useSceneSetup = (container) => {
     }
   }
   // Добавим сетку и оси
-  scene.add(new GridHelper(10, 10))
-  scene.add(new AxesHelper(5))
+  // scene.add(new GridHelper(10, 10))
+  // scene.add(new AxesHelper(5))
 
   watch(
     selectedGallery,

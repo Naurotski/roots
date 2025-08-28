@@ -16,7 +16,7 @@
     :transition-show="$q.screen.xs ? 'slide-up' : 'fade'"
     :transition-hide="$q.screen.xs ? 'slide-down' : 'fade'"
   >
-    <q-card style="max-width: 1000px; border-radius: 25px">
+    <q-card style="border-radius: 25px" :style="action ? 'max-width: 1300px' : 'max-width: 1000px'">
       <div class="q-pt-md bg-white" style="position: sticky; top: 0; z-index: 10">
         <q-toolbar>
           <q-toolbar-title class="text-body1" style="white-space: normal !important">
@@ -56,11 +56,15 @@
       <q-separator class="q-mx-lg" color="negative" />
       <q-card-section>
         <div class="row q-gutter-xl justify-center">
+          <buy-access-card v-if="action" :action="action"/>
           <div
             v-for="(subscription, key) in subscriptionsData"
             :key="subscription.price"
-            class="col-11 col-sm-5 q-pa-md column"
-            :class="{ 'text-grey': statusActive && key === 'month' }"
+            class="col-11 q-pa-md column"
+            :class="[
+              { 'text-grey': statusActive && key === 'month' },
+              action ? 'col-sm-3' : 'col-sm-5'
+            ]"
             :style="
               key === 'month' && statusActive
                 ? 'border: 2px solid #CCCCCC; border-radius: 25px'
@@ -88,6 +92,7 @@
                 name="acceptTerms"
                 v-model="acceptMap[key]"
                 class="col-auto"
+                :disable="key === 'month' && statusActive"
               />
               <div class="col">
                 {{ $t('common.acceptHhe') }}
@@ -107,6 +112,7 @@
                 v-model="waiveMap[key]"
                 name="waiveWithdrawal"
                 class="col-auto"
+                :disable="key === 'month' && statusActive"
               />
               <div class="col">
                 {{ $t('subscription.refusalToRefundMoney') }}
@@ -145,19 +151,21 @@ import { useUserStore } from 'stores/user-store'
 import { prices } from 'src/pk_live'
 import { formatPaymentMethod } from 'src/composables/formatPaymentMethod'
 import ConfirmSubscriptionChangeDialog from 'components/dialogs/ConfirmSubscriptionChangeDialog.vue'
+import BuyAccessCard from 'components/cart/BuyAccessCard.vue'
 
 export default {
   name: 'SubscribeDialog',
   components: {
-    ConfirmSubscriptionChangeDialog
+    ConfirmSubscriptionChangeDialog,
+    BuyAccessCard
   },
-  props: ['actionId'],
+  props: ['action'],
   setup(props) {
     const $q = useQuasar()
     const { locale, t } = useI18n({ useScope: 'global' })
     const route = useRoute()
     const router = useRouter()
-    const { actionId } = toRefs(props)
+    const { action } = toRefs(props)
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
     const { showLoginDialog } = authStore
@@ -192,7 +200,7 @@ export default {
         showLoginDialog(true)
       }
       if (subscription.value?.status === 'active') {
-        router.push(`/3d/${actionId.value}`)
+        router.push(`/3d/${action.value.id.value}`)
       } else {
         dialogActivator.value = true
       }
@@ -239,7 +247,7 @@ export default {
         }
       } else {
         await payStripe({
-          success_url: actionId.value ? `/3d/${actionId.value}` : null,
+          success_url: action.value.id.value ? `/3d/${action.value.id.value}` : null,
           cancel_url: route.path,
           mode: 'subscription',
           line_items: [

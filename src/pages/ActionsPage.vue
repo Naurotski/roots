@@ -66,7 +66,7 @@
                             Object.keys(listGalleries).includes(action.id.toString()) &&
                             $q.screen.gt.md
                           "
-                          :action-id="action.id"
+                          :action="action"
                         />
                         <div v-if="action.lifeTime !== 'archive'" class="q-my-sm">
                           <list-working-days-dialog
