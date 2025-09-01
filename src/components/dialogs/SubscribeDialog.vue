@@ -5,7 +5,7 @@
       outline
       rounded
       class="full-width"
-      :class="{ 'text-negative': filteredListGalleriesNonDraft[action.id].payment }"
+      :class="{ 'text-negative': !filteredListGalleriesNonDraft[action.id].payment }"
       :label="$t('graphics3D.virtualGallery')"
       @click="handlerClick"
     />

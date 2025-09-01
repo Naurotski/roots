@@ -229,6 +229,7 @@ export default {
     virtualGallery: 'Virtual Gallery'
   },
   subscription: {
+    accessEnding: 'Access is ending',
     annualAccess: 'Annual access',
     automaticallyRenewed: 'Your subscription will be automatically renewed',
     bestValue: 'Best Value',
@@ -266,7 +267,7 @@ export default {
     yourCurrentPlan: 'Your current plan',
     monthList: {
       oneMonth:
-        'One-month access to the 3 most recent active exhibitions (the current exhibition you joined + the 2 previous ones)',
+        'One-month access to the 3 most recent active exhibitions (the current exhibition + the 2 previous ones)',
       immersive: 'Immersive experience of the exhibition, fully identical to the real-life version',
       information: 'Information on all the artworks presented in the exhibition',
       video: 'Exclusive project video by the artist',

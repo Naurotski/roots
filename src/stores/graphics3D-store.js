@@ -52,7 +52,6 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
       })
       if (newSubscription?.interval === 'month' && newSubscription.status === 'active') {
         Object.keys(listGalleries.value).forEach((key) => {
-          console.log(key)
           if (
             filteredListGalleriesMonthlySubscription.value.find((item) => item.galleryId === key)
           ) {

@@ -230,6 +230,7 @@ export default {
     virtualGallery: 'Galleria Virtuale'
   },
   subscription: {
+    accessEnding: "L'accesso sta terminando",
     annualAccess: 'Accesso annuale',
     automaticallyRenewed: 'Il tuo abbonamento verrà rinnovato automaticamente',
     bestValue: 'Miglior valore',
@@ -267,7 +268,7 @@ export default {
     yourCurrentPlan: 'Il tuo piano attuale',
     monthList: {
       oneMonth:
-        'Accesso di un mese alle 3 mostre attive più recenti (la mostra attuale a cui ti sei iscritto + le 2 precedenti)',
+        'Accesso di un mese alle 3 mostre attive più recenti (<a href="/actions/exhibitions">la mostra attuale</a> + le 2 precedenti)',
       immersive: 'Esperienza immersiva della mostra, perfettamente identica alla versione dal vivo',
       information: 'Informazioni su tutte le opere esposte nella mostra',
       video: 'Video esclusivo del progetto realizzato dall’artista',
