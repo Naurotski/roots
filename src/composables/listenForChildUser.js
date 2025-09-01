@@ -4,7 +4,7 @@ import { useUserStore } from 'stores/user-store.js'
 import { useStripeStore } from 'stores/stripe-store'
 
 const userStore = useUserStore()
-const { updateUserData, updateListOrders, updateListSubscriptions } = userStore
+const { updateUserData, updateListOrders, updateListSubscriptions, updateListPayments } = userStore
 const stripeStore = useStripeStore()
 const { updateCart } = stripeStore
 
@@ -24,6 +24,10 @@ const localFunction = (parent, data) => {
   if (parent === 'subscriptions') {
     console.log('onChildAdded-subscriptions -', data.key)
     updateListSubscriptions({ key: data.key, value: data.val() })
+  }
+  if (parent === 'payments') {
+    console.log('onChildAdded-payments -', data.key)
+    updateListPayments({ key: data.key, value: data.val() })
   }
 }
 export const listenForChildUser = (uid, parent) => {

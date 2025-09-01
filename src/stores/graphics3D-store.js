@@ -1,10 +1,13 @@
-import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { defineStore, storeToRefs } from 'pinia'
+import { computed, ref, watchEffect } from 'vue'
 import { Loading, date } from 'quasar'
 import { ref as dbRef, onChildAdded, onChildChanged, onChildRemoved, off } from 'firebase/database'
 import { db } from 'boot/firebase.js'
+import { useUserStore } from 'stores/user-store'
 
 export const useGraphics3DStore = defineStore('graphics3D', () => {
+  const userStore = useUserStore()
+  const { listSubscriptions, listPayments } = storeToRefs(userStore)
   const listGalleries = ref({})
   const selectedGallery = ref({})
   const models3d = ref({})
@@ -14,12 +17,51 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
   const audioList = ref({})
   const activeLoading = ref(0)
 
-  const filteredListGalleries = computed(() =>
-    Object.values(listGalleries.value)
-      .filter((item) => item.openingDate <= date.formatDate(new Date(), 'YYYY/MM/DD'))
+  const filteredListGalleriesNonDraft = computed(() =>
+    Object.fromEntries(
+      Object.entries(listGalleries.value).filter(
+        ([, value]) =>
+          !value.draft && value.openingDate <= date.formatDate(new Date(), 'YYYY/MM/DD')
+      )
+    )
+  )
+  const filteredListGalleriesMonthlySubscription = computed(() =>
+    Object.values(filteredListGalleriesNonDraft.value)
       .sort((a, b) => b.closingDate.localeCompare(a.closingDate))
       .slice(0, 3)
   )
+
+  watchEffect(() => {
+    let newSubscription = listSubscriptions.value?.['Virtual Gallery'] || {}
+    let newPayment = listPayments.value?.virtualGalleries || {}
+    if (newSubscription?.interval === 'year' && newSubscription.status === 'active') {
+      Object.keys(listGalleries.value).forEach(
+        (key) => (listGalleries.value[key]['payment'] = 'year')
+      )
+    } else {
+      Object.keys(listGalleries.value).forEach((key) => {
+        if (
+          Object.keys(newPayment).find(
+            (keyPay) => keyPay === key && newPayment[keyPay] >= Date.now()
+          )
+        ) {
+          listGalleries.value[key].payment = 'pay'
+        } else {
+          listGalleries.value[key].payment = ''
+        }
+      })
+      if (newSubscription?.interval === 'month' && newSubscription.status === 'active') {
+        Object.keys(listGalleries.value).forEach((key) => {
+          console.log(key)
+          if (
+            filteredListGalleriesMonthlySubscription.value.find((item) => item.galleryId === key)
+          ) {
+            listGalleries.value[key].payment = 'month'
+          }
+        })
+      }
+    }
+  })
   const startLoading = (message = 'Загружаем экспозицию…') => {
     if (activeLoading.value === 0) {
       Loading.show({ group: 'gallery', message })
@@ -109,6 +151,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
   }
   return {
     listGalleries,
+    filteredListGalleriesNonDraft,
     selectedGallery,
     models3d,
     isAutoMoving,
@@ -116,7 +159,6 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     videoList,
     audioList,
     activeLoading,
-    filteredListGalleries,
     startLoading,
     endLoading,
     updateVideoAudio,

@@ -17,7 +17,7 @@
     :rules="[(val) => (val && val.galleryName.length > 0) || 'Please choose something']"
     style="bottom: 3%; left: 5%; position: absolute; width: 300px"
   />
-<!--  для использования поиска все готово просто надо добавить use-input  в  <q-select-->
+  <!--  для использования поиска все готово просто надо добавить use-input  в  <q-select-->
   <!--    <pre>selectedGallery - {{ selectedGallery }}</pre>-->
 </template>
 
@@ -30,22 +30,24 @@ export default {
   name: 'SelectGallery',
   setup() {
     const graphics3DStore = useGraphics3DStore()
-    const { listGalleries, selectedGallery, selectedElementId, filteredListGalleries } = storeToRefs(graphics3DStore)
+    const { listGalleries, selectedGallery, selectedElementId, filteredListGalleriesNonDraft } =
+      storeToRefs(graphics3DStore)
     const { listenForChildEvents, clearSelectedGallery } = graphics3DStore
     if (!Object.keys(listGalleries.value).length) listenForChildEvents('listGalleries')
     const options = ref('')
     const sortedGalleries = computed(() =>
-      Object.values(filteredListGalleries.value).sort((a, b) => {
-        if (a.galleryName > b.galleryName) return 1
-        if (a.galleryName < b.galleryName) return -1
-        return 0
-      })
+      Object.values(filteredListGalleriesNonDraft.value)
+        .filter((item) => !!item.payment)
+        .sort((a, b) => {
+          if (a.galleryName > b.galleryName) return 1
+          if (a.galleryName < b.galleryName) return -1
+          return 0
+        })
     )
-
     const gallery = computed({
       get() {
         if (selectedGallery.value.galleryId) {
-          return listGalleries.value[selectedGallery.value.galleryId]
+          return filteredListGalleriesNonDraft.value[selectedGallery.value.galleryId]
         } else {
           return null
         }
@@ -66,7 +68,6 @@ export default {
       })
     }
     return {
-      listGalleries,
       gallery,
       options,
       selectedGallery,

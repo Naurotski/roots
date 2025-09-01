@@ -5,6 +5,7 @@
       outline
       rounded
       class="full-width"
+      :class="{ 'text-negative': filteredListGalleriesNonDraft[action.id].payment }"
       :label="$t('graphics3D.virtualGallery')"
       @click="handlerClick"
     />
@@ -16,24 +17,18 @@
     :transition-show="$q.screen.xs ? 'slide-up' : 'fade'"
     :transition-hide="$q.screen.xs ? 'slide-down' : 'fade'"
   >
-    <q-card style="border-radius: 25px" :style="action ? 'max-width: 1300px' : 'max-width: 1000px'">
-      <div class="q-pt-md bg-white" style="position: sticky; top: 0; z-index: 10">
+    <q-card
+      style="border-radius: 25px"
+      :style="action.id ? 'max-width: 1300px' : 'max-width: 1000px'"
+    >
+      <div class="q-mx-md bg-white" style="position: sticky; top: 0; z-index: 10">
         <q-toolbar>
           <q-toolbar-title class="text-body1" style="white-space: normal !important">
-            {{
-              statusActive
-                ? $t('subscription.upgradeYourPlan')
-                : $t('subscription.selectSubscription')
-            }}
+            {{ $t('subscription.enterAorta') }}
           </q-toolbar-title>
           <q-btn flat round icon="close" @click="dialogActivator = false" />
         </q-toolbar>
-        <q-separator color="negative" />
-      </div>
-
-      <q-card-section>
         <div v-if="$i18n.locale === 'en'">
-          <div class="text-h5">Enter AORTA — the gallery that’s always with you.</div>
           <div class="text-body2">
             Immerse yourself in a world where art surrounds you from every side. Our projects are
             not just exhibitions, but immersive stories that change the way you see the world and
@@ -43,7 +38,6 @@
           </div>
         </div>
         <div v-else>
-          <div class="text-h5">Entra in AORTA — la galleria che è sempre con te.</div>
           <div class="text-body2">
             Immergiti in un mondo in cui l’arte ti circonda da ogni lato. I nostri progetti non sono
             semplici mostre, ma storie immersive che cambiano il tuo modo di vedere il mondo — e
@@ -52,18 +46,18 @@
             ciò che domani diventerà leggendario.
           </div>
         </div>
-      </q-card-section>
-      <q-separator class="q-mx-lg" color="negative" />
+        <q-separator class="q-mt-md" color="negative" />
+      </div>
       <q-card-section>
         <div class="row q-gutter-xl justify-center">
-          <buy-access-card v-if="action" :action="action"/>
+          <buy-access-card v-if="action.id" :action="action" />
           <div
             v-for="(subscription, key) in subscriptionsData"
             :key="subscription.price"
             class="col-11 q-pa-md column"
             :class="[
               { 'text-grey': statusActive && key === 'month' },
-              action ? 'col-sm-3' : 'col-sm-5'
+              action.id ? 'col-sm-3' : 'col-sm-5'
             ]"
             :style="
               key === 'month' && statusActive
@@ -148,6 +142,7 @@ import { useQuasar } from 'quasar'
 import { useAuthStore } from 'stores/auth-store'
 import { useStripeStore } from 'stores/stripe-store'
 import { useUserStore } from 'stores/user-store'
+import { useGraphics3DStore } from 'stores/graphics3D-store'
 import { prices } from 'src/pk_live'
 import { formatPaymentMethod } from 'src/composables/formatPaymentMethod'
 import ConfirmSubscriptionChangeDialog from 'components/dialogs/ConfirmSubscriptionChangeDialog.vue'
@@ -159,7 +154,12 @@ export default {
     ConfirmSubscriptionChangeDialog,
     BuyAccessCard
   },
-  props: ['action'],
+  props: {
+    action: {
+      type: Object,
+      default: () => ({})
+    }
+  },
   setup(props) {
     const $q = useQuasar()
     const { locale, t } = useI18n({ useScope: 'global' })
@@ -172,8 +172,10 @@ export default {
     const stripeStore = useStripeStore()
     const { payStripe, subscriptionUpdate } = stripeStore
     const userStore = useUserStore()
-    const { userData, listSubscriptions } = storeToRefs(userStore)
+    const { userData, listSubscriptions, listPayments } = storeToRefs(userStore)
     const { subscriptionsData } = userStore
+    const graphics3DStore = useGraphics3DStore()
+    const { filteredListGalleriesNonDraft } = storeToRefs(graphics3DStore)
     const dialogActivator = ref(false)
     const activatorChangeDialog = ref(false)
     const subscriptionChangeData = ref({})
@@ -195,12 +197,12 @@ export default {
       { immediate: true }
     )
     const handlerClick = () => {
-      console.log('handlerClick')
       if (!loggedIn.value) {
         showLoginDialog(true)
+        return
       }
-      if (subscription.value?.status === 'active') {
-        router.push(`/3d/${action.value.id.value}`)
+      if (filteredListGalleriesNonDraft.value[action.value.id].payment) {
+        router.push(`/3d/${action.value.id}`)
       } else {
         dialogActivator.value = true
       }
@@ -247,7 +249,7 @@ export default {
         }
       } else {
         await payStripe({
-          success_url: action.value.id.value ? `/3d/${action.value.id.value}` : null,
+          success_url: action.value.id ? `/3d/${action.value.id}` : null,
           cancel_url: route.path,
           mode: 'subscription',
           line_items: [
@@ -283,6 +285,7 @@ export default {
       }
     }
     return {
+      filteredListGalleriesNonDraft,
       subscriptionsData,
       subscription,
       statusActive,
@@ -291,6 +294,7 @@ export default {
       subscriptionChangeData,
       acceptMap,
       waiveMap,
+      listPayments,
       handlerClick,
       submitForm
     }

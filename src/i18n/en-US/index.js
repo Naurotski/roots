@@ -237,6 +237,7 @@ export default {
     confirmChange: 'Confirm subscription change',
     costNewPlan: 'Cost of the new plan',
     creditUnused: 'Credit for unused',
+    enterAorta: 'Enter AORTA — the gallery that’s always with you.',
     month: 'month',
     monthly: 'Monthly subscription',
     monthlyAccess: 'Monthly access',
@@ -282,6 +283,12 @@ export default {
       possibility:
         'Possibility to revisit your favorite exhibitions at any time and as many times as you would like to',
       choose: 'If you choose this access of €99.99, you have 2 months free access during one year'
+    },
+    accessList: {
+      accessScope: 'One-month unlimited access — revisit as often as you wish',
+      immersive: 'Immersive journey — feel fully present inside the virtual exhibition',
+      information:
+        'Exclusive updates — be among the first to discover new artworks, objects, and features added to your chosen exhibition.'
     }
   }
 }

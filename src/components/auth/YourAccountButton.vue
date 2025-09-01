@@ -31,7 +31,7 @@
       </div>
       <div v-else class="text-center">{{ $t('auth.singIn') }}</div>
     </template>
-    <q-list>
+    <q-list v-if="$route.path !== '/account'">
       <q-item clickable to="/account">
         <q-item-section> {{ $t('auth.yourAccount') }} </q-item-section>
       </q-item>

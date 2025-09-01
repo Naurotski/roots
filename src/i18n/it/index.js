@@ -238,6 +238,7 @@ export default {
     confirmChange: "Confermare la modifica dell'abbonamento",
     costNewPlan: 'Costo del nuovo piano',
     creditUnused: 'Credito per non utilizzato',
+    enterAorta: 'Entra in AORTA — la galleria che è sempre con te.',
     month: 'mese',
     monthly: 'Abbonamento mensile',
     monthlyAccess: 'Accesso mensile',
@@ -284,6 +285,12 @@ export default {
       possibility:
         'Possibilità di rivedere le tue mostre preferite in qualsiasi momento e tutte le volte che desideri',
       choose: 'Con questo abbonamento da €99,99 hai 2 mesi di accesso gratuito durante l’anno'
+    },
+    accessList: {
+      accessScope: 'Accesso illimitato di un mese — ritorna tutte le volte che desideri',
+      immersive: 'Viaggio immersivo — senti la piena presenza all’interno della mostra virtuale',
+      information:
+        'Aggiornamenti esclusivi — sarai tra i primi a scoprire nuove opere, oggetti e funzionalità aggiunte alla mostra scelta'
     }
   }
 }

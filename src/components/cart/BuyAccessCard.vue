@@ -4,7 +4,7 @@
     style="border: 2px solid #000000; border-radius: 25px"
   >
     <div class="text-center">
-      <div class="text-h6">buy access</div>
+      <div class="text-h6">Buy access</div>
       <q-separator color="negative" class="q-mx-lg q-my-md" />
       <div class="text-h5">€ {{ price }}</div>
       <!--      <div class="text-subtitle2">/ {{ $t(subscription.interval) }}</div>-->
@@ -66,9 +66,9 @@ export default {
   },
   setup(props) {
     const list = [
-      'subscription.monthList.oneMonth',
-      'subscription.monthList.immersive',
-      'subscription.monthList.information'
+      'subscription.accessList.accessScope',
+      'subscription.accessList.immersive',
+      'subscription.accessList.information'
     ]
     const $q = useQuasar()
     const { locale, t } = useI18n({ useScope: 'global' })
@@ -87,13 +87,13 @@ export default {
           ? 'Nessuna descrizione'
           : action.value.descriptionIt.length < 200
           ? action.value.descriptionIt
-          : `${action.value.descriptionIt?.substring(0, 200)}...`
+          : `${action.value.descriptionIt?.substring(0, 300)}...`
       } else {
         return !action.value.description
           ? 'No description'
           : action.value.description.length < 200
           ? action.value.description
-          : `${action.value.description?.substring(0, 200)}...`
+          : `${action.value.description?.substring(0, 300)}...`
       }
     })
     const buyAccess = async () => {
@@ -121,7 +121,7 @@ export default {
                 description: description.value,
                 images: [action.value.urlImage],
                 metadata: {
-                  id: action.value.id,
+                  id: action.value.id
                 }
               }
             }
@@ -135,7 +135,6 @@ export default {
           email: userData.value.email,
           locale: locale.value,
           virtual: true
-          // imageUrl: subscriptionsData[interval].imageUrl
         },
         userData: {
           userId: userData.value.userId,

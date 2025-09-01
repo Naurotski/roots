@@ -57,6 +57,17 @@ export const useUserStore = defineStore('user', () => {
   const userData = ref({})
   const listOrders = ref({})
   const listSubscriptions = ref({})
+  const listPayments = ref({})
+
+  const makeUpdater =
+    (stateRef) =>
+    ({ key, value }) => {
+      if (value === 'logoutUser') {
+        stateRef.value = {}
+      } else {
+        stateRef.value[key] = value
+      }
+    }
 
   const setUserData = (data) => {
     if (data === 'logoutUser') {
@@ -71,20 +82,10 @@ export const useUserStore = defineStore('user', () => {
   const updateUserData = ({ key, value }) => {
     userData.value[key] = value
   }
-  const updateListOrders = ({ key, value }) => {
-    if (value === 'logoutUser') {
-      listOrders.value = {}
-    } else {
-      listOrders.value[key] = value
-    }
-  }
-  const updateListSubscriptions = ({ key, value }) => {
-    if (value === 'logoutUser') {
-      listSubscriptions.value = {}
-    } else {
-      listSubscriptions.value[key] = value
-    }
-  }
+  const updateListOrders = makeUpdater(listOrders)
+  const updateListSubscriptions = makeUpdater(listSubscriptions)
+  const updateListPayments = makeUpdater(listPayments)
+
   const updateUser = async ({ path, payload }) => {
     console.log('updateUser -------', path, payload)
     try {
@@ -167,10 +168,12 @@ export const useUserStore = defineStore('user', () => {
     userData,
     listOrders,
     listSubscriptions,
+    listPayments,
     setUserData,
     updateUserData,
     updateListOrders,
     updateListSubscriptions,
+    updateListPayments,
     updateUser,
     uploadImageToStorage,
     updateUserEmail,

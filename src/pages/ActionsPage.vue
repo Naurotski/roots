@@ -63,7 +63,9 @@
                         <subscribe-dialog
                           v-if="
                             action.lifeTime !== 'upcoming' &&
-                            Object.keys(listGalleries).includes(action.id.toString()) &&
+                            Object.keys(filteredListGalleriesNonDraft).includes(
+                              action.id.toString()
+                            ) &&
                             $q.screen.gt.md
                           "
                           :action="action"
@@ -104,7 +106,6 @@
           <no-results v-else />
         </q-tab-panel>
       </q-tab-panels>
-
     </q-page>
   </transition>
 </template>
@@ -159,7 +160,7 @@ export default {
     const { getArtists } = artistsStore
     if (!artistsList.value.length) getArtists()
     const graphics3DStore = useGraphics3DStore()
-    const { listGalleries } = storeToRefs(graphics3DStore)
+    const { listGalleries, filteredListGalleriesNonDraft } = storeToRefs(graphics3DStore)
     const { listenForChildEvents } = graphics3DStore
     if (!Object.keys(listGalleries.value).length) listenForChildEvents('listGalleries')
     const itemRefs = ref([])
@@ -349,7 +350,7 @@ export default {
       itemRefs,
       actionJsonLd,
       joinProjects,
-      listGalleries
+      filteredListGalleriesNonDraft
     }
   }
 }
