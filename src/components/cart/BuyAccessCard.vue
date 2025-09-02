@@ -4,10 +4,10 @@
     style="border: 2px solid #000000; border-radius: 25px"
   >
     <div class="text-center">
-      <div class="text-h6">Buy access</div>
+      <div class="text-h6">{{ $t('subscription.exhibitionPass') }}</div>
       <q-separator color="negative" class="q-mx-lg q-my-md" />
       <div class="text-h5">€ {{ price }}</div>
-      <!--      <div class="text-subtitle2">/ {{ $t(subscription.interval) }}</div>-->
+      <div class="text-subtitle2">{{ locale === 'en' ? $t(action.name) : $t(action.nameIt) }}</div>
     </div>
 
     <div class="col-grow flex items-center q-my-md">

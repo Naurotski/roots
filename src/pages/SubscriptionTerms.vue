@@ -120,6 +120,21 @@ const messages = {
           }
         ]
       },
+      s3a: {
+        id: 'single-gallery-access',
+        num: '3A',
+        title: 'One-time access to a single virtual gallery',
+        points: [
+          'You may purchase one-time access to an individual virtual gallery for a limited period indicated at checkout.',
+          'Access is activated immediately after payment confirmation and remains available until the stated expiration date; it does not auto-renew.',
+          'This is a single, non-recurring purchase and is separate from any subscription plan.',
+          {
+            html: '<strong>Right of withdrawal for digital services.</strong> If, at checkout, you give explicit consent to immediate access and acknowledge the loss of the 14-day withdrawal right after activation, no refund is due once access has started (see Section 5).'
+          },
+          'Access is personal and non-transferable. Sharing credentials or allowing third-party access is prohibited.',
+          'Technical requirements and acceptable use rules apply as set out in these Terms (see Sections 2 and 6).'
+        ]
+      },
       s4: {
         id: 'service-start',
         num: 4,
@@ -279,6 +294,21 @@ const messages = {
           }
         ]
       },
+      s3a: {
+        id: 'single-gallery-access',
+        num: '3A',
+        title: 'Accesso singolo a una galleria virtuale',
+        points: [
+          'Puoi acquistare un accesso singolo a una specifica galleria virtuale per un periodo limitato indicato al momento dell’acquisto.',
+          'L’accesso viene attivato immediatamente dopo la conferma del pagamento e resta disponibile fino alla data di scadenza indicata; non prevede rinnovo automatico.',
+          'Si tratta di un acquisto una tantum, distinto da qualsiasi piano in abbonamento.',
+          {
+            html: '<strong>Diritto di recesso per servizi digitali.</strong> Se, in fase di acquisto, presti consenso espresso all’accesso immediato e riconosci la perdita del diritto di recesso di 14 giorni dopo l’attivazione, non è dovuto alcun rimborso una volta avviato l’accesso (vedi Sezione 5).'
+          },
+          'L’accesso è personale e non trasferibile. È vietata la condivisione delle credenziali o l’accesso da parte di terzi.',
+          'Si applicano i requisiti tecnici e le regole d’uso previste nelle presenti Condizioni (vedi Sezioni 2 e 6).'
+        ]
+      },
       s4: {
         id: 'service-start',
         num: 4,
@@ -393,7 +423,22 @@ const messages = {
 
 const { t, locale } = useI18n({ useScope: 'local', messages })
 
-const structure = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13']
+const structure = [
+  's1',
+  's2',
+  's3',
+  's3a',
+  's4',
+  's5',
+  's6',
+  's7',
+  's8',
+  's9',
+  's10',
+  's11',
+  's12',
+  's13'
+]
 
 const sections = computed(() => {
   const dict = messages[locale.value.startsWith('it') ? 'it' : 'en'].sections
