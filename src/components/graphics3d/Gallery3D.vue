@@ -15,6 +15,7 @@ import { setAnimationLoop } from 'src/composables/graphics3d/setAnimationLoop'
 import { removeVideoFromScene } from 'src/composables/graphics3d/removeVideoFromScene'
 import { removeElement } from 'src/composables/graphics3d/removeElement'
 import { createPainting } from 'src/composables/graphics3d/createPainting'
+import { createSticker } from 'src/composables/graphics3d/createSticker'
 import { loadModel } from 'src/composables/graphics3d/loadModel'
 import { modelPositioning } from 'src/composables/graphics3d/modelPositioning'
 import { useVideo } from 'src/composables/graphics3d/useVideo'
@@ -88,6 +89,7 @@ export default {
                 (item) =>
                   item.userData.isPlaceableObject ||
                   item.userData.isPainting ||
+                  item.userData.isSticker ||
                   item.userData.isFurnitureObject
               )
               .forEach((elem) => {
@@ -126,6 +128,32 @@ export default {
                   })
                 )
               endLoading()
+            }
+            if (selectedGallery.value.storeStickers) {
+              Object.values(selectedGallery.value.storeStickers)
+                .filter((elem) => elem.position)
+                .forEach((item) =>
+                  createSticker({
+                    renderer,
+                    point: new Vector3(
+                      item.position.point.x,
+                      item.position.point.y,
+                      item.position.point.z
+                    ),
+                    normal: new Vector3(
+                      item.position.normal.x,
+                      item.position.normal.y,
+                      item.position.normal.z
+                    ),
+                    scene,
+                    collidableMeshes,
+                    url: item.url,
+                    width: item.width,
+                    height: item.height,
+                    stickerId: item.id,
+                    rotation: item.position.rotation
+                  })
+                )
             }
             if (selectedGallery.value.store) {
               startLoading('Загружаем 3D-объекты…')

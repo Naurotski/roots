@@ -35,56 +35,43 @@ const removeElement = async (scene, collidableMeshes, element) => {
   if (
     !element ||
     (!element.userData.isPainting &&
+      !element.userData.isSticker &&
       !element.userData.isPlaceableObject &&
       !element.userData.isFurnitureObject)
   )
     return
-  // Удаляем SpotLight и его цель
+
   const { spotLight, spotLightTarget, id } = element.userData
   if (spotLight) scene.remove(spotLight)
   if (spotLightTarget) scene.remove(spotLightTarget)
 
-  if (element.userData.isPainting) {
-    // Удаляем из collidableMeshes
-    const index = collidableMeshes.indexOf(element)
-    if (index !== -1) {
-      collidableMeshes.splice(index, 1)
-    }
-    // Освобождаем ресурсы
-    if (element.geometry) {
-      element.geometry.dispose()
-    }
-    if (Array.isArray(element.material)) {
-      element.material.forEach((mat) => {
-        disposeMaterial(mat)
-      })
-    } else if (element.material) {
-      disposeMaterial(element.material)
-    }
+  const removeFromCollidable = (mesh) => {
+    const i = collidableMeshes.indexOf(mesh)
+    if (i !== -1) collidableMeshes.splice(i, 1)
+  }
+  const disposeMesh = (mesh) => {
+    if (mesh.geometry) mesh.geometry.dispose()
+    if (Array.isArray(mesh.material)) mesh.material.forEach(disposeMaterial)
+    else if (mesh.material) disposeMaterial(mesh.material)
+  }
+
+  if (element.userData.isPainting || element.userData.isSticker) {
+    removeFromCollidable(element)
+    disposeMesh(element)
   } else {
     element.traverse((child) => {
       if (child.isMesh) {
-        const index = collidableMeshes.indexOf(child)
-        if (index !== -1) {
-          collidableMeshes.splice(index, 1)
-        }
-
-        if (child.geometry) child.geometry.dispose()
-        if (Array.isArray(child.material)) {
-          child.material.forEach(disposeMaterial)
-        } else if (child.material) {
-          disposeMaterial(child.material)
-        }
+        removeFromCollidable(child)
+        disposeMesh(child)
       }
     })
     updateModels3d({ id })
   }
-  // Обнуляем ссылки
   element.userData.spotLight = null
   element.userData.spotLightTarget = null
   element.userData.mixer?.stopAllAction()
   element.userData.mixer = null
-  // Удаляем из сцены
+
   scene.remove(element)
 }
 

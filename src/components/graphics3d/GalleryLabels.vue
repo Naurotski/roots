@@ -14,11 +14,7 @@
         </div>
       </q-card-section>
       <q-separator v-if="selectedElement.description" class="q-mx-md" color="negative" />
-      <q-card-section
-        v-if="selectedElement.description"
-        class="scroll"
-        style="max-height: 50vh"
-      >
+      <q-card-section v-if="selectedElement.description" class="scroll" style="max-height: 50vh">
         <div class="text-justify text-body2" style="white-space: pre-line">
           {{ selectedElement.description }}
         </div>
@@ -85,7 +81,11 @@ export default {
     const { updateSelectedElementId } = graphics3DStore
     const selectedElement = computed(() => {
       if (!selectedElementId) return
-      const typeStore = selectedElementId.value.isPainting ? 'storeroom' : 'store'
+      const typeStore = selectedElementId.value.isPainting
+        ? 'storeroom'
+        : selectedElementId.value.isSticker
+        ? 'storeStickers'
+        : 'store'
       let localElement = selectedGallery.value[typeStore][selectedElementId.value.id]
       return {
         ...localElement,

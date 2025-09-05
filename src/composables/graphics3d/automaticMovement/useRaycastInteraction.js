@@ -50,7 +50,7 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
       let normalForApproach = null
 
       // Получаем нормаль поверхности
-      if (taggedParent.userData.isPainting) {
+      if (taggedParent.userData.isPainting || taggedParent.userData.isSticker) {
         normalForApproach = intersect.face.normal
           .clone()
           .applyMatrix3(new Matrix3().getNormalMatrix(intersect.object.matrixWorld))
@@ -154,7 +154,8 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
       if (!selectedElementId || selectedElementId.id !== taggedParent.userData.id) {
         updateSelectedElementId({
           id: taggedParent.userData.id,
-          isPainting: taggedParent.userData.isPainting
+          isPainting: taggedParent.userData.isPainting,
+          isSticker: taggedParent.userData.isSticker
         })
       }
       taggedParent = null
