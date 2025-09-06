@@ -35,7 +35,7 @@ export default {
     let scene, renderer, camera, cleanupAudio, cleanupVideo
 
     onMounted(async () => {
-      startLoading('Инициализируем сцену…')
+      startLoading('Loading…')
       try {
         const { sceneSetupUnmounted, ...rest } = useSceneSetup(container)
         scene = rest.scene
@@ -48,7 +48,7 @@ export default {
         scene.add(controlsObject)
         unmountedArray.value.push(playerControlsUnmounted)
 
-        startLoading('Загружаем галерею…')
+        startLoading('Loading…')
         modelGalleryReady.value = await loadModelGallery(
           '/3Dmodels/gallery.glb',
           scene,
@@ -81,7 +81,7 @@ export default {
     watch(
       () => selectedGallery.value.galleryId,
       async (newVal, oldVal) => {
-        startLoading('Обновляем экспозицию…')
+        startLoading('Loading…')
         try {
           if (oldVal) {
             scene.children
@@ -103,7 +103,7 @@ export default {
           }
           if (newVal) {
             if (selectedGallery.value.storeroom) {
-              startLoading('Размещаем картины…')
+              startLoading('Loading…')
               Object.values(selectedGallery.value.storeroom)
                 .filter((elem) => elem.position)
                 .forEach((item) =>
@@ -130,6 +130,7 @@ export default {
               endLoading()
             }
             if (selectedGallery.value.storeStickers) {
+              startLoading('Loading…')
               Object.values(selectedGallery.value.storeStickers)
                 .filter((elem) => elem.position)
                 .forEach((item) =>
@@ -156,7 +157,7 @@ export default {
                 )
             }
             if (selectedGallery.value.store) {
-              startLoading('Загружаем 3D-объекты…')
+              startLoading('Loading…')
               for (const item of Object.values(selectedGallery.value.store).filter(
                 (elem) => elem.position
               )) {
@@ -194,7 +195,7 @@ export default {
     watch(
       [() => selectedGallery.value.videoStore, () => modelGalleryReady.value],
       async ([newVideoStore, isModelReady], [oldVideoStore]) => {
-        startLoading('Подготавливаем видео…')
+        startLoading('Loading…')
         try {
           if (
             oldVideoStore &&
@@ -220,7 +221,7 @@ export default {
       () => selectedGallery.value.audioStore,
       async (newVal, oldVal) => {
         if (!newVal && !oldVal) return
-        startLoading('Загружаем аудио…')
+        startLoading('Loading…')
         try {
           if (oldVal) cleanupAudio?.()
           if (newVal) {
