@@ -1,9 +1,9 @@
 import { Euler, MathUtils, Raycaster, Vector3 } from 'three'
 const wallRaycaster = new Raycaster() // для проверки препятствий снизу
-const downRay = new Raycaster() // для проверки где пол
-const moveSpeed = 1
+const downRay = new Raycaster()
+const velocity = new Vector3() // для проверки где пол
 
-const velocity = new Vector3()
+const moveSpeed = 1
 const maxStepHeight = 0.3
 const stepUpSpeed = 5 // скорость подъема
 let stepLerpAlpha = 0
@@ -41,10 +41,12 @@ export const handleStepUpCheck = (
     controlsObject.position.z
   )
   wallRaycaster.set(rayOriginHigh, direction)
+
   const highHits = wallRaycaster.intersectObjects(collidableMeshes, false)
   const canStepUp = highHits.length === 0 || highHits[0].distance > minDistance
+
   let deltaHeight = floorLevel - floorY
-  if (canStepUp) {
+  if (canStepUp && floorLevel - floorY <= maxStepHeight) {
     if (Math.abs(deltaHeight) > 0.01) {
       stepLerpAlpha = Math.min(1, stepLerpAlpha + delta * stepUpSpeed)
       controlsObject.position.y = MathUtils.lerp(

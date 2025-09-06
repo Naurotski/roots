@@ -1,11 +1,7 @@
 const findTaggedParent = (object) => {
   let current = object
   while (current) {
-    if (
-      current.userData.isPainting ||
-      current.userData.isSticker ||
-      current.userData.isPlaceableObject
-    ) {
+    if (current.userData.isPainting || current.userData.isPlaceableObject) {
       return current
     }
     current = current.parent
