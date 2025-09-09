@@ -1,9 +1,5 @@
 import { Euler, MathUtils, Raycaster, Vector3 } from 'three'
-import { storeToRefs } from 'pinia'
-import { useGraphics3DStore } from 'stores/graphics3D-store'
-const graphics3DStore = useGraphics3DStore()
-const { selectedElementId } = storeToRefs(graphics3DStore)// для проверки где пол
-const wallRaycaster = new Raycaster() // для проверки препятствий снизу
+const wallRaycaster = new Raycaster()
 const downRay = new Raycaster()
 const velocity = new Vector3()
 const moveSpeed = 1
@@ -49,7 +45,7 @@ export const handleStepUpCheck = (
   const canStepUp = highHits.length === 0 || highHits[0].distance > minDistance
 
   let deltaHeight = floorLevel - floorY
-  if (canStepUp && (floorLevel - floorY <= maxStepHeight || selectedElementId.value?.id)) {
+  if (canStepUp && deltaHeight <= maxStepHeight + 1) {
     if (Math.abs(deltaHeight) > 0.01) {
       stepLerpAlpha = Math.min(1, stepLerpAlpha + delta * stepUpSpeed)
       controlsObject.position.y = MathUtils.lerp(

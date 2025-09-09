@@ -1,7 +1,8 @@
 <template>
-  <transition name="fade">
+  <transition name="fade" mode="out-in">
     <q-card
       v-if="selectedElementId"
+      :key="selectedElementId.id"
       style="width: 300px; bottom: 15%; left: 15%; position: absolute"
     >
       <q-card-section class="text-center">
@@ -21,9 +22,10 @@
       </q-card-section>
     </q-card>
   </transition>
-  <transition name="fade">
+  <transition name="fade" mode="out-in">
     <q-card
       v-if="selectedElementId"
+      :key="selectedElementId.id"
       style="width: 300px; bottom: 15%; right: 15%; position: absolute"
     >
       <q-card-section v-if="selectedElement.price" class="text-center">
