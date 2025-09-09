@@ -49,7 +49,7 @@ export const usePlayerControls = (camera, renderer) => {
     head.rotation.x = Math.max(-Math.PI / 2 + 0.1, Math.min(Math.PI / 2 - 0.1, head.rotation.x))
     prevMouseX = e.clientX
     prevMouseY = e.clientY
-    if (selectedElementId.value) updateSelectedElementId(null)
+    if (selectedElementId.value) setTimeout(() => updateSelectedElementId(null), 500)
   }
 
   const onMouseup = () => {
@@ -63,7 +63,7 @@ export const usePlayerControls = (camera, renderer) => {
   const onKeydown = (e) => {
     if (isAutoMoving.value || paymentDialogChek.value) return
     keysPressed[e.code] = true
-    if (selectedElementId.value) updateSelectedElementId(null)
+    if (selectedElementId.value) setTimeout(() => updateSelectedElementId(null), 500)
   }
   const onKeyup = (e) => {
     if (isAutoMoving.value || paymentDialogChek.value) return

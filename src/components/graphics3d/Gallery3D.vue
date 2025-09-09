@@ -35,7 +35,6 @@ export default {
     let scene, renderer, camera, cleanupAudio, cleanupVideo
 
     onMounted(async () => {
-      startLoading('Loading…')
       try {
         const { sceneSetupUnmounted, ...rest } = useSceneSetup(container)
         scene = rest.scene
@@ -81,86 +80,96 @@ export default {
     watch(
       () => selectedGallery.value.galleryId,
       async (newVal, oldVal) => {
-        startLoading('Loading…')
         try {
           if (oldVal) {
             scene.children
               .filter(
-                (item) =>
-                  item.userData.isPlaceableObject ||
-                  item.userData.isPainting ||
-                  item.userData.isSticker ||
-                  item.userData.isFurnitureObject
+                (i) =>
+                  i.userData.isPlaceableObject ||
+                  i.userData.isPainting ||
+                  i.userData.isSticker ||
+                  i.userData.isFurnitureObject
               )
-              .forEach((elem) => {
-                removeElement(scene, collidableMeshes, elem)
-              })
+              .forEach((elem) => removeElement(scene, collidableMeshes, elem))
+
             removeVideoFromScene(scene, 'Smart_TV_1')
             cleanupAudio?.()
             cleanupVideo?.()
-            clearSelectedGallery()
-            // modelGalleryReady.value = false
+            await clearSelectedGallery()
           }
-          if (newVal) {
-            if (selectedGallery.value.storeroom) {
-              startLoading('Loading…')
-              Object.values(selectedGallery.value.storeroom)
-                .filter((elem) => elem.position)
-                .forEach((item) =>
-                  createPainting({
-                    renderer,
-                    point: new Vector3(
-                      item.position.point.x,
-                      item.position.point.y,
-                      item.position.point.z
-                    ),
-                    normal: new Vector3(
-                      item.position.normal.x,
-                      item.position.normal.y,
-                      item.position.normal.z
-                    ),
-                    scene,
-                    collidableMeshes,
-                    url: item.url,
-                    width: item.width,
-                    height: item.height,
-                    paintingId: item.id
-                  })
-                )
+
+          if (!newVal) return
+
+          if (selectedGallery.value.storeroom) {
+            startLoading('Loading paintings…')
+            try {
+              const items = Object.values(selectedGallery.value.storeroom).filter((e) => e.position)
+              const tasks = items.map((item) =>
+                createPainting({
+                  renderer,
+                  point: new Vector3(
+                    item.position.point.x,
+                    item.position.point.y,
+                    item.position.point.z
+                  ),
+                  normal: new Vector3(
+                    item.position.normal.x,
+                    item.position.normal.y,
+                    item.position.normal.z
+                  ),
+                  scene,
+                  collidableMeshes,
+                  url: item.url,
+                  width: item.width,
+                  height: item.height,
+                  paintingId: item.id
+                })
+              )
+              await Promise.all(tasks)
+            } finally {
               endLoading()
             }
-            if (selectedGallery.value.storeStickers) {
-              startLoading('Loading…')
-              Object.values(selectedGallery.value.storeStickers)
-                .filter((elem) => elem.position)
-                .forEach((item) =>
-                  createSticker({
-                    renderer,
-                    point: new Vector3(
-                      item.position.point.x,
-                      item.position.point.y,
-                      item.position.point.z
-                    ),
-                    normal: new Vector3(
-                      item.position.normal.x,
-                      item.position.normal.y,
-                      item.position.normal.z
-                    ),
-                    scene,
-                    collidableMeshes,
-                    url: item.url,
-                    width: item.width,
-                    height: item.height,
-                    stickerId: item.id,
-                    rotation: item.position.rotation
-                  })
-                )
+          }
+
+          if (selectedGallery.value.storeStickers) {
+            startLoading('Loading stickers…')
+            try {
+              const items = Object.values(selectedGallery.value.storeStickers).filter(
+                (e) => e.position
+              )
+              const tasks = items.map((item) =>
+                createSticker({
+                  renderer,
+                  point: new Vector3(
+                    item.position.point.x,
+                    item.position.point.y,
+                    item.position.point.z
+                  ),
+                  normal: new Vector3(
+                    item.position.normal.x,
+                    item.position.normal.y,
+                    item.position.normal.z
+                  ),
+                  scene,
+                  collidableMeshes,
+                  url: item.url,
+                  width: item.width,
+                  height: item.height,
+                  stickerId: item.id,
+                  rotation: item.position.rotation
+                })
+              )
+              await Promise.all(tasks)
+            } finally {
+              endLoading()
             }
-            if (selectedGallery.value.store) {
-              startLoading('Loading…')
-              for (const item of Object.values(selectedGallery.value.store).filter(
-                (elem) => elem.position
-              )) {
+          }
+
+          if (selectedGallery.value.store) {
+            startLoading('Loading objects…')
+            try {
+              const items = Object.values(selectedGallery.value.store).filter((e) => e.position)
+              const tasks = items.map(async (item) => {
                 const modelData = await loadModel({
                   url: item.url,
                   targetHeight: item.targetHeight
@@ -182,7 +191,9 @@ export default {
                   collidableMeshes,
                   rotation: item.position.rotation
                 })
-              }
+              })
+              await Promise.all(tasks)
+            } finally {
               endLoading()
             }
           }
@@ -195,7 +206,7 @@ export default {
     watch(
       [() => selectedGallery.value.videoStore, () => modelGalleryReady.value],
       async ([newVideoStore, isModelReady], [oldVideoStore]) => {
-        startLoading('Loading…')
+        startLoading('Loading video…')
         try {
           if (
             oldVideoStore &&
@@ -221,7 +232,7 @@ export default {
       () => selectedGallery.value.audioStore,
       async (newVal, oldVal) => {
         if (!newVal && !oldVal) return
-        startLoading('Loading…')
+        startLoading('Loading audio…')
         try {
           if (oldVal) cleanupAudio?.()
           if (newVal) {

@@ -1,3 +1,4 @@
+import { storeToRefs } from 'pinia'
 import { Box3, MathUtils, Matrix3, Matrix4, Raycaster, Vector2, Vector3 } from 'three'
 import { findTaggedParent } from 'src/composables/graphics3d/findIntersectionElement'
 import {
@@ -5,7 +6,6 @@ import {
   rotateHeadToTarget
 } from 'src/composables/graphics3d/automaticMovement/rotateToTarget'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
-import { storeToRefs } from 'pinia'
 const graphics3DStore = useGraphics3DStore()
 const { isAutoMoving, selectedElementId, videoList } = storeToRefs(graphics3DStore)
 const { updateCheckAutoMoving, updateSelectedElementId, updateVideoAudio } = graphics3DStore

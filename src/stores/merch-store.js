@@ -28,6 +28,7 @@ export const useMerchStore = defineStore('merch', () => {
     Glossy: '#000000',
     Black: '#000000'
   })
+  // если меняем merchLinks надо поменять правила в Realtime Database
   const merchLinks = ref([
     { label: 'links.mugs', name: 'mugs' },
     { label: 'links.bags', name: 'bags' },
