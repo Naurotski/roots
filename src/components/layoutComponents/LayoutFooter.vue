@@ -12,39 +12,16 @@
           <q-icon :name="item.icon" size="sm" class="q-mr-md" />
         </a>
       </div>
-      <div class="text-body1">&copy; {{ date }} Aorta</div>
+      <div class="text-body1" :class="{ 'q-mb-md': $q.screen.xs }">&copy; {{ date }} Aorta</div>
       <router-link
-        v-if="!$q.screen.xs"
+        v-for="link in links"
+        :key="link.to"
         class="text-body1"
         style="text-decoration: none; color: white"
-        to="/termsSale"
-        >{{ $t('auth.termsSale') }}</router-link
+        :to="link.to"
       >
-      <router-link
-        v-if="!$q.screen.xs"
-        class="text-body1"
-        style="text-decoration: none; color: white"
-        to="/privacy"
-        >{{ $t('auth.privacyPolicy') }}</router-link
-      >
-      <router-link
-        v-if="!$q.screen.xs"
-        class="text-body1"
-        style="text-decoration: none; color: white"
-        to="/rules"
-        >{{ $t('common.rulesGallery') }}</router-link
-      >
-    </div>
-    <div v-if="$q.screen.xs" class="row justify-around q-gutter-xs q-mt-xs">
-      <router-link class="text-body1" style="text-decoration: none; color: white" to="/termsSale">{{
-        $t('auth.termsSale')
-      }}</router-link>
-      <router-link class="text-body1" style="text-decoration: none; color: white" to="/privacy">{{
-        $t('auth.privacyPolicy')
-      }}</router-link>
-      <router-link class="text-body1" style="text-decoration: none; color: white" to="/rules">{{
-        $t('common.rulesGallery')
-      }}</router-link>
+        {{ $t(link.label) }}
+      </router-link>
     </div>
   </q-footer>
 </template>
@@ -63,9 +40,16 @@ export default {
       { icon: 'fa-brands fa-instagram', path: 'https://www.instagram.com/aorta.socialartgallery/' },
       { icon: 'fa-regular fa-envelope', path: 'mailto:aorta.gallery@gmail.com' }
     ])
+    const links = [
+      { to: '/termsSale', label: 'auth.termsSale' },
+      { to: '/privacy', label: 'auth.privacyPolicy' },
+      { to: '/rules', label: 'common.rulesGallery' },
+      { to: '/termsSubscription', label: 'subscription.subscriptionTerms' }
+    ]
     return {
       date,
-      socialMedia
+      socialMedia,
+      links
     }
   }
 }

@@ -239,7 +239,7 @@ const messages = {
           { html: 'Address: CORSO ITALIA 146, Pisa, 56125, Italy' },
           { html: 'Partita IVA: 02303430504' },
           {
-            html: 'Support e‑mail: <a href="mailto:support@aortagallery.com">support@aortagallery.com</a>'
+            html: 'Support e‑mail: <a href="mailto:aorta.gallery@gmail.com">aorta.gallery@gmail.com</a>'
           }
         ]
       }
@@ -413,7 +413,7 @@ const messages = {
           { html: 'Indirizzo: CORSO ITALIA 146, Pisa, 56125, Italia' },
           { html: 'Partita IVA: 02303430504' },
           {
-            html: 'E‑mail assistenza: <a href="mailto:support@aortagallery.com">support@aortagallery.com</a>'
+            html: 'E‑mail assistenza: <a href="mailto:aorta.gallery@gmail.com">aorta.gallery@gmail.com</a>'
           }
         ]
       }
