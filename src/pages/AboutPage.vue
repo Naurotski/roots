@@ -246,11 +246,11 @@
               <span>{{
                 $i18n.locale === 'en' ? 'Founder, curator' : 'Fondatrice e curatrice'
               }}</span>
-              Nadzeya Naurotskaya,
+              Nadzeya Naurotskaya
             </div>
             <div>
               <span>{{ $i18n.locale === 'en' ? 'Director' : 'Direttrice' }}</span>
-              Vera Kaptsiakova,
+              Vera Kaptsiakova
             </div>
           </div>
           <div class="row justify-center q-my-lg">
