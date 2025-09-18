@@ -46,18 +46,15 @@
             AORTA (ex-Roots Gallery) is a physical exhibition space in the center of Pisa (Italy).
             Since February 2023, we have been working as a pop-up gallery, and since July 2023 — in
             permanent locations.
-
             <br />
             We regularly organize immersive exhibitions, which are projects with strong social and
             philosophical content. Up to now, we have organized and carried out 21 exhibition
             projects on topics such as war, dictatorship, homelessness, bullying, ecology, body
             privacy, freedom, migration, etc. Cooperation involves more than 50 artists from
             different countries. AORTA is an international project.
-
             <br />
             <br />
             Our projects include:
-
             <ul>
               <li>
                 All traditional forms of contemporary art: painting, photography, installations,
@@ -78,12 +75,10 @@
               </li>
             </ul>
             Financial model (growsharing)
-
             <br />
             <br />
             The main idea is that the viewer is an active participant and sponsor of the project.
             Each project can be implemented through joint financing and contributions:
-
             <ul>
               <li>
                 For users its about tickets, pre-sale, support and contribution with rewards as
@@ -101,11 +96,9 @@
             remuneration for creating the virtual project, and the artist gets a fee for creating
             artworks. Exhibitions can be implemented in any city of the world with sufficient
             financial collections.
-
             <br />
             <br />
             Scaling and prospects:
-
             <ul>
               <li>
                 A large network of virtual exhibitions, which means a global access, like Netflix
@@ -131,7 +124,6 @@
               If you are interested in collaboration, write to us!
             </div>
           </div>
-
           <div v-else class="text-justify text-body1" style="white-space: pre-line">
             <div class="text-h6 text-bold" :class="{ 'text-center': $q.screen.xs }">
               AORTA è la prima galleria di arte sociale, che unisce arte, tecnologia e salute
@@ -246,7 +238,6 @@
               Se siete interessati a collaborare, scriveteci!
             </div>
           </div>
-
           <div class="q-mt-lg" :class="{ 'text-center': $q.screen.xs }">
             <a target="_blank" href="mailto:aorta.gallery@gmail.com">aorta.gallery@gmail.com</a>
             <div>+39 331 994 5585</div>
@@ -261,9 +252,7 @@
               <span>{{ $i18n.locale === 'en' ? 'Director' : 'Direttrice' }}</span>
               Vera Kaptsiakova,
             </div>
-
           </div>
-
           <div class="row justify-center q-my-lg">
             <div class="col-12 text-h6 text-center">{{ $t('common.yourMessage') }}</div>
             <mail-feedback class="col-12 col-md-8" />
