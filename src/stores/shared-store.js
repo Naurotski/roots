@@ -10,11 +10,11 @@ import { showErrorMessage } from 'src/composables/show-error-message.js'
 export const useSharedStore = defineStore('shared', () => {
   const essentialLinks = ref([
     { label: 'links.home', path: '/home' },
+    { label: 'links.about', path: '/about' },
     { label: 'links.artists', path: '/artists' },
     { label: 'links.exhibitions', path: '/actions/exhibitions' },
-    { label: 'links.shop', path: '/shop' },
-    { label: 'links.about', path: '/about' },
-    { label: 'links.sale', path: '/sale' }
+    { label: 'links.sale', path: '/sale' },
+    { label: 'links.shop', path: '/shop' }
   ])
   const actionsLinks = ref([
     { label: 'links.current', name: 'current' },
