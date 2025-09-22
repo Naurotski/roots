@@ -1,5 +1,4 @@
 export const removeVideoFromScene = (scene, videoId) => {
-  console.log('removeVideoFromScene ---')
   const videoMesh = scene.getObjectByName(`video-mesh-${videoId}`)
   if (videoMesh) {
     // Удалить текстуру, если она есть
@@ -14,7 +13,7 @@ export const removeVideoFromScene = (scene, videoId) => {
     }
     // корректно удалить текстуру
     const tex = videoMesh.userData.videoTexture || videoMesh.material?.map
-    if (tex?.dispose) tex.dispose()
+    tex.dispose()
     // Удалить из сцены и освободить ресурсы
     scene.remove(videoMesh)
     videoMesh.geometry?.dispose?.()

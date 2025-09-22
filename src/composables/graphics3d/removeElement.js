@@ -31,7 +31,6 @@ const disposeMaterial = (material) => {
 }
 
 const removeElement = async (scene, collidableMeshes, element) => {
-  console.log('removeElement ----')
   if (
     !element ||
     (!element.userData.isPainting &&
@@ -42,7 +41,10 @@ const removeElement = async (scene, collidableMeshes, element) => {
     return
 
   const { spotLight, spotLightTarget, id } = element.userData
-  if (spotLight) scene.remove(spotLight)
+  if (spotLight) {
+    spotLight.shadow?.map?.dispose?.()
+    scene.remove(spotLight)
+  }
   if (spotLightTarget) scene.remove(spotLightTarget)
 
   const removeFromCollidable = (mesh) => {

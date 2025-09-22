@@ -34,6 +34,24 @@ export default {
     const collidableMeshes = []
     let scene, renderer, camera, cleanupAudio, cleanupVideo
 
+    const pLimit = (n) => {
+      const q = []
+      let a = 0
+      return (fn) =>
+        new Promise((res, rej) => {
+          const run = () => {
+            a++
+            fn()
+              .then(res, rej)
+              .finally(() => {
+                a--
+                q.shift()?.()
+              })
+          }
+          a < n ? run() : q.push(run)
+        })
+    }
+    const limit = pLimit(4)
     onMounted(async () => {
       try {
         const { sceneSetupUnmounted, ...rest } = useSceneSetup(container)
@@ -47,7 +65,7 @@ export default {
         scene.add(controlsObject)
         unmountedArray.value.push(playerControlsUnmounted)
 
-        startLoading('Loading…')
+        startLoading('Loading Model…')
         modelGalleryReady.value = await loadModelGallery(
           '/3Dmodels/gallery.glb',
           scene,
@@ -80,8 +98,11 @@ export default {
     watch(
       () => selectedGallery.value.galleryId,
       async (newVal, oldVal) => {
+        if (newVal === oldVal) return
         try {
+          startLoading()
           if (oldVal) {
+            startLoading()
             scene.children
               .filter(
                 (i) =>
@@ -91,138 +112,131 @@ export default {
                   i.userData.isFurnitureObject
               )
               .forEach((elem) => removeElement(scene, collidableMeshes, elem))
-
             removeVideoFromScene(scene, 'Smart_TV_1')
             cleanupAudio?.()
             cleanupVideo?.()
             await clearSelectedGallery()
+            endLoading()
           }
-
           if (!newVal) return
-
           if (selectedGallery.value.storeroom) {
-            startLoading('Loading paintings…')
-            try {
-              const items = Object.values(selectedGallery.value.storeroom).filter((e) => e.position)
-              const tasks = items.map((item) =>
-                createPainting({
-                  renderer,
-                  point: new Vector3(
-                    item.position.point.x,
-                    item.position.point.y,
-                    item.position.point.z
-                  ),
-                  normal: new Vector3(
-                    item.position.normal.x,
-                    item.position.normal.y,
-                    item.position.normal.z
-                  ),
-                  scene,
-                  collidableMeshes,
-                  url: item.url,
-                  width: item.width,
-                  height: item.height,
-                  paintingId: item.id
-                })
+            startLoading('Loading Paintings...')
+            const items = Object.values(selectedGallery.value.storeroom).filter((e) => e.position)
+            await Promise.allSettled(
+              items.map((item) =>
+                limit(() =>
+                  createPainting({
+                    renderer,
+                    point: new Vector3(
+                      item.position.point.x,
+                      item.position.point.y,
+                      item.position.point.z
+                    ),
+                    normal: new Vector3(
+                      item.position.normal.x,
+                      item.position.normal.y,
+                      item.position.normal.z
+                    ),
+                    scene,
+                    collidableMeshes,
+                    url: item.url,
+                    width: item.width,
+                    height: item.height,
+                    paintingId: item.id
+                  })
+                )
               )
-              await Promise.all(tasks)
-            } finally {
-              endLoading()
-            }
+            )
+            endLoading()
           }
-
           if (selectedGallery.value.storeStickers) {
-            startLoading('Loading stickers…')
-            try {
-              const items = Object.values(selectedGallery.value.storeStickers).filter(
-                (e) => e.position
+            startLoading('Loading Stickers...')
+            const items = Object.values(selectedGallery.value.storeStickers).filter(
+              (e) => e.position
+            )
+            await Promise.allSettled(
+              items.map((item) =>
+                limit(() =>
+                  createSticker({
+                    renderer,
+                    point: new Vector3(
+                      item.position.point.x,
+                      item.position.point.y,
+                      item.position.point.z
+                    ),
+                    normal: new Vector3(
+                      item.position.normal.x,
+                      item.position.normal.y,
+                      item.position.normal.z
+                    ),
+                    scene,
+                    collidableMeshes,
+                    url: item.url,
+                    width: item.width,
+                    height: item.height,
+                    stickerId: item.id,
+                    rotation: item.position.rotation
+                  })
+                )
               )
-              const tasks = items.map((item) =>
-                createSticker({
-                  renderer,
-                  point: new Vector3(
-                    item.position.point.x,
-                    item.position.point.y,
-                    item.position.point.z
-                  ),
-                  normal: new Vector3(
-                    item.position.normal.x,
-                    item.position.normal.y,
-                    item.position.normal.z
-                  ),
-                  scene,
-                  collidableMeshes,
-                  url: item.url,
-                  width: item.width,
-                  height: item.height,
-                  stickerId: item.id,
-                  rotation: item.position.rotation
-                })
-              )
-              await Promise.all(tasks)
-            } finally {
-              endLoading()
-            }
+            )
+            endLoading()
           }
-
           if (selectedGallery.value.store) {
-            startLoading('Loading objects…')
-            try {
-              const items = Object.values(selectedGallery.value.store).filter((e) => e.position)
-              const tasks = items.map(async (item) => {
-                const modelData = await loadModel({
-                  url: item.url,
-                  targetHeight: item.targetHeight
+            startLoading('Loading Objects...')
+            const items = Object.values(selectedGallery.value.store).filter((e) => e.position)
+            await Promise.allSettled(
+              items.map((item) =>
+                limit(async () => {
+                  const modelData = await loadModel({
+                    url: item.url,
+                    targetHeight: item.targetHeight
+                  })
+                  modelPositioning({
+                    scene,
+                    modelData,
+                    point: new Vector3(
+                      item.position.point.x,
+                      item.position.point.y,
+                      item.position.point.z
+                    ),
+                    normal: new Vector3(
+                      item.position.normal.x,
+                      item.position.normal.y,
+                      item.position.normal.z
+                    ),
+                    objectId: item.id,
+                    collidableMeshes,
+                    rotation: item.position.rotation
+                  })
                 })
-                await modelPositioning({
-                  scene,
-                  modelData,
-                  point: new Vector3(
-                    item.position.point.x,
-                    item.position.point.y,
-                    item.position.point.z
-                  ),
-                  normal: new Vector3(
-                    item.position.normal.x,
-                    item.position.normal.y,
-                    item.position.normal.z
-                  ),
-                  objectId: item.id,
-                  collidableMeshes,
-                  rotation: item.position.rotation
-                })
-              })
-              await Promise.all(tasks)
-            } finally {
-              endLoading()
-            }
+              )
+            )
+            endLoading()
           }
         } finally {
           endLoading()
         }
       },
-      { immediate: true, deep: true }
+      { immediate: true, flush: 'post' }
     )
     watch(
       [() => selectedGallery.value.videoStore, () => modelGalleryReady.value],
       async ([newVideoStore, isModelReady], [oldVideoStore]) => {
-        startLoading('Loading video…')
-        try {
-          if (
-            oldVideoStore &&
-            JSON.stringify(toRaw(newVideoStore)) !== JSON.stringify(toRaw(oldVideoStore))
-          ) {
-            Object.keys(oldVideoStore).forEach((key) => {
-              removeVideoFromScene(scene, key)
-              cleanupVideo?.()
-            })
+        if (
+          oldVideoStore &&
+          JSON.stringify(toRaw(newVideoStore)) !== JSON.stringify(toRaw(oldVideoStore))
+        ) {
+          Object.keys(oldVideoStore).forEach((key) => {
+            removeVideoFromScene(scene, key)
+            cleanupVideo?.()
+          })
+        }
+        if (isModelReady && newVideoStore) {
+          startLoading('Loading Video...')
+          for (const key of Object.keys(newVideoStore)) {
+            cleanupVideo = await useVideo(scene, newVideoStore[key])
           }
-          if (isModelReady && newVideoStore) {
-            for (const key of Object.keys(newVideoStore)) {
-              cleanupVideo = await useVideo(scene, newVideoStore[key])
-            }
-          }
-        } finally {
           endLoading()
         }
       },
@@ -232,13 +246,10 @@ export default {
       () => selectedGallery.value.audioStore,
       async (newVal, oldVal) => {
         if (!newVal && !oldVal) return
-        startLoading('Loading audio…')
-        try {
-          if (oldVal) cleanupAudio?.()
-          if (newVal) {
-            cleanupAudio = await useAudio(camera, newVal['backgroundMusic'])
-          }
-        } finally {
+        if (oldVal) cleanupAudio?.()
+        if (newVal) {
+          startLoading('Loading Audio...')
+          cleanupAudio = await useAudio(camera, newVal['backgroundMusic'])
           endLoading()
         }
       }

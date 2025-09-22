@@ -1,9 +1,7 @@
 import { boot } from 'quasar/wrappers'
 import { storeToRefs } from 'pinia'
-import { LocalStorage, Loading } from 'quasar'
+import { LocalStorage } from 'quasar'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
-
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 export default boot(({ router }) => {
   router.beforeEach(async (to) => {
@@ -16,21 +14,15 @@ export default boot(({ router }) => {
     if (to.name === '3D Gallery') {
       const graphicsStore = useGraphics3DStore()
       const { filteredListGalleriesNonDraft } = storeToRefs(graphicsStore)
-      const { listenForChildEvents } = graphicsStore
+      const { getGraphics3D } = graphicsStore
       const id = String(to.params.galleryId)
+
       let payment = filteredListGalleriesNonDraft.value[id]?.payment
       if (!payment) {
-        // запускаем загрузку и ждём немного
-        listenForChildEvents('listGalleries')
-        Loading.show()
-        try {
-          await sleep(2000)
-          payment = filteredListGalleriesNonDraft.value[id]?.payment
-          if (!payment) {
-            return { name: 'Home' }
-          }
-        } finally {
-          Loading.hide()
+        await getGraphics3D('listGalleries')
+        payment = filteredListGalleriesNonDraft.value[id]?.payment
+        if (!payment) {
+          return { name: 'Home' }
         }
       }
     }

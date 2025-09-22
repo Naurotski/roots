@@ -11,7 +11,13 @@
           />
         </router-link>
       </q-toolbar-title>
-      <q-tabs narrow-indicator stretch class="gt-sm" indicator-color="negative">
+      <q-tabs
+        narrow-indicator
+        stretch
+        class="gt-sm"
+        indicator-color="negative"
+        active-color="negative"
+      >
         <q-route-tab
           class="text-body1"
           v-for="{ label, path } in essentialLinks"

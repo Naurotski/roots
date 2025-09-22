@@ -9,7 +9,7 @@ import {
   FrontSide
 } from 'three'
 
-export const createSticker = ({
+export const createSticker = async ({
   renderer,
   point,
   normal,
@@ -22,19 +22,20 @@ export const createSticker = ({
   rotation,
   offset = 0.001 // на сколько отодвинуть от стены
 }) => {
-  const texture = new TextureLoader().setCrossOrigin('anonymous').load(url, (t) => {
-    t.anisotropy = renderer.capabilities.getMaxAnisotropy()
-    t.colorSpace = SRGBColorSpace
-    t.minFilter = LinearMipMapLinearFilter // или LinearFilter для чётких изображений
-    t.magFilter = LinearFilter
-  })
-
+  const loader = new TextureLoader()
+  loader.setCrossOrigin?.('anonymous')
+  const texture = await loader.loadAsync(url)
+  await texture.image?.decode?.().catch(() => {})
+  texture.anisotropy = renderer.capabilities.getMaxAnisotropy()
+  texture.colorSpace = SRGBColorSpace
+  texture.minFilter = LinearMipMapLinearFilter
+  texture.magFilter = LinearFilter
   const material = new MeshStandardMaterial({
     map: texture,
-    transparent: true, // у картинки есть альфа
-    alphaTest: 0.01, // отбрасываем почти полностью прозрачные пиксели (меньше лишнего овердро)
-    depthWrite: false, // наклейка не «портит» буфер глубины
-    polygonOffset: true, // убираем мерцание с поверхностью стены
+    transparent: true,
+    alphaTest: 0.01,
+    depthWrite: false,
+    polygonOffset: true,
     polygonOffsetFactor: -1,
     polygonOffsetUnits: -1,
     side: FrontSide
@@ -42,13 +43,11 @@ export const createSticker = ({
 
   const sticker = new Mesh(new PlaneGeometry(+width, +height), material)
 
-  // позиционируем вплотную к стене
   sticker.position.copy(point).add(normal.clone().multiplyScalar(offset))
-  // ориентируем плоскость лицом наружу (как у картины)
   sticker.lookAt(point.clone().add(normal))
 
   if (rotation) {
-    sticker.rotateZ(rotation.z)
+    sticker.rotation.z = rotation.z
     sticker.userData.rotation = rotation.z
   }
 

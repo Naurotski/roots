@@ -14,6 +14,7 @@ import {
 import { watch } from 'vue'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 import { storeToRefs } from 'pinia'
+import { Notify } from 'quasar'
 const graphics3DStore = useGraphics3DStore()
 const { videoList } = storeToRefs(graphics3DStore)
 
@@ -107,6 +108,13 @@ export const useVideo = async (scene, dataVideo) => {
       videoTexture.needsUpdate = true
     }
   } catch (err) {
+    Notify.create({
+      type: 'negative',
+      message: err.message || 'An error occurred',
+      timeout: 5000,
+      position: 'bottom',
+      icon: 'error'
+    })
     console.error('Error loading model:', err)
   }
   let checkPlay
@@ -139,7 +147,6 @@ export const useVideo = async (scene, dataVideo) => {
   }
   document.addEventListener('visibilitychange', handleVisibilityChange)
   return () => {
-    console.log('cleanupVideo----------------')
     document.removeEventListener('visibilitychange', handleVisibilityChange)
     stopWatch?.()
   }

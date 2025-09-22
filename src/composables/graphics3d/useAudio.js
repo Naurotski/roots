@@ -7,25 +7,22 @@ const { audioList, activeLoading } = storeToRefs(graphics3DStore)
 const { updateVideoAudio } = graphics3DStore
 
 export const useAudio = async (camera, dataAudio) => {
-  let checkPlay
-  let bufferReady = false
+  let checkPlay = false
   const listener = new AudioListener()
   camera.add(listener)
 
   const sound = new Audio(listener)
   const audioLoader = new AudioLoader()
 
-  audioLoader.load(dataAudio.url, (buffer) => {
-    sound.setBuffer(buffer)
-    sound.setLoop(true)
-    sound.setVolume(0.5)
-    bufferReady = true
-  })
+  const buffer = await audioLoader.loadAsync(dataAudio.url)
+  sound.setBuffer(buffer)
+  sound.setLoop(true)
+  sound.setVolume(0.5)
 
-  const stopWatcher = watch(
+  const stopAudioWatch = watch(
     audioList,
     (newValue) => {
-      if (newValue?.[dataAudio.audioId]?.play && activeLoading.value === 0 && bufferReady) {
+      if (newValue?.[dataAudio.audioId]?.play && activeLoading.value === 0) {
         sound.play()
         checkPlay = true
       } else {
@@ -35,15 +32,19 @@ export const useAudio = async (camera, dataAudio) => {
     },
     { deep: true, immediate: true }
   )
-  watch(
+
+  const stopActiveWatch = watch(
     activeLoading,
-    (newValue) => {
-      if (newValue === 0 && bufferReady) {
-        setTimeout(() => updateVideoAudio(dataAudio.audioId, 'play', true, 'audioStore'), 1000)
+    (nv, ov) => {
+      if (ov > 0 && nv === 0) {
+        setTimeout(() => {
+          updateVideoAudio(dataAudio.audioId, 'play', true, 'audioStore')
+        }, 1000)
       }
     },
     { immediate: true }
   )
+
   const handleVisibilityChange = () => {
     if (document.hidden) {
       if (sound.isPlaying) {
@@ -58,14 +59,14 @@ export const useAudio = async (camera, dataAudio) => {
 
   document.addEventListener('visibilitychange', handleVisibilityChange)
   return () => {
-    console.log('cleanupAudio----------------')
     sound.stop?.()
     sound.disconnect?.()
     sound.parent?.remove(sound)
     camera.remove(listener)
     sound.buffer = null
     sound.source = null
-    stopWatcher()
+    stopAudioWatch()
+    stopActiveWatch()
     document.removeEventListener('visibilitychange', handleVisibilityChange)
   }
 }

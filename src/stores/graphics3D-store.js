@@ -1,9 +1,17 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { computed, ref, watchEffect } from 'vue'
 import { Loading, date } from 'quasar'
-import { ref as dbRef, onChildAdded, onChildChanged, onChildRemoved, off } from 'firebase/database'
+import {
+  ref as dbRef,
+  onChildAdded,
+  onChildChanged,
+  onChildRemoved,
+  off,
+  get
+} from 'firebase/database'
 import { db } from 'boot/firebase.js'
 import { useUserStore } from 'stores/user-store'
+import { showErrorMessage } from 'src/composables/show-error-message'
 
 export const useGraphics3DStore = defineStore('graphics3D', () => {
   const userStore = useUserStore()
@@ -61,16 +69,23 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
       }
     }
   })
-  const startLoading = (message = 'Загружаем экспозицию…') => {
+  const startLoading = (message = 'Loading…') => {
+    document.body.classList.add('gallery-loading')
     if (activeLoading.value === 0) {
-      Loading.show({ group: 'gallery', message })
+      Loading.show({
+        group: 'gallery',
+        message,
+        spinnerColor: 'negative',
+        messageColor: 'negative'
+      })
     }
     activeLoading.value++
   }
   const endLoading = () => {
     activeLoading.value = Math.max(0, activeLoading.value - 1)
     if (activeLoading.value === 0) {
-      Loading.hide('gallery')
+      Loading.hide()
+      document.body.classList.remove('gallery-loading')
     }
   }
   const updateListGalleries = (data, check) => {
@@ -117,11 +132,34 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
   }
   const updateCheckAutoMoving = (val) => (isAutoMoving.value = val)
   const updateSelectedElementId = (val) => (selectedElementId.value = val)
+
+  const getGraphics3D = async (parent) => {
+    try {
+      startLoading()
+      const result = await get(dbRef(db, `graphics3D/${parent}`))
+      const localObject = result.val()
+      if (parent === 'listGalleries') {
+        Object.keys(localObject).forEach((key) =>
+          updateListGalleries({ galleryId: key, ...localObject[key] })
+        )
+      } else {
+        Object.keys(localObject).forEach((key) => {
+          updateSelectedGallery(key, localObject[key])
+        })
+      }
+    } catch (error) {
+      showErrorMessage(error.message)
+      throw error
+    } finally {
+      endLoading()
+    }
+  }
+
   const listenForChildEvents = (parent) => {
-    console.log('listenForChildEvents - ', parent)
+    // console.log('listenForChildEvents - ', parent)
     let path = `graphics3D/${parent}`
     onChildAdded(dbRef(db, path), async (data) => {
-      console.log('onChildAdded-- ', data.key, data.val())
+      // console.log('onChildAdded-- ', data.key, data.val())
       if (parent === 'listGalleries') {
         updateListGalleries({ galleryId: data.key, ...data.val() })
       } else {
@@ -129,7 +167,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
       }
     })
     onChildChanged(dbRef(db, path), async (data) => {
-      console.log('onChildChanged-- ', data.key, data.val())
+      // console.log('onChildChanged-- ', data.key, data.val())
       if (parent === 'listGalleries') {
         updateListGalleries({ galleryId: data.key, ...data.val() })
       } else {
@@ -137,7 +175,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
       }
     })
     onChildRemoved(dbRef(db, path), async (data) => {
-      console.log('onChildRemoved-- ', data.key, data.val())
+      // console.log('onChildRemoved-- ', data.key, data.val())
       if (parent === 'listGalleries') {
         updateListGalleries({ galleryId: data.key, ...data.val() }, 'delete')
       } else {
@@ -164,6 +202,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     updateModels3d,
     updateCheckAutoMoving,
     updateSelectedElementId,
+    getGraphics3D,
     listenForChildEvents,
     clearListGalleries,
     clearSelectedGallery

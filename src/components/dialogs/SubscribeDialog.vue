@@ -34,7 +34,7 @@
             not just exhibitions, but immersive stories that change the way you see the world and
             these immersive stories stay with you forever. You’re inside the gallery, even if you’re
             thousands of kilometers away. New exhibitions appear every month, so don’t miss what
-            will become absolutely legendary tomorrow.
+            will become absolutely legendary tomorrow. The virtual gallery works only.
           </div>
         </div>
         <div v-else>
@@ -43,7 +43,7 @@
             semplici mostre, ma storie immersive che cambiano il tuo modo di vedere il mondo — e
             queste storie restano con te per sempre. Sei dentro la galleria, anche se ti trovi a
             migliaia di chilometri di distanza. Ogni mese nuove mostre prendono vita: non perdere
-            ciò che domani diventerà leggendario.
+            ciò che domani diventerà leggendario. La galleria virtuale funziona solo su PC.
           </div>
         </div>
         <q-separator class="q-mt-md" color="negative" />

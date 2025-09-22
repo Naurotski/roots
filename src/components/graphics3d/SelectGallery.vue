@@ -32,7 +32,7 @@ export default {
     const graphics3DStore = useGraphics3DStore()
     const { listGalleries, selectedGallery, selectedElementId, filteredListGalleriesNonDraft } =
       storeToRefs(graphics3DStore)
-    const { listenForChildEvents, clearSelectedGallery } = graphics3DStore
+    const { getGraphics3D, listenForChildEvents, clearSelectedGallery} = graphics3DStore
     if (!Object.keys(listGalleries.value).length) listenForChildEvents('listGalleries')
     const options = ref('')
     const sortedGalleries = computed(() =>
@@ -56,7 +56,7 @@ export default {
         if (selectedGallery.value.galleryId) {
           clearSelectedGallery()
         }
-        listenForChildEvents(`galleries/${val.galleryId}`)
+        getGraphics3D(`galleries/${val.galleryId}`)
       }
     })
     const filterFn = (val, update) => {

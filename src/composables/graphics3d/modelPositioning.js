@@ -4,7 +4,7 @@ import { useSpotLight } from 'src/composables/graphics3d/useSpotLight'
 const graphics3DStore = useGraphics3DStore()
 const { updateModels3d } = graphics3DStore
 
-export const modelPositioning = async ({
+export const modelPositioning = ({
   scene,
   modelData,
   point,

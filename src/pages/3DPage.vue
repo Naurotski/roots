@@ -42,10 +42,10 @@ export default {
     const { loggedIn } = storeToRefs(authStore)
     const graphics3DStore = useGraphics3DStore()
     const { selectedGallery } = storeToRefs(graphics3DStore)
-    const { listenForChildEvents, clearSelectedGallery } = graphics3DStore
+    const { clearSelectedGallery, getGraphics3D } = graphics3DStore
     if (selectedGallery.value.galleryId !== +galleryId.value) {
       clearSelectedGallery()
-      listenForChildEvents(`galleries/${galleryId.value}`)
+      getGraphics3D(`galleries/${galleryId.value}`)
     }
     watch(loggedIn, (val) => {
       if (!val) router.replace('/')

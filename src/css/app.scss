@@ -5,3 +5,6 @@
 .border-black {
   border: 2px solid #000000;
 }
+body.gallery-loading .q-loading__backdrop {
+  opacity:1 !important;
+}
