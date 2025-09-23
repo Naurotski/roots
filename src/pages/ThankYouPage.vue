@@ -59,7 +59,6 @@ export default {
     const route = useRoute()
     const name = route.query.name
     const printFul = route.query.printFul
-    console.log('name-printFul----', name, printFul)
     useMeta(() => {
       return {
         title: 'Aorta Social Art Gallery',

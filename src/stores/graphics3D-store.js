@@ -1,6 +1,6 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { computed, ref, watchEffect } from 'vue'
-import { Loading, date } from 'quasar'
+import { date } from 'quasar'
 import {
   ref as dbRef,
   onChildAdded,
@@ -23,7 +23,6 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
   const selectedElementId = ref(null)
   const videoList = ref({})
   const audioList = ref({})
-  const activeLoading = ref(0)
 
   const filteredListGalleriesNonDraft = computed(() =>
     Object.fromEntries(
@@ -69,25 +68,6 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
       }
     }
   })
-  const startLoading = (message = 'Loading…') => {
-    document.body.classList.add('gallery-loading')
-    if (activeLoading.value === 0) {
-      Loading.show({
-        group: 'gallery',
-        message,
-        spinnerColor: 'negative',
-        messageColor: 'negative'
-      })
-    }
-    activeLoading.value++
-  }
-  const endLoading = () => {
-    activeLoading.value = Math.max(0, activeLoading.value - 1)
-    if (activeLoading.value === 0) {
-      Loading.hide()
-      document.body.classList.remove('gallery-loading')
-    }
-  }
   const updateListGalleries = (data, check) => {
     if (check === 'delete') {
       delete listGalleries.value[data.galleryId]
@@ -135,7 +115,6 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
 
   const getGraphics3D = async (parent) => {
     try {
-      startLoading()
       const result = await get(dbRef(db, `graphics3D/${parent}`))
       const localObject = result.val()
       if (parent === 'listGalleries') {
@@ -150,8 +129,6 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     } catch (error) {
       showErrorMessage(error.message)
       throw error
-    } finally {
-      endLoading()
     }
   }
 
@@ -195,9 +172,6 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     selectedElementId,
     videoList,
     audioList,
-    activeLoading,
-    startLoading,
-    endLoading,
     updateVideoAudio,
     updateModels3d,
     updateCheckAutoMoving,

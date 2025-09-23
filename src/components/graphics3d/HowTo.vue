@@ -56,7 +56,7 @@
 <script setup>
 import { ref } from 'vue'
 const showCard = ref(true)
-setTimeout(() => (showCard.value = false), 20000)
+// setTimeout(() => (showCard.value = false), 20000)
 </script>
 <style scoped>
 .howto-row {

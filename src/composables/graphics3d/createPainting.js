@@ -8,6 +8,7 @@ import {
   TextureLoader,
   SRGBColorSpace
 } from 'three'
+import { manager } from 'src/composables/graphics3d/loadingManager'
 import { useSpotLight } from 'src/composables/graphics3d/useSpotLight'
 
 export const createPainting = async ({
@@ -21,7 +22,7 @@ export const createPainting = async ({
   height,
   paintingId
 }) => {
-  const loader = new TextureLoader()
+  const loader = new TextureLoader(manager)
   loader.setCrossOrigin?.('anonymous')
 
   const texture = await loader.loadAsync(url)

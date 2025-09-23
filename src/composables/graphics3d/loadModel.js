@@ -1,11 +1,12 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { AnimationMixer, Box3, Vector3 } from 'three'
+import { manager } from 'src/composables/graphics3d/loadingManager'
 
 export function loadModel({ url, targetHeight }) {
   return new Promise((resolve, reject) => {
-    const loader = new GLTFLoader()
     const size = new Vector3()
-
+    const loader = new GLTFLoader(manager)
+    loader.setCrossOrigin('anonymous')
     loader.load(
       url,
       (gltf) => {

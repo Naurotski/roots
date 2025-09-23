@@ -8,7 +8,7 @@ import {
   SRGBColorSpace,
   FrontSide
 } from 'three'
-
+import { manager } from 'src/composables/graphics3d/loadingManager'
 export const createSticker = async ({
   renderer,
   point,
@@ -22,7 +22,7 @@ export const createSticker = async ({
   rotation,
   offset = 0.001 // на сколько отодвинуть от стены
 }) => {
-  const loader = new TextureLoader()
+  const loader = new TextureLoader(manager)
   loader.setCrossOrigin?.('anonymous')
   const texture = await loader.loadAsync(url)
   await texture.image?.decode?.().catch(() => {})

@@ -1,5 +1,6 @@
 <template>
   <q-select
+    ref="gallerySel"
     v-model="gallery"
     :options="options"
     dense
@@ -11,14 +12,11 @@
     options-dense
     emit-value
     input-debounce="0"
-    lazy-rules
     :disable="!!selectedElementId?.id"
     @filter="filterFn"
-    :rules="[(val) => (val && val.galleryName.length > 0) || 'Please choose something']"
     style="bottom: 3%; left: 5%; position: absolute; width: 300px"
   />
   <!--  для использования поиска все готово просто надо добавить use-input  в  <q-select-->
-  <!--    <pre>selectedGallery - {{ selectedGallery }}</pre>-->
 </template>
 
 <script>
@@ -32,9 +30,10 @@ export default {
     const graphics3DStore = useGraphics3DStore()
     const { listGalleries, selectedGallery, selectedElementId, filteredListGalleriesNonDraft } =
       storeToRefs(graphics3DStore)
-    const { getGraphics3D, listenForChildEvents, clearSelectedGallery} = graphics3DStore
+    const { getGraphics3D, listenForChildEvents, clearSelectedGallery } = graphics3DStore
     if (!Object.keys(listGalleries.value).length) listenForChildEvents('listGalleries')
     const options = ref('')
+    const gallerySel = ref(null)
     const sortedGalleries = computed(() =>
       Object.values(filteredListGalleriesNonDraft.value)
         .filter((item) => !!item.payment)
@@ -57,6 +56,8 @@ export default {
           clearSelectedGallery()
         }
         getGraphics3D(`galleries/${val.galleryId}`)
+        gallerySel.value?.hidePopup()
+        gallerySel.value?.blur?.()
       }
     })
     const filterFn = (val, update) => {
@@ -70,6 +71,7 @@ export default {
     return {
       gallery,
       options,
+      gallerySel,
       selectedGallery,
       selectedElementId,
       filterFn

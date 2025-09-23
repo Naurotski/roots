@@ -20,6 +20,11 @@ import { loadModel } from 'src/composables/graphics3d/loadModel'
 import { modelPositioning } from 'src/composables/graphics3d/modelPositioning'
 import { useVideo } from 'src/composables/graphics3d/useVideo'
 import { useAudio } from 'src/composables/graphics3d/useAudio'
+import {
+  setLoadingLabel,
+  holdOverlay,
+  releaseOverlay
+} from 'src/composables/graphics3d/loadingManager'
 
 export default {
   name: 'Gallery3D',
@@ -27,7 +32,7 @@ export default {
   setup() {
     const graphics3DStore = useGraphics3DStore()
     const { selectedGallery, models3d } = storeToRefs(graphics3DStore)
-    const { startLoading, endLoading, clearSelectedGallery } = graphics3DStore
+    const { clearSelectedGallery } = graphics3DStore
     const container = ref(null)
     const unmountedArray = ref([])
     const modelGalleryReady = ref(false)
@@ -53,56 +58,51 @@ export default {
     }
     const limit = pLimit(4)
     onMounted(async () => {
-      try {
-        const { sceneSetupUnmounted, ...rest } = useSceneSetup(container)
-        scene = rest.scene
-        renderer = rest.renderer
-        camera = rest.camera
-        unmountedArray.value.push(sceneSetupUnmounted)
+      const { sceneSetupUnmounted, ...rest } = useSceneSetup(container)
+      scene = rest.scene
+      renderer = rest.renderer
+      camera = rest.camera
+      unmountedArray.value.push(sceneSetupUnmounted)
 
-        const { controlsObject, controlsObjectHeight, keysPressed, playerControlsUnmounted } =
-          usePlayerControls(camera, renderer)
-        scene.add(controlsObject)
-        unmountedArray.value.push(playerControlsUnmounted)
+      const { controlsObject, controlsObjectHeight, keysPressed, playerControlsUnmounted } =
+        usePlayerControls(camera, renderer)
+      scene.add(controlsObject)
+      unmountedArray.value.push(playerControlsUnmounted)
 
-        startLoading('Loading Model…')
-        modelGalleryReady.value = await loadModelGallery(
-          '/3Dmodels/gallery.glb',
-          scene,
-          collidableMeshes
-        )
-        endLoading()
-        const { updateMoveToPainting, raycastInteractionUnmounted } = useRaycastInteraction({
-          camera,
-          renderer,
-          controlsObject,
-          collidableMeshes
-        })
-        unmountedArray.value.push(raycastInteractionUnmounted)
+      setLoadingLabel('Loading Model…')
+      modelGalleryReady.value = await loadModelGallery(
+        '/3Dmodels/gallery.glb',
+        scene,
+        collidableMeshes
+      )
 
-        setAnimationLoop({
-          scene,
-          camera,
-          renderer,
-          controlsObject,
-          controlsObjectHeight,
-          collidableMeshes,
-          keysPressed,
-          updateMoveToPainting
-        })
-      } finally {
-        endLoading()
-      }
+      const { updateMoveToPainting, raycastInteractionUnmounted } = useRaycastInteraction({
+        camera,
+        renderer,
+        controlsObject,
+        collidableMeshes
+      })
+      unmountedArray.value.push(raycastInteractionUnmounted)
+
+      setAnimationLoop({
+        scene,
+        camera,
+        renderer,
+        controlsObject,
+        controlsObjectHeight,
+        collidableMeshes,
+        keysPressed,
+        updateMoveToPainting
+      })
     })
 
     watch(
       () => selectedGallery.value.galleryId,
       async (newVal, oldVal) => {
         if (newVal === oldVal) return
+        holdOverlay('Loading…')
         try {
-          startLoading()
           if (oldVal) {
-            startLoading()
             scene.children
               .filter(
                 (i) =>
@@ -116,11 +116,10 @@ export default {
             cleanupAudio?.()
             cleanupVideo?.()
             await clearSelectedGallery()
-            endLoading()
           }
           if (!newVal) return
           if (selectedGallery.value.storeroom) {
-            startLoading('Loading Paintings...')
+            setLoadingLabel('Loading Paintings…')
             const items = Object.values(selectedGallery.value.storeroom).filter((e) => e.position)
             await Promise.allSettled(
               items.map((item) =>
@@ -147,10 +146,9 @@ export default {
                 )
               )
             )
-            endLoading()
           }
           if (selectedGallery.value.storeStickers) {
-            startLoading('Loading Stickers...')
+            setLoadingLabel('Loading Stickers…')
             const items = Object.values(selectedGallery.value.storeStickers).filter(
               (e) => e.position
             )
@@ -180,10 +178,9 @@ export default {
                 )
               )
             )
-            endLoading()
           }
           if (selectedGallery.value.store) {
-            startLoading('Loading Objects...')
+            setLoadingLabel('Loading Objects…')
             const items = Object.values(selectedGallery.value.store).filter((e) => e.position)
             await Promise.allSettled(
               items.map((item) =>
@@ -212,10 +209,11 @@ export default {
                 })
               )
             )
-            endLoading()
           }
+        } catch (e) {
+          console.error(e)
         } finally {
-          endLoading()
+          releaseOverlay() // ← оверлей закроется только тут
         }
       },
       { immediate: true, flush: 'post' }
@@ -233,11 +231,10 @@ export default {
           })
         }
         if (isModelReady && newVideoStore) {
-          startLoading('Loading Video...')
+          setLoadingLabel('Loading Video…')
           for (const key of Object.keys(newVideoStore)) {
             cleanupVideo = await useVideo(scene, newVideoStore[key])
           }
-          endLoading()
         }
       },
       { deep: true }
@@ -248,9 +245,8 @@ export default {
         if (!newVal && !oldVal) return
         if (oldVal) cleanupAudio?.()
         if (newVal) {
-          startLoading('Loading Audio...')
+          setLoadingLabel('Loading Audio…')
           cleanupAudio = await useAudio(camera, newVal['backgroundMusic'])
-          endLoading()
         }
       }
     )

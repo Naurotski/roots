@@ -8,3 +8,7 @@
 body.gallery-loading .q-loading__backdrop {
   opacity:1 !important;
 }
+body.gallery-loading .q-loading__backdrop,
+body.gallery-loading .q-loading__box {
+  transition: none !important;
+}

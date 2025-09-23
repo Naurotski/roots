@@ -1,9 +1,10 @@
 import { AudioLoader, AudioListener, Audio } from 'three'
 import { watch } from 'vue'
-import { useGraphics3DStore } from 'stores/graphics3D-store'
 import { storeToRefs } from 'pinia'
+import { manager, activeLoading } from 'src/composables/graphics3d/loadingManager'
+import { useGraphics3DStore } from 'stores/graphics3D-store'
 const graphics3DStore = useGraphics3DStore()
-const { audioList, activeLoading } = storeToRefs(graphics3DStore)
+const { audioList } = storeToRefs(graphics3DStore)
 const { updateVideoAudio } = graphics3DStore
 
 export const useAudio = async (camera, dataAudio) => {
@@ -12,7 +13,7 @@ export const useAudio = async (camera, dataAudio) => {
   camera.add(listener)
 
   const sound = new Audio(listener)
-  const audioLoader = new AudioLoader()
+  const audioLoader = new AudioLoader(manager)
 
   const buffer = await audioLoader.loadAsync(dataAudio.url)
   sound.setBuffer(buffer)

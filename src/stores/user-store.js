@@ -23,7 +23,7 @@ export const useUserStore = defineStore('user', () => {
       price: '€9.99',
       interval: 'subscription.month',
       imageUrl:
-        'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/subscription%2FPhotoStub.png?alt=media&token=2e76a26d-2a14-4eda-b613-bdcd17c8af2c',
+        'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/subscription%2Ficon.png?alt=media&token=b2d72737-946d-4639-bedc-c840a7131ce0',
       list: [
         'subscription.monthList.oneMonth',
         'subscription.monthList.immersive',
@@ -39,7 +39,7 @@ export const useUserStore = defineStore('user', () => {
       price: '€99.99',
       interval: 'subscription.year',
       imageUrl:
-        'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/subscription%2FARTStub.png?alt=media&token=f062d68a-9242-4271-a220-af4e94e536b2',
+        'https://firebasestorage.googleapis.com/v0/b/roots-a7a88.appspot.com/o/subscription%2Ficon.png?alt=media&token=b2d72737-946d-4639-bedc-c840a7131ce0',
       list: [
         'subscription.yearList.fullAccess',
         'subscription.yearList.immersive',

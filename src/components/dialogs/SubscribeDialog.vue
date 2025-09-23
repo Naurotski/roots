@@ -34,7 +34,7 @@
             not just exhibitions, but immersive stories that change the way you see the world and
             these immersive stories stay with you forever. You’re inside the gallery, even if you’re
             thousands of kilometers away. New exhibitions appear every month, so don’t miss what
-            will become absolutely legendary tomorrow. The virtual gallery works only.
+            will become absolutely legendary tomorrow. The virtual gallery works only on PC.
           </div>
         </div>
         <div v-else>
