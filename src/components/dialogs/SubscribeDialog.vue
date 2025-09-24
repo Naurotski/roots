@@ -209,7 +209,9 @@ export default {
     }
 
     const submitForm = async ({ interval, updateChek = false, retrieveUpcomingChek = false }) => {
-      if (!acceptMap.value[interval] && !waiveMap.value[interval]) {
+      console.log(acceptMap.value[interval])
+      console.log(waiveMap.value[interval])
+      if (!acceptMap.value[interval] || !waiveMap.value[interval]) {
         $q.notify({
           type: 'warning',
           message: t('subscription.pleaseConfirm'),

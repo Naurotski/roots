@@ -98,7 +98,7 @@ export default {
     })
     const buyAccess = async () => {
       console.log('buyAccess')
-      if (!acceptMap.value && !waiveMap.value) {
+      if (!acceptMap.value || !waiveMap.value) {
         $q.notify({
           type: 'warning',
           message: t('subscription.pleaseConfirm'), //??????
