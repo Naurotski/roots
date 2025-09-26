@@ -200,6 +200,8 @@ export default {
     childrenNeedAdult: 'A child ticket cannot be selected without an adult',
     emailForTicket: 'Email address for ticket delivery',
     selectDate: 'Select date and time to purchase tickets',
+    sorry:
+      'We’re sorry — all tickets to the gallery are currently sold out due to high demand. Thank you for your interest.',
     tickets: 'tickets'
   },
   jsonLd: {

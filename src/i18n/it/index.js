@@ -199,6 +199,8 @@ export default {
     childrenNeedAdult: 'Il biglietto per bambini non può essere selezionato senza un adulto',
     emailForTicket: 'Indirizzo email per la consegna dei biglietti',
     selectDate: 'Seleziona data e ora per acquistare i biglietti',
+    sorry:
+      'Ci scusiamo — i biglietti per la galleria sono al momento esauriti a causa dell’elevata richiesta. Grazie per l’interesse.',
     tickets: 'biglietti'
   },
   jsonLd: {

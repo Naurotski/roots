@@ -79,7 +79,7 @@
           class="example-row-equal-width flex flex-center"
           style="height: 70%"
         >
-          <div class="full-width q-pb-xs">
+          <div v-if="Object.keys(currentListTickets).length" class="full-width q-pb-xs">
             <div v-for="(date, dateKey) in currentListTickets" :key="dateKey" class="row">
               <div class="" :class="['flex flex-center', $q.screen.xs ? 'col-5' : 'col-3 ']">
                 {{
@@ -112,6 +112,7 @@
               </div>
             </div>
           </div>
+          <div v-else class="text-h5 text-center">{{ $t('tickets.sorry') }}</div>
         </q-card-section>
         <div v-else style="height: 70%" class="flex flex-center">
           <timed-tickets
