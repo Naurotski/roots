@@ -118,7 +118,7 @@
           :class="$q.screen.xs ? 'q-mb-md' : 'q-mr-md'"
           :src="urlImage"
           alt="photo"
-          @click="() => $router.push(`/3d/${id}`)"
+          @click="$q.screen.gt.md ? $router.push(`/3d/${id}`) : null"
         />
         <div class="col-12 col-sm-9 column justify-center" :class="{ 'text-center': $q.screen.xs }">
           <div class="text-h5">{{ name }}</div>
