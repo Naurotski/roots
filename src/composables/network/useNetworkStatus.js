@@ -38,7 +38,6 @@ const showUnreachable = () => {
   })
 }
 const showSlow = (ms) => {
-  console.log('showSlow ---- ms', ms)
   if (!isOnline.value || !isReachable.value) return
   const type = ms >= VERY_SLOW_MS ? 'warning' : 'info'
   const msg = ms >= VERY_SLOW_MS ? t('common.verySlowInternet') : t('common.slowInternet')
@@ -51,7 +50,6 @@ const showSlow = (ms) => {
   })
 }
 async function pingOnce() {
-  console.log('pingOnce -------- ')
   const controller = new AbortController()
   const tim = setTimeout(() => controller.abort(), TIMEOUT_MS)
   const start = performance.now()
@@ -70,7 +68,6 @@ async function pingOnce() {
           unreachableNtf()
           unreachableNtf = null
         }
-        console.log('pingOnce - latencyMs.value-------', latencyMs.value)
         if (latencyMs.value >= SLOW_MS) showSlow(latencyMs.value)
         clearTimeout(tim)
         return true
@@ -79,11 +76,9 @@ async function pingOnce() {
       }
     }
     isReachable.value = false
-    console.log('++++++1')
     showUnreachable()
   } catch (_) {
     isReachable.value = false
-    console.log('++++++2')
     showUnreachable()
   } finally {
     clearTimeout(t)
@@ -92,7 +87,6 @@ async function pingOnce() {
 }
 
 function handleOnline() {
-  console.log('handleOnline ------------')
   if (offlineNtf) {
     offlineNtf()
     offlineNtf = null
@@ -100,14 +94,12 @@ function handleOnline() {
   pingOnce()
 }
 function handleOffline() {
-  console.log('handleOffline ------------')
   isOnline.value = false
   isReachable.value = false
   showOffline()
 }
 
 function startNetworkStatus() {
-  console.log('startWatch -------')
   stopNetworkStatus()
   if (!isOnline.value) showOffline()
   window.addEventListener('online', handleOnline)
