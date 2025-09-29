@@ -1,9 +1,11 @@
 import { boot } from 'quasar/wrappers'
 import { storeToRefs } from 'pinia'
 import { LocalStorage } from 'quasar'
+import { startNetworkStatus } from 'src/composables/network/useNetworkStatus'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 
 export default boot(({ router }) => {
+  startNetworkStatus()
   router.beforeEach(async (to) => {
     if (
       !LocalStorage.getItem('loggedIn') &&

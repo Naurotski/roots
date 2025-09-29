@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { onMounted, onUnmounted, ref, toRaw, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, toRaw, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { Vector3 } from 'three'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
@@ -25,6 +25,7 @@ import {
   holdOverlay,
   releaseOverlay
 } from 'src/composables/graphics3d/loadingManager'
+import { latencyMs } from 'src/composables/network/useNetworkStatus'
 
 export default {
   name: 'Gallery3D',
@@ -39,24 +40,42 @@ export default {
     const collidableMeshes = []
     let scene, renderer, camera, cleanupAudio, cleanupVideo
 
-    const pLimit = (n) => {
+    // 1) маппинг латентности -> параллелизм
+    const cap = computed(() => {
+      const ms = latencyMs.value ?? 200
+      if (ms < 150) return 8
+      if (ms < 400) return 4
+      if (ms < 1000) return 2
+      return 1
+    })
+
+    function createAdaptiveLimit(capRef) {
       const q = []
-      let a = 0
+      let inFlight = 0
+
+      const pump = () => {
+        while (inFlight < capRef.value && q.length) q.shift()()
+      }
+      // при смене cap — сразу «раскачиваем» очередь
+      watch(capRef, pump, { flush: 'post' })
+
       return (fn) =>
         new Promise((res, rej) => {
           const run = () => {
-            a++
-            fn()
+            inFlight++
+            Promise.resolve()
+              .then(fn)
               .then(res, rej)
               .finally(() => {
-                a--
-                q.shift()?.()
+                inFlight--
+                pump()
               })
           }
-          a < n ? run() : q.push(run)
+          inFlight < capRef.value ? run() : q.push(run)
         })
     }
-    const limit = pLimit(4)
+
+    const limit = createAdaptiveLimit(cap)
     onMounted(async () => {
       const { sceneSetupUnmounted, ...rest } = useSceneSetup(container)
       scene = rest.scene
