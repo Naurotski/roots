@@ -95,12 +95,12 @@ export default {
     const { addProductToCart, updateCart } = stripeStore
     const merchStore = useMerchStore()
     const { merchList, colorMappingPrintFul } = storeToRefs(merchStore)
-    const { listenForChildMerch, checkExistenceMerch } = merchStore
+    const { listenForChildMerch, getRealtimeDatabase } = merchStore
     if (!merchList.value[dataCard.value.rubric]) listenForChildMerch(dataCard.value.rubric)
 
     setTimeout(() => {
       if (!merchList.value[dataCard.value.rubric]?.[dataCard.value.id.split('_')[0]]) {
-        checkExistenceMerch(
+        getRealtimeDatabase(
           `merch/${dataCard.value.rubric}/${dataCard.value.id.split('_')[0]}`
         ).then((result) => {
           if (!result) deleteProduct()
