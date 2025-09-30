@@ -315,7 +315,7 @@ export default {
                   "logo": "https://aortagallery.com/logo.png",
                   "contactPoint": {
                     "@type": "ContactPoint",
-                    "telephone": "+39-392-5568834",
+                    "telephone": "+39-331-9945585",
                     "contactType": t('jsonLd.customerService'),
                     "email": "support@aortagallery.com"
                   }

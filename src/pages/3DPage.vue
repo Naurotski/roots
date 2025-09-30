@@ -103,89 +103,86 @@ export default {
             href: `https://aortagallery.com/3d/${galleryId.value}`
           }
         },
-        // script: {
-        //   jsonLd: {
-        //     type: 'application/ld+json',
-        //     // prettier-ignore
-        //     innerHTML: JSON.stringify({
-        //       "@context": "https://schema.org",
-        //       "@type": "ExhibitionEvent",
-        //       "name": name,
-        //       "description": description,
-        //       "eventStatus": "https://schema.org/EventScheduled",
-        //       "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
-        //       "isAccessibleForFree": false,
-        //       "image": heroImage,
-        //       "url": virtualUrl,
-        //       "location": {
-        //         "@type": "VirtualLocation",
-        //         "url": virtualUrl
-        //       },
-        //       "organizer": {
-        //         "@type": "Organization",
-        //         "name": t('meta.homeTitle'),
-        //         "url": "https://aortagallery.com",
-        //         "logo": "https://aortagallery.com/logo.png",
-        //         "contactPoint": {
-        //           "@type": "ContactPoint",
-        //           "telephone": "+39-392-5568834",
-        //           "contactType": t('jsonLd.customerService'),
-        //           "email": "support@aortagallery.com"
-        //         }
-        //       },
-        //       // При желании добавь реальные даты запуска/актуальности
-        //       "startDate": virtualJsonLd.value?.startDate || new Date().toISOString().slice(0,10),
-        //       "endDate": virtualJsonLd.value?.endDate,
-        //       "offers": [
-        //         {
-        //           "@type": "Offer",
-        //           "name": locale.value === 'it' ? "Abbonamento Mensile" : "Monthly Subscription",
-        //           "category": "subscription",
-        //           "url": `${virtualUrl}?plan=monthly`,
-        //           "price": "9.99",
-        //           "priceCurrency": "EUR",
-        //           "availability": "https://schema.org/InStock",
-        //           "priceSpecification": {
-        //             "@type": "UnitPriceSpecification",
-        //             "price": 9.99,
-        //             "priceCurrency": "EUR",
-        //             "billingDuration": 1,
-        //             "billingPeriod": "P1M"
-        //           }
-        //         },
-        //         {
-        //           "@type": "Offer",
-        //           "name": locale.value === 'it' ? "Abbonamento Annuale" : "Yearly Subscription",
-        //           "category": "subscription",
-        //           "url": `${virtualUrl}?plan=yearly`,
-        //           "price": "99.99",
-        //           "priceCurrency": "EUR",
-        //           "availability": "https://schema.org/InStock",
-        //           "priceSpecification": {
-        //             "@type": "UnitPriceSpecification",
-        //             "price": 99.99,
-        //             "priceCurrency": "EUR",
-        //             "billingDuration": 1,
-        //             "billingPeriod": "P1Y"
-        //           }
-        //         },
-        //         {
-        //           "@type": "Offer",
-        //           "name": locale.value === 'it' ? "Ingresso Singolo" : "One-time Visit",
-        //           "category": "ticket",
-        //           "url": `${virtualUrl}?ticket=day-pass`,
-        //           "price": "8.99",
-        //           "priceCurrency": "EUR",
-        //           "availability": "https://schema.org/InStock"
-        //         }
-        //       ]
-        //     })
-        //   }
-        // }
+        script: {
+          jsonLd: {
+            type: 'application/ld+json',
+            // prettier-ignore
+            innerHTML: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ExhibitionEvent",
+              "name": name,
+              "description": description,
+              "eventStatus": "https://schema.org/EventScheduled",
+              "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+              "isAccessibleForFree": false,
+              "image": selectedRealGallery.value.urlImage,
+              "url": `https://aortagallery.com/3d/${galleryId.value}`,
+              "location": {
+                "@type": "VirtualLocation",
+                "url": `https://aortagallery.com/3d/${galleryId.value}`
+              },
+              "organizer": {
+                "@type": "Organization",
+                "name": t('meta.homeTitle'),
+                "url": "https://aortagallery.com",
+                "logo": "https://aortagallery.com/logo.png",
+                "contactPoint": {
+                  "@type": "ContactPoint",
+                  "telephone": "+39-331-9945585",
+                  "contactType": t('jsonLd.customerService'),
+                  "email": "support@aortagallery.com"
+                }
+              },
+              "offers": [
+                {
+                  "@type": "Offer",
+                  "name": t('subscription.monthlyAccess'),
+                  "category": "subscription",
+                  "url": `https://aortagallery.com/3d/${galleryId.value}`,
+                  "price": "9.99",
+                  "priceCurrency": "EUR",
+                  "availability": "https://schema.org/InStock",
+                  "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "price": 9.99,
+                    "priceCurrency": "EUR",
+                    "billingDuration": 1,
+                    "billingPeriod": "P1M"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "name": t('subscription.annualAccess'),
+                  "category": "subscription",
+                  "url": `https://aortagallery.com/3d/${galleryId.value}`,
+                  "price": "99.99",
+                  "priceCurrency": "EUR",
+                  "availability": "https://schema.org/InStock",
+                  "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "price": 99.99,
+                    "priceCurrency": "EUR",
+                    "billingDuration": 1,
+                    "billingPeriod": "P1Y"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "name": name,
+                  "category": "ticket",
+                  "url": `https://aortagallery.com/3d/${galleryId.value}`,
+                  "price": "8.99",
+                  "priceCurrency": "EUR",
+                  "availability": "https://schema.org/InStock"
+                }
+              ]
+            })
+          }
+        }
       }
     })
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped />
