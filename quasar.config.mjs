@@ -9,10 +9,13 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 /* eslint-env node */
-import { defineConfig } from '#q-app/wrappers'
-const path = require('path')
+import { defineConfig } from '#q-app/wrappers' // если алиас не работает — см. вариант ниже
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-module.exports = defineConfig(function (/* ctx */) {
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+export default defineConfig(() => {
   return {
     eslint: {
       // fix: true,
@@ -52,7 +55,7 @@ module.exports = defineConfig(function (/* ctx */) {
     build: {
       target: {
         browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
-        node: 'node20'
+        node: 'node22'
       },
 
       vueRouterMode: 'history', // available values: 'hash', 'history'
