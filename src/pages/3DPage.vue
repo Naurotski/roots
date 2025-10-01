@@ -57,8 +57,6 @@ export default {
     const merchStore = useMerchStore()
     const { getRealtimeDatabase } = merchStore
     const selectedRealGallery = ref({})
-    console.log(filterExhibitionsDraft.value)
-    console.log(filterExhibitionsDraft.value.length)
     if (filterExhibitionsDraft.value.length) {
       selectedRealGallery.value = filterExhibitionsDraft.value.find(
         (item) => item.id === +galleryId.value
@@ -71,7 +69,6 @@ export default {
     })
     async function getSelectedRealGallery() {
       selectedRealGallery.value = await getRealtimeDatabase(`exhibitions/${galleryId.value}`)
-      console.log(selectedRealGallery.value)
     }
     useMeta(() => {
       const name =
