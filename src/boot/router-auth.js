@@ -9,21 +9,22 @@ export default boot(({ router }) => {
   router.beforeEach(async (to) => {
     if (
       !LocalStorage.getItem('loggedIn') &&
-      (to.name === 'Your Account' || to.name === '3D Gallery')
+      (to.name === 'Your Account')
     ) {
       return { name: 'Home' }
     }
     if (to.name === '3D Gallery') {
       const graphicsStore = useGraphics3DStore()
-      const { filteredListGalleriesNonDraft } = storeToRefs(graphicsStore)
+      const { filteredListGalleriesNonDraft, listGalleries } = storeToRefs(graphicsStore)
       const { getGraphics3D } = graphicsStore
       const id = String(to.params.galleryId)
-
+      let free = listGalleries.value[id]?.free
       let payment = filteredListGalleriesNonDraft.value[id]?.payment
-      if (!payment) {
+      if (!free && !payment) {
         await getGraphics3D('listGalleries')
+        free = listGalleries.value[id]?.free
         payment = filteredListGalleriesNonDraft.value[id]?.payment
-        if (!payment) {
+        if (!free && !payment) {
           return { name: 'Home' }
         }
       }

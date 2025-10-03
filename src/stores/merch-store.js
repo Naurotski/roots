@@ -131,7 +131,6 @@ export const useMerchStore = defineStore('merch', () => {
     })
   }
   const getRealtimeDatabase = async (path) => {
-    console.log('getRealtimeDatabase ---', path)
     const result = await get(dbRef(db, path))
     return result.val()
   }

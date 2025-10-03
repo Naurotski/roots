@@ -5,7 +5,11 @@
       outline
       rounded
       class="full-width"
-      :class="{ 'text-negative': !filteredListGalleriesNonDraft[action.id].payment }"
+      :class="{
+        'text-negative':
+          !filteredListGalleriesNonDraft[action.id].payment &&
+          !filteredListGalleriesNonDraft[action.id].free
+      }"
       :label="$t('graphics3D.virtualGallery')"
       @click="handlerClick"
     />
@@ -197,6 +201,10 @@ export default {
       { immediate: true }
     )
     const handlerClick = () => {
+      if (filteredListGalleriesNonDraft.value[action.value.id].free) {
+        router.push(`/3d/${action.value.id}`)
+        return
+      }
       if (!loggedIn.value) {
         showLoginDialog(true)
         return
