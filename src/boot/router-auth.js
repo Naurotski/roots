@@ -7,10 +7,7 @@ import { useGraphics3DStore } from 'stores/graphics3D-store'
 export default boot(({ router }) => {
   startNetworkStatus()
   router.beforeEach(async (to) => {
-    if (
-      !LocalStorage.getItem('loggedIn') &&
-      (to.name === 'Your Account')
-    ) {
+    if (!LocalStorage.getItem('loggedIn') && to.name === 'Your Account') {
       return { name: 'Home' }
     }
     if (to.name === '3D Gallery') {

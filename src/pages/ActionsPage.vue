@@ -106,7 +106,6 @@
           <no-results v-else />
         </q-tab-panel>
       </q-tab-panels>
-      <pre>filteredListGalleriesNonDraft - {{filteredListGalleriesNonDraft}}</pre>
     </q-page>
   </transition>
 </template>
