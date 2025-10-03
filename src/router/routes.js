@@ -48,6 +48,12 @@ const routes = isMaintenanceMode
             component: () => import('pages/WorkPage.vue')
           },
           {
+            path: 'virtual',
+            name: 'Virtual',
+            props: true,
+            component: () => import('pages/VirtualListPage.vue')
+          },
+          {
             path: 'merch/:rubric/:id',
             name: 'Merch',
             props: true,

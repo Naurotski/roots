@@ -12,6 +12,7 @@
       }"
       :label="$t('graphics3D.virtualGallery')"
       @click="handlerClick"
+      v-bind="$attrs"
     />
   </slot>
   <q-dialog

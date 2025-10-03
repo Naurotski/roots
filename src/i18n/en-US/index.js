@@ -73,8 +73,8 @@ export default {
     shop: 'Shop',
     sculpture: 'Sculpture',
     tShirts: 'T-shirts',
-
-    upcoming: 'Upcoming'
+    upcoming: 'Upcoming',
+    virtual: 'Virtual'
   },
   auth: {
     already: 'Already have an account?',

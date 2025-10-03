@@ -13,6 +13,7 @@ export const useSharedStore = defineStore('shared', () => {
     { label: 'links.about', path: '/about' },
     { label: 'links.artists', path: '/artists' },
     { label: 'links.exhibitions', path: '/actions/exhibitions' },
+    { label: 'links.virtual', path: '/virtual' },
     { label: 'links.sale', path: '/sale' },
     { label: 'links.shop', path: '/shop' }
   ])
