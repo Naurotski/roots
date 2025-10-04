@@ -195,7 +195,9 @@ export default {
     shopKeywords:
       "Offerte su merchandising artistico, Spedizione gadget artistici, Compra online regali unici, Merchandising artistico online, Compra gadget ispirati all’arte, T-shirt artistiche in vendita, Poster d'arte contemporanea, Accessori ispirati all'arte moderna, Souvenir d'arte Pisa, Regali per amanti dell’arte, Merchandising galleria d’arte, Shopping online di arte moderna, Borse con stampe artistiche, Prodotti esclusivi d’arte, Design contemporaneo per il tuo stile, Tazze e accessori d’arte, Merchandising artistico personalizzato, Collezione moda ispirata all'arte",
     virtualGalleryKeywords:
-      "galleria virtuale, mostra d'arte online, museo d'arte VR, esposizione digitale, tour galleria 3D, arte contemporanea online, acquisto stampe, mostre d'artista, arte immersiva, galleria web, biglietto online, abbonamento mensile, abbonamento annuale, ingresso singolo, Aorta Gallery, Pisa Italia"
+      "Galleria virtuale, mostra d'arte online, museo d'arte VR, esposizione digitale, tour galleria 3D, arte contemporanea online, acquisto stampe, mostre d'artista, arte immersiva, galleria web, biglietto online, abbonamento mensile, abbonamento annuale, ingresso singolo, Aorta Gallery, Pisa Italia",
+    virtualListDescription:
+      'Visita le mostre virtuali di Aorta Gallery: esposizioni 3D online. Scopri rassegne in corso, future e archivio e acquista opere direttamente nello spazio virtuale.'
   },
   tickets: {
     adults: 'Adulti',

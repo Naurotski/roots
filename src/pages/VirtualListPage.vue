@@ -59,6 +59,7 @@
           <q-separator v-if="index < filteredActionsI18n.length - 1" class="q-my-md" />
         </div>
       </template>
+      <pre>filteredActionsI18n - {{ filteredActionsI18n }}</pre>
     </small-page-container>
   </q-page>
 </template>
@@ -67,6 +68,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
+import { useMeta } from 'quasar'
 import { useActionStore } from 'stores/actions-store'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 import SmallPageContainer from 'components/shared/SmallPageContainer.vue'
@@ -83,7 +85,7 @@ export default {
     SmallPageContainer
   },
   setup() {
-    const { locale } = useI18n({ useScope: 'global' })
+    const { locale, t } = useI18n({ useScope: 'global' })
     const actionsStore = useActionStore()
     const { filterExhibitionsDraft } = storeToRefs(actionsStore)
     const { getExhibitions } = actionsStore
@@ -112,6 +114,66 @@ export default {
         return filteredArray
       }
     })
+
+    const jsonLd = computed(() => ({
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: t('links.virtual'),
+      itemListOrder: 'https://schema.org/ItemListOrderAscending',
+      numberOfItems: filteredActionsI18n.value.length,
+      itemListElement: filteredActionsI18n.value.map((a, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: `https://aortagallery.com/3d/${a.id}`,
+        item: {
+          '@type': 'ExhibitionEvent',
+          name: locale.value === 'en' ? a.name : a.nameIt,
+          description: locale.value === 'en' ? a.description : a.descriptionIt,
+          startDate: a.openingDate,
+          eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+          image: a.urlImage,
+          url: `https://aortagallery.com/3d/${a.id}`,
+          location: {
+            '@type': 'VirtualLocation',
+            url: `https://aortagallery.com/3d/${a.id}`
+          },
+          organizer: {
+            '@type': 'Organization',
+            name: t('meta.homeTitle'),
+            url: 'https://aortagallery.com'
+          }
+        }
+      }))
+    }))
+    useMeta(() => ({
+      title: `${t('meta.homeTitle')} | ${t('links.virtual')}`,
+      meta: {
+        description: {
+          name: 'description',
+          content: t('meta.virtualListDescription')
+        },
+        keywords: {
+          name: 'keywords',
+          content: t('meta.virtualGalleryKeywords')
+        },
+        robots: {
+          name: 'robots',
+          content: 'index, follow'
+        }
+      },
+      link: {
+        canonical: {
+          rel: 'canonical',
+          href: `https://aortagallery.com/virtual`
+        }
+      },
+      script: {
+        jsonLd: {
+          type: 'application/ld+json',
+          innerHTML: JSON.stringify(jsonLd.value)
+        }
+      }
+    }))
     return {
       filteredListGalleriesNonDraft,
       filteredActionsI18n

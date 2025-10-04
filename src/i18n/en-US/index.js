@@ -195,7 +195,9 @@ export default {
     shopKeywords:
       'Art merchandise discounts, Art-themed gadgets shipping, Shop unique gifts online, Artistic merchandise online, Buy art-inspired gadgets, Art-themed T-shirts for sale, Contemporary art posters, Accessories inspired by modern art, Art souvenirs Pisa, Gifts for art lovers, Art gallery merchandise, Modern art shopping online, Tote bags with artistic prints, Exclusive art products, Contemporary design for your style, Art-themed mugs and accessories, Personalized artistic merchandise, Fashion collection inspired by art',
     virtualGalleryKeywords:
-      'virtual gallery, online art exhibition, VR art museum, digital art show, 3D gallery tour, contemporary art online, buy art prints, artist exhibitions, immersive art, web gallery, online ticket, monthly subscription, yearly subscription, day pass, Aorta Gallery, Pisa Italy'
+      'Virtual gallery, online art exhibition, VR art museum, digital art show, 3D gallery tour, contemporary art online, buy art prints, artist exhibitions, immersive art, web gallery, online ticket, monthly subscription, yearly subscription, day pass, Aorta Gallery, Pisa Italy',
+    virtualListDescription:
+      'Explore Aorta Gallery’s virtual exhibitions—immersive 3D shows online. Browse current, upcoming and archive displays, and buy artworks directly in the virtual space.'
   },
   tickets: {
     adults: 'Adults',
