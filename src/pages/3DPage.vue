@@ -1,15 +1,26 @@
 <template>
-  <q-page>
-    <gallery3-d />
-    <how-to class="absolute-top-right q-mt-xl q-mr-xl" />
-    <gallery-labels />
-    <gallery3-d-video-sound />
-    <select-gallery />
+  <q-page class="q-pa-none">
+    <div class="fs-root" ref="fsRoot">
+      <gallery3-d />
+      <how-to class="absolute-top-right q-mt-xl q-mr-xl" />
+      <gallery-labels />
+      <gallery3-d-video-sound />
+      <select-gallery />
+      <q-btn
+        color="white"
+        text-color="black"
+        class="absolute-top-left q-mt-xl q-ml-xl"
+        round
+        :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+        @click="toggleFs"
+      />
+    </div>
   </q-page>
 </template>
 
 <script>
-import { ref, toRefs, watch } from 'vue'
+import { ref, toRefs, watch, onMounted } from 'vue'
+import { useQuasar } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -40,9 +51,11 @@ export default {
     }
   },
   setup(props) {
-    const { galleryId } = toRefs(props)
+    const fsRoot = ref(null)
+    const $q = useQuasar()
     const router = useRouter()
     const { locale, t } = useI18n({ useScope: 'global' })
+    const { galleryId } = toRefs(props)
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
     const graphics3DStore = useGraphics3DStore()
@@ -70,6 +83,13 @@ export default {
     async function getSelectedRealGallery() {
       selectedRealGallery.value = await getRealtimeDatabase(`exhibitions/${galleryId.value}`)
     }
+    const toggleFs = () => {
+      if ($q.fullscreen.isActive) $q.fullscreen.exit()
+      else $q.fullscreen.request(fsRoot.value)
+    }
+    onMounted(() => {
+      toggleFs()
+    })
     useMeta(() => {
       const name =
         locale.value === 'en' ? selectedRealGallery.value.name : selectedRealGallery.value.nameIt
@@ -178,6 +198,10 @@ export default {
         }
       }
     })
+    return {
+      fsRoot,
+      toggleFs
+    }
   }
 }
 </script>
