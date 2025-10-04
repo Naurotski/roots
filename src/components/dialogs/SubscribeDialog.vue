@@ -202,6 +202,16 @@ export default {
       { immediate: true }
     )
     const handlerClick = () => {
+      console.log($q.screen)
+      if ($q.screen.lt.lg) {
+        $q.notify({
+          type: 'warning',
+          message: t('graphics3D.virtualAvailable'),
+          timeout: 5000,
+          position: 'top'
+        })
+        return
+      }
       if (filteredListGalleriesNonDraft.value[action.value.id].free) {
         router.push(`/3d/${action.value.id}`)
         return
@@ -218,8 +228,6 @@ export default {
     }
 
     const submitForm = async ({ interval, updateChek = false, retrieveUpcomingChek = false }) => {
-      console.log(acceptMap.value[interval])
-      console.log(waiveMap.value[interval])
       if (!acceptMap.value[interval] || !waiveMap.value[interval]) {
         $q.notify({
           type: 'warning',

@@ -47,7 +47,6 @@
                 <template #button>
                   <div>
                     <subscribe-dialog
-                      v-if="$q.screen.gt.md"
                       :action="action"
                       :label="$t('common.enter')"
                     />

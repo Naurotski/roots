@@ -238,6 +238,8 @@ export default {
       "Clicca sulle opere d'arte o sugli oggetti 3D per avvicinarti e visualizzare le informazioni",
     howTo: 'Come fare?',
     upAndDown: 'Usa i tasti su e giù per andare avanti e indietro',
+    virtualAvailable:
+      'Le mostre virtuali, al momento, sono solo per desktop e richiedono i comandi da tastiera',
     virtualGallery: 'Galleria Virtuale'
   },
   subscription: {

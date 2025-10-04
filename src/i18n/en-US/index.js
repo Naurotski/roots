@@ -236,6 +236,7 @@ export default {
     clickOnArtworks: 'Click on artworks or 3D objects to move closer and view information',
     howTo: 'How to?',
     upAndDown: 'Use your up and down keys to move forward and back',
+    virtualAvailable: 'tual exhibitions are currently desktop-only and use keyboard controls',
     virtualGallery: 'Virtual Gallery'
   },
   subscription: {

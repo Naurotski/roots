@@ -65,8 +65,7 @@
                             action.lifeTime !== 'upcoming' &&
                             Object.keys(filteredListGalleriesNonDraft).includes(
                               action.id.toString()
-                            ) &&
-                            $q.screen.gt.md
+                            )
                           "
                           :action="action"
                         />
