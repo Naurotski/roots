@@ -58,7 +58,6 @@
           <q-separator v-if="index < filteredActionsI18n.length - 1" class="q-my-md" />
         </div>
       </template>
-      <pre>filteredActionsI18n - {{ filteredActionsI18n }}</pre>
     </small-page-container>
   </q-page>
 </template>
