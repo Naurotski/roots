@@ -39,6 +39,7 @@ export const useSharedStore = defineStore('shared', () => {
   const merchStore = useMerchStore()
   const { getProductsPrintFul, updateMerchHomePageList } = merchStore
   const rightDrawerOpen = ref(false)
+  const headerFooterHidden = ref(false)
   const carouselHomePage = ref([])
   const selectedExhibitionsData = ref({})
   const worksForSale = ref([])
@@ -54,6 +55,7 @@ export const useSharedStore = defineStore('shared', () => {
   )
 
   const toggleRightDrawer = () => (rightDrawerOpen.value = !rightDrawerOpen.value)
+  const toggleHeaderFooter = (val) => (headerFooterHidden.value = val)
   const toggleDeliveryDetailsDialogActivator = () =>
     (deliveryDetailsDialogActivator.value = !deliveryDetailsDialogActivator.value)
 
@@ -117,12 +119,14 @@ export const useSharedStore = defineStore('shared', () => {
     saleLinks,
     yourAccountLinks,
     rightDrawerOpen,
+    headerFooterHidden,
     carouselHomePage,
     selectedExhibitionsData,
     worksForSale,
     sortedCountries,
     deliveryDetailsDialogActivator,
     toggleRightDrawer,
+    toggleHeaderFooter,
     toggleDeliveryDetailsDialogActivator,
     getHomePageData,
     getCountries,

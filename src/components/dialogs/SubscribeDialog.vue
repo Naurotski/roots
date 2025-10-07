@@ -203,15 +203,15 @@ export default {
     )
     const handlerClick = () => {
       console.log($q.screen)
-      if ($q.screen.lt.lg) {
-        $q.notify({
-          type: 'warning',
-          message: t('graphics3D.virtualAvailable'),
-          timeout: 5000,
-          position: 'top'
-        })
-        return
-      }
+      // if ($q.screen.lt.lg) {
+      //   $q.notify({
+      //     type: 'warning',
+      //     message: t('graphics3D.virtualAvailable'),
+      //     timeout: 5000,
+      //     position: 'top'
+      //   })
+      //   return
+      // }
       if (filteredListGalleriesNonDraft.value[action.value.id].free) {
         router.push(`/3d/${action.value.id}`)
         return

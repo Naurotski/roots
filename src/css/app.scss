@@ -12,3 +12,34 @@ body.gallery-loading .q-loading__backdrop,
 body.gallery-loading .q-loading__box {
   transition: none !important;
 }
+
+body.app-fs, body.app-fs html, body.app-fs #q-app { height: 100%; }
+
+body.app-fs {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;                 /* корню – нет скролла */
+  overscroll-behavior: none;        /* Chrome/FF/iOS16+ */
+  -webkit-overflow-scrolling: auto; /* снять инерцию iOS */
+}
+
+/* Quasar-обёртки тоже иногда скроллят — запретим при ФС */
+body.app-fs .q-layout,
+body.app-fs .q-page-container,
+body.app-fs .q-page {
+  overflow: hidden !important;
+}
+
+/* внутри сцены – никаких браузерных жестов/панорам */
+body.app-fs .fs-root.fs-emulated {
+  touch-action: none;
+}
+
+/* и на канвасах (на всякий, если внутри есть другие элементы) */
+body.app-fs .fs-root.fs-emulated canvas {
+  touch-action: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}

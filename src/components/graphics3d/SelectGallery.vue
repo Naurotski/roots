@@ -32,7 +32,7 @@ export default {
       storeToRefs(graphics3DStore)
     const { getGraphics3D, listenForChildEvents, clearSelectedGallery } = graphics3DStore
     if (!Object.keys(listGalleries.value).length) listenForChildEvents('listGalleries')
-    const options = ref('')
+    const options = ref([])
     const gallerySel = ref(null)
     const sortedGalleries = computed(() =>
       Object.values(filteredListGalleriesNonDraft.value)

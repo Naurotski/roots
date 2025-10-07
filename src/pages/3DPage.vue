@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-none">
-    <div class="fs-root" ref="fsRoot">
+    <div class="fs-root" ref="fsRoot" :class="{ 'fs-emulated': emulateFs }">
       <gallery3-d />
       <how-to class="absolute-top-right q-mt-xl q-mr-xl" />
       <gallery-labels />
@@ -11,7 +11,7 @@
         text-color="black"
         class="absolute-top-left q-mt-xl q-ml-xl"
         round
-        :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+        :icon="$q.fullscreen.isActive || emulateFs ? 'fullscreen_exit' : 'fullscreen'"
         @click="toggleFs"
       />
     </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { ref, toRefs, watch, onMounted } from 'vue'
+import { ref, toRefs, watch, onMounted, onUnmounted } from 'vue'
 import { useQuasar } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
@@ -29,6 +29,7 @@ import { useAuthStore } from 'stores/auth-store'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 import { useActionStore } from 'stores/actions-store'
 import { useMerchStore } from 'stores/merch-store'
+import { useSharedStore } from 'stores/shared-store'
 import Gallery3D from 'components/graphics3d/Gallery3D.vue'
 import HowTo from 'components/graphics3d/HowTo.vue'
 import GalleryLabels from 'components/graphics3d/GalleryLabels.vue'
@@ -52,10 +53,13 @@ export default {
   },
   setup(props) {
     const fsRoot = ref(null)
+    const emulateFs = ref(false)
     const $q = useQuasar()
     const router = useRouter()
     const { locale, t } = useI18n({ useScope: 'global' })
     const { galleryId } = toRefs(props)
+    const sharedStore = useSharedStore()
+    const { toggleHeaderFooter } = sharedStore
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
     const graphics3DStore = useGraphics3DStore()
@@ -83,12 +87,30 @@ export default {
     async function getSelectedRealGallery() {
       selectedRealGallery.value = await getRealtimeDatabase(`exhibitions/${galleryId.value}`)
     }
-    const toggleFs = () => {
-      if ($q.fullscreen.isActive) $q.fullscreen.exit()
-      else $q.fullscreen.request(fsRoot.value)
+    const toggleFs = async () => {
+      if ($q.fullscreen?.isCapable) {
+        if ($q.fullscreen.isActive) await $q.fullscreen.exit()
+        else await $q.fullscreen.request(fsRoot.value)
+        return
+      }
+      emulateFs.value = !emulateFs.value
+      toggleHeaderFooter(emulateFs.value)
+      console.log(emulateFs.value)
+      if (emulateFs.value) {
+        console.log('1----')
+        document.body.classList.add('app-fs')
+      } else {
+        console.log('2----')
+        document.body.classList.remove('app-fs')
+      }
     }
     onMounted(() => {
       toggleFs()
+    })
+    onUnmounted(() => {
+      emulateFs.value = false
+      toggleHeaderFooter(false)
+      document.body.classList.remove('app-fs')
     })
     useMeta(() => {
       const name =
@@ -200,6 +222,7 @@ export default {
     })
     return {
       fsRoot,
+      emulateFs,
       toggleFs
     }
   }
