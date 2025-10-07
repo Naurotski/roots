@@ -46,10 +46,7 @@
                 </template>
                 <template #button>
                   <div>
-                    <subscribe-dialog
-                      :action="action"
-                      :label="$t('common.enter')"
-                    />
+                    <subscribe-dialog :action="action" :label="$t('common.enter')" />
                   </div>
                 </template>
               </shared-card>
