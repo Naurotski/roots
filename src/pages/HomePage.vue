@@ -59,7 +59,7 @@
               icon-right="mdi-arrow-right-bold"
             />
             <list-working-days-dialog
-              v-if="ticketsList[selectedExhibitionsData.id]"
+              v-if="ticketsList[selectedExhibitionsData.id] && lifeTimeExhibition === 'current'"
               :action="filteredActionI18n"
             >
               <q-btn
