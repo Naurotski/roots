@@ -1,3 +1,5 @@
+import { useGraphics3DStore } from 'stores/graphics3D-store'
+
 export function createTouchControls({
   el, // renderer.domElement
   controlsObject,
@@ -6,8 +8,9 @@ export function createTouchControls({
   isAutoMoving, // ref<boolean>
   paymentDialogChek, // ref<boolean>
   selectedElementId, // ref<any>
-  updateSelectedElementId // fn
 }) {
+  const graphics3DStore = useGraphics3DStore()
+  const { updateSelectedElementId } = graphics3DStore
   const MOVE_ACTIVATE_PX = 10 // когда drag становится жестом
   const TAP_MAX_TIME_MS = 250 // максимум для "тапа"
   const TAP_MAX_MOVE_PX = 6 // допуск движения для "тапа"

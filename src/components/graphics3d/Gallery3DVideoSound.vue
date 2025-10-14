@@ -1,5 +1,12 @@
 <template>
-  <div class="row" style="max-width: 300px; bottom: 3%; right: 5%; position: absolute">
+  <div
+    class=""
+    :class="
+      $q.screen.width > 700
+        ? 'row absolute-bottom-right q-mr-xl'
+        : 'row absolute-top flex justify-center'
+    "
+  >
     <div v-if="selectedGallery.audioStore && Object.keys(selectedGallery.audioStore).length">
       <div v-for="{ audioId } in Object.values(selectedGallery.audioStore)" :key="audioId">
         <q-btn

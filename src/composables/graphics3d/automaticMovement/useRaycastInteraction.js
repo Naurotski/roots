@@ -10,7 +10,13 @@ const graphics3DStore = useGraphics3DStore()
 const { isAutoMoving, selectedElementId, videoList } = storeToRefs(graphics3DStore)
 const { updateCheckAutoMoving, updateSelectedElementId, updateVideoAudio } = graphics3DStore
 
-export const useRaycastInteraction = ({ camera, renderer, controlsObject, collidableMeshes }) => {
+export const useRaycastInteraction = ({
+  camera,
+  scene,
+  renderer,
+  controlsObject,
+  collidableMeshes
+}) => {
   const raycaster = new Raycaster()
   const mouse = new Vector2()
   const targetPos = new Vector3()
@@ -19,6 +25,7 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
   let moveTarget = null
   let lookAtTargetPos = null
   let taggedParent = null
+  let boundingBox = null
   let mainTarget = null // Цель перед картиной
   let isBypassing = false
 
@@ -28,7 +35,12 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
     mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
     mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
   }
-
+  const toScreen = (v) => {
+    const p = new Vector3().copy(v).project(camera)
+    const w = renderer.domElement.clientWidth
+    const h = renderer.domElement.clientHeight
+    return { x: (p.x * 0.5 + 0.5) * w, y: (-p.y * 0.5 + 0.5) * h }
+  }
   const onMousedownRaycaster = async (e) => {
     if (e.button !== 0 || e.target !== renderer.domElement || isAutoMoving.value) return // Только левая кнопка
     normalizeMouseEvent(e)
@@ -44,7 +56,7 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
       taggedParent = findTaggedParent(intersect.object)
       if (!taggedParent) return
       // Получаем центр картины
-      const boundingBox = new Box3().setFromObject(taggedParent)
+      boundingBox = new Box3().setFromObject(taggedParent)
       boundingBox.getCenter(targetPos)
 
       let normalForApproach = null
@@ -152,10 +164,33 @@ export const useRaycastInteraction = ({ camera, renderer, controlsObject, collid
       lookAtTargetPos = null
       updateCheckAutoMoving(false)
       if (!selectedElementId || selectedElementId.id !== taggedParent.userData.id) {
+        scene.updateMatrixWorld(true)
+        camera.updateProjectionMatrix()
+        camera.updateMatrixWorld(true)
+        const { min, max } = boundingBox
+        const corners = [
+          new Vector3(min.x, min.y, min.z),
+          new Vector3(min.x, min.y, max.z),
+          new Vector3(min.x, max.y, min.z),
+          new Vector3(min.x, max.y, max.z),
+          new Vector3(max.x, min.y, min.z),
+          new Vector3(max.x, min.y, max.z),
+          new Vector3(max.x, max.y, min.z),
+          new Vector3(max.x, max.y, max.z)
+        ]
+        const pts = corners.map(toScreen)
+        const xs = pts.map((p) => p.x)
+        const ys = pts.map((p) => p.y)
         updateSelectedElementId({
           id: taggedParent.userData.id,
-          isPainting: taggedParent.userData.isPainting,
-          isSticker: taggedParent.userData.isSticker
+          isPainting: !!taggedParent.userData.isPainting,
+          isSticker: !!taggedParent.userData.isSticker,
+          screenBounds: {
+            xMin: Math.min(...xs),
+            xMax: Math.max(...xs),
+            yMin: Math.min(...ys),
+            yMax: Math.max(...ys)
+          }
         })
       }
       taggedParent = null

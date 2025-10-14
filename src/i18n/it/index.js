@@ -237,7 +237,11 @@ export default {
     clickOnArtworks:
       "Clicca sulle opere d'arte o sugli oggetti 3D per avvicinarti e visualizzare le informazioni",
     howTo: 'Come fare?',
+    tapArtworks: 'Tocca un oggetto/opera per avvicinarti e vedere le informazioni',
+    touchHalves:
+      'Scorri sulla metà sinistra dello schermo per camminare; scorri sulla metà destra per guardarti intorno',
     upAndDown: 'Usa i tasti su e giù per andare avanti e indietro',
+    useDevice: 'È meglio usare il dispositivo in orientamento orizzontale',
     virtualAvailable:
       'Le mostre virtuali, al momento, sono solo per desktop e richiedono i comandi da tastiera',
     virtualGallery: 'Galleria Virtuale'

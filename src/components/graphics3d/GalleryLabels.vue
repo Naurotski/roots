@@ -2,9 +2,18 @@
   <transition name="fade" mode="out-in">
     <q-card
       v-if="selectedElementId"
-      :key="selectedElementId.id"
-      style="width: 300px; bottom: 15%; left: 15%; position: absolute"
+      :key="selectedElementId.id + '-left'"
+      style="width: 300px; position: absolute; z-index: 2"
+      :style="leftStyle"
     >
+      <q-btn
+        size="sm"
+        class="absolute-top-right z-max"
+        flat
+        round
+        icon="close"
+        @click="deleteSelectedElementId"
+      />
       <q-card-section class="text-center">
         <div class="text-h6 text-bold">{{ selectedElement.name }}</div>
         <div v-if="selectedElement.material" class="text-body2">
@@ -15,7 +24,14 @@
         </div>
       </q-card-section>
       <q-separator v-if="selectedElement.description" class="q-mx-md" color="negative" />
-      <q-card-section v-if="selectedElement.description" class="scroll" style="max-height: 50vh">
+      <q-card-section
+        v-if="selectedElement.description"
+        class="scroll"
+        :style="{
+          maxHeight:
+            $q.screen.width / $q.screen.height > 1 && $q.screen.height < 600 ? '50vh' : '30vh'
+        }"
+      >
         <div class="text-justify text-body2" style="white-space: pre-line">
           {{ selectedElement.description }}
         </div>
@@ -26,8 +42,18 @@
     <q-card
       v-if="selectedElementId"
       :key="selectedElementId.id"
-      style="width: 300px; bottom: 15%; right: 15%; position: absolute"
+      style="width: 300px; position: absolute; z-index: 2"
+      :style="rightStyle"
     >
+      <q-btn
+        v-if="selectedElement.nftLink && selectedElement.price"
+        size="sm"
+        class="absolute-top-right z-max"
+        flat
+        round
+        icon="close"
+        @click="deleteSelectedElementId"
+      />
       <q-card-section v-if="selectedElement.price" class="text-center">
         <div class="text-h6 text-bold">{{ selectedElement.price }} €</div>
         <payment-dialog
@@ -97,13 +123,88 @@ export default {
         typeStore
       }
     })
+
+    const bounds = computed(() => selectedElementId.value?.screenBounds || null)
+    const CARD_W = 300
+    const GAP = 16
+    const MARGIN = 8
+
+    const isPortrait = computed(() => window.innerHeight > window.innerWidth)
+
+    const leftStyle = computed(() => {
+      if (!bounds.value) return {}
+      const vw = window.innerWidth
+      const vh = window.innerHeight
+      const b = bounds.value
+      const xMid = (b.xMin + b.xMax) / 2
+      const yMid = (b.yMin + b.yMax) / 2
+
+      if (isPortrait.value) {
+        // сверху над объектом (по центру), сдвигаем на -100% собственной высоты
+        const left = Math.min(Math.max(MARGIN, xMid - CARD_W / 2), vw - CARD_W - MARGIN)
+        // const top = Math.max(MARGIN, b.yMin - GAP)
+        return {
+          width: `${CARD_W}px`,
+          left: `${left}px`,
+          top: `${MARGIN}px`
+          // transform: 'translateY(-100%)'
+        }
+      }
+
+      // слева по вертикальному центру (не зависит от высоты)
+      let left = b.xMin - GAP - CARD_W
+      if (left < MARGIN) left = MARGIN
+      const top = Math.min(Math.max(MARGIN, yMid), vh - MARGIN)
+      return {
+        width: `${CARD_W}px`,
+        left: `${left}px`,
+        top: `${top}px`,
+        transform: 'translateY(-50%)'
+      }
+    })
+
+    const rightStyle = computed(() => {
+      if (!bounds.value) return {}
+      const vw = window.innerWidth
+      const vh = window.innerHeight
+      const b = bounds.value
+      const xMid = (b.xMin + b.xMax) / 2
+      const yMid = (b.yMin + b.yMax) / 2
+
+      if (isPortrait.value) {
+        // снизу под объектом (по центру)
+        const left = Math.min(Math.max(MARGIN, xMid - CARD_W / 2), vw - CARD_W - MARGIN)
+        // const top = Math.min(vh - MARGIN, b.yMax + GAP)
+        return {
+          width: `${CARD_W}px`,
+          left: `${left}px`,
+          bottom: `${MARGIN}px`
+        }
+      }
+
+      // справа по вертикальному центру
+      let left = b.xMax + GAP
+      if (left + CARD_W > vw - MARGIN) left = vw - CARD_W - MARGIN
+      const top = Math.min(Math.max(MARGIN, yMid), vh - MARGIN)
+      return {
+        width: `${CARD_W}px`,
+        left: `${left}px`,
+        top: `${top}px`,
+        transform: 'translateY(-50%)'
+      }
+    })
+
+    const deleteSelectedElementId = () => updateSelectedElementId(null)
     onUnmounted(() => {
       if (selectedElementId.value) updateSelectedElementId(null)
     })
     return {
       selectedGallery,
       selectedElement,
-      selectedElementId
+      selectedElementId,
+      leftStyle,
+      rightStyle,
+      deleteSelectedElementId
     }
   }
 }
@@ -117,17 +218,5 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-}
-
-.slide-fade-enter-active {
-  transition: all 0.4s ease;
-}
-.slide-fade-enter-from {
-  opacity: 0;
-  transform: translateY(10px);
-}
-.slide-fade-leave-to {
-  opacity: 0;
-  transform: translateY(10px);
 }
 </style>

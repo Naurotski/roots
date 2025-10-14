@@ -97,6 +97,7 @@ export default {
 
       const { updateMoveToPainting, raycastInteractionUnmounted } = useRaycastInteraction({
         camera,
+        scene,
         renderer,
         controlsObject,
         collidableMeshes

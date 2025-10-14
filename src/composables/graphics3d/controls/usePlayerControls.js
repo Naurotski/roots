@@ -83,9 +83,7 @@ export const usePlayerControls = (camera, renderer) => {
     keysPressed,
     isAutoMoving,
     paymentDialogChek,
-    selectedElementId,
-    updateSelectedElementId,
-    lookK: 0.002
+    selectedElementId
   })
   touch.attach()
 

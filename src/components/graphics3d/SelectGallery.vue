@@ -1,31 +1,34 @@
 <template>
-  <q-select
-    ref="gallerySel"
-    v-model="gallery"
-    :options="options"
-    dense
-    rounded
-    outlined
-    bg-color="white"
-    option-label="galleryName"
-    label="Gallery Name"
-    options-dense
-    emit-value
-    input-debounce="0"
-    :disable="!!selectedElementId?.id"
-    @filter="filterFn"
-    style="bottom: 3%; left: 5%; position: absolute; width: 300px"
-  >
-    <template v-slot:option="scope">
-      <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
-        <q-item-section>
-          <q-item-label :class="!scope.opt.payment && !scope.opt.free ? 'text-negative' : ''">
-            {{ scope.opt.galleryName }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-    </template>
-  </q-select>
+  <div class="absolute-bottom-left q-pa-md q-ml-xl" >
+    <q-select
+      ref="gallerySel"
+      v-model="gallery"
+      :options="options"
+      dense
+      rounded
+      outlined
+      bg-color="white"
+      option-label="galleryName"
+      label="Gallery Name"
+      options-dense
+      emit-value
+      input-debounce="0"
+      :disable="!!selectedElementId?.id"
+      @filter="filterFn"
+      style="max-width: 300px"
+    >
+      <template v-slot:option="scope">
+        <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
+          <q-item-section>
+            <q-item-label :class="!scope.opt.payment && !scope.opt.free ? 'text-negative' : ''">
+              {{ scope.opt.galleryName }}
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+      </template>
+    </q-select>
+  </div>
+
   <!--  для использования поиска все готово просто надо добавить use-input  в  <q-select-->
   <subscribe-dialog ref="subDlg" :action="localGallery">
     <template #default>.</template>
