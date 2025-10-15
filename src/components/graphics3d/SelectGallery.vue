@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute-bottom-left q-pa-md q-ml-xl" >
+  <div class="absolute-bottom-left q-pa-md q-ml-xl">
     <q-select
       ref="gallerySel"
       v-model="gallery"

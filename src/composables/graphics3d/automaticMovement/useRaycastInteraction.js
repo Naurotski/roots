@@ -1,14 +1,12 @@
 import { storeToRefs } from 'pinia'
 import { Box3, MathUtils, Matrix3, Matrix4, Raycaster, Vector2, Vector3 } from 'three'
+import { useGraphics3DStore } from 'stores/graphics3D-store'
 import { findTaggedParent } from 'src/composables/graphics3d/findIntersectionElement'
 import {
   rotateToTarget,
   rotateHeadToTarget
 } from 'src/composables/graphics3d/automaticMovement/rotateToTarget'
-import { useGraphics3DStore } from 'stores/graphics3D-store'
-const graphics3DStore = useGraphics3DStore()
-const { isAutoMoving, selectedElementId, videoList } = storeToRefs(graphics3DStore)
-const { updateCheckAutoMoving, updateSelectedElementId, updateVideoAudio } = graphics3DStore
+import { recomputeAndUpdateScreenBounds } from 'src/composables/graphics3d/automaticMovement/screenBounds'
 
 export const useRaycastInteraction = ({
   camera,
@@ -17,6 +15,9 @@ export const useRaycastInteraction = ({
   controlsObject,
   collidableMeshes
 }) => {
+  const graphics3DStore = useGraphics3DStore()
+  const { isAutoMoving, selectedElementId, videoList } = storeToRefs(graphics3DStore)
+  const { updateCheckAutoMoving, updateSelectedElementId, updateVideoAudio } = graphics3DStore
   const raycaster = new Raycaster()
   const mouse = new Vector2()
   const targetPos = new Vector3()
@@ -34,12 +35,6 @@ export const useRaycastInteraction = ({
     const rect = renderer.domElement.getBoundingClientRect()
     mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
     mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
-  }
-  const toScreen = (v) => {
-    const p = new Vector3().copy(v).project(camera)
-    const w = renderer.domElement.clientWidth
-    const h = renderer.domElement.clientHeight
-    return { x: (p.x * 0.5 + 0.5) * w, y: (-p.y * 0.5 + 0.5) * h }
   }
   const onMousedownRaycaster = async (e) => {
     if (e.button !== 0 || e.target !== renderer.domElement || isAutoMoving.value) return // Только левая кнопка
@@ -164,33 +159,12 @@ export const useRaycastInteraction = ({
       lookAtTargetPos = null
       updateCheckAutoMoving(false)
       if (!selectedElementId || selectedElementId.id !== taggedParent.userData.id) {
-        scene.updateMatrixWorld(true)
-        camera.updateProjectionMatrix()
-        camera.updateMatrixWorld(true)
-        const { min, max } = boundingBox
-        const corners = [
-          new Vector3(min.x, min.y, min.z),
-          new Vector3(min.x, min.y, max.z),
-          new Vector3(min.x, max.y, min.z),
-          new Vector3(min.x, max.y, max.z),
-          new Vector3(max.x, min.y, min.z),
-          new Vector3(max.x, min.y, max.z),
-          new Vector3(max.x, max.y, min.z),
-          new Vector3(max.x, max.y, max.z)
-        ]
-        const pts = corners.map(toScreen)
-        const xs = pts.map((p) => p.x)
-        const ys = pts.map((p) => p.y)
-        updateSelectedElementId({
-          id: taggedParent.userData.id,
-          isPainting: !!taggedParent.userData.isPainting,
-          isSticker: !!taggedParent.userData.isSticker,
-          screenBounds: {
-            xMin: Math.min(...xs),
-            xMax: Math.max(...xs),
-            yMin: Math.min(...ys),
-            yMax: Math.max(...ys)
-          }
+        recomputeAndUpdateScreenBounds({
+          boundingBox,
+          scene,
+          camera,
+          renderer,
+          taggedParent
         })
       }
       taggedParent = null
@@ -198,6 +172,17 @@ export const useRaycastInteraction = ({
       dir.normalize()
       controlsObject.position.add(dir.multiplyScalar(moveSpeed * delta))
     }
+  }
+  const onWindowResize = () => {
+    if (!selectedElementId.value) return
+    console.log('recomputeAndUpdateScreenBounds -----')
+    recomputeAndUpdateScreenBounds({
+      boundingBox,
+      scene,
+      camera,
+      renderer,
+      taggedParent
+    })
   }
 
   const onMousemoveRaycaster = (e) => {
@@ -218,10 +203,12 @@ export const useRaycastInteraction = ({
   const el = renderer.domElement
   el.addEventListener('mousedown', onMousedownRaycaster)
   el.addEventListener('mousemove', onMousemoveRaycaster)
+  window.addEventListener('resize', onWindowResize)
 
   const raycastInteractionUnmounted = () => {
     el.removeEventListener('mousedown', onMousedownRaycaster)
     el.removeEventListener('mousemove', onMousemoveRaycaster)
+    window.removeEventListener('resize', onWindowResize)
   }
   return { raycastInteractionUnmounted, updateMoveToPainting }
 }

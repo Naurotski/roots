@@ -28,8 +28,7 @@
         v-if="selectedElement.description"
         class="scroll"
         :style="{
-          maxHeight:
-            $q.screen.width / $q.screen.height > 1 && $q.screen.height < 600 ? '50vh' : '30vh'
+          maxHeight: $q.screen.width < $q.screen.height && $q.screen.height > 600 ? '50vh' : '30vh'
         }"
       >
         <div class="text-justify text-body2" style="white-space: pre-line">
@@ -96,6 +95,7 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 import PaymentDialog from 'components/dialogs/PaymentDialog.vue'
+import { useQuasar } from 'quasar'
 
 export default {
   name: 'GalleryLabels',
@@ -103,10 +103,16 @@ export default {
     PaymentDialog
   },
   setup() {
+    const CARD_W = 300
+    const GAP = 15
+    const MARGIN = 5
+
     const { locale } = useI18n({ useScope: 'global' })
+    const $q = useQuasar()
     const graphics3DStore = useGraphics3DStore()
     const { selectedGallery, selectedElementId } = storeToRefs(graphics3DStore)
     const { updateSelectedElementId } = graphics3DStore
+    let vw, vh
     const selectedElement = computed(() => {
       if (!selectedElementId) return
       const typeStore = selectedElementId.value.isPainting
@@ -123,24 +129,24 @@ export default {
         typeStore
       }
     })
+    const bounds = computed(() => {
+      console.log('screenBounds---', selectedElementId.value?.screenBounds)
+      return selectedElementId.value?.screenBounds || null
+    })
 
-    const bounds = computed(() => selectedElementId.value?.screenBounds || null)
-    const CARD_W = 300
-    const GAP = 16
-    const MARGIN = 8
-
-    const isPortrait = computed(() => window.innerHeight > window.innerWidth)
+    const isPortrait = computed(() => {
+      console.log($q.screen.width)
+      console.log($q.screen.height)
+      vw = $q.screen.width
+      vh = $q.screen.height
+      return $q.screen.height > $q.screen.width
+    })
 
     const leftStyle = computed(() => {
       if (!bounds.value) return {}
-      const vw = window.innerWidth
-      const vh = window.innerHeight
-      const b = bounds.value
-      const xMid = (b.xMin + b.xMax) / 2
-      const yMid = (b.yMin + b.yMax) / 2
-
+      const xMid = (bounds.value.xMin + bounds.value.xMax) / 2
+      const yMid = (bounds.value.yMin + bounds.value.yMax) / 2
       if (isPortrait.value) {
-        // сверху над объектом (по центру), сдвигаем на -100% собственной высоты
         const left = Math.min(Math.max(MARGIN, xMid - CARD_W / 2), vw - CARD_W - MARGIN)
         // const top = Math.max(MARGIN, b.yMin - GAP)
         return {
@@ -150,9 +156,7 @@ export default {
           // transform: 'translateY(-100%)'
         }
       }
-
-      // слева по вертикальному центру (не зависит от высоты)
-      let left = b.xMin - GAP - CARD_W
+      let left = bounds.value.xMin - GAP - CARD_W
       if (left < MARGIN) left = MARGIN
       const top = Math.min(Math.max(MARGIN, yMid), vh - MARGIN)
       return {
@@ -165,14 +169,13 @@ export default {
 
     const rightStyle = computed(() => {
       if (!bounds.value) return {}
-      const vw = window.innerWidth
-      const vh = window.innerHeight
-      const b = bounds.value
-      const xMid = (b.xMin + b.xMax) / 2
-      const yMid = (b.yMin + b.yMax) / 2
-
+      console.log('rightStyle --')
+      console.log(bounds.value)
+      console.log(vw)
+      console.log(vh)
+      const xMid = (bounds.value.xMin + bounds.value.xMax) / 2
+      const yMid = (bounds.value.yMin + bounds.value.yMax) / 2
       if (isPortrait.value) {
-        // снизу под объектом (по центру)
         const left = Math.min(Math.max(MARGIN, xMid - CARD_W / 2), vw - CARD_W - MARGIN)
         // const top = Math.min(vh - MARGIN, b.yMax + GAP)
         return {
@@ -181,9 +184,7 @@ export default {
           bottom: `${MARGIN}px`
         }
       }
-
-      // справа по вертикальному центру
-      let left = b.xMax + GAP
+      let left = bounds.value.xMax + GAP
       if (left + CARD_W > vw - MARGIN) left = vw - CARD_W - MARGIN
       const top = Math.min(Math.max(MARGIN, yMid), vh - MARGIN)
       return {

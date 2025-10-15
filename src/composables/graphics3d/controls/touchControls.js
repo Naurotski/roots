@@ -7,7 +7,7 @@ export function createTouchControls({
   keysPressed,
   isAutoMoving, // ref<boolean>
   paymentDialogChek, // ref<boolean>
-  selectedElementId, // ref<any>
+  selectedElementId // ref<any>
 }) {
   const graphics3DStore = useGraphics3DStore()
   const { updateSelectedElementId } = graphics3DStore
