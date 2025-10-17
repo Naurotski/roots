@@ -214,7 +214,7 @@ export default defineComponent({
         link: {
           canonical: {
             rel: 'canonical',
-            href: 'https://aortagallery.com/home'
+            href: 'https://aortagallery.com/'
           }
         },
         script: {

@@ -13,10 +13,13 @@ const routes = isMaintenanceMode
         component: () => import('layouts/Layout.vue'),
         children: [
           {
-            path: '/home',
+            path: '',
             name: 'Home',
-            alias: '',
             component: () => import('pages/HomePage.vue')
+          },
+          {
+            path: '/home',
+            redirect: '/'
           },
           {
             path: 'artists',
