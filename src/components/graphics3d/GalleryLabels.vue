@@ -11,6 +11,7 @@
         class="absolute-top-right z-max"
         flat
         round
+        color="negative"
         icon="close"
         @click="deleteSelectedElementId"
       />
@@ -50,6 +51,7 @@
         class="absolute-top-right z-max"
         flat
         round
+        color="negative"
         icon="close"
         @click="deleteSelectedElementId"
       />
@@ -129,14 +131,9 @@ export default {
         typeStore
       }
     })
-    const bounds = computed(() => {
-      console.log('screenBounds---', selectedElementId.value?.screenBounds)
-      return selectedElementId.value?.screenBounds || null
-    })
+    const bounds = computed(() => selectedElementId.value?.screenBounds || null)
 
     const isPortrait = computed(() => {
-      console.log($q.screen.width)
-      console.log($q.screen.height)
       vw = $q.screen.width
       vh = $q.screen.height
       return $q.screen.height > $q.screen.width
@@ -169,10 +166,6 @@ export default {
 
     const rightStyle = computed(() => {
       if (!bounds.value) return {}
-      console.log('rightStyle --')
-      console.log(bounds.value)
-      console.log(vw)
-      console.log(vh)
       const xMid = (bounds.value.xMin + bounds.value.xMax) / 2
       const yMid = (bounds.value.yMin + bounds.value.yMax) / 2
       if (isPortrait.value) {

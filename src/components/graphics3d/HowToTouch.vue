@@ -7,7 +7,14 @@
     <q-card-section class="row">
       <div class="text-h6">{{ $t('graphics3D.howTo') }}</div>
       <q-space />
-      <q-btn class="absolute-top-right" flat round icon="close" @click="showCard = false" />
+      <q-btn
+        class="absolute-top-right"
+        flat
+        round
+        icon="close"
+        color="negative"
+        @click="showCard = false"
+      />
     </q-card-section>
     <div class="howto-row orientation-warning">
       <div class="howto-icon">

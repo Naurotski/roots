@@ -1,12 +1,15 @@
 import { storeToRefs } from 'pinia'
 import { Box3, MathUtils, Matrix3, Matrix4, Raycaster, Vector2, Vector3 } from 'three'
+import { Screen } from 'quasar'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
+import { useSharedStore } from 'stores/shared-store'
 import { findTaggedParent } from 'src/composables/graphics3d/findIntersectionElement'
 import {
   rotateToTarget,
   rotateHeadToTarget
 } from 'src/composables/graphics3d/automaticMovement/rotateToTarget'
 import { recomputeAndUpdateScreenBounds } from 'src/composables/graphics3d/automaticMovement/screenBounds'
+import { watch } from 'vue'
 
 export const useRaycastInteraction = ({
   camera,
@@ -18,10 +21,13 @@ export const useRaycastInteraction = ({
   const graphics3DStore = useGraphics3DStore()
   const { isAutoMoving, selectedElementId, videoList } = storeToRefs(graphics3DStore)
   const { updateCheckAutoMoving, updateSelectedElementId, updateVideoAudio } = graphics3DStore
+  const sharedStore = useSharedStore()
+  const { headerFooterHidden } = storeToRefs(sharedStore)
   const raycaster = new Raycaster()
   const mouse = new Vector2()
   const targetPos = new Vector3()
 
+  const APPROACH_DISTANCE = 1
   const moveSpeed = 2 // м/с
   let moveTarget = null
   let lookAtTargetPos = null
@@ -49,7 +55,17 @@ export const useRaycastInteraction = ({
         return
       }
       taggedParent = findTaggedParent(intersect.object)
-      if (!taggedParent) return
+      if (
+        !taggedParent ||
+        (Screen.lt.md &&
+          !document.fullscreenElement &&
+          !document.webkitFullscreenElement &&
+          !headerFooterHidden.value)
+      ) {
+        taggedParent = null
+        return
+      }
+
       // Получаем центр картины
       boundingBox = new Box3().setFromObject(taggedParent)
       boundingBox.getCenter(targetPos)
@@ -65,16 +81,15 @@ export const useRaycastInteraction = ({
       } else if (taggedParent.userData.isPlaceableObject && taggedParent.userData.normal) {
         normalForApproach = taggedParent.userData.normal.clone().normalize()
       }
-
       if (!normalForApproach) return
 
-      lookAtTargetPos = targetPos.clone() // Смотрим на центр картины
-      mainTarget = targetPos.clone().add(normalForApproach.clone().multiplyScalar(1)) // Двигаемся на метр перед картиной
+      lookAtTargetPos = targetPos.clone()
+      mainTarget = targetPos.clone().addScaledVector(normalForApproach, APPROACH_DISTANCE) // пределяем конечную точку движениях один метр перед картиной по нормали
       moveTarget = mainTarget.clone()
 
       const result = findClearPathDirection()
       if (!result) {
-        console.log('Движение не начато: путь закрыт во всех направлениях')
+        console.log('The movement has not started: the road is closed in all directions')
         moveTarget = null
         lookAtTargetPos = null
         return
@@ -116,7 +131,7 @@ export const useRaycastInteraction = ({
         return { direction: testDir, isOriginal: false }
       }
     }
-    console.log('Обход не найден — путь закрыт со всех сторон')
+    console.log('No bypass was found - the path is blocked on all sides')
     return null
   }
   const isDirectionClear = (origin, direction) => {
@@ -132,28 +147,24 @@ export const useRaycastInteraction = ({
 
   const updateMoveToPainting = (delta) => {
     if (!moveTarget || !lookAtTargetPos) return
-
     if (
       isBypassing &&
       isDirectionClear(
-        controlsObject.position.clone().setY(controlsObject.position.y),
+        controlsObject.position.clone(),
         mainTarget.clone().sub(controlsObject.position).normalize()
       )
     ) {
       moveTarget = mainTarget.clone()
       isBypassing = false
     }
-
     rotateToTarget(controlsObject, lookAtTargetPos, delta, moveTarget, moveSpeed)
     const head = controlsObject.getObjectByName('head')
     if (head) {
       rotateHeadToTarget(controlsObject, head, lookAtTargetPos, delta, moveTarget, moveSpeed)
     }
-
     const dir = moveTarget.clone().sub(controlsObject.position)
     const distance = dir.length()
-
-    if (distance < 0.05) {
+    if (distance <= 0.01) {
       controlsObject.position.copy(moveTarget)
       moveTarget = null
       lookAtTargetPos = null
@@ -167,15 +178,15 @@ export const useRaycastInteraction = ({
           taggedParent
         })
       }
-      taggedParent = null
+      // taggedParent = null
     } else {
-      dir.normalize()
-      controlsObject.position.add(dir.multiplyScalar(moveSpeed * delta))
+      const maxStep = moveSpeed * delta
+      const step = Math.min(maxStep, distance)
+      controlsObject.position.add(dir.multiplyScalar(step / (distance || 1)))
     }
   }
   const onWindowResize = () => {
     if (!selectedElementId.value) return
-    console.log('recomputeAndUpdateScreenBounds -----')
     recomputeAndUpdateScreenBounds({
       boundingBox,
       scene,
@@ -185,6 +196,30 @@ export const useRaycastInteraction = ({
     })
   }
 
+  watch(
+    () => [Screen.width, Screen.height, headerFooterHidden.value],
+    () => {
+      if (!selectedElementId.value) return
+      if (
+        Screen.lt.md &&
+        !document.fullscreenElement &&
+        !document.webkitFullscreenElement &&
+        !headerFooterHidden.value
+      ) {
+        updateSelectedElementId(null)
+        taggedParent = null
+        return
+      }
+      recomputeAndUpdateScreenBounds({
+        boundingBox,
+        scene,
+        camera,
+        renderer,
+        taggedParent
+      })
+    }
+  )
+
   const onMousemoveRaycaster = (e) => {
     if (isAutoMoving.value) return // Только левая кнопка
     normalizeMouseEvent(e)
@@ -193,7 +228,6 @@ export const useRaycastInteraction = ({
     let hovered = hoverIntersects
       .map((i) => findTaggedParent(i.object) || i.object.name === 'Smart_TV_1')
       .find((obj) => obj !== null)
-    // console.log('hovered --', hovered)
     if (hovered) {
       document.body.style.cursor = 'pointer'
     } else {

@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-none">
-    <div class="fs-root" ref="fsRoot" :class="{ 'fs-emulated': emulateFs }">
+    <div class="fs-root" ref="fsRoot" :class="{ 'fs-emulated': headerFooterHidden }">
       <gallery3-d />
       <how-to v-if="mode === 'keyboard'" class="absolute-top-right q-mt-xl q-mr-xl" />
       <how-to-touch v-else />
@@ -16,8 +16,7 @@
           { blink: shouldBlink }
         ]"
         round
-        :icon="$q.fullscreen.isActive || emulateFs ? 'fullscreen_exit' : 'fullscreen'"
-        :disable="!!selectedElementId"
+        :icon="$q.fullscreen.isActive || headerFooterHidden ? 'fullscreen_exit' : 'fullscreen'"
         @click="toggleFs"
       />
     </div>
@@ -61,13 +60,13 @@ export default {
   },
   setup(props) {
     const fsRoot = ref(null)
-    const emulateFs = ref(false)
     const $q = useQuasar()
     const router = useRouter()
     const { locale, t } = useI18n({ useScope: 'global' })
     const { galleryId } = toRefs(props)
     const mode = ref('keyboard')
     const sharedStore = useSharedStore()
+    const { headerFooterHidden } = storeToRefs(sharedStore)
     const { toggleHeaderFooter } = sharedStore
     const authStore = useAuthStore()
     const { loggedIn } = storeToRefs(authStore)
@@ -91,7 +90,7 @@ export default {
       getSelectedRealGallery()
     }
     const shouldBlink = computed(
-      () => $q.screen.lt.md && !$q.fullscreen.isActive && !emulateFs.value
+      () => $q.screen.lt.md && !$q.fullscreen.isActive && !headerFooterHidden.value
     )
     watch(loggedIn, (val) => {
       if (!val) router.replace('/')
@@ -105,26 +104,23 @@ export default {
         else await $q.fullscreen.request(fsRoot.value)
         return
       }
-      emulateFs.value = !emulateFs.value
-      toggleHeaderFooter(emulateFs.value)
-      document.body.classList.toggle('app-fs', emulateFs.value)
+      toggleHeaderFooter(!headerFooterHidden.value)
+      document.body.classList.toggle('app-fs', headerFooterHidden.value)
     }
     const setDefaultMode = () =>
       (mode.value = window.matchMedia('(pointer: coarse)').matches ? 'touch' : 'keyboard')
 
-    let mq, handler
+    let mq
     onMounted(() => {
       toggleFs()
       setDefaultMode()
       mq = window.matchMedia('(pointer: coarse)')
-      handler = () => setDefaultMode()
-      mq.addEventListener?.('change', handler)
+      mq.addEventListener?.('change', setDefaultMode)
     })
     onUnmounted(() => {
-      emulateFs.value = false
       toggleHeaderFooter(false)
       document.body.classList.remove('app-fs')
-      mq.removeEventListener?.('change', handler)
+      mq.removeEventListener?.('change', setDefaultMode)
     })
     useMeta(() => {
       const name =
@@ -236,10 +232,10 @@ export default {
     })
     return {
       fsRoot,
-      emulateFs,
       mode,
       selectedElementId,
       shouldBlink,
+      headerFooterHidden,
       toggleFs
     }
   }

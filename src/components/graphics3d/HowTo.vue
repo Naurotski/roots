@@ -3,18 +3,21 @@
     <q-card-section class="row">
       <div class="text-h6">{{ $t('graphics3D.howTo') }}</div>
       <q-space />
-      <q-btn class="absolute-top-right" flat round icon="close" @click="showCard = false" />
+      <q-btn
+        class="absolute-top-right"
+        flat
+        round
+        icon="close"
+        color="negative"
+        @click="showCard = false"
+      />
     </q-card-section>
-
-    <!-- 1. Click and drag -->
     <div class="howto-row">
       <div class="howto-icon">
         <img src="~/assets/rotate-mouse.svg" alt="rotate mouse" class="icon" />
       </div>
       <div class="howto-text">{{ $t('graphics3D.clickAndDrag') }}</div>
     </div>
-
-    <!-- 2. Arrow keys -->
     <div class="howto-row">
       <div class="howto-icon">
         <div class="key-group">
@@ -30,8 +33,6 @@
       </div>
       <div class="howto-text">{{ $t('graphics3D.upAndDown') }}</div>
     </div>
-
-    <!-- 3. Click on artworks or objects -->
     <div class="howto-row">
       <div class="howto-icon">
         <img src="~/assets/click-on-objects.svg" alt="click on artworks or objects" class="icon" />
