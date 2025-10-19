@@ -19,7 +19,7 @@ export default boot(({ router }) => {
           icon: 'smartphone',
           message: t('graphics3D.virtualAvailable'),
           position: 'top',
-          timeout: 4000
+          timeout: 8000
         })
         return { name: 'Home' }
       }
