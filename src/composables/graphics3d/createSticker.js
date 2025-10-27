@@ -2,13 +2,10 @@ import {
   PlaneGeometry,
   Mesh,
   MeshStandardMaterial,
-  TextureLoader,
-  LinearFilter,
-  LinearMipMapLinearFilter,
-  SRGBColorSpace,
   FrontSide
 } from 'three'
 import { manager } from 'src/composables/graphics3d/loadingManager'
+import { loadTextureSmart } from 'src/composables/graphics3d/ktx2/loadTextureSmart'
 export const createSticker = async ({
   renderer,
   point,
@@ -20,16 +17,11 @@ export const createSticker = async ({
   height,
   stickerId,
   rotation,
-  offset = 0.001 // на сколько отодвинуть от стены
+  offset = 0.001,
+  ktx2Variants,
+  perfTier // на сколько отодвинуть от стены
 }) => {
-  const loader = new TextureLoader(manager)
-  loader.setCrossOrigin?.('anonymous')
-  const texture = await loader.loadAsync(url)
-  await texture.image?.decode?.().catch(() => {})
-  texture.anisotropy = renderer.capabilities.getMaxAnisotropy()
-  texture.colorSpace = SRGBColorSpace
-  texture.minFilter = LinearMipMapLinearFilter
-  texture.magFilter = LinearFilter
+  const texture = await loadTextureSmart({ renderer, url, ktx2Variants, perfTier, manager })
   const material = new MeshStandardMaterial({
     map: texture,
     transparent: true,

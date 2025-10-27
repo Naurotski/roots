@@ -6,6 +6,7 @@ pk_live.js
 printFullToken.js
 .firebase
 public/3Dmodels
+public/basis
 # Quasar core related directories
 .quasar
 /dist

@@ -1,15 +1,7 @@
-import {
-  BoxGeometry,
-  Color,
-  LinearFilter,
-  LinearMipMapLinearFilter,
-  Mesh,
-  MeshStandardMaterial,
-  TextureLoader,
-  SRGBColorSpace
-} from 'three'
+import { BoxGeometry, Color, Mesh, MeshStandardMaterial } from 'three'
 import { manager } from 'src/composables/graphics3d/loadingManager'
 import { useSpotLight } from 'src/composables/graphics3d/useSpotLight'
+import { loadTextureSmart } from 'src/composables/graphics3d/ktx2/loadTextureSmart'
 
 export const createPainting = async ({
   renderer,
@@ -20,18 +12,11 @@ export const createPainting = async ({
   url,
   width,
   height,
-  paintingId
+  paintingId,
+  ktx2Variants,
+  perfTier
 }) => {
-  const loader = new TextureLoader(manager)
-  loader.setCrossOrigin?.('anonymous')
-
-  const texture = await loader.loadAsync(url)
-  await texture.image?.decode?.().catch(() => {})
-
-  texture.anisotropy = renderer.capabilities.getMaxAnisotropy()
-  texture.colorSpace = SRGBColorSpace
-  texture.minFilter = LinearMipMapLinearFilter
-  texture.magFilter = LinearFilter
+  const texture = await loadTextureSmart({ renderer, url, ktx2Variants, perfTier, manager })
 
   const sideMaterial = new MeshStandardMaterial({ color: new Color(0xffffff) })
 

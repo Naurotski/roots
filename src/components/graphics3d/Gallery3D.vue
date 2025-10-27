@@ -20,6 +20,7 @@ import { loadModel } from 'src/composables/graphics3d/loadModel'
 import { modelPositioning } from 'src/composables/graphics3d/modelPositioning'
 import { useVideo } from 'src/composables/graphics3d/useVideo'
 import { useAudio } from 'src/composables/graphics3d/useAudio'
+import { detectPerfTier } from 'src/composables/graphics3d/ktx2/tier'
 import {
   setLoadingLabel,
   holdOverlay,
@@ -36,6 +37,7 @@ export default {
     const { clearSelectedGallery } = graphics3DStore
     const container = ref(null)
     const unmountedArray = ref([])
+    const perfTier = ref('high')
     const modelGalleryReady = ref(false)
     const collidableMeshes = []
     let scene, renderer, camera, cleanupAudio, cleanupVideo
@@ -138,6 +140,7 @@ export default {
             await clearSelectedGallery()
           }
           if (!newVal) return
+          perfTier.value = await detectPerfTier(renderer, { sampleMs: 600 })
           if (selectedGallery.value.storeroom) {
             setLoadingLabel('Loading Paintings…')
             const items = Object.values(selectedGallery.value.storeroom).filter((e) => e.position)
@@ -161,7 +164,9 @@ export default {
                     url: item.url,
                     width: item.width,
                     height: item.height,
-                    paintingId: item.id
+                    paintingId: item.id,
+                    ktx2Variants: item.ktx2Variants,
+                    perfTier: perfTier.value
                   })
                 )
               )
@@ -193,7 +198,9 @@ export default {
                     width: item.width,
                     height: item.height,
                     stickerId: item.id,
-                    rotation: item.position.rotation
+                    rotation: item.position.rotation,
+                    ktx2Variants: item.ktx2Variants,
+                    perfTier: perfTier.value
                   })
                 )
               )
