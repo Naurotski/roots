@@ -20,7 +20,7 @@ export const setAnimationLoop = ({
   const clock = new Clock()
   renderer.setAnimationLoop(() => {
     const delta = clock.getDelta()
-
+    const now = performance.now()
     // Обновляем все миксеры
     Object.values(models3d.value)
       .filter((elem) => elem.mixer)
@@ -42,7 +42,7 @@ export const setAnimationLoop = ({
     // === Обновляем видео-текстуры ===
     scene.traverse((child) => {
       if (child.userData.update) {
-        child.userData.update()
+        child.userData.update(now)
       }
     })
     renderer.render(scene, camera)

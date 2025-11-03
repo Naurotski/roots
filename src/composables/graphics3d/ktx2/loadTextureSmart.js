@@ -18,7 +18,6 @@ export const loadTextureSmart = async ({ renderer, url, ktx2Variants, perfTier, 
   if (ktxUrl) {
     try {
       const t = await getKTX2(renderer, manager).loadAsync(ktxUrl)
-      console.log('loadTextureSmart--ktxUrl-')
       t.colorSpace = SRGBColorSpace
       t.minFilter = LinearMipMapLinearFilter
       t.magFilter = LinearFilter

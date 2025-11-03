@@ -15,11 +15,14 @@ import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { Notify } from 'quasar'
 import { markStart, markEnd } from 'src/composables/graphics3d/loadingManager'
+import { pickKTX2Variant } from 'src/composables/graphics3d/ktx2/pickKTX2'
 import { useGraphics3DStore } from 'stores/graphics3D-store'
 const graphics3DStore = useGraphics3DStore()
 const { videoList } = storeToRefs(graphics3DStore)
 
-export const useVideo = async (scene, dataVideo) => {
+export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
+  const localUrl = pickKTX2Variant(dataVideo.videoVariants, renderer, perfTier) || dataVideo.url
+  console.log('localUrl ---', localUrl)
   const object = scene.getObjectByName(dataVideo.videoId)
   if (!object || !object.geometry) return
   const token = `video:${dataVideo.videoId}`
@@ -31,7 +34,7 @@ export const useVideo = async (scene, dataVideo) => {
     video.playsInline = true
     video.preload = 'auto'
     video.muted = true
-    video.src = dataVideo.url
+    video.src = localUrl
     await new Promise((resolve, reject) => {
       const ok = () => {
         cleanup()
@@ -108,8 +111,12 @@ export const useVideo = async (scene, dataVideo) => {
     screen.userData.video = video
     screen.userData.videoTexture = videoTexture
     // Добавляем метод обновления текстуры (в основном render loop)
-    screen.userData.update = () => {
-      videoTexture.needsUpdate = true
+    let lastUpdate = 0
+    screen.userData.update = (now) => {
+      if (now - lastUpdate > 33) {
+        videoTexture.needsUpdate = true
+        lastUpdate = now
+      }
     }
     scene.add(screen)
   } catch (err) {

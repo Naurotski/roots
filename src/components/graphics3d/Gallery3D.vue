@@ -213,8 +213,11 @@ export default {
               items.map((item) =>
                 limit(async () => {
                   const modelData = await loadModel({
+                    renderer,
                     url: item.url,
-                    targetHeight: item.targetHeight
+                    glbVariants: item.glbVariants,
+                    targetHeight: item.targetHeight,
+                    perfTier: perfTier.value
                   })
                   modelPositioning({
                     scene,
@@ -260,7 +263,7 @@ export default {
         if (isModelReady && newVideoStore) {
           setLoadingLabel('Loading Video…')
           for (const key of Object.keys(newVideoStore)) {
-            cleanupVideo = await useVideo(scene, newVideoStore[key])
+            cleanupVideo = await useVideo(scene, renderer, perfTier, newVideoStore[key])
           }
         }
       },

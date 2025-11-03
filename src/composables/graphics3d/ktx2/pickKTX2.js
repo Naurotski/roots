@@ -17,12 +17,12 @@ export const pickKTX2Variant = (variants = {}, renderer, perfTier) => {
     // если hi-DPR — поднимаем порядок: сначала desktop
     if (hiDPR) {
       if (minSide >= 1200) return want(['desktop', 'mobile', 'thumb', 'full'])
-      if (minSide >= 700)  return want(['desktop', 'mobile', 'thumb', 'full'])
+      if (minSide >= 700) return want(['desktop', 'mobile', 'thumb', 'full'])
       return want(['mobile', 'thumb', 'desktop', 'full'])
     }
     // обычный mid
     if (minSide >= 1200) return want(['desktop', 'mobile', 'thumb', 'full'])
-    if (minSide >= 700)  return want(['mobile', 'desktop', 'thumb', 'full'])
+    if (minSide >= 700) return want(['mobile', 'desktop', 'thumb', 'full'])
     return want(['thumb', 'mobile', 'desktop', 'full'])
   }
 
