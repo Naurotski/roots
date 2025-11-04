@@ -28,7 +28,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
     Object.fromEntries(
       Object.entries(listGalleries.value).filter(
         ([, value]) =>
-          !value.draft && value.openingDate <= date.formatDate(new Date(), 'YYYY/MM/DD')
+          value.openingDate <= date.formatDate(new Date(), 'YYYY/MM/DD')
       )
     )
   )

@@ -9,7 +9,8 @@ import {
   Vector3,
   Quaternion,
   MathUtils,
-  SRGBColorSpace
+  SRGBColorSpace,
+  TextureLoader
 } from 'three'
 import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
@@ -21,6 +22,7 @@ const graphics3DStore = useGraphics3DStore()
 const { videoList } = storeToRefs(graphics3DStore)
 
 export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
+  let timer, playIcon
   const localUrl = pickKTX2Variant(dataVideo.videoVariants, renderer, perfTier) || dataVideo.url
   console.log('localUrl ---', localUrl)
   const object = scene.getObjectByName(dataVideo.videoId)
@@ -46,10 +48,17 @@ export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
       }
       const cleanup = () => {
         video.removeEventListener('loadeddata', ok)
+        video.removeEventListener('canplaythrough', ok)
         video.removeEventListener('error', fail)
       }
       video.addEventListener('loadeddata', ok, { once: true })
+      video.addEventListener('canplaythrough', ok, { once: true })
       video.addEventListener('error', fail, { once: true })
+
+      timer = setTimeout(() => {
+        cleanup()
+        resolve(true)
+      }, 3000)
     })
 
     const videoAspect = video.videoWidth / video.videoHeight || 16 / 9 // страховка на случай нулей
@@ -68,6 +77,7 @@ export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
       toneMapped: false,
       transparent: false
     })
+
     // 3. рассчитываем bounding box
     object.geometry.computeBoundingBox()
     const boundingBox = object.geometry.boundingBox
@@ -75,6 +85,7 @@ export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
     boundingBox.getSize(size)
     const center = new Vector3()
     boundingBox.getCenter(center)
+
     // 4. определим, на какую ось "смотрит" объект
     // можно взять нормаль первой грани (упрощённо)
     const normal = new Vector3(0, 0, 1) // по умолчанию Z
@@ -99,6 +110,7 @@ export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
     }
     const geometry = new PlaneGeometry(width, height)
     const screen = new Mesh(geometry, material)
+
     // 6. позиция по центру (в мировых координатах)
     const worldCenter = center.clone().applyMatrix4(object.matrixWorld)
     screen.position.copy(worldCenter).add(normal.clone().multiplyScalar(0.01))
@@ -110,6 +122,23 @@ export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
     screen.name = `video-mesh-${dataVideo.videoId}`
     screen.userData.video = video
     screen.userData.videoTexture = videoTexture
+
+    // ИКОНКА PLAY как плоскость (без биллбординга)
+    const iconUrl = '/assets/play.png' // укажи свой путь
+    const iconTex = new TextureLoader().load(iconUrl)
+    const iconMat = new MeshBasicMaterial({
+      map: iconTex,
+      transparent: true,
+      depthTest: true,
+      depthWrite: false,
+      side: FrontSide
+    })
+    const iconSizeK = 0.75 // доля от высоты экрана
+    const iconGeo = new PlaneGeometry(height * iconSizeK, height * iconSizeK)
+    playIcon = new Mesh(iconGeo, iconMat)
+    playIcon.position.set(0, 0, 0.002) // чуть выше поверхности
+    screen.add(playIcon)
+
     // Добавляем метод обновления текстуры (в основном render loop)
     let lastUpdate = 0
     screen.userData.update = (now) => {
@@ -118,6 +147,10 @@ export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
         lastUpdate = now
       }
     }
+    // начальная видимость иконки (если стор уже содержит состояние)
+    const initialPlay = !!videoList.value?.[dataVideo.videoId]?.play
+    playIcon.visible = !initialPlay
+
     scene.add(screen)
   } catch (err) {
     Notify.create({
@@ -144,6 +177,7 @@ export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
           checkPlay = false
         }
         video.muted = newValue[dataVideo.videoId].muted
+        if (playIcon) playIcon.visible = !newValue[dataVideo.videoId]?.play
       }
     },
     { deep: true }
@@ -163,5 +197,6 @@ export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
   return () => {
     document.removeEventListener('visibilitychange', handleVisibilityChange)
     stopWatch?.()
+    clearTimeout(timer)
   }
 }
