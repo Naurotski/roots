@@ -24,7 +24,6 @@ const { videoList } = storeToRefs(graphics3DStore)
 export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
   let timer, playIcon
   const localUrl = pickKTX2Variant(dataVideo.videoVariants, renderer, perfTier) || dataVideo.url
-  console.log('localUrl ---', localUrl)
   const object = scene.getObjectByName(dataVideo.videoId)
   if (!object || !object.geometry) return
   const token = `video:${dataVideo.videoId}`

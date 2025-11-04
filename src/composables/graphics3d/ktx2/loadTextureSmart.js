@@ -14,7 +14,6 @@ const getKTX2 = (renderer, manager) => {
 
 export const loadTextureSmart = async ({ renderer, url, ktx2Variants, perfTier, manager }) => {
   const ktxUrl = pickKTX2Variant(ktx2Variants, renderer, perfTier)
-  console.log('ktxUrl ---', ktxUrl)
   if (ktxUrl) {
     try {
       const t = await getKTX2(renderer, manager).loadAsync(ktxUrl)
@@ -30,7 +29,6 @@ export const loadTextureSmart = async ({ renderer, url, ktx2Variants, perfTier, 
   const tl = getTL(manager)
   tl.setCrossOrigin?.('anonymous')
   const t = await tl.loadAsync(url)
-  console.log('loadTextureSmart---url-')
   await t.image?.decode?.().catch(() => {})
   t.colorSpace = SRGBColorSpace
   t.minFilter = LinearMipMapLinearFilter
