@@ -166,7 +166,8 @@ export default {
     const filteredActions = ref([])
     const joinProjects = {
       1747135580593: 'https://buy.stripe.com/aFaaEWdrxasDgCndEe0co05',
-      1747135787981: 'https://buy.stripe.com/eVqdR83QXdEP1HtgQq0co06'
+      1747135787981: 'https://buy.stripe.com/eVqdR83QXdEP1HtgQq0co06',
+      1760538460280: 'https://buy.stripe.com/eVq9AS4V1asDeuf1Vw0co07'
     }
     const tab = ref(
       route.query.lifeTime ? 'current' : $q.localStorage.getItem('tab-actions') || 'archive'
