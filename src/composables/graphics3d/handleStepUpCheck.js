@@ -2,12 +2,15 @@ import { Euler, MathUtils, Raycaster, Vector3 } from 'three'
 const wallRaycaster = new Raycaster()
 const downRay = new Raycaster()
 const velocity = new Vector3()
+let lastSafe = new Vector3()
+
 const moveSpeed = 1
 const maxStepHeight = 0.3
 const stepUpSpeed = 5 // скорость подъема
 let stepLerpAlpha = 0
-const minDistance = 0.3 // насколько близко можно подойти
+const minDistance = 0.4 // насколько близко можно подойти
 let floorLevel = 0
+const MAX_DT = 1 / 30
 
 export const handleStepUpCheck = (
   delta,
@@ -17,6 +20,8 @@ export const handleStepUpCheck = (
   collidableMeshes
 ) => {
   if (moveVector.lengthSq() === 0) return
+  delta = Math.min(delta, MAX_DT)
+
   moveVector.normalize()
   moveVector.applyEuler(new Euler(0, controlsObject.rotation.y, 0, 'YXZ'))
   velocity.copy(moveVector).multiplyScalar(moveSpeed * delta)
@@ -24,11 +29,17 @@ export const handleStepUpCheck = (
 
   // === Проверка препятствия перед игроком ===
   // Определение уровня пола
-  const rayOrigin = controlsObject.position.clone()
-  rayOrigin.addScaledVector(direction, 0.1) // чуть впереди
+  const rayOrigin = controlsObject.position.clone().addScaledVector(direction, 0.1) // чуть впереди
   downRay.set(rayOrigin, new Vector3(0, -1, 0))
   const groundHits = downRay.intersectObjects(collidableMeshes, false) //Ищем все пересечения луча с объектами в collidableMeshes
   floorLevel = groundHits[0]?.point.y
+
+  if (floorLevel !== undefined) {
+    lastSafe.copy(controlsObject.position)
+  } else {
+    controlsObject.position.copy(lastSafe)
+    return
+  }
 
   //определение уровня ног
   const floorY = controlsObject.position.y - controlsObjectHeight // предполагаем рост 1.6м

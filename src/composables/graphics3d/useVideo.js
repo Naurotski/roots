@@ -133,11 +133,10 @@ export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
       depthWrite: false,
       side: FrontSide
     })
-    const iconSizeK = 0.75 // доля от высоты экрана
+    const iconSizeK = 0.55 // доля от высоты экрана
     const iconGeo = new PlaneGeometry(height * iconSizeK, height * iconSizeK)
     playIcon = new Mesh(iconGeo, iconMat)
     playIcon.position.set(0, 0, 0.002) // чуть выше поверхности
-    screen.add(playIcon)
 
     // Добавляем метод обновления текстуры (в основном render loop)
     let lastUpdate = 0
@@ -150,7 +149,7 @@ export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
     // начальная видимость иконки (если стор уже содержит состояние)
     const initialPlay = !!videoList.value?.[dataVideo.videoId]?.play
     playIcon.visible = !initialPlay
-
+    screen.add(playIcon)
     scene.add(screen)
   } catch (err) {
     Notify.create({

@@ -134,7 +134,7 @@ export default {
                   i.userData.isFurnitureObject
               )
               .forEach((elem) => removeElement(scene, collidableMeshes, elem))
-            removeVideoFromScene(scene, 'Smart_TV_1')
+            // removeVideoFromScene(scene, 'Smart_TV_1')
             cleanupAudio?.()
             cleanupVideo?.()
             await clearSelectedGallery()
@@ -255,10 +255,12 @@ export default {
           oldVideoStore &&
           JSON.stringify(toRaw(newVideoStore)) !== JSON.stringify(toRaw(oldVideoStore))
         ) {
-          Object.keys(oldVideoStore).forEach((key) => {
-            removeVideoFromScene(scene, key)
-            cleanupVideo?.()
-          })
+          await Promise.all(
+            Object.keys(oldVideoStore).map(async (key) => {
+              await removeVideoFromScene(scene, key)
+              cleanupVideo?.()
+            })
+          )
         }
         if (isModelReady && newVideoStore) {
           setLoadingLabel('Loading Video…')
