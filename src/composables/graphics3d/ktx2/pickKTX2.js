@@ -27,6 +27,5 @@ export const pickKTX2Variant = (variants = {}, renderer, perfTier) => {
   }
 
   // low
-  if (minSide >= 900) return want(['mobile', 'thumb', 'desktop', 'full'])
   return want(['thumb', 'mobile', 'desktop', 'full'])
 }

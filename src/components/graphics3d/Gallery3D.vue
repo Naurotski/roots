@@ -42,12 +42,19 @@ export default {
     const collidableMeshes = []
     let scene, renderer, camera, cleanupAudio, cleanupVideo
 
+    const galleryGlbVariants = {
+      thumb: '/3Dmodels/gallery-thumb.glb',
+      mobile: '/3Dmodels/gallery-mobile.glb',
+      desktop: '/3Dmodels/gallery-desktop.glb',
+      full: '/3Dmodels/gallery-full.glb'
+    }
+
     // 1) маппинг латентности -> параллелизм
     const cap = computed(() => {
       const ms = latencyMs.value ?? 200
-      if (ms < 150) return 8
-      if (ms < 400) return 4
-      if (ms < 1000) return 2
+      if (ms < 150) return 3
+      if (ms < 400) return 2
+      if (ms < 1000) return 1
       return 1
     })
 
@@ -76,6 +83,11 @@ export default {
           inFlight < capRef.value ? run() : q.push(run)
         })
     }
+    const detectWithTimeout = (renderer, ms = 600, timeout = 1500) =>
+      Promise.race([
+        detectPerfTier(renderer, { sampleMs: ms }).catch(() => 'low'),
+        new Promise((resolve) => setTimeout(() => resolve('low'), timeout))
+      ])
 
     const limit = createAdaptiveLimit(cap)
     onMounted(async () => {
@@ -90,12 +102,16 @@ export default {
       scene.add(controlsObject)
       unmountedArray.value.push(playerControlsUnmounted)
 
+      perfTier.value = await detectWithTimeout(renderer, 600, 1500)
+
       setLoadingLabel('Loading Model…')
-      modelGalleryReady.value = await loadModelGallery(
-        '/3Dmodels/gallery.glb',
+      modelGalleryReady.value = await loadModelGallery({
+        glbVariants: galleryGlbVariants,
         scene,
-        collidableMeshes
-      )
+        collidableMeshes,
+        renderer,
+        perfTier: perfTier.value
+      })
 
       const { updateMoveToPainting, raycastInteractionUnmounted } = useRaycastInteraction({
         camera,
@@ -140,105 +156,100 @@ export default {
             await clearSelectedGallery()
           }
           if (!newVal) return
-          perfTier.value = await detectPerfTier(renderer, { sampleMs: 600 })
+          perfTier.value = await detectWithTimeout(renderer, 600, 1500)
           if (selectedGallery.value.storeroom) {
             setLoadingLabel('Loading Paintings…')
             const items = Object.values(selectedGallery.value.storeroom).filter((e) => e.position)
-            await Promise.allSettled(
-              items.map((item) =>
-                limit(() =>
-                  createPainting({
-                    renderer,
-                    point: new Vector3(
-                      item.position.point.x,
-                      item.position.point.y,
-                      item.position.point.z
-                    ),
-                    normal: new Vector3(
-                      item.position.normal.x,
-                      item.position.normal.y,
-                      item.position.normal.z
-                    ),
-                    scene,
-                    collidableMeshes,
-                    url: item.url,
-                    width: item.width,
-                    height: item.height,
-                    paintingId: item.id,
-                    ktx2Variants: item.ktx2Variants,
-                    perfTier: perfTier.value
-                  })
-                )
+            for (const item of items) {
+              await limit(() =>
+                createPainting({
+                  renderer,
+                  point: new Vector3(
+                    item.position.point.x,
+                    item.position.point.y,
+                    item.position.point.z
+                  ),
+                  normal: new Vector3(
+                    item.position.normal.x,
+                    item.position.normal.y,
+                    item.position.normal.z
+                  ),
+                  scene,
+                  collidableMeshes,
+                  url: item.url,
+                  width: item.width,
+                  height: item.height,
+                  paintingId: item.id,
+                  ktx2Variants: item.ktx2Variants,
+                  perfTier: perfTier.value
+                })
               )
-            )
+            }
           }
           if (selectedGallery.value.storeStickers) {
             setLoadingLabel('Loading Stickers…')
             const items = Object.values(selectedGallery.value.storeStickers).filter(
               (e) => e.position
             )
-            await Promise.allSettled(
-              items.map((item) =>
-                limit(() =>
-                  createSticker({
-                    renderer,
-                    point: new Vector3(
-                      item.position.point.x,
-                      item.position.point.y,
-                      item.position.point.z
-                    ),
-                    normal: new Vector3(
-                      item.position.normal.x,
-                      item.position.normal.y,
-                      item.position.normal.z
-                    ),
-                    scene,
-                    collidableMeshes,
-                    url: item.url,
-                    width: item.width,
-                    height: item.height,
-                    stickerId: item.id,
-                    rotation: item.position.rotation,
-                    ktx2Variants: item.ktx2Variants,
-                    perfTier: perfTier.value
-                  })
-                )
+            for (const item of items) {
+              await limit(() =>
+                createSticker({
+                  renderer,
+                  point: new Vector3(
+                    item.position.point.x,
+                    item.position.point.y,
+                    item.position.point.z
+                  ),
+                  normal: new Vector3(
+                    item.position.normal.x,
+                    item.position.normal.y,
+                    item.position.normal.z
+                  ),
+                  scene,
+                  collidableMeshes,
+                  url: item.url,
+                  width: item.width,
+                  height: item.height,
+                  stickerId: item.id,
+                  rotation: item.position.rotation,
+                  ktx2Variants: item.ktx2Variants,
+                  perfTier: perfTier.value
+                })
               )
-            )
+            }
           }
           if (selectedGallery.value.store) {
             setLoadingLabel('Loading Objects…')
             const items = Object.values(selectedGallery.value.store).filter((e) => e.position)
-            await Promise.allSettled(
-              items.map((item) =>
-                limit(async () => {
-                  const modelData = await loadModel({
-                    renderer,
-                    url: item.url,
-                    glbVariants: item.glbVariants,
-                    targetHeight: item.targetHeight,
-                    perfTier: perfTier.value
-                  })
-                  modelPositioning({
-                    scene,
-                    modelData,
-                    point: new Vector3(
-                      item.position.point.x,
-                      item.position.point.y,
-                      item.position.point.z
-                    ),
-                    normal: new Vector3(
-                      item.position.normal.x,
-                      item.position.normal.y,
-                      item.position.normal.z
-                    ),
-                    objectId: item.id,
-                    collidableMeshes,
-                    rotation: item.position.rotation
-                  })
+            console.log('watch-storeroom-store------', items)
+            for (const item of items) {
+              await limit(async () => {
+                const modelData = await loadModel({
+                  renderer,
+                  url: item.url,
+                  glbVariants: item.glbVariants,
+                  targetHeight: item.targetHeight,
+                  perfTier: perfTier.value
                 })
-              )
-            )
+                modelPositioning({
+                  scene,
+                  modelData,
+                  point: new Vector3(
+                    item.position.point.x,
+                    item.position.point.y,
+                    item.position.point.z
+                  ),
+                  normal: new Vector3(
+                    item.position.normal.x,
+                    item.position.normal.y,
+                    item.position.normal.z
+                  ),
+                  objectId: item.id,
+                  collidableMeshes,
+                  rotation: item.position.rotation
+                })
+              })
+            }
           }
         } catch (e) {
           console.error(e)

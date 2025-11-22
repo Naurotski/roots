@@ -16,7 +16,7 @@ async function gpuProbe(renderer, ms = 400) {
     const prog = createProgram(gl, vs, fs)
     const buf = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, buf)
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW)
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
     const loc = gl.getAttribLocation(prog, 'p')
     renderer.__probe = { prog, buf, loc }
   }
@@ -42,9 +42,18 @@ async function gpuProbe(renderer, ms = 400) {
   })
 
   function createProgram(gl, vsSrc, fsSrc) {
-    const vs = gl.createShader(gl.VERTEX_SHADER); gl.shaderSource(vs, vsSrc); gl.compileShader(vs)
-    const fs = gl.createShader(gl.FRAGMENT_SHADER); gl.shaderSource(fs, fsSrc); gl.compileShader(fs)
-    const p = gl.createProgram(); gl.attachShader(p, vs); gl.attachShader(p, fs); gl.linkProgram(p)
+    const vs = gl.createShader(gl.VERTEX_SHADER)
+    gl.shaderSource(vs, vsSrc)
+    gl.compileShader(vs)
+
+    const fs = gl.createShader(gl.FRAGMENT_SHADER)
+    gl.shaderSource(fs, fsSrc)
+    gl.compileShader(fs)
+
+    const p = gl.createProgram()
+    gl.attachShader(p, vs)
+    gl.attachShader(p, fs)
+    gl.linkProgram(p)
     return p
   }
 }
@@ -77,6 +86,7 @@ export const detectPerfTier = async (renderer, { sampleMs = 600 } = {}) => {
   else if (memGB >= 8) score += 2
   else if (memGB >= 4) score += 1
 
+  // ядра
   if (cores >= 8) score += 1
 
   // iOS часто скрывает память/ядра — дайте «разумную» поправку, если GPU/форматы сильные
@@ -101,7 +111,35 @@ export const detectPerfTier = async (renderer, { sampleMs = 600 } = {}) => {
   // hi-DPR + ок fps = буст (поднимет iPhone 14 в high)
   if (dpr >= 3 && fps >= 50) score += 2
 
-  if (score >= 8) return 'high'
-  if (score >= 4) return 'mid'
-  return 'low'
+  // базовый tier по score
+  let tier
+  if (score >= 9) tier = 'high'
+  else if (score >= 5) tier = 'mid'
+  else tier = 'low'
+
+  // жёсткие даунгрейды для слабых устройств
+
+  // 1) низкий fps → всегда low
+  if (fps < 35) {
+    tier = 'low'
+  } else {
+    // 2) мало RAM → режем на ступень вниз
+    if (memGB > 0 && memGB <= 3) {
+      if (tier === 'high') tier = 'mid'
+      else if (tier === 'mid') tier = 'low'
+    }
+
+    // 3) мало ядер → тоже вниз
+    if (cores > 0 && cores <= 4) {
+      if (tier === 'high') tier = 'mid'
+      else if (tier === 'mid') tier = 'low'
+    }
+  }
+
+  // 4) hi-DPR, но fps не тянет → не даём high
+  if (dpr >= 2 && fps < 50 && tier === 'high') {
+    tier = 'mid'
+  }
+
+  return tier
 }
