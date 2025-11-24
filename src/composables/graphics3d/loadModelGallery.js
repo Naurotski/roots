@@ -11,7 +11,6 @@ export const loadModelGallery = async ({
 }) => {
   try {
     const url = pickKTX2Variant(glbVariants, renderer, perfTier)
-    console.log('loadModelGallery picked url ------', url)
     if (!url) throw new Error('No suitable gallery GLB variant')
 
     const loader = getGLTFLoader(renderer)

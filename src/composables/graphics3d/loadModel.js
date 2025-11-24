@@ -1,14 +1,13 @@
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { AnimationMixer, Box3, Vector3 } from 'three'
-import { manager } from 'src/composables/graphics3d/loadingManager'
 import { pickKTX2Variant } from 'src/composables/graphics3d/ktx2/pickKTX2'
+import { getGLTFLoader } from 'src/composables/graphics3d/loaders/gltfLoader'
 
 export function loadModel({ renderer, url, glbVariants, targetHeight, perfTier }) {
   return new Promise((resolve, reject) => {
     const localUrl = pickKTX2Variant(glbVariants, renderer, perfTier) || url
     console.log('localUrl --', localUrl)
     const size = new Vector3()
-    const loader = new GLTFLoader(manager)
+    const loader = getGLTFLoader(renderer)
     loader.setCrossOrigin('anonymous')
     loader.load(
       localUrl,

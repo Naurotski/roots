@@ -34,7 +34,7 @@ export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
     video.crossOrigin = 'anonymous'
     video.loop = true
     video.playsInline = true
-    video.preload = 'none'
+    video.preload = 'auto'
     video.muted = true
     video.src = localUrl
     await new Promise((resolve, reject) => {
