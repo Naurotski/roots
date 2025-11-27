@@ -1,65 +1,38 @@
 <template>
   <q-card
-    v-if="showCard"
-    class="absolute-center q-pa-md z-max"
+    class="absolute-top-right q-mt-md q-mr-md q-pa-md z-max"
     style="width: 360px; max-width: 90vw"
   >
     <q-card-section class="row">
       <div class="text-h6">{{ $t('graphics3D.howTo') }}</div>
       <q-space />
-      <q-btn
-        class="absolute-top-right"
-        flat
-        round
-        icon="close"
-        color="negative"
-        @click="showCard = false"
-      />
+      <slot />
     </q-card-section>
     <div class="howto-row orientation-warning">
       <div class="howto-icon">
-        <img src="~/assets/useDevice.svg" alt="swipe to rotate" class="icon" />
+        <img src="~/assets/use-device.png" alt="swipe to rotate" class="icon" />
       </div>
       <div class="howto-text">{{ $t('graphics3D.useDevice') }}</div>
     </div>
     <div class="howto-row">
       <div class="howto-icon">
-        <img src="~/assets/touchHalves.svg" alt="swipe to rotate" class="icon" />
+        <img src="~/assets/touch-halves.png" alt="swipe to rotate" class="icon" />
       </div>
       <div class="howto-text">{{ $t('graphics3D.touchHalves') }}</div>
     </div>
     <div class="howto-row">
       <div class="howto-icon">
-        <img src="~/assets/tapArtworks.svg" alt="tap objects" class="icon" />
+        <img src="~/assets/tap-artworks.png" alt="tap objects" class="icon" />
       </div>
       <div class="howto-text">
         {{ $t('graphics3D.tapArtworks') }}
       </div>
     </div>
   </q-card>
-  <div v-else>
-    <q-btn
-      round
-      color="white"
-      text-color="black"
-      class="absolute-top-right q-mt-sm q-mr-sm"
-      :class="mode === 'keyboard' ? 'q-mt-xl q-ml-xl' : 'q-mt-sm q-ml-sm'"
-      size="md"
-      icon="fa-solid fa-bars"
-      @click="showCard = true"
-    />
-  </div>
 </template>
 <script>
-import { ref } from 'vue'
 export default {
-  name: 'HowToTouch',
-  setup() {
-    const showCard = ref(true)
-    return {
-      showCard
-    }
-  }
+  name: 'HowToTouch'
 }
 </script>
 

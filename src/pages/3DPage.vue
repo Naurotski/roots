@@ -2,8 +2,25 @@
   <q-page class="q-pa-none">
     <div class="fs-root" ref="fsRoot" :class="{ 'fs-emulated': headerFooterHidden }">
       <gallery3-d />
-      <how-to v-if="mode === 'keyboard'" class="absolute-top-right q-mt-xl q-mr-xl" />
-      <how-to-touch v-else />
+      <how-to v-if="mode === 'keyboard' && showCard">
+        <q-btn
+          class="absolute-top-right"
+          flat
+          round
+          icon="close"
+          color="negative"
+          @click="showCard = false"
+        />
+      </how-to>
+      <how-to-touch v-if="mode !== 'keyboard' && showCard">
+        <q-btn
+          class="absolute-top-right"
+          flat
+          round
+          icon="close"
+          color="negative"
+          @click="showCard = false"
+      /></how-to-touch>
       <gallery-labels />
       <gallery3-d-video-sound />
       <select-gallery />
@@ -12,12 +29,23 @@
         text-color="black"
         class="absolute-top-left"
         :class="[
-          mode === 'keyboard' ? 'q-mt-xl q-ml-xl' : 'q-mt-sm q-ml-sm',
+          mode === 'keyboard' ? 'q-mt-xl q-ml-xl' : 'q-mt-md q-ml-md',
           { blink: shouldBlink }
         ]"
         round
         :icon="$q.fullscreen.isActive || headerFooterHidden ? 'fullscreen_exit' : 'fullscreen'"
         @click="toggleFs"
+      />
+      <q-btn
+        v-if="!showCard"
+        round
+        color="white"
+        text-color="black"
+        class="absolute-top-right"
+        :class="mode === 'keyboard' ? 'q-mt-xl q-mr-xl' : 'q-mt-md q-mr-md'"
+        size="md"
+        icon="fa-solid fa-bars"
+        @click="showCard = true"
       />
     </div>
   </q-page>
@@ -82,6 +110,7 @@ export default {
     const merchStore = useMerchStore()
     const { getRealtimeDatabase } = merchStore
     const selectedRealGallery = ref({})
+    const showCard = ref(true)
     if (filterExhibitionsDraft.value.length) {
       selectedRealGallery.value = filterExhibitionsDraft.value.find(
         (item) => item.id === +galleryId.value
@@ -236,6 +265,7 @@ export default {
       selectedElementId,
       shouldBlink,
       headerFooterHidden,
+      showCard,
       toggleFs
     }
   }

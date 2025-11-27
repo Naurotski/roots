@@ -1,16 +1,9 @@
 <template>
-  <q-card v-if="showCard" class="q-pa-md" style="width: 360px; max-width: 90vw">
+  <q-card class="q-pa-md absolute-top-right q-mt-xl q-mr-xl" style="width: 360px; max-width: 90vw">
     <q-card-section class="row">
       <div class="text-h6">{{ $t('graphics3D.howTo') }}</div>
       <q-space />
-      <q-btn
-        class="absolute-top-right"
-        flat
-        round
-        icon="close"
-        color="negative"
-        @click="showCard = false"
-      />
+      <slot />
     </q-card-section>
     <div class="howto-row">
       <div class="howto-icon">
@@ -42,22 +35,11 @@
       </div>
     </div>
   </q-card>
-  <div v-else>
-    <q-btn
-      round
-      color="white"
-      text-color="black"
-      class="q-mt-md q-mr-md"
-      size="md"
-      icon="fa-solid fa-bars"
-      @click="showCard = true"
-    />
-  </div>
 </template>
-<script setup>
-import { ref } from 'vue'
-const showCard = ref(true)
-// setTimeout(() => (showCard.value = false), 20000)
+<script>
+export default {
+  name: 'HowTo'
+}
 </script>
 <style scoped>
 .howto-row {
