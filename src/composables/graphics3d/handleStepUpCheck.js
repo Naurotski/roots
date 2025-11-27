@@ -8,7 +8,7 @@ const moveSpeed = 1
 const maxStepHeight = 0.3
 const stepUpSpeed = 5 // скорость подъема
 let stepLerpAlpha = 0
-const minDistance = 0.4 // насколько близко можно подойти
+const minDistance = 0.2
 let floorLevel = 0
 const MAX_DT = 1 / 30
 

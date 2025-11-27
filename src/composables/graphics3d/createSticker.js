@@ -1,9 +1,4 @@
-import {
-  PlaneGeometry,
-  Mesh,
-  MeshStandardMaterial,
-  FrontSide
-} from 'three'
+import { PlaneGeometry, Mesh, MeshStandardMaterial, FrontSide } from 'three'
 import { manager } from 'src/composables/graphics3d/loadingManager'
 import { loadTextureSmart } from 'src/composables/graphics3d/ktx2/loadTextureSmart'
 export const createSticker = async ({

@@ -23,7 +23,7 @@ const { videoList } = storeToRefs(graphics3DStore)
 
 export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
   let timer, playIcon
-  const localUrl = pickKTX2Variant(dataVideo.videoVariants, renderer, perfTier) || dataVideo.url
+  const localUrl = pickKTX2Variant(dataVideo.videoVariants, perfTier) || dataVideo.url
   console.log('useVideo ===== localUrl ---', localUrl)
   const object = scene.getObjectByName(dataVideo.videoId)
   if (!object || !object.geometry) return
@@ -34,7 +34,7 @@ export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
     video.crossOrigin = 'anonymous'
     video.loop = true
     video.playsInline = true
-    video.preload = 'auto'
+    video.preload = 'metadata'
     video.muted = true
     video.src = localUrl
     await new Promise((resolve, reject) => {
@@ -138,14 +138,6 @@ export const useVideo = async (scene, renderer, perfTier, dataVideo) => {
     playIcon = new Mesh(iconGeo, iconMat)
     playIcon.position.set(0, 0, 0.002) // чуть выше поверхности
 
-    // Добавляем метод обновления текстуры (в основном render loop)
-    let lastUpdate = 0
-    screen.userData.update = (now) => {
-      if (now - lastUpdate > 33) {
-        videoTexture.needsUpdate = true
-        lastUpdate = now
-      }
-    }
     // начальная видимость иконки (если стор уже содержит состояние)
     const initialPlay = !!videoList.value?.[dataVideo.videoId]?.play
     playIcon.visible = !initialPlay

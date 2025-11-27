@@ -4,7 +4,7 @@ import { getGLTFLoader } from 'src/composables/graphics3d/loaders/gltfLoader'
 
 export function loadModel({ renderer, url, glbVariants, targetHeight, perfTier }) {
   return new Promise((resolve, reject) => {
-    const localUrl = pickKTX2Variant(glbVariants, renderer, perfTier) || url
+    const localUrl = pickKTX2Variant(glbVariants, perfTier) || url
     console.log('localUrl --', localUrl)
     const size = new Vector3()
     const loader = getGLTFLoader(renderer)
