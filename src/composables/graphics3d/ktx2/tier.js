@@ -94,6 +94,5 @@ export const detectPerfTier = async (renderer, { debug = false } = {}) => {
       rendererStr
     })
   }
-console.log('tier - ', tier)
   return tier
 }

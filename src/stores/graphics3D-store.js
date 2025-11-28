@@ -34,6 +34,7 @@ export const useGraphics3DStore = defineStore('graphics3D', () => {
   )
   const filteredListGalleriesMonthlySubscription = computed(() =>
     Object.values(filteredListGalleriesNonDraft.value)
+      .filter((item) => !item.free)
       .sort((a, b) => b.closingDate.localeCompare(a.closingDate))
       .slice(0, 3)
   )
